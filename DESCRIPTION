@@ -10,3 +10,8 @@ Depends:
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Suggests: covr,
+    testthat,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
