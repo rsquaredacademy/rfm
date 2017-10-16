@@ -3,15 +3,26 @@ Type: Package
 Title: Recency, Frequency and Monetary Value Analysis in R
 Version: 0.1.0
 Authors@R: person("Aravind", "Hebbali", email = "hebbali.aravind@gmail.com", role = c("aut", "cre"))
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: Tools for performing recency, frequency and monetary value analysis.
 Depends:
     R(>= 3.2.4)
 License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: true
-Suggests: covr,
+Imports:
+    dplyr,
+    lubridate,
+    magrittr,
+    stats,
+    purrr,
+    forcats,
+    assertthat,
+    ggplot2,
+    grDevices
+Suggests: 
+    covr,
     testthat,
     knitr,
     rmarkdown
+LazyData: true
 VignetteBuilder: knitr
+RoxygenNote: 6.0.1
