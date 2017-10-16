@@ -38,7 +38,14 @@
   <a href="news/index.html">News</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/rsquaredacademy/rfm">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -55,11 +62,15 @@
     
 <div class="contents">
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
 <div id="rfm" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#rfm" class="anchor"> </a>rfm</h1></div>
-<p>Recency, Frequency and Market Value Analysis in R.</p>
+
+<div id="overview" class="section level2">
+<h2 class="hasAnchor">
+<a href="#overview" class="anchor"> </a>Overview</h2>
+<p>Recency, Frequency and Monetary Value Analysis in R.</p>
+</div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"> </a>Installation</h2>
@@ -70,9 +81,10 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"> </a>Usage</h2>
-<div id="rfm-table" class="section level3">
-<h3 class="hasAnchor">
-<a href="#rfm-table" class="anchor"> </a>RFM Table</h3>
+</div>
+<div id="rfm-table" class="section level2">
+<h2 class="hasAnchor">
+<a href="#rfm-table" class="anchor"> </a>RFM Table</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">analysis_date &lt;-<span class="st"> </span>lubridate<span class="op">::</span><span class="kw">as_datetime</span>(<span class="st">'2014-04-01 05:30:00'</span>, <span class="dt">tz =</span> <span class="st">'UTC'</span>)
 rfm_result &lt;-<span class="st"> </span><span class="kw"><a href="reference/rfm_table.html">rfm_table</a></span>(rfm_data, customer_id, order_date, revenue, analysis_date)
 rfm_result
@@ -93,42 +105,41 @@ rfm_result
 <span class="co">#&gt; #   recency_score &lt;int&gt;, frequency_score &lt;int&gt;, monetary_score &lt;int&gt;,</span>
 <span class="co">#&gt; #   rfm_score &lt;dbl&gt;</span></code></pre></div>
 </div>
-<div id="heat-map" class="section level3">
-<h3 class="hasAnchor">
-<a href="#heat-map" class="anchor"> </a>Heat Map</h3>
+<div id="heat-map" class="section level2">
+<h2 class="hasAnchor">
+<a href="#heat-map" class="anchor"> </a>Heat Map</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/rfm_heatmap.html">rfm_heatmap</a></span>(rfm_result)</code></pre></div>
 <p><img src="README-heatmap-1.png" width="672"></p>
 </div>
-<div id="bar-chart" class="section level3">
-<h3 class="hasAnchor">
-<a href="#bar-chart" class="anchor"> </a>Bar Chart</h3>
+<div id="bar-chart" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bar-chart" class="anchor"> </a>Bar Chart</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/rfm_bar_chart.html">rfm_bar_chart</a></span>(rfm_result)</code></pre></div>
 <p><img src="README-barchart-1.png" width="672"></p>
 </div>
-<div id="scatter-plots" class="section level3">
+<div id="scatter-plots" class="section level2">
+<h2 class="hasAnchor">
+<a href="#scatter-plots" class="anchor"> </a>Scatter Plots</h2>
+<div id="monetary-value-vs-recency" class="section level3">
 <h3 class="hasAnchor">
-<a href="#scatter-plots" class="anchor"> </a>Scatter Plots</h3>
-<div id="monetary-value-vs-recency" class="section level4">
-<h4 class="hasAnchor">
-<a href="#monetary-value-vs-recency" class="anchor"> </a>monetary value vs recency</h4>
+<a href="#monetary-value-vs-recency" class="anchor"> </a>Monetary Value vs Recency</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/rfm_mr_plot.html">rfm_mr_plot</a></span>(rfm_result)</code></pre></div>
 <p><img src="README-mr-1.png" width="672"></p>
 </div>
-</div>
-</div>
-</div>
-<div id="frequency-vs-monetary-value" class="section level1">
-<h1 class="hasAnchor">
-<a href="#frequency-vs-monetary-value" class="anchor"> </a>frequency vs monetary value</h1>
+<div id="frequency-vs-monetary-value" class="section level3">
+<h3 class="hasAnchor">
+<a href="#frequency-vs-monetary-value" class="anchor"> </a>Frequency vs Monetary Value</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/rfm_mr_plot.html">rfm_fm_plot</a></span>(rfm_result)</code></pre></div>
 <p><img src="README-fm-1.png" width="672"></p>
 </div>
-<div id="frequency-vs-recency" class="section level1">
-<h1 class="hasAnchor">
-<a href="#frequency-vs-recency" class="anchor"> </a>frequency vs recency</h1>
+<div id="frequency-vs-recency" class="section level3">
+<h3 class="hasAnchor">
+<a href="#frequency-vs-recency" class="anchor"> </a>Frequency vs Recency</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/rfm_mr_plot.html">rfm_fr_plot</a></span>(rfm_result)</code></pre></div>
 <p><img src="README-fr-1.png" width="672"></p>
 <p>Please note that this project is released with a <a href="CONDUCT.md">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</p>
+</div>
+</div>
 </div>
 </div>
   </div>
@@ -136,6 +147,10 @@ rfm_result
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Links</h2>
 <ul class="list-unstyled">
+<li>Browse source code at <br><a href="https://rsquaredacademy.github.io/rfm/">https://​rsquaredacademy.github.io/​rfm/​</a>
+</li>
+<li>Report a bug at <br><a href="https://github.com/rsquaredacademy/rfm/issues">https://​github.com/​rsquaredacademy/​rfm/​issues</a>
+</li>
 <li>Learn more at <br><a href="http://www.rsquaredacademy.com">http://​www.rsquaredacademy.com</a>
 </li>
 <li>Shiny App at <br><a href="http://rsquaredlabs.com:3838/explorer/">http://​rsquaredlabs.com:3838/​explorer/​</a>
