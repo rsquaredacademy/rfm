@@ -1,9 +1,12 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^\.travis\.yml$
 ^README\.Rmd$
 ^README-.*\.png$
+^cran-comments\.md$
+^\.travis\.yml$
+^codecov\.yml$
 ^appveyor\.yml$
 ^CONDUCT\.md$
-^codecov\.yml$
-^cran-comments\.md$
+^olsrr\.jpg$
+^_pkgdown\.yml$
+^docs$
