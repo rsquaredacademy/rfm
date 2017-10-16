@@ -12,14 +12,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-[![Travis-CI Build Status](https://travis-ci.org/rsquaredacademy/rfm.svg?branch=master)](https://travis-ci.org/rsquaredacademy/rfm)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/rfm?branch=master&svg=true)](https://ci.appveyor.com/project/rsquaredacademy/rfm)
-[![Coverage Status](https://img.shields.io/codecov/c/github/rsquaredacademy/rfm/master.svg)](https://codecov.io/github/rsquaredacademy/rfm?branch=master)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/rfm)](https://cran.r-project.org/package=rfm)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/rfm)](https://cran.r-project.org/package=rfm) [![Travis-CI Build Status](https://travis-ci.org/rsquaredacademy/rfm.svg?branch=master)](https://travis-ci.org/rsquaredacademy/rfm) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/rfm?branch=master&svg=true)](https://ci.appveyor.com/project/rsquaredacademy/rfm) [![](https://cranlogs.r-pkg.org/badges/grand-total/rfm)](https://cran.r-project.org/package=rfm)
 
 # rfm
 
-The goal of rfm is to ...
+Recency, Frequency and Market Value Analysis in R.
 
 ## Installation
 
@@ -30,12 +27,52 @@ You can install rfm from github with:
 devtools::install_github("rsquaredacademy/rfm")
 ```
 
-## Example
-
-This is a basic example which shows you how to solve a common problem:
-
-```{r example}
-## basic example code
+```{r, echo=FALSE, message=FALSE}
+library(rfm)
 ```
+
+## Usage
+
+### RFM Table
+
+```{r rfm_table}
+analysis_date <- lubridate::as_datetime('2014-04-01 05:30:00', tz = 'UTC')
+rfm_result <- rfm_table(rfm_data, customer_id, order_date, revenue, analysis_date)
+rfm_result
+```
+
+### Heat Map
+
+```{r heatmap}
+rfm_heatmap(rfm_result)
+```
+
+### Bar Chart
+
+```{r barchart}
+rfm_bar_chart(rfm_result)
+```
+
+### Scatter Plots
+
+#### monetary value vs recency
+
+```{r mr}
+rfm_mr_plot(rfm_result)
+```
+
+# frequency vs monetary value
+
+```{r fm}
+rfm_fm_plot(rfm_result)
+```
+
+# frequency vs recency
+
+```{r fr}
+rfm_fr_plot(rfm_result)
+```
+
+
 
 Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
