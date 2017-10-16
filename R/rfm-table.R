@@ -8,6 +8,11 @@
 #' @param order_date date of transaction
 #' @param revenue revenue from the customer
 #' @param analysis_date data of analysis
+#' @param recency_bins number of bins for recency
+#' @param frequency_bins number of bins for frequency
+#' @param monetary_bins number of bins for monetary
+#' @param ... other arguments
+#' @param x an object of class \code{rfm_table}
 #' @return \code{rfm_table} returns a tibble with the following columns:
 #'
 #' \item{customer_id}{unique id of the customer}
@@ -15,10 +20,7 @@
 #' \item{recency_days}{number of days since the most recent transaction}
 #' \item{transaction_count}{total number of transactions of the customer}
 #' \item{revenue}{revenue from the customer}
-#' \item{analysis_date}{date of analysis}
-#' \item{recency_bins}{number of bins for recency}
-#' \item{frequency_bins}{number of bins for frequency}
-#' \item{monetary_bins}{number of bins for monetary}
+#'
 #' @examples
 #' analysis_date <- lubridate::as_datetime('2014-04-01 05:30:00', tz = 'UTC')
 #' rfm_table(rfm_data, customer_id, order_date, revenue, analysis_date)
@@ -32,7 +34,7 @@ rfm_table <- function(data = NULL, customer_id = NULL, order_date = NULL,
 #'
 rfm_table.default <- function(data = NULL, customer_id = NULL, order_date = NULL,
                       revenue = NULL, analysis_date = NULL, recency_bins = 5,
-                      frequency_bins = 5, monetary_bins = 5) {
+                      frequency_bins = 5, monetary_bins = 5, ...) {
 
   if (!lubridate::is.POSIXct(analysis_date)) {
     stop('analysis_date must be date/time.')

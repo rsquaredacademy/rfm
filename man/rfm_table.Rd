@@ -21,6 +21,16 @@ rfm_table(data = NULL, customer_id = NULL, order_date = NULL,
 \item{revenue}{revenue from the customer}
 
 \item{analysis_date}{data of analysis}
+
+\item{recency_bins}{number of bins for recency}
+
+\item{frequency_bins}{number of bins for frequency}
+
+\item{monetary_bins}{number of bins for monetary}
+
+\item{...}{other arguments}
+
+\item{x}{an object of class \code{rfm_table}}
 }
 \value{
 \code{rfm_table} returns a tibble with the following columns:
@@ -30,10 +40,6 @@ rfm_table(data = NULL, customer_id = NULL, order_date = NULL,
 \item{recency_days}{number of days since the most recent transaction}
 \item{transaction_count}{total number of transactions of the customer}
 \item{revenue}{revenue from the customer}
-\item{analysis_date}{date of analysis}
-\item{recency_bins}{number of bins for recency}
-\item{frequency_bins}{number of bins for frequency}
-\item{monetary_bins}{number of bins for monetary}
 }
 \description{
 Table with recency, frequency, monetary and RFM score
