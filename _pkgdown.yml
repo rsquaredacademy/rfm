@@ -1,0 +1,26 @@
+templates:
+  params:
+    bootswatch: cerulean
+
+home:
+  links:
+  - text: Learn more
+    href: http://www.rsquaredacademy.com
+  - text: Shiny App
+    href: http://rsquaredlabs.com:3838/explorer/
+
+
+reference:
+- title: RFM
+
+  contents:
+  - rfm_table
+  - rfm_heatmap
+  - rfm_bar_chart
+  - rfm_fm_plot
+  - rfm_fr_plot
+  - rfm_mr_plot
+
+- title: Data
+  contents:
+  - rfm_data
