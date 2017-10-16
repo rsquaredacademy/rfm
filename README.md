@@ -1,11 +1,14 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/rfm)](https://cran.r-project.org/package=rfm) [![Travis-CI Build Status](https://travis-ci.org/rsquaredacademy/rfm.svg?branch=master)](https://travis-ci.org/rsquaredacademy/rfm) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/rfm?branch=master&svg=true)](https://ci.appveyor.com/project/rsquaredacademy/rfm) [![](https://cranlogs.r-pkg.org/badges/grand-total/rfm)](https://cran.r-project.org/package=rfm)
-
 rfm
 ===
 
-Recency, Frequency and Market Value Analysis in R.
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/rfm)](https://cran.r-project.org/package=rfm) [![Travis-CI Build Status](https://travis-ci.org/rsquaredacademy/rfm.svg?branch=master)](https://travis-ci.org/rsquaredacademy/rfm) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/rfm?branch=master&svg=true)](https://ci.appveyor.com/project/rsquaredacademy/rfm) [![](https://cranlogs.r-pkg.org/badges/grand-total/rfm)](https://cran.r-project.org/package=rfm)
+
+Overview
+--------
+
+Recency, Frequency and Monetary Value Analysis in R.
 
 Installation
 ------------
@@ -20,7 +23,8 @@ devtools::install_github("rsquaredacademy/rfm")
 Usage
 -----
 
-### RFM Table
+RFM Table
+---------
 
 ``` r
 analysis_date <- lubridate::as_datetime('2014-04-01 05:30:00', tz = 'UTC')
@@ -44,7 +48,8 @@ rfm_result
 #> #   rfm_score <dbl>
 ```
 
-### Heat Map
+Heat Map
+--------
 
 ``` r
 rfm_heatmap(rfm_result)
@@ -52,7 +57,8 @@ rfm_heatmap(rfm_result)
 
 ![](README-heatmap-1.png)
 
-### Bar Chart
+Bar Chart
+---------
 
 ``` r
 rfm_bar_chart(rfm_result)
@@ -60,9 +66,10 @@ rfm_bar_chart(rfm_result)
 
 ![](README-barchart-1.png)
 
-### Scatter Plots
+Scatter Plots
+-------------
 
-#### monetary value vs recency
+### Monetary Value vs Recency
 
 ``` r
 rfm_mr_plot(rfm_result)
@@ -70,8 +77,7 @@ rfm_mr_plot(rfm_result)
 
 ![](README-mr-1.png)
 
-frequency vs monetary value
-===========================
+### Frequency vs Monetary Value
 
 ``` r
 rfm_fm_plot(rfm_result)
@@ -79,8 +85,7 @@ rfm_fm_plot(rfm_result)
 
 ![](README-fm-1.png)
 
-frequency vs recency
-====================
+### Frequency vs Recency
 
 ``` r
 rfm_fr_plot(rfm_result)

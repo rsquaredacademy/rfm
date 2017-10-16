@@ -12,11 +12,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/rfm)](https://cran.r-project.org/package=rfm) [![Travis-CI Build Status](https://travis-ci.org/rsquaredacademy/rfm.svg?branch=master)](https://travis-ci.org/rsquaredacademy/rfm) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/rfm?branch=master&svg=true)](https://ci.appveyor.com/project/rsquaredacademy/rfm) [![](https://cranlogs.r-pkg.org/badges/grand-total/rfm)](https://cran.r-project.org/package=rfm)
-
 # rfm
 
-Recency, Frequency and Market Value Analysis in R.
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/rfm)](https://cran.r-project.org/package=rfm) [![Travis-CI Build Status](https://travis-ci.org/rsquaredacademy/rfm.svg?branch=master)](https://travis-ci.org/rsquaredacademy/rfm) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/rfm?branch=master&svg=true)](https://ci.appveyor.com/project/rsquaredacademy/rfm) [![](https://cranlogs.r-pkg.org/badges/grand-total/rfm)](https://cran.r-project.org/package=rfm)
+
+## Overview
+
+Recency, Frequency and Monetary Value Analysis in R.
 
 ## Installation
 
@@ -33,7 +35,7 @@ library(rfm)
 
 ## Usage
 
-### RFM Table
+## RFM Table
 
 ```{r rfm_table}
 analysis_date <- lubridate::as_datetime('2014-04-01 05:30:00', tz = 'UTC')
@@ -41,38 +43,36 @@ rfm_result <- rfm_table(rfm_data, customer_id, order_date, revenue, analysis_dat
 rfm_result
 ```
 
-### Heat Map
+## Heat Map
 
 ```{r heatmap}
 rfm_heatmap(rfm_result)
 ```
 
-### Bar Chart
+## Bar Chart
 
 ```{r barchart}
 rfm_bar_chart(rfm_result)
 ```
 
-### Scatter Plots
+## Scatter Plots
 
-#### monetary value vs recency
+### Monetary Value vs Recency
 
 ```{r mr}
 rfm_mr_plot(rfm_result)
 ```
 
-# frequency vs monetary value
+### Frequency vs Monetary Value
 
 ```{r fm}
 rfm_fm_plot(rfm_result)
 ```
 
-# frequency vs recency
+### Frequency vs Recency
 
 ```{r fr}
 rfm_fr_plot(rfm_result)
 ```
-
-
 
 Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
