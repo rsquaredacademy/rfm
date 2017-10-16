@@ -6,8 +6,6 @@ Authors@R: person("Aravind", "Hebbali", email = "hebbali.aravind@gmail.com", rol
 Description: Tools for performing recency, frequency and monetary value analysis.
 Depends:
     R(>= 3.2.4)
-License: MIT + file LICENSE
-Encoding: UTF-8
 Imports:
     dplyr,
     lubridate,
@@ -23,6 +21,10 @@ Suggests:
     testthat,
     knitr,
     rmarkdown
+URL: https://rsquaredacademy.github.io/rfm/, https://github.com/rsquaredacademy/rfm
+BugReports: https://github.com/rsquaredacademy/rfm/issues
+License: MIT + file LICENSE
+Encoding: UTF-8
 LazyData: true
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
