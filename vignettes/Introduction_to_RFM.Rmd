@@ -1,0 +1,55 @@
+---
+title: "Introduction to RFM"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to RFM}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Introduction
+
+```{r, echo=FALSE, message=FALSE}
+library(rfm)
+```
+
+## RFM 
+
+```{r rfm_table}
+analysis_date <- lubridate::as_datetime('2014-04-01 05:30:00', tz = 'UTC')
+rfm_result <- rfm_table(rfm_data, customer_id, order_date, revenue, analysis_date)
+rfm_result
+```
+
+### Heat Map
+
+```{r heatmap, fig.align='center'}
+rfm_heatmap(rfm_result)
+```
+
+### Bar Chart
+
+```{r barchart, fig.align='center'}
+rfm_bar_chart(rfm_result)
+```
+
+### Scatter Plots
+
+#### monetary value vs recency
+
+```{r mr, fig.align='center'}
+rfm_mr_plot(rfm_result)
+```
+
+# frequency vs monetary value
+
+```{r fm, fig.align='center'}
+rfm_fm_plot(rfm_result)
+```
+
+# frequency vs recency
+
+```{r fr, fig.align='center'}
+rfm_fr_plot(rfm_result)
+```
