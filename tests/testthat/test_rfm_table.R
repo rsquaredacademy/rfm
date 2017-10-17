@@ -7,8 +7,8 @@ test_that('output from rfm_table is as expected', {
   actual <- result %>%
     use_series(rfm) %>%
     extract2('recency_days') %>%
-    mean
-  expected <- 51.66
-  expect_equal(round(actual, 2), expected)
+    sum
+  expected <- 712229
+  expect_equal(actual, expected)
 
 })
