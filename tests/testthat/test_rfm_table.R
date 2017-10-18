@@ -6,9 +6,9 @@ test_that('output from rfm_table is as expected', {
   result <- rfm_table(rfm_data, customer_id, order_date, revenue, analysis_date)
   actual <- result %>%
     use_series(rfm) %>%
-    extract2('recency_days') %>%
+    extract2('transaction_count') %>%
     sum
-  expected <- 712229
+  expected <- 25613
   expect_equal(actual, expected)
 
 })
