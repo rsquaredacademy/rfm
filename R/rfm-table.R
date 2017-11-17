@@ -62,7 +62,11 @@ rfm_table.default <- function(data = NULL, customer_id = NULL, order_date = NULL
   result$frequency_score <- NA
   result$monetary_score <- NA
 
-  bins_recency <- bins(result, recency_days, recency_bins)
+  if (length(recency_bins) == 1) {
+    bins_recency <- bins(result, recency_days, recency_bins)
+  } else {
+    bins_recency <- recency_bins
+  }
   lower_recency <- bins_lower(result, recency_days, bins_recency)
   upper_recency <- bins_upper(result, recency_days, bins_recency)
 
@@ -71,22 +75,38 @@ rfm_table.default <- function(data = NULL, customer_id = NULL, order_date = NULL
                               result$recency_days < upper_recency[i]] <- i
   }
 
-  bins_frequency <- bins(result, transaction_count, frequency_bins)
+  fscore <- frequency_bins %>%
+    seq_len %>%
+    rev
+
+  if (length(frequency_bins) == 1) {
+    bins_frequency <- bins(result, transaction_count, frequency_bins)
+  } else {
+    bins_frequency <- frequency_bins
+  }
   lower_frequency <- bins_lower(result, transaction_count, bins_frequency)
   upper_frequency <- bins_upper(result, transaction_count, bins_frequency)
 
   for (i in seq_len(frequency_bins)) {
     result$frequency_score[result$transaction_count >= lower_frequency[i] &
-                             result$transaction_count < upper_frequency[i]] <- i
+                             result$transaction_count < upper_frequency[i]] <- fscore[i]
   }
 
-  bins_monetary <- bins(result, amount, monetary_bins)
+  mscore <- monetary_bins %>%
+    seq_len %>%
+    rev
+
+  if (length(monetary_bins) == 1) {
+    bins_monetary <- bins(result, amount, monetary_bins)
+  } else {
+    bins_monetary <- monetary_bins
+  }
   lower_monetary <- bins_lower(result, amount, bins_monetary)
   upper_monetary <- bins_upper(result, amount, bins_monetary)
 
   for (i in seq_len(monetary_bins)) {
     result$monetary_score[result$amount >= lower_monetary[i] &
-                            result$amount < upper_monetary[i]] <- i
+                            result$amount < upper_monetary[i]] <- mscore[i]
   }
 
   result %<>%
