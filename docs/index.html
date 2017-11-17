@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Recency, Frequency and Monetary Value Analysis in R • rfm</title>
-<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="jquery.sticky-kit.min.js"></script><script src="pkgdown.js"></script><!-- mathjax --><script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -16,7 +16,7 @@
 </head>
 <body>
     <div class="container template-vignette">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <header><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
@@ -29,19 +29,40 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="reference/index.html">Reference</a>
+  <a href="index.html">Home</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Guides
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
 <li>
-  <a href="articles/index.html">Articles</a>
+      <a href="articles/Introduction_to_RFM.html">Intro</a>
+    </li>
+  </ul>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Reference
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
 <li>
-  <a href="news/index.html">News</a>
+      <a href="reference/index.html">Functions</a>
+    </li>
+    <li>
+      <a href="news/index.html">News</a>
+    </li>
+  </ul>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/rsquaredacademy/rfm">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -62,10 +83,12 @@
     
 <div class="contents">
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-<div id="rfm" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#rfm" class="anchor"> </a>rfm</h1></div>
-
+<div id="rfm" class="section level2">
+<h2 class="hasAnchor">
+<a href="#rfm" class="anchor"> </a>rfm</h2>
+<p><strong>Author:</strong> <a href="">Aravind Hebbali</a><br><strong>License:</strong> <a href="https://opensource.org/licenses/MIT">MIT</a></p>
+<p><a href="https://cran.r-project.org/package=rfm"><img src="http://www.r-pkg.org/badges/version/rfm" alt="CRAN_Status_Badge"></a> <a href="https://travis-ci.org/rsquaredacademy/rfm"><img src="https://travis-ci.org/rsquaredacademy/rfm.svg?branch=master" alt="Travis-CI Build Status"></a> <a href="https://ci.appveyor.com/project/rsquaredacademy/rfm"><img src="https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/rfm?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a> <a href="https://codecov.io/github/rsquaredacademy/rfm?branch=master"><img src="https://img.shields.io/codecov/c/github/rsquaredacademy/rfm/master.svg"></a> <a href="https://cran.r-project.org/package=rfm"><img src="https://cranlogs.r-pkg.org/badges/grand-total/rfm"></a> <a href=""><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg"></a></p>
+</div>
 <div id="overview" class="section level2">
 <h2 class="hasAnchor">
 <a href="#overview" class="anchor"> </a>Overview</h2>
@@ -91,16 +114,16 @@ rfm_result
 <span class="co">#&gt; # A tibble: 13,787 x 9</span>
 <span class="co">#&gt;            customer_id    date_most_recent recency_days transaction_count</span>
 <span class="co">#&gt;                  &lt;chr&gt;              &lt;dttm&gt;        &lt;dbl&gt;             &lt;int&gt;</span>
-<span class="co">#&gt;  1     Aaliyah Carroll 2014-03-28 00:00:00      4.00000                 1</span>
-<span class="co">#&gt;  2     Aaliyah Padberg 2014-03-10 07:48:00     21.67500                 1</span>
-<span class="co">#&gt;  3         Aarav Hyatt 2014-02-17 00:00:00     43.00000                 1</span>
-<span class="co">#&gt;  4      Aarav Kassulke 2014-01-20 04:09:00     70.82708                 1</span>
-<span class="co">#&gt;  5         Aarav Kutch 2014-01-18 00:40:00     72.97222                 1</span>
-<span class="co">#&gt;  6       Aaron Gutmann 2014-02-06 06:59:00     53.70903                 1</span>
-<span class="co">#&gt;  7       Aaron Stracke 2014-02-13 00:00:00     47.00000                 3</span>
-<span class="co">#&gt;  8    Abagail Weissnat 2014-02-14 00:00:00     46.00000                 2</span>
-<span class="co">#&gt;  9 Abagail Windler PhD 2014-02-14 00:00:00     46.00000                 1</span>
-<span class="co">#&gt; 10       Abb Armstrong 2014-01-20 00:00:00     71.00000                 2</span>
+<span class="co">#&gt;  1     Aaliyah Carroll 2014-03-28 00:00:00     4.229167                 1</span>
+<span class="co">#&gt;  2     Aaliyah Padberg 2014-03-10 07:48:00    21.904167                 1</span>
+<span class="co">#&gt;  3         Aarav Hyatt 2014-02-17 00:00:00    43.229167                 1</span>
+<span class="co">#&gt;  4      Aarav Kassulke 2014-01-20 04:09:00    71.056250                 1</span>
+<span class="co">#&gt;  5         Aarav Kutch 2014-01-18 00:40:00    73.201389                 1</span>
+<span class="co">#&gt;  6       Aaron Gutmann 2014-02-06 06:59:00    53.938194                 1</span>
+<span class="co">#&gt;  7       Aaron Stracke 2014-02-13 00:00:00    47.229167                 3</span>
+<span class="co">#&gt;  8    Abagail Weissnat 2014-02-14 00:00:00    46.229167                 2</span>
+<span class="co">#&gt;  9 Abagail Windler PhD 2014-02-14 00:00:00    46.229167                 1</span>
+<span class="co">#&gt; 10       Abb Armstrong 2014-01-20 00:00:00    71.229167                 2</span>
 <span class="co">#&gt; # ... with 13,777 more rows, and 5 more variables: amount &lt;int&gt;,</span>
 <span class="co">#&gt; #   recency_score &lt;int&gt;, frequency_score &lt;int&gt;, monetary_score &lt;int&gt;,</span>
 <span class="co">#&gt; #   rfm_score &lt;dbl&gt;</span></code></pre></div>
@@ -141,7 +164,6 @@ rfm_result
 </div>
 </div>
 </div>
-</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -153,31 +175,21 @@ rfm_result
 </li>
 <li>Learn more at <br><a href="http://www.rsquaredacademy.com">http://​www.rsquaredacademy.com</a>
 </li>
-<li>Shiny App at <br><a href="http://rsquaredlabs.com:3838/explorer/">http://​rsquaredlabs.com:3838/​explorer/​</a>
-</li>
 </ul>
 <h2>License</h2>
 <p><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE">LICENSE</a></p>
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Aravind Hebbali <br><small class="roles"> Author, maintainer </small> </li>
+<li> <a href="" target="_balnk">Aravind Hebbali</a> <br><small class="roles"> Author, maintainer </small> </li>
+<li> <a href="http://​www.rsquaredacademy.com" target="_balnk">Rsquared Academy</a> <br><small class="roles"> Copyright holder, funder </small> </li>
 </ul>
-<html><body>
-<h2>Dev status</h2>
-<ul class="list-unstyled">
-<li><a href="https://cran.r-project.org/package=rfm"><img src="http://www.r-pkg.org/badges/version/rfm" alt="CRAN_Status_Badge"></a></li>
-<li><a href="https://travis-ci.org/rsquaredacademy/rfm"><img src="https://travis-ci.org/rsquaredacademy/rfm.svg?branch=master" alt="Travis-CI Build Status"></a></li>
-<li><a href="https://ci.appveyor.com/project/rsquaredacademy/rfm"><img src="https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/rfm?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
-<li><a href="https://cran.r-project.org/package=rfm"><img src="https://cranlogs.r-pkg.org/badges/grand-total/rfm"></a></li>
-</ul>
-</body></html>
 </div>
 
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Aravind Hebbali.</p>
+  <p>Developed by Aravind Hebbali, Rsquared Academy.</p>
 </div>
 
 <div class="pkgdown">

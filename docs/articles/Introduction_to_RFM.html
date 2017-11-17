@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Introduction to RFM • rfm</title>
-<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><!-- mathjax --><script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -16,7 +16,7 @@
 </head>
 <body>
     <div class="container template-vignette">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <header><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
@@ -29,19 +29,40 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../index.html">Home</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Guides
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
 <li>
-  <a href="../articles/index.html">Articles</a>
+      <a href="../articles/Introduction_to_RFM.html">Intro</a>
+    </li>
+  </ul>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Reference
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
 <li>
-  <a href="../news/index.html">News</a>
+      <a href="../reference/index.html">Functions</a>
+    </li>
+    <li>
+      <a href="../news/index.html">News</a>
+    </li>
+  </ul>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/rsquaredacademy/rfm">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -59,7 +80,7 @@
     <div class="page-header toc-ignore">
       <h1>Introduction to RFM</h1>
             
-            <h4 class="date">2017-10-16</h4>
+            <h4 class="date">2017-11-17</h4>
           </div>
 
     
@@ -78,16 +99,16 @@ rfm_result</code></pre></div>
 <pre><code>## # A tibble: 13,787 x 9
 ##            customer_id    date_most_recent recency_days transaction_count
 ##                  &lt;chr&gt;              &lt;dttm&gt;        &lt;dbl&gt;             &lt;int&gt;
-##  1     Aaliyah Carroll 2014-03-28 00:00:00      4.00000                 1
-##  2     Aaliyah Padberg 2014-03-10 07:48:00     21.67500                 1
-##  3         Aarav Hyatt 2014-02-17 00:00:00     43.00000                 1
-##  4      Aarav Kassulke 2014-01-20 04:09:00     70.82708                 1
-##  5         Aarav Kutch 2014-01-18 00:40:00     72.97222                 1
-##  6       Aaron Gutmann 2014-02-06 06:59:00     53.70903                 1
-##  7       Aaron Stracke 2014-02-13 00:00:00     47.00000                 3
-##  8    Abagail Weissnat 2014-02-14 00:00:00     46.00000                 2
-##  9 Abagail Windler PhD 2014-02-14 00:00:00     46.00000                 1
-## 10       Abb Armstrong 2014-01-20 00:00:00     71.00000                 2
+##  1     Aaliyah Carroll 2014-03-28 00:00:00     4.229167                 1
+##  2     Aaliyah Padberg 2014-03-10 07:48:00    21.904167                 1
+##  3         Aarav Hyatt 2014-02-17 00:00:00    43.229167                 1
+##  4      Aarav Kassulke 2014-01-20 04:09:00    71.056250                 1
+##  5         Aarav Kutch 2014-01-18 00:40:00    73.201389                 1
+##  6       Aaron Gutmann 2014-02-06 06:59:00    53.938194                 1
+##  7       Aaron Stracke 2014-02-13 00:00:00    47.229167                 3
+##  8    Abagail Weissnat 2014-02-14 00:00:00    46.229167                 2
+##  9 Abagail Windler PhD 2014-02-14 00:00:00    46.229167                 1
+## 10       Abb Armstrong 2014-01-20 00:00:00    71.229167                 2
 ## # ... with 13,777 more rows, and 5 more variables: amount &lt;int&gt;,
 ## #   recency_score &lt;int&gt;, frequency_score &lt;int&gt;, monetary_score &lt;int&gt;,
 ## #   rfm_score &lt;dbl&gt;</code></pre>
@@ -145,7 +166,7 @@ rfm_result</code></pre></div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Aravind Hebbali.</p>
+  <p>Developed by Aravind Hebbali, Rsquared Academy.</p>
 </div>
 
 <div class="pkgdown">
