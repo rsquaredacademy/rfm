@@ -2,7 +2,10 @@ Package: rfm
 Type: Package
 Title: Recency, Frequency and Monetary Value Analysis in R
 Version: 0.1.0
-Authors@R: person("Aravind", "Hebbali", email = "hebbali.aravind@gmail.com", role = c("aut", "cre"))
+Authors@R: c(
+    person("Aravind", "Hebbali", email = "hebbali.aravind@gmail.com", role = c("aut", "cre")),
+    person("Rsquared", "Academy", role = c("cph", "fnd"))
+    )
 Description: Tools for performing recency, frequency and monetary value analysis.
 Depends:
     R(>= 3.2.4)
