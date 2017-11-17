@@ -1,5 +1,5 @@
 #' @importFrom magrittr extract2
-#' @importFrom ggplot2 ggplot geom_tile aes scale_fill_gradientn ggtitle xlab ylab
+#' @importFrom ggplot2 ggplot geom_tile aes scale_fill_gradientn ggtitle xlab ylab 
 #' @importFrom grDevices topo.colors
 #' @title RFM Heatmap
 #' @description Heatmap of Mean Monetary Value
@@ -67,7 +67,7 @@ rfm_bar_chart <- function(rfm_table) {
   p <- ggplot(data = data) +
     geom_bar(aes(x = frequency_score), fill = 'blue') +
     facet_grid(recency_score ~ ., switch = 'x') +
-    xlab('Frequency Score') + ylab('Record Count')
+    xlab('Frequency Score') + ylab('Record Count') 
 
   print(p)
 
