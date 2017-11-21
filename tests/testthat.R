@@ -1,4 +1,4 @@
 library(testthat)
-library(rfm)
+library(segmentr)
 
-test_check("rfm")
+test_check("segmentr")
