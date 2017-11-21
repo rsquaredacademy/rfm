@@ -11,7 +11,7 @@ vignette: >
 ## Introduction
 
 ```{r, echo=FALSE, message=FALSE}
-library(rfm)
+library(segmentr)
 ```
 
 ## RFM 
