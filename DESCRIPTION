@@ -1,12 +1,12 @@
-Package: rfm
+Package: segmentr
 Type: Package
-Title: Recency, Frequency and Monetary Value Analysis in R
+Title: Tools for Segmentation and Clustering
 Version: 0.1.0
 Authors@R: c(
     person("Aravind", "Hebbali", email = "hebbali.aravind@gmail.com", role = c("aut", "cre")),
     person("Rsquared", "Academy", role = c("cph", "fnd"))
     )
-Description: Tools for performing recency, frequency and monetary value analysis.
+Description: Tools for performing segmentation and clustering 
 Depends:
     R(>= 3.2.4)
 Imports:
@@ -24,8 +24,8 @@ Suggests:
     testthat,
     knitr,
     rmarkdown
-URL: https://rsquaredacademy.github.io/rfm/, https://github.com/rsquaredacademy/rfm
-BugReports: https://github.com/rsquaredacademy/rfm/issues
+URL: https://rsquaredacademy.github.io/segmentr/, https://github.com/rsquaredacademy/segmentr
+BugReports: https://github.com/rsquaredacademy/segmentr/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

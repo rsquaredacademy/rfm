@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-rfm
+segmentr
 ---------
 
 **Author:** [Aravind Hebbali]()<br/>
@@ -22,11 +22,11 @@ rfm
 
 ## Overview
 
-Recency, Frequency and Monetary Value Analysis in R.
+Tools for segmentation and clustering
 
 ## Installation
 
-You can install rfm from github with:
+You can install segmentr from github with:
 
 ```{r gh-installation, eval = FALSE}
 # install.packages("devtools")

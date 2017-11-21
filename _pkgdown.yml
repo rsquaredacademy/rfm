@@ -3,7 +3,7 @@ templates:
     bootswatch: cosmo
 
 navbar:
-  title: "rfm"
+  title: "segmentr"
   type: inverse
   left:
     - text: "Home"
@@ -20,7 +20,7 @@ navbar:
           href: news/index.html
   right:
    - icon: fa-github
-     href: https://github.com/rsquaredacademy/rfm
+     href: https://github.com/rsquaredacademy/segmentr
 
 home:
   links:
