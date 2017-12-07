@@ -16,7 +16,8 @@ Imports:
     magrittr,
     purrr,
     rlang (>= 0.1.2),
-    stats
+    stats,
+    tidyr
 Suggests: 
     covr,
     knitr,
