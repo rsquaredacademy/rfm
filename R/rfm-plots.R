@@ -1,5 +1,6 @@
 #' @importFrom magrittr extract2
-#' @importFrom ggplot2 ggplot geom_tile aes scale_fill_gradientn ggtitle xlab ylab 
+#' @importFrom ggplot2 ggplot geom_tile aes scale_fill_gradientn ggtitle xlab
+#' ylab theme element_text scale_y_continuous sec_axis element_blank
 #' @importFrom grDevices topo.colors
 #' @title RFM Heatmap
 #' @description Heatmap of Mean Monetary Value
@@ -7,7 +8,7 @@
 #' @return Heatmap
 #' @examples
 #' # rfm table
-#' analysis_date <- lubridate::as_datetime('2014-04-01 05:30:00', tz = 'UTC')
+#' analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
 #' rfm_result <- rfm_table(rfm_data, customer_id, order_date, revenue, analysis_date)
 #'
 #' # heat map
@@ -37,11 +38,52 @@ rfm_heatmap <- function(data) {
    scale_fill_gradientn(limits = c(llm, ulm), colours = topo.colors(9, alpha = 0.5),
                         breaks = guide_breaks,
                         name = 'Mean Monetary Value') +
-   ggtitle('RFM Heat Map') + xlab('Frequency') + ylab('Recency')
+   ggtitle('RFM Heat Map') + xlab('Frequency') + ylab('Recency') +
+    theme(
+      plot.title = element_text(hjust = 0.5)
+    )
 
  print(p)
 
 }
+
+#' @importFrom tidyr gather
+#' @importFrom ggplot2 geom_histogram labeller
+#' @title RFM Histograms
+#' @description Histograms of recency, frequency and monetary value
+#' @param rfm_table an object of class \code{rfm_table}
+#' @return Histograms
+#' @examples
+#' # rfm table
+#' analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
+#' rfm_result <- rfm_table(rfm_data, customer_id, order_date, revenue, analysis_date)
+#'
+#' # histograms
+#' rfm_histograms(rfm_result)
+#'
+#' @export
+#'
+rfm_histograms <- function(rfm_table) {
+
+  rfm_table %>%
+    use_series(rfm) %>%
+    select(recency_days, transaction_count, amount) %>%
+    gather(rfm, score) %>%
+    ggplot(aes(score)) +
+    geom_histogram(bins = 9, fill = 'blue') +
+    ylab('Count') + ggtitle('RFM Histograms') + xlab(' ') +
+    facet_grid(. ~ rfm, scales = "free_x",
+               labeller = labeller(
+                 rfm = c(amount = 'Monetary', recency_days = 'Recency',
+                         transaction_count = 'Frequency')
+               )) +
+    theme(
+      plot.title = element_text(hjust = 0.5)
+    )
+
+
+}
+
 
 
 #' @importFrom ggplot2 geom_bar facet_grid
@@ -51,7 +93,7 @@ rfm_heatmap <- function(data) {
 #' @return Bar Chart
 #' @examples
 #' # rfm table
-#' analysis_date <- lubridate::as_datetime('2014-04-01 05:30:00', tz = 'UTC')
+#' analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
 #' rfm_result <- rfm_table(rfm_data, customer_id, order_date, revenue, analysis_date)
 #'
 #' # bar chart
@@ -64,10 +106,22 @@ rfm_bar_chart <- function(rfm_table) {
   data <- rfm_table %>%
     use_series(rfm)
 
+  data$recency_score <- factor(data$recency_score, levels = c(5, 4, 3, 2, 1))
+
   p <- ggplot(data = data) +
-    geom_bar(aes(x = frequency_score), fill = 'blue') +
-    facet_grid(recency_score ~ ., switch = 'x') +
-    xlab('Frequency Score') + ylab('Record Count') 
+    geom_bar(aes(x = monetary_score), fill = 'blue') +
+    facet_grid(recency_score ~ frequency_score) +
+    scale_y_continuous(sec.axis = sec_axis(~ ., name = "Recency Score")) +
+    xlab('Monetary Score') + ylab(' ') + ggtitle('Frequency Score') +
+    theme(
+      plot.title = element_text(
+        face = 'plain', size = 11, hjust = 0.5
+      ),
+      axis.text.y  = element_blank(),
+      axis.ticks.y = element_blank()
+    )
+
+
 
   print(p)
 
@@ -80,21 +134,21 @@ rfm_bar_chart <- function(rfm_table) {
 #' @return Scatter Plot
 #' @examples
 #' # rfm table
-#' analysis_date <- lubridate::as_datetime('2014-04-01 05:30:00', tz = 'UTC')
+#' analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
 #' rfm_result <- rfm_table(rfm_data, customer_id, order_date, revenue, analysis_date)
 #'
 #' # monetary value vs recency
-#' rfm_mr_plot(rfm_result)
+#' rfm_rm_plot(rfm_result)
 #'
 #' # frequency vs monetary value
 #' rfm_fm_plot(rfm_result)
 #'
 #' # frequency vs recency
-#' rfm_fr_plot(rfm_result)
+#' rfm_rf_plot(rfm_result)
 #'
 #' @export
 #'
-rfm_mr_plot <- function(rfm_table) {
+rfm_rm_plot <- function(rfm_table) {
 
   data <- rfm_table %>%
     use_series(rfm)
@@ -102,13 +156,14 @@ rfm_mr_plot <- function(rfm_table) {
   p <- ggplot(data) +
     geom_point(aes(x = amount, y = recency_days),
                color = 'blue') +
-    xlab('Monetary') + ylab('Recency')
+    xlab('Monetary') + ylab('Recency') +
+    ggtitle('Recency vs Monetary')
 
   print(p)
 
 }
 
-#' @rdname rfm_mr_plot
+#' @rdname rfm_rm_plot
 #' @export
 #'
 rfm_fm_plot <- function(rfm_table) {
@@ -119,16 +174,17 @@ rfm_fm_plot <- function(rfm_table) {
   p <- ggplot(data) +
     geom_point(aes(x = amount, y = transaction_count),
                color = 'blue') +
-    xlab('Monetary') + ylab('Frequency')
+    xlab('Monetary') + ylab('Frequency') +
+    ggtitle('Frequency vs Monetary')
 
   print(p)
 
 }
 
-#' @rdname rfm_mr_plot
+#' @rdname rfm_rm_plot
 #' @export
 #'
-rfm_fr_plot <- function(rfm_table) {
+rfm_rf_plot <- function(rfm_table) {
 
   data <- rfm_table %>%
     use_series(rfm)
@@ -136,7 +192,8 @@ rfm_fr_plot <- function(rfm_table) {
   p <- ggplot(data) +
     geom_point(aes(x = transaction_count, y = recency_days),
                color = 'blue') +
-    xlab('Frequency') + ylab('Recency')
+    xlab('Frequency') + ylab('Recency') +
+    ggtitle('Recency vs Frequency')
 
   print(p)
 }
