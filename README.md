@@ -1,11 +1,11 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-segmentr
---------
+segmentr: Tools for segmentation and clustering <img src="hex_segmentr.png" align="right" />
+--------------------------------------------------------------------------------------------
 
-**Author:** [Aravind Hebbali]()<br/> **License:** [MIT](https://opensource.org/licenses/MIT)
+**Author:** [Aravind Hebbali](http://www.aravindhebbali.com)<br/> **License:** [MIT](https://opensource.org/licenses/MIT)
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/segmentr)](https://cran.r-project.org/package=segmentr) [![Travis-CI Build Status](https://travis-ci.org/rsquaredacademy/segmentr.svg?branch=master)](https://travis-ci.org/rsquaredacademy/segmentr) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/segmentr?branch=master&svg=true)](https://ci.appveyor.com/project/rsquaredacademy/segmentr) [![Coverage Status](https://img.shields.io/codecov/c/github/rsquaredacademy/segmentr/master.svg)](https://codecov.io/github/rsquaredacademy/segmentr?branch=master) [![](https://cranlogs.r-pkg.org/badges/grand-total/segmentr)](https://cran.r-project.org/package=segmentr) ![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/segmentr)](https://cran.r-project.org/package=segmentr) [![Travis-CI Build Status](https://travis-ci.org/rsquaredacademy/segmentr.svg?branch=master)](https://travis-ci.org/rsquaredacademy/segmentr) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/segmentr?branch=master&svg=true)](https://ci.appveyor.com/project/rsquaredacademy/segmentr) [![](https://cranlogs.r-pkg.org/badges/grand-total/segmentr)](https://cran.r-project.org/package=segmentr)
 
 Overview
 --------
@@ -19,9 +19,14 @@ You can install segmentr from github with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("rsquaredacademy/rfm")
+devtools::install_github("rsquaredacademy/segmentr")
 ```
 
+<style>
+.co {
+  font-size: 11px;
+}
+</style>
 Usage
 -----
 
@@ -29,25 +34,23 @@ RFM Table
 ---------
 
 ``` r
-analysis_date <- lubridate::as_datetime('2014-04-01 05:30:00', tz = 'UTC')
+analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
 rfm_result <- rfm_table(rfm_data, customer_id, order_date, revenue, analysis_date)
 rfm_result
-#> # A tibble: 13,787 x 9
-#>            customer_id    date_most_recent recency_days transaction_count
-#>                  <chr>              <dttm>        <dbl>             <int>
-#>  1     Aaliyah Carroll 2014-03-28 00:00:00     4.229167                 1
-#>  2     Aaliyah Padberg 2014-03-10 07:48:00    21.904167                 1
-#>  3         Aarav Hyatt 2014-02-17 00:00:00    43.229167                 1
-#>  4      Aarav Kassulke 2014-01-20 04:09:00    71.056250                 1
-#>  5         Aarav Kutch 2014-01-18 00:40:00    73.201389                 1
-#>  6       Aaron Gutmann 2014-02-06 06:59:00    53.938194                 1
-#>  7       Aaron Stracke 2014-02-13 00:00:00    47.229167                 3
-#>  8    Abagail Weissnat 2014-02-14 00:00:00    46.229167                 2
-#>  9 Abagail Windler PhD 2014-02-14 00:00:00    46.229167                 1
-#> 10       Abb Armstrong 2014-01-20 00:00:00    71.229167                 2
-#> # ... with 13,777 more rows, and 5 more variables: amount <int>,
-#> #   recency_score <int>, frequency_score <int>, monetary_score <int>,
-#> #   rfm_score <dbl>
+#> # A tibble: 995 x 9
+#>           customer_id date_most_recent recency_days transaction_count amount recency_score frequency_score monetary_score rfm_score
+#>                 <chr>           <date>        <dbl>             <dbl>  <dbl>         <int>           <int>          <int>     <dbl>
+#>  1 Abbey O'Reilly DVM       2006-06-09          205                 6    472             3               4              3       343
+#>  2         Add Senger       2006-08-13          140                 3    340             4               1              2       412
+#>  3     Aden Lesch Sr.       2006-06-20          194                 4    405             3               2              3       323
+#>  4     Admiral Senger       2006-08-21          132                 5    448             4               3              3       433
+#>  5     Agness O'Keefe       2006-10-02           90                 9    843             5               5              5       555
+#>  6      Aileen Barton       2006-10-08           84                 9    763             5               5              5       555
+#>  7     Ailene Hermann       2006-03-25          281                 8    699             3               5              5       355
+#>  8  Aiyanna Bruen PhD       2006-04-29          246                 4    157             3               2              1       321
+#>  9    Ala Schmidt DDS       2006-01-16          349                 3    363             2               1              2       212
+#> 10      Alannah Borer       2005-04-21          619                 4    196             1               2              1       121
+#> # ... with 985 more rows
 ```
 
 Heat Map
@@ -57,27 +60,36 @@ Heat Map
 rfm_heatmap(rfm_result)
 ```
 
-![](README-heatmap-1.png)
+<img src="README-heatmap-1.png" style="display: block; margin: auto;" />
 
-Bar Chart
----------
+Bins Count
+----------
 
 ``` r
 rfm_bar_chart(rfm_result)
 ```
 
-![](README-barchart-1.png)
+<img src="README-barchart-1.png" style="display: block; margin: auto;" />
+
+Histogram
+---------
+
+``` r
+rfm_histograms(rfm_result)
+```
+
+<img src="README-rfmhist-1.png" style="display: block; margin: auto;" />
 
 Scatter Plots
 -------------
 
-### Monetary Value vs Recency
+### Recency vs Monetary Value
 
 ``` r
-rfm_mr_plot(rfm_result)
+rfm_rm_plot(rfm_result)
 ```
 
-![](README-mr-1.png)
+<img src="README-mr-1.png" style="display: block; margin: auto;" />
 
 ### Frequency vs Monetary Value
 
@@ -85,14 +97,14 @@ rfm_mr_plot(rfm_result)
 rfm_fm_plot(rfm_result)
 ```
 
-![](README-fm-1.png)
+<img src="README-fm-1.png" style="display: block; margin: auto;" />
 
-### Frequency vs Recency
+### Recency vs Frequency
 
 ``` r
-rfm_fr_plot(rfm_result)
+rfm_rf_plot(rfm_result)
 ```
 
-![](README-fr-1.png)
+<img src="README-fr-1.png" style="display: block; margin: auto;" />
 
 Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.

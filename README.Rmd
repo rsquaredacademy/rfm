@@ -12,13 +12,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-segmentr
+segmentr: Tools for segmentation and clustering <img src="hex_segmentr.png" align="right" />  
 ---------
 
-**Author:** [Aravind Hebbali]()<br/>
+**Author:** [Aravind Hebbali](http://www.aravindhebbali.com)<br/>
 **License:** [MIT](https://opensource.org/licenses/MIT)
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/rfm)](https://cran.r-project.org/package=rfm) [![Travis-CI Build Status](https://travis-ci.org/rsquaredacademy/rfm.svg?branch=master)](https://travis-ci.org/rsquaredacademy/rfm) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/rfm?branch=master&svg=true)](https://ci.appveyor.com/project/rsquaredacademy/rfm) [![](https://cranlogs.r-pkg.org/badges/grand-total/rfm)](https://cran.r-project.org/package=rfm)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/segmentr)](https://cran.r-project.org/package=segmentr) [![Travis-CI Build Status](https://travis-ci.org/rsquaredacademy/segmentr.svg?branch=master)](https://travis-ci.org/rsquaredacademy/segmentr) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/segmentr?branch=master&svg=true)](https://ci.appveyor.com/project/rsquaredacademy/segmentr) [![](https://cranlogs.r-pkg.org/badges/grand-total/segmentr)](https://cran.r-project.org/package=segmentr)
 
 ## Overview
 
@@ -30,53 +30,67 @@ You can install segmentr from github with:
 
 ```{r gh-installation, eval = FALSE}
 # install.packages("devtools")
-devtools::install_github("rsquaredacademy/rfm")
+devtools::install_github("rsquaredacademy/segmentr")
 ```
 
 ```{r, echo=FALSE, message=FALSE}
-library(rfm)
+library(segmentr)
+options(tibble.width = Inf)
 ```
+
+<style>
+.co {
+  font-size: 11px;
+}
+</style>
 
 ## Usage
 
 ## RFM Table
 
 ```{r rfm_table}
-analysis_date <- lubridate::as_datetime('2014-04-01 05:30:00', tz = 'UTC')
+analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
 rfm_result <- rfm_table(rfm_data, customer_id, order_date, revenue, analysis_date)
 rfm_result
 ```
 
 ## Heat Map
 
-```{r heatmap}
+```{r heatmap, fig.align='center', fig.width=7, fig.height=7}
 rfm_heatmap(rfm_result)
 ```
 
-## Bar Chart
+## Bins Count
 
-```{r barchart}
+```{r barchart, fig.align='center', fig.width=7, fig.height=7}
 rfm_bar_chart(rfm_result)
 ```
 
+## Histogram
+
+```{r rfmhist, fig.align='center', fig.width=7, fig.height=7}
+rfm_histograms(rfm_result)
+```
+
+
 ## Scatter Plots
 
-### Monetary Value vs Recency
+### Recency vs Monetary Value  
 
-```{r mr}
-rfm_mr_plot(rfm_result)
+```{r mr, fig.align='center', fig.width=7, fig.height=7}
+rfm_rm_plot(rfm_result)
 ```
 
 ### Frequency vs Monetary Value
 
-```{r fm}
+```{r fm, fig.align='center', fig.width=7, fig.height=7}
 rfm_fm_plot(rfm_result)
 ```
 
-### Frequency vs Recency
+### Recency vs Frequency 
 
-```{r fr}
-rfm_fr_plot(rfm_result)
+```{r fr, fig.align='center', fig.width=7, fig.height=7}
+rfm_rf_plot(rfm_result)
 ```
 
 Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
