@@ -2,28 +2,26 @@ Package: segmentr
 Type: Package
 Title: Tools for Segmentation and Clustering
 Version: 0.1.0
-Authors@R: c(
-    person("Aravind", "Hebbali", email = "hebbali.aravind@gmail.com", role = c("aut", "cre")),
-    person("Rsquared", "Academy", role = c("cph", "fnd"))
-    )
-Description: Tools for performing segmentation and clustering 
+Authors@R: person("Aravind", "Hebbali", email = "hebbali.aravind@gmail.com", role = c("aut", "cre"))
+Description: Tools for segmentation and clustering 
 Depends:
     R(>= 3.2.4)
-Imports:
+Imports: 
+    assertthat,
     dplyr,
+    forcats,
+    ggplot2,
+    grDevices,
     lubridate,
     magrittr,
-    stats,
     purrr,
-    forcats,
-    assertthat,
-    ggplot2,
-    grDevices
+    rlang (>= 0.1.2),
+    stats
 Suggests: 
     covr,
-    testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat
 URL: https://rsquaredacademy.github.io/segmentr/, https://github.com/rsquaredacademy/segmentr
 BugReports: https://github.com/rsquaredacademy/segmentr/issues
 License: MIT + file LICENSE
