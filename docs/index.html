@@ -83,11 +83,12 @@
     
 <div class="contents">
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-<div id="segmentr" class="section level2">
+<div id="segmentr-tools-for-segmentation-and-clustering" class="section level2">
 <h2 class="hasAnchor">
-<a href="#segmentr" class="anchor"> </a>segmentr</h2>
-<p><strong>Author:</strong> <a href="">Aravind Hebbali</a><br><strong>License:</strong> <a href="https://opensource.org/licenses/MIT">MIT</a></p>
-<p><a href="https://cran.r-project.org/package=segmentr"><img src="http://www.r-pkg.org/badges/version/segmentr" alt="CRAN_Status_Badge"></a> <a href="https://travis-ci.org/rsquaredacademy/segmentr"><img src="https://travis-ci.org/rsquaredacademy/segmentr.svg?branch=master" alt="Travis-CI Build Status"></a> <a href="https://ci.appveyor.com/project/rsquaredacademy/segmentr"><img src="https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/segmentr?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a> <a href="https://codecov.io/github/rsquaredacademy/segmentr?branch=master"><img src="https://img.shields.io/codecov/c/github/rsquaredacademy/segmentr/master.svg"></a> <a href="https://cran.r-project.org/package=segmentr"><img src="https://cranlogs.r-pkg.org/badges/grand-total/segmentr"></a> <a href=""><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg"></a></p>
+<a href="#segmentr-tools-for-segmentation-and-clustering" class="anchor"> </a>segmentr: Tools for segmentation and clustering <img src="hex_segmentr.png" align="right">
+</h2>
+<p><strong>Author:</strong> <a href="http://www.aravindhebbali.com">Aravind Hebbali</a><br><strong>License:</strong> <a href="https://opensource.org/licenses/MIT">MIT</a></p>
+<p><a href="https://cran.r-project.org/package=segmentr"><img src="http://www.r-pkg.org/badges/version/segmentr" alt="CRAN_Status_Badge"></a> <a href="https://travis-ci.org/rsquaredacademy/segmentr"><img src="https://travis-ci.org/rsquaredacademy/segmentr.svg?branch=master" alt="Travis-CI Build Status"></a> <a href="https://ci.appveyor.com/project/rsquaredacademy/segmentr"><img src="https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/segmentr?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a> <a href="https://cran.r-project.org/package=segmentr"><img src="https://cranlogs.r-pkg.org/badges/grand-total/segmentr"></a></p>
 </div>
 <div id="overview" class="section level2">
 <h2 class="hasAnchor">
@@ -99,7 +100,12 @@
 <a href="#installation" class="anchor"> </a>Installation</h2>
 <p>You can install segmentr from github with:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("devtools")</span>
-devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"rsquaredacademy/rfm"</span>)</code></pre></div>
+devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"rsquaredacademy/segmentr"</span>)</code></pre></div>
+<style>
+.co {
+  font-size: 11px;
+}
+</style>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
@@ -108,58 +114,62 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 <div id="rfm-table" class="section level2">
 <h2 class="hasAnchor">
 <a href="#rfm-table" class="anchor"> </a>RFM Table</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">analysis_date &lt;-<span class="st"> </span>lubridate<span class="op">::</span><span class="kw">as_datetime</span>(<span class="st">'2014-04-01 05:30:00'</span>, <span class="dt">tz =</span> <span class="st">'UTC'</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">analysis_date &lt;-<span class="st"> </span>lubridate<span class="op">::</span><span class="kw">as_date</span>(<span class="st">'2006-12-31'</span>, <span class="dt">tz =</span> <span class="st">'UTC'</span>)
 rfm_result &lt;-<span class="st"> </span><span class="kw"><a href="reference/rfm_table.html">rfm_table</a></span>(rfm_data, customer_id, order_date, revenue, analysis_date)
 rfm_result
-<span class="co">#&gt; # A tibble: 13,787 x 9</span>
-<span class="co">#&gt;            customer_id    date_most_recent recency_days transaction_count</span>
-<span class="co">#&gt;                  &lt;chr&gt;              &lt;dttm&gt;        &lt;dbl&gt;             &lt;int&gt;</span>
-<span class="co">#&gt;  1     Aaliyah Carroll 2014-03-28 00:00:00     4.229167                 1</span>
-<span class="co">#&gt;  2     Aaliyah Padberg 2014-03-10 07:48:00    21.904167                 1</span>
-<span class="co">#&gt;  3         Aarav Hyatt 2014-02-17 00:00:00    43.229167                 1</span>
-<span class="co">#&gt;  4      Aarav Kassulke 2014-01-20 04:09:00    71.056250                 1</span>
-<span class="co">#&gt;  5         Aarav Kutch 2014-01-18 00:40:00    73.201389                 1</span>
-<span class="co">#&gt;  6       Aaron Gutmann 2014-02-06 06:59:00    53.938194                 1</span>
-<span class="co">#&gt;  7       Aaron Stracke 2014-02-13 00:00:00    47.229167                 3</span>
-<span class="co">#&gt;  8    Abagail Weissnat 2014-02-14 00:00:00    46.229167                 2</span>
-<span class="co">#&gt;  9 Abagail Windler PhD 2014-02-14 00:00:00    46.229167                 1</span>
-<span class="co">#&gt; 10       Abb Armstrong 2014-01-20 00:00:00    71.229167                 2</span>
-<span class="co">#&gt; # ... with 13,777 more rows, and 5 more variables: amount &lt;int&gt;,</span>
-<span class="co">#&gt; #   recency_score &lt;int&gt;, frequency_score &lt;int&gt;, monetary_score &lt;int&gt;,</span>
-<span class="co">#&gt; #   rfm_score &lt;dbl&gt;</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 995 x 9</span>
+<span class="co">#&gt;           customer_id date_most_recent recency_days transaction_count amount recency_score frequency_score monetary_score rfm_score</span>
+<span class="co">#&gt;                 &lt;chr&gt;           &lt;date&gt;        &lt;dbl&gt;             &lt;dbl&gt;  &lt;dbl&gt;         &lt;int&gt;           &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 Abbey O'Reilly DVM       2006-06-09          205                 6    472             3               4              3       343</span>
+<span class="co">#&gt;  2         Add Senger       2006-08-13          140                 3    340             4               1              2       412</span>
+<span class="co">#&gt;  3     Aden Lesch Sr.       2006-06-20          194                 4    405             3               2              3       323</span>
+<span class="co">#&gt;  4     Admiral Senger       2006-08-21          132                 5    448             4               3              3       433</span>
+<span class="co">#&gt;  5     Agness O'Keefe       2006-10-02           90                 9    843             5               5              5       555</span>
+<span class="co">#&gt;  6      Aileen Barton       2006-10-08           84                 9    763             5               5              5       555</span>
+<span class="co">#&gt;  7     Ailene Hermann       2006-03-25          281                 8    699             3               5              5       355</span>
+<span class="co">#&gt;  8  Aiyanna Bruen PhD       2006-04-29          246                 4    157             3               2              1       321</span>
+<span class="co">#&gt;  9    Ala Schmidt DDS       2006-01-16          349                 3    363             2               1              2       212</span>
+<span class="co">#&gt; 10      Alannah Borer       2005-04-21          619                 4    196             1               2              1       121</span>
+<span class="co">#&gt; # ... with 985 more rows</span></code></pre></div>
 </div>
 <div id="heat-map" class="section level2">
 <h2 class="hasAnchor">
 <a href="#heat-map" class="anchor"> </a>Heat Map</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/rfm_heatmap.html">rfm_heatmap</a></span>(rfm_result)</code></pre></div>
-<p><img src="README-heatmap-1.png" width="672"></p>
+<p><img src="README-heatmap-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
-<div id="bar-chart" class="section level2">
+<div id="bins-count" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bar-chart" class="anchor"> </a>Bar Chart</h2>
+<a href="#bins-count" class="anchor"> </a>Bins Count</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/rfm_bar_chart.html">rfm_bar_chart</a></span>(rfm_result)</code></pre></div>
-<p><img src="README-barchart-1.png" width="672"></p>
+<p><img src="README-barchart-1.png" width="672" style="display: block; margin: auto;"></p>
+</div>
+<div id="histogram" class="section level2">
+<h2 class="hasAnchor">
+<a href="#histogram" class="anchor"> </a>Histogram</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/rfm_histograms.html">rfm_histograms</a></span>(rfm_result)</code></pre></div>
+<p><img src="README-rfmhist-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 <div id="scatter-plots" class="section level2">
 <h2 class="hasAnchor">
 <a href="#scatter-plots" class="anchor"> </a>Scatter Plots</h2>
-<div id="monetary-value-vs-recency" class="section level3">
+<div id="recency-vs-monetary-value" class="section level3">
 <h3 class="hasAnchor">
-<a href="#monetary-value-vs-recency" class="anchor"> </a>Monetary Value vs Recency</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/rfm_mr_plot.html">rfm_mr_plot</a></span>(rfm_result)</code></pre></div>
-<p><img src="README-mr-1.png" width="672"></p>
+<a href="#recency-vs-monetary-value" class="anchor"> </a>Recency vs Monetary Value</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/rfm_rm_plot.html">rfm_rm_plot</a></span>(rfm_result)</code></pre></div>
+<p><img src="README-mr-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 <div id="frequency-vs-monetary-value" class="section level3">
 <h3 class="hasAnchor">
 <a href="#frequency-vs-monetary-value" class="anchor"> </a>Frequency vs Monetary Value</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/rfm_mr_plot.html">rfm_fm_plot</a></span>(rfm_result)</code></pre></div>
-<p><img src="README-fm-1.png" width="672"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/rfm_rm_plot.html">rfm_fm_plot</a></span>(rfm_result)</code></pre></div>
+<p><img src="README-fm-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
-<div id="frequency-vs-recency" class="section level3">
+<div id="recency-vs-frequency" class="section level3">
 <h3 class="hasAnchor">
-<a href="#frequency-vs-recency" class="anchor"> </a>Frequency vs Recency</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/rfm_mr_plot.html">rfm_fr_plot</a></span>(rfm_result)</code></pre></div>
-<p><img src="README-fr-1.png" width="672"></p>
+<a href="#recency-vs-frequency" class="anchor"> </a>Recency vs Frequency</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/rfm_rm_plot.html">rfm_rf_plot</a></span>(rfm_result)</code></pre></div>
+<p><img src="README-fr-1.png" width="672" style="display: block; margin: auto;"></p>
 <p>Please note that this project is released with a <a href="CONDUCT.md">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</p>
 </div>
 </div>
@@ -180,8 +190,8 @@ rfm_result
 <p><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE">LICENSE</a></p>
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li> <a href="" target="_balnk">Aravind Hebbali</a> <br><small class="roles"> Author, maintainer </small> </li>
-<li> <a href="http://​www.rsquaredacademy.com" target="_balnk">Rsquared Academy</a> <br><small class="roles"> Copyright holder, funder </small> </li>
+<li>Aravind Hebbali <br><small class="roles"> Author, maintainer </small> </li>
+<li>Rsquared Academy <br><small class="roles"> Copyright holder, funder </small> </li>
 </ul>
 </div>
 

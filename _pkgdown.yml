@@ -35,9 +35,10 @@ reference:
   - rfm_table
   - rfm_heatmap
   - rfm_bar_chart
+  - rfm_histograms
   - rfm_fm_plot
-  - rfm_fr_plot
-  - rfm_mr_plot
+  - rfm_rf_plot
+  - rfm_rm_plot
 
 - title: Data
   contents:
