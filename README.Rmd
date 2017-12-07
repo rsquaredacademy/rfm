@@ -38,12 +38,6 @@ library(segmentr)
 options(tibble.width = Inf)
 ```
 
-<style>
-.co {
-  font-size: 11px;
-}
-</style>
-
 ## Usage
 
 ## RFM Table

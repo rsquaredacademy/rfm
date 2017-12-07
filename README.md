@@ -22,11 +22,6 @@ You can install segmentr from github with:
 devtools::install_github("rsquaredacademy/segmentr")
 ```
 
-<style>
-.co {
-  font-size: 11px;
-}
-</style>
 Usage
 -----
 
