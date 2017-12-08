@@ -66,6 +66,12 @@ rfm_bar_chart(rfm_result)
 rfm_histograms(rfm_result)
 ```
 
+## Customers by Orders
+
+```{r rfmorders, fig.align='center', fig.width=7, fig.height=7}
+rfm_order_dist(rfm_result)
+```
+
 
 ## Scatter Plots
 

@@ -75,6 +75,15 @@ rfm_histograms(rfm_result)
 
 <img src="README-rfmhist-1.png" style="display: block; margin: auto;" />
 
+Customers by Orders
+-------------------
+
+``` r
+rfm_order_dist(rfm_result)
+```
+
+<img src="README-rfmorders-1.png" style="display: block; margin: auto;" />
+
 Scatter Plots
 -------------
 

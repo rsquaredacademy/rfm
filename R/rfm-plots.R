@@ -121,9 +121,51 @@ rfm_bar_chart <- function(rfm_table) {
       axis.ticks.y = element_blank()
     )
 
-
-
   print(p)
+
+}
+
+
+#' @importFrom dplyr count
+#' @importFrom magrittr multiply_by
+#' @importFrom ggplot2 ylim geom_text position_dodge
+#' @title Customers by Orders
+#' @description Number of customers by number of orders
+#' @param rfm_table an object of class \code{rfm_table}
+#' @return Bar Chart
+#' @examples
+#' # rfm table
+#' analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
+#' rfm_result <- rfm_table(rfm_data, customer_id, order_date, revenue, analysis_date)
+#'
+#' # bar chart
+#' rfm_order_dist(rfm_result)
+#'
+#' @export
+#'
+rfm_order_dist <- function(rfm_table) {
+
+  data <- rfm_result %>%
+    use_series(rfm) %>%
+    count(transaction_count)
+
+  ylim_max <- data %>%
+    pull(n) %>%
+    max %>%
+    multiply_by(1.1) %>%
+    ceiling
+
+  data %>%
+    ggplot(aes(x = transaction_count, y = n)) +
+    geom_bar(stat = "identity", fill = 'blue') +
+    xlab('Orders') + ylab('Customers') + ylim(0, ylim_max) +
+    ggtitle('Customers by Orders') +
+    geom_text(
+      aes(label = n, y = n + 3), position = position_dodge(0.9), vjust = 0
+    ) +
+    theme(
+      plot.title = element_text(hjust = 0.5)
+    )
 
 }
 
