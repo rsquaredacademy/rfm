@@ -1,33 +1,35 @@
-Package: segmentr
 Type: Package
+Package: segmentr
 Title: Tools for Segmentation and Clustering
 Version: 0.1.0
 Authors@R: person("Aravind", "Hebbali", email = "hebbali.aravind@gmail.com", role = c("aut", "cre"))
 Description: Tools for segmentation and clustering 
-Depends:
-    R(>= 3.2.4)
-Imports: 
-    assertthat,
-    dplyr,
-    forcats,
-    ggplot2,
-    grDevices,
-    lubridate,
-    magrittr,
-    purrr,
-    rlang (>= 0.1.2),
-    stats,
-    tidyr
-Suggests: 
-    covr,
-    kableExtra,
-    knitr,
-    rmarkdown,
-    testthat
+License: MIT + file LICENSE
 URL: https://rsquaredacademy.github.io/segmentr/, https://github.com/rsquaredacademy/segmentr
 BugReports: https://github.com/rsquaredacademy/segmentr/issues
-License: MIT + file LICENSE
+Depends: 
+    R (>= 3.2.4)
+Imports: 
+    assertthat (>= 0.2.0),
+    dplyr (>= 0.7.4),
+    forcats (>= 0.2.0),
+    ggplot2 (>= 2.2.1),
+    grDevices (>= 3.4.3),
+    lubridate (>= 1.7.1),
+    magrittr (>= 1.5),
+    purrr (>= 0.2.4),
+    rlang (>= 0.1.2),
+    stats (>= 3.4.3),
+    tidyr (>= 0.7.2)
+Suggests: 
+    covr (>= 3.0.0),
+    DT (>= 0.1),
+    kableExtra (>= 0.6.1),
+    knitr (>= 1.17),
+    rmarkdown (>= 1.8),
+    testthat (>= 1.0.2.9000),
+    RColorBrewer
+VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
-VignetteBuilder: knitr
 RoxygenNote: 6.0.1
