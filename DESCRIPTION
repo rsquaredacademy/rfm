@@ -10,25 +10,25 @@ BugReports: https://github.com/rsquaredacademy/segmentr/issues
 Depends: 
     R (>= 3.2.4)
 Imports: 
-    assertthat (>= 0.2.0),
-    dplyr (>= 0.7.4),
-    forcats (>= 0.2.0),
-    ggplot2 (>= 2.2.1),
-    grDevices (>= 3.4.3),
-    lubridate (>= 1.7.1),
-    magrittr (>= 1.5),
-    purrr (>= 0.2.4),
-    rlang (>= 0.1.2),
-    stats (>= 3.4.3),
-    tidyr (>= 0.7.2)
+    assertthat,
+    dplyr,
+    forcats,
+    ggplot2,
+    grDevices,
+    lubridate,
+    magrittr,
+    purrr,
+    rlang,
+    stats,
+    tidyr
 Suggests: 
-    covr (>= 3.0.0),
-    DT (>= 0.1),
-    kableExtra (>= 0.6.1),
-    knitr (>= 1.17),
-    rmarkdown (>= 1.8),
-    testthat (>= 1.0.2.9000),
-    RColorBrewer
+    covr,
+    DT,
+    kableExtra,
+    knitr,
+    RColorBrewer,
+    rmarkdown,
+    testthat
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
