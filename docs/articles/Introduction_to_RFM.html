@@ -39,7 +39,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/Introduction_to_RFM.html">Intro</a>
+      <a href="../articles/Introduction_to_RFM.html">Introduction</a>
+    </li>
+    <li>
+      <a href="../articles/case-study.html">Case Study</a>
     </li>
   </ul>
 </li>
@@ -79,8 +82,9 @@
   <div class="col-md-9">
     <div class="page-header toc-ignore">
       <h1>Introduction to RFM</h1>
+                        <h4 class="author">Aravind Hebbali</h4>
             
-            <h4 class="date">2017-12-07</h4>
+            <h4 class="date">2017-12-09</h4>
           </div>
 
     
@@ -89,10 +93,50 @@
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <html><body><a href="#introduction" class="anchor"> </a></body></html>Introduction</h2>
+<p><strong>RFM</strong> (recency, frequency, monetary) analysis is a behavior based technique used to segment customers by examining their transaction history such as</p>
+<ul>
+<li>how recently a customer has purchased (recency)</li>
+<li>how often they purchase (frequency)</li>
+<li>how much the customer spends (monetary)</li>
+</ul>
+<p>It is based on the marketing axiom that <strong>80% of your business comes from 20% of your customers</strong>. RFM helps to identify customers who are more likely to respond to promotions by segmenting them into various categories.</p>
 </div>
-<div id="rfm" class="section level2">
+<div id="data" class="section level2">
 <h2 class="hasAnchor">
-<html><body><a href="#rfm" class="anchor"> </a></body></html>RFM</h2>
+<html><body><a href="#data" class="anchor"> </a></body></html>Data</h2>
+<p>To calculate the RFM score for each customer we need transaction data for each customer which should include the following</p>
+<ul>
+<li>a unique customer id</li>
+<li>date of transaction/order</li>
+<li>transaction/order amount</li>
+</ul>
+<p><code>segmentr</code> includes a sample data set <code>rfm_data</code> which includes the above details:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rfm_data</code></pre></div>
+<pre><code>## # A tibble: 4,906 x 3
+##            customer_id order_date revenue
+##                  &lt;chr&gt;     &lt;date&gt;   &lt;dbl&gt;
+##  1 Mr. Brion Stark Sr. 2004-12-20      32
+##  2      Ethyl Botsford 2005-05-02      36
+##  3      Hosteen Jacobi 2004-03-06     116
+##  4       Mr. Edw Frami 2006-03-15      99
+##  5         Josef Lemke 2006-08-14      76
+##  6    Julisa Halvorson 2005-05-28      56
+##  7    Judyth Lueilwitz 2005-03-09     108
+##  8   Mr. Mekhi Goyette 2005-09-23     183
+##  9   Hansford Moen PhD 2005-09-07      30
+## 10       Fount Flatley 2006-04-12      13
+## # ... with 4,896 more rows</code></pre>
+</div>
+<div id="rfm-score" class="section level2">
+<h2 class="hasAnchor">
+<html><body><a href="#rfm-score" class="anchor"> </a></body></html>RFM Score</h2>
+<ul>
+<li><p>customers are assigned a recency score based on date of most recent purchase or time interval since most recent purchase. This score is based on a simple ranking of recency values into a small number of categories. For example, if you use five categories, the customers with the most recent purchase dates receive a recency ranking of 5, and those with purchase dates furthest in the past receive a recency ranking of 1.</p></li>
+<li><p>in a similar fashion, customers are then assigned a frequency ranking, with higher values representing a higher frequency of purchases. For example, in a five category ranking scheme, customers who purchase most often receive a frequency ranking of 5.</p></li>
+<li><p>finally, customers are ranked by monetary value, with the highest monetary values receiving the highest ranking. Continuing the five-category example, customers who have spent the most would receive a monetary ranking of 5.</p></li>
+</ul>
+<p>The result is four scores for each customer: recency, frequency, monetary, and combined RFM score, which is simply the three individual scores concatenated into a single value. The â€œbestâ€ customers (those most likely to respond to an offer) are those with the highest combined RFM scores. For example, in a five-category ranking, there is a total of 125 possible combined RFM scores, and the highest combined RFM score is 555.</p>
+<p>Use <code><a href="../reference/rfm_table.html">rfm_table()</a></code> to generate the scores for each customer.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">analysis_date &lt;-<span class="st"> </span>lubridate<span class="op">::</span><span class="kw">as_date</span>(<span class="st">'2006-12-31'</span>, <span class="dt">tz =</span> <span class="st">'UTC'</span>)
 rfm_result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rfm_table.html">rfm_table</a></span>(rfm_data, customer_id, order_date, revenue, analysis_date)
 rfm_result </code></pre></div>
@@ -422,24 +466,42 @@ Alannah Borer
 <div id="heat-map" class="section level3">
 <h3 class="hasAnchor">
 <html><body><a href="#heat-map" class="anchor"> </a></body></html>Heat Map</h3>
+<p>The heat map of mean monetary distribution shows the average monetary value for categories defined by recency and frequency scores. Darker areas indicate a higher average monetary value.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/rfm_heatmap.html">rfm_heatmap</a></span>(rfm_result)</code></pre></div>
-<p><img src="Introduction_to_RFM_files/figure-html/heatmap-1.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="Introduction_to_RFM_files/figure-html/heatmap-1.png" width="768" style="display: block; margin: auto;"></p>
 </div>
 <div id="bar-chart" class="section level3">
 <h3 class="hasAnchor">
 <html><body><a href="#bar-chart" class="anchor"> </a></body></html>Bar Chart</h3>
+<p>The chart of bin counts displays the bin distribution for the selected binning method. Each bar represents the number of cases that will be assigned each combined RFM score.ï®</p>
+<ul>
+<li><p>Although you typically want a fairly even distribution, with all (or most) bars of roughly the same height, a certain amount of variance should be expected when using the default binning method that assigns tied values to the same bin.</p></li>
+<li><p>Extreme fluctuations in bin distribution and/or many empty bins may indicate that you should try another binning method (fewer bins and/or random assignment of ties) or reconsider the suitability of RFM analysis.</p></li>
+</ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/rfm_bar_chart.html">rfm_bar_chart</a></span>(rfm_result)</code></pre></div>
-<p><img src="Introduction_to_RFM_files/figure-html/barchart-1.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="Introduction_to_RFM_files/figure-html/barchart-1.png" width="768" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div id="histogram" class="section level2">
 <h2 class="hasAnchor">
 <html><body><a href="#histogram" class="anchor"> </a></body></html>Histogram</h2>
+<p>The histograms show the relative distribution of values for the three variables used to calculate recency, frequency, and monetary scores. It is not unusual for these histograms to indicate somewhat skewed distributions rather than a normal or symmetrical distribution.</p>
+<p>The horizontal axis of each histogram is always ordered from low values on the left to high values on the right. With recency, however, the interpretation of the chart depends on the type of recency measure: date or time interval. For dates, the bars on the left represent values further in the past (a less recent date has a lower value than a more recent date). For time intervals, the bars on the left represent more recent values (the smaller the time interval, the more recent the transaction).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/rfm_histograms.html">rfm_histograms</a></span>(rfm_result)</code></pre></div>
-<p><img src="Introduction_to_RFM_files/figure-html/rfmhist-1.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="Introduction_to_RFM_files/figure-html/rfmhist-1.png" width="768" style="display: block; margin: auto;"></p>
+</div>
+<div id="customers-by-orders" class="section level2">
+<h2 class="hasAnchor">
+<html><body><a href="#customers-by-orders" class="anchor"> </a></body></html>Customers by Orders</h2>
+<p>Visualize the distribution of customers across orders.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/rfm_order_dist.html">rfm_order_dist</a></span>(rfm_result)</code></pre></div>
+<p><img src="Introduction_to_RFM_files/figure-html/rfmorders-1.png" width="768" style="display: block; margin: auto;"></p>
 <div id="scatter-plots" class="section level3">
 <h3 class="hasAnchor">
 <html><body><a href="#scatter-plots" class="anchor"> </a></body></html>Scatter Plots</h3>
+<p>These scatterplots show the relationships between the three variables used to calculate recency, frequency, and monetary scores.</p>
+<p>Itâ€™s common to see noticeable linear groupings of points on the frequency scale, since frequency often represents a relatively small range of discrete values. For example, if the total number of transactions doesnâ€™t exceed 15, then there are only 15 possible frequency values (unless you count fractional transactions), whereas there could by hundreds of possible recency values and thousands of monetary values.</p>
+<p>The interpretation of the recency axis depends on the type of recency measure: date or time interval. For dates, points closer to the origin represent dates further in the past. For time intervals, points closer to the origin represent more recent values.</p>
 <div id="recency-vs-monetary-value" class="section level4">
 <h4 class="hasAnchor">
 <html><body><a href="#recency-vs-monetary-value" class="anchor"> </a></body></html>Recency vs Monetary Value</h4>
@@ -468,8 +530,10 @@ Alannah Borer
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#introduction">Introduction</a></li>
-      <li><a href="#rfm">RFM</a></li>
+      <li><a href="#data">Data</a></li>
+      <li><a href="#rfm-score">RFM Score</a></li>
       <li><a href="#histogram">Histogram</a></li>
+      <li><a href="#customers-by-orders">Customers by Orders</a></li>
       </ul>
 </div>
       </div>
@@ -478,7 +542,7 @@ Alannah Borer
 
 
       <footer><div class="copyright">
-  <p>Developed by Aravind Hebbali, Rsquared Academy.</p>
+  <p>Developed by Aravind Hebbali.</p>
 </div>
 
 <div class="pkgdown">
