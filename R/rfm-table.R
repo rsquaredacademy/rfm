@@ -29,36 +29,39 @@
 #'
 rfm_table <- function(data = NULL, customer_id = NULL, order_date = NULL,
                       revenue = NULL, analysis_date = NULL, recency_bins = 5,
-                      frequency_bins = 5, monetary_bins = 5, ...) UseMethod('rfm_table')
+                      frequency_bins = 5, monetary_bins = 5, ...) UseMethod("rfm_table")
 
 #' @export
 #'
 rfm_table.default <- function(data = NULL, customer_id = NULL, order_date = NULL,
-                      revenue = NULL, analysis_date = NULL, recency_bins = 5,
-                      frequency_bins = 5, monetary_bins = 5, ...) {
-
-  cust_id  <- enquo(customer_id)
-  odate    <- enquo(order_date)
+                              revenue = NULL, analysis_date = NULL, recency_bins = 5,
+                              frequency_bins = 5, monetary_bins = 5, ...) {
+  cust_id <- enquo(customer_id)
+  odate <- enquo(order_date)
   revenues <- enquo(revenue)
 
   result <- data %>%
-    select(!!cust_id, !!odate, !!revenues) %>%
-    group_by(!!cust_id) %>%
-    summarise(date_most_recent = max(!!odate), amount = sum(!!revenues),
-              transaction_count = n()) %>%
+    select(!! cust_id, !! odate, !! revenues) %>%
+    group_by(!! cust_id) %>%
+    summarise(
+      date_most_recent = max(!! odate), amount = sum(!! revenues),
+      transaction_count = n()
+    ) %>%
     mutate(
       recency_days = (analysis_date - date_most_recent) / ddays()
     ) %>%
-    select(!!cust_id, date_most_recent, recency_days, transaction_count,
-           amount)
+    select(
+      !! cust_id, date_most_recent, recency_days, transaction_count,
+      amount
+    )
 
   result$recency_score <- NA
   result$frequency_score <- NA
   result$monetary_score <- NA
 
   rscore <- recency_bins %>%
-    seq_len %>%
-    rev
+    seq_len() %>%
+    rev()
 
   if (length(recency_bins) == 1) {
     bins_recency <- bins(result, recency_days, recency_bins)
@@ -70,12 +73,12 @@ rfm_table.default <- function(data = NULL, customer_id = NULL, order_date = NULL
 
   for (i in seq_len(recency_bins)) {
     result$recency_score[result$recency_days >= lower_recency[i] &
-                              result$recency_days < upper_recency[i]] <- rscore[i]
+      result$recency_days < upper_recency[i]] <- rscore[i]
   }
 
   fscore <- frequency_bins %>%
-    seq_len %>%
-    rev
+    seq_len() %>%
+    rev()
 
   if (length(frequency_bins) == 1) {
     bins_frequency <- bins(result, transaction_count, frequency_bins)
@@ -87,12 +90,12 @@ rfm_table.default <- function(data = NULL, customer_id = NULL, order_date = NULL
 
   for (i in seq_len(frequency_bins)) {
     result$frequency_score[result$transaction_count >= lower_frequency[i] &
-                             result$transaction_count < upper_frequency[i]] <- i
+      result$transaction_count < upper_frequency[i]] <- i
   }
 
   mscore <- monetary_bins %>%
-    seq_len %>%
-    rev
+    seq_len() %>%
+    rev()
 
   if (length(monetary_bins) == 1) {
     bins_monetary <- bins(result, amount, monetary_bins)
@@ -104,24 +107,27 @@ rfm_table.default <- function(data = NULL, customer_id = NULL, order_date = NULL
 
   for (i in seq_len(monetary_bins)) {
     result$monetary_score[result$amount >= lower_monetary[i] &
-                            result$amount < upper_monetary[i]] <- i
+      result$amount < upper_monetary[i]] <- i
   }
 
   result %<>%
     mutate(
       rfm_score = recency_score * 100 + frequency_score * 10 + monetary_score
     ) %>%
-    select(!!cust_id, date_most_recent, recency_days, transaction_count, amount,
-           recency_score, frequency_score, monetary_score, rfm_score)
+    select(
+      !! cust_id, date_most_recent, recency_days, transaction_count, amount,
+      recency_score, frequency_score, monetary_score, rfm_score
+    )
 
   result$transaction_count <- as.numeric(result$transaction_count)
 
-  out <- list(rfm = result, analysis_date = analysis_date,
-              frequency_bins = frequency_bins, recency_bins = recency_bins,
-              monetary_bins = monetary_bins)
-  class(out) <- c('rfm_table', 'tibble', 'data.frame')
+  out <- list(
+    rfm = result, analysis_date = analysis_date,
+    frequency_bins = frequency_bins, recency_bins = recency_bins,
+    monetary_bins = monetary_bins
+  )
+  class(out) <- c("rfm_table", "tibble", "data.frame")
   return(out)
-
 }
 
 
