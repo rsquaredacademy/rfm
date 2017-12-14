@@ -28,7 +28,8 @@ Suggests:
     knitr,
     RColorBrewer,
     rmarkdown,
-    testthat
+    testthat,
+    vdiffr
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
