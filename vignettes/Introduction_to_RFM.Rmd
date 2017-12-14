@@ -17,6 +17,10 @@ library(knitr)
 library(kableExtra)
 library(magrittr)
 library(dplyr)
+library(ggplot2)
+library(DT)
+library(grDevices)
+library(RColorBrewer)
 options(knitr.table.format = "html") 
 options(tibble.width = Inf)
 ```
@@ -136,3 +140,103 @@ rfm_fm_plot(rfm_result)
 ```{r fr, fig.align='center', fig.width=7, fig.height=7}
 rfm_rf_plot(rfm_result)
 ```
+
+## Segments
+
+```{r segments, echo=FALSE}
+segment <- c('Champions', 'Loyal Customers', 'Potential Loyalist',
+             'New Customers', 'Promising', 'Need Attention',
+             'About To Sleep', 'At Risk', "Can't Lose Them", 'Hibernating',
+             'Lost')
+description <- c("Bought recently, buy often and spend the most",
+                 "Spend good money. Responsive to promotions",
+                 "Recent customers, spent good amount, bought more than once", 
+                 "Bought more recently, but not often",
+                 "Recent shoppers, but haven't spent much",
+                 "Above average recency, frequency & monetary values",
+                 "Below average recency, frequency & monetary values",
+                 "Spent big money, purchased often but long time ago",
+                 "Made big purchases and often, but long time ago",
+                 "Low spenders, low frequency, purchased long time ago",
+                 "Lowest recency, frequency & monetary scores")
+recency <- c('4 - 5', '2 - 5', '3 - 5', '4 - 5', '3 - 4', '2 - 3', '2 - 3', '<= 2', '<= 1', '1 - 2', '<= 2')
+frequency <- c('4 - 5', '3 - 5', '1 - 3', '<= 1', '<= 1', '2 - 3', '<= 2', '2 - 5', '4 - 5', '1 - 2', '<= 2')
+monetary <- c('4 - 5', '3 - 5', '1 - 3', '<= 1', '<= 1', '2 - 3', '<= 2', '2 - 5', '4 - 5', '1 - 2', '<= 2')
+segments <- tibble(Segment = segment, Description = description, 
+                   R = recency, `F` = frequency, M = monetary)
+segments %>%
+  kable() %>%
+  kable_styling(full_width = TRUE, font_size = 12)
+```
+
+## Segmented Customer Data
+
+```{r criteria, echo=FALSE}
+rfm_segments <- rfm_result %>%
+  use_series(rfm) %>%
+  mutate(
+    segment = case_when(
+      (recency_score %>% between(4, 5)) & (frequency_score %>% between(4, 5)) & 
+      (monetary_score %>% between(4, 5))  ~ 'Champions',                       
+      (recency_score %>% between(2, 5)) & (frequency_score %>% between(3, 5)) &
+      (monetary_score %>% between(3, 5)) ~ 'Loyal Customers',
+      (recency_score %>% between(3, 5)) & (frequency_score %>% between(1, 3)) &
+      (monetary_score %>% between(1, 3)) ~ 'Potential Loyalist',
+      (recency_score %>% between(4, 5)) & (frequency_score == 1) &
+      (monetary_score == 1) ~ 'New Customers',
+      (recency_score %>% between(3, 4)) & (frequency_score == 1) &
+      (monetary_score == 1) ~ 'Promising',
+      (recency_score %>% between(2, 3)) & (frequency_score %>% between(2, 3)) &
+      (monetary_score %>% between(2, 3)) ~ 'Needs Attention',
+      (recency_score %>% between(2, 3)) & (frequency_score <= 2) &
+      (monetary_score <= 2) ~ 'About To Sleep',
+      (recency_score <= 2) & (frequency_score %>% between(2, 5)) &
+      (monetary_score %>% between(2, 5)) ~ 'At Risk',
+      (recency_score == 1) & (frequency_score %>% between(4, 5)) &
+      (monetary_score %>% between(4, 5)) ~ 'Cant Lose Them',
+      (recency_score %>% between(1, 2)) & (frequency_score %>% between(1, 2)) &
+      (monetary_score %>% between(1, 2)) ~ 'Hibernating',
+      (recency_score <= 2) & (frequency_score  <= 2) &
+      (monetary_score  <= 2) ~ 'Lost',
+      TRUE ~ 'Others'
+    )
+  ) %>%
+  select(customer_id, segment, rfm_score, transaction_count, recency_days,
+         amount) 
+
+# use datatable
+rfm_segments %>%
+  datatable(filter = 'top', 
+            options = list(pageLength = 5, autoWidth = TRUE),
+            colnames = c('Customer', 'Segment', 'RFM', 
+                         'Orders', 'Recency', 'Total Spend')
+  )
+```
+
+## Segment Size
+
+```{r rfm_customers}
+rfm_segments %>%
+  count(segment) %>%
+  arrange(desc(n)) %>%
+  rename(Segment = segment, Count = n) 
+```
+
+## Average Recency
+
+```{r avg_recency, fig.align='center', fig.height=5, fig.width=6}
+rfm_segments %>%
+  group_by(segment) %>%
+  select(segment, recency_days) %>%
+  summarize(mean(recency_days)) %>%
+  rename(segment = segment, avg_recency = `mean(recency_days)`) %>%
+  ggplot(aes(segment, avg_recency)) + 
+  geom_bar(stat = 'identity', fill = brewer.pal(n = 8, name = "Set1")) +
+  xlab('Segment') + ylab('Average Recency') +
+  ggtitle('Average Recency by Segment') +
+  coord_flip() +
+  theme(
+    plot.title = element_text(hjust = 0.5)
+  )
+```
+
