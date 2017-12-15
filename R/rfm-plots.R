@@ -144,7 +144,7 @@ rfm_bar_chart <- function(rfm_table) {
 #' @export
 #'
 rfm_order_dist <- function(rfm_table) {
-  data <- rfm_result %>%
+  data <- rfm_table %>%
     use_series(rfm) %>%
     count(transaction_count)
 
