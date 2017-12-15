@@ -1,6 +1,7 @@
 #' @importFrom magrittr extract2
 #' @importFrom ggplot2 ggplot geom_tile aes scale_fill_gradientn ggtitle xlab
 #' ylab theme element_text scale_y_continuous sec_axis element_blank
+#' @importFrom RColorBrewer brewer.pal
 #' @importFrom grDevices topo.colors
 #' @title RFM Heatmap
 #' @description Heatmap of Mean Monetary Value
@@ -35,7 +36,7 @@ rfm_heatmap <- function(data) {
   p <- ggplot(data = mapdata) +
     geom_tile(aes(x = frequency_score, y = recency_score, fill = monetary)) +
     scale_fill_gradientn(
-      limits = c(llm, ulm), colours = topo.colors(9, alpha = 0.5),
+      limits = c(llm, ulm), colours = brewer.pal(n = 5, name = "PuBu"),
       breaks = guide_breaks,
       name = "Mean Monetary Value"
     ) +

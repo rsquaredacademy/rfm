@@ -20,7 +20,8 @@ Imports:
     purrr,
     rlang,
     stats,
-    tidyr
+    tidyr,
+    RColorBrewer
 Suggests: 
     covr,
     DT,
