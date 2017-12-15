@@ -5,7 +5,7 @@ segmentr: Tools for segmentation and clustering <img src="hex_segmentr.png" alig
 
 **Author:** [Aravind Hebbali](http://www.aravindhebbali.com)<br/> **License:** [MIT](https://opensource.org/licenses/MIT)
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/segmentr)](https://cran.r-project.org/package=segmentr) [![Travis-CI Build Status](https://travis-ci.org/rsquaredacademy/segmentr.svg?branch=master)](https://travis-ci.org/rsquaredacademy/segmentr) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/segmentr?branch=master&svg=true)](https://ci.appveyor.com/project/rsquaredacademy/segmentr) [![](https://cranlogs.r-pkg.org/badges/grand-total/segmentr)](https://cran.r-project.org/package=segmentr)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/segmentr)](https://cran.r-project.org/package=segmentr) [![Travis-CI Build Status](https://travis-ci.org/rsquaredacademy/segmentr.svg?branch=master)](https://travis-ci.org/rsquaredacademy/segmentr) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/segmentr?branch=master&svg=true)](https://ci.appveyor.com/project/rsquaredacademy/segmentr) [![Coverage Status](https://img.shields.io/codecov/c/github/rsquaredacademy/segmentr/master.svg)](https://codecov.io/github/rsquaredacademy/segmentr?branch=master) [![](https://cranlogs.r-pkg.org/badges/grand-total/segmentr)](https://cran.r-project.org/package=segmentr) ![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
 
 Overview
 --------
