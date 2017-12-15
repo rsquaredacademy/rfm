@@ -10,10 +10,8 @@ navbar:
       href: index.html
     - text: "Guides"
       menu:
-        - text: "Introduction"
+        - text: "Introduction to RFM"
           href: articles/Introduction_to_RFM.html
-        - text: "Case Study"
-          href: articles/case-study.html
     - text: "Reference"
       menu:
         - text: "Functions"
