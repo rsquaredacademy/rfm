@@ -7,13 +7,16 @@
 rfm_heatmap(data)
 }
 \arguments{
-\item{data}{a data.frame or a tibble}
+\item{data}{an object of class \code{rfm_table}}
 }
 \value{
 Heatmap
 }
 \description{
-Heatmap of Mean Monetary Value
+The heat map shows the average monetary value for different 
+categories of recency and frequency scores. Higher scores of frequency and 
+recency are characterized by higher average monetary value as indicated by 
+the darker areas in the heatmap.
 }
 \examples{
 # rfm table

@@ -4,8 +4,11 @@
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom grDevices topo.colors
 #' @title RFM Heatmap
-#' @description Heatmap of Mean Monetary Value
-#' @param data a data.frame or a tibble
+#' @description The heat map shows the average monetary value for different 
+#' categories of recency and frequency scores. Higher scores of frequency and 
+#' recency are characterized by higher average monetary value as indicated by 
+#' the darker areas in the heatmap.
+#' @param data an object of class \code{rfm_table}
 #' @return Heatmap
 #' @examples
 #' # rfm table
@@ -90,7 +93,8 @@ rfm_histograms <- function(rfm_table) {
 
 #' @importFrom ggplot2 geom_bar facet_grid
 #' @title RFM Bar Chart
-#' @description Bar Chart of Frequency Score vs Recency Score
+#' @description Examine the distribution of monetary scores for the different 
+#' combinations of frequency and recency scores.
 #' @param rfm_table an object of class \code{rfm_table}
 #' @return Bar Chart
 #' @examples
@@ -130,7 +134,7 @@ rfm_bar_chart <- function(rfm_table) {
 #' @importFrom magrittr multiply_by
 #' @importFrom ggplot2 ylim geom_text position_dodge
 #' @title Customers by Orders
-#' @description Number of customers by number of orders
+#' @description Visualize the distribution of customers across orders
 #' @param rfm_table an object of class \code{rfm_table}
 #' @return Bar Chart
 #' @examples
@@ -169,7 +173,8 @@ rfm_order_dist <- function(rfm_table) {
 
 #' @importFrom ggplot2 geom_point
 #' @title RFM Scatter Plot
-#' @description Monetary Value vs Recency, Frequency vs Monetary Value and Frequency vs Recency Plots
+#' @description Recency vs Monetary Value, Frequency vs Monetary Value and 
+#' Recency vs Frequency Plots
 #' @param rfm_table an object of class \code{rfm_table}
 #' @return Scatter Plot
 #' @examples

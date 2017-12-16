@@ -13,7 +13,7 @@ rfm_order_dist(rfm_table)
 Bar Chart
 }
 \description{
-Number of customers by number of orders
+Visualize the distribution of customers across orders
 }
 \examples{
 # rfm table

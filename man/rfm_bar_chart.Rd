@@ -13,7 +13,8 @@ rfm_bar_chart(rfm_table)
 Bar Chart
 }
 \description{
-Bar Chart of Frequency Score vs Recency Score
+Examine the distribution of monetary scores for the different 
+combinations of frequency and recency scores.
 }
 \examples{
 # rfm table
