@@ -42,7 +42,7 @@ rfm_table(data = NULL, customer_id = NULL, order_date = NULL,
 \item{revenue}{revenue from the customer}
 }
 \description{
-Table with recency, frequency, monetary and RFM score
+Recency, frequency, monetary and RFM score
 }
 \examples{
 analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')

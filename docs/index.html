@@ -87,13 +87,9 @@
 <h2 class="hasAnchor">
 <a href="#segmentr-tools-for-segmentation-and-clustering" class="anchor"> </a>segmentr: Tools for segmentation and clustering <img src="hex_segmentr.png" align="right">
 </h2>
-<p><strong>Author:</strong> <a href="http://www.aravindhebbali.com">Aravind Hebbali</a><br><strong>License:</strong> <a href="https://opensource.org/licenses/MIT">MIT</a></p>
+<p><strong>Author:</strong> <a href="https://www.aravindhebbali.com">Aravind Hebbali</a><br><strong>License:</strong> <a href="https://opensource.org/licenses/MIT">MIT</a></p>
 <p><a href="https://cran.r-project.org/package=segmentr"><img src="http://www.r-pkg.org/badges/version/segmentr" alt="CRAN_Status_Badge"></a> <a href="https://travis-ci.org/rsquaredacademy/segmentr"><img src="https://travis-ci.org/rsquaredacademy/segmentr.svg?branch=master" alt="Travis-CI Build Status"></a> <a href="https://ci.appveyor.com/project/rsquaredacademy/segmentr"><img src="https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/segmentr?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a> <a href="https://codecov.io/github/rsquaredacademy/segmentr?branch=master"><img src="https://img.shields.io/codecov/c/github/rsquaredacademy/segmentr/master.svg"></a> <a href="https://cran.r-project.org/package=segmentr"><img src="https://cranlogs.r-pkg.org/badges/grand-total/segmentr"></a> <a href=""><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg"></a></p>
-</div>
-<div id="overview" class="section level2">
-<h2 class="hasAnchor">
-<a href="#overview" class="anchor"> </a>Overview</h2>
-<p>Tools for segmentation and clustering</p>
+<p>In the long run, the goal of segmentr is to develop tools for segmentation and clustering. Included in version 0.1.0 are tools for RFM (recency, frequency and monetary) analysis.</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -102,13 +98,46 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("devtools")</span>
 devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"rsquaredacademy/segmentr"</span>)</code></pre></div>
 </div>
+<div id="consistent-prefix" class="section level2">
+<h2 class="hasAnchor">
+<a href="#consistent-prefix" class="anchor"> </a>Consistent Prefix</h2>
+<p>segmentr uses consistent prefix <code>rfm_</code> for easy tab completion.</p>
+</div>
+<div id="vignettes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#vignettes" class="anchor"> </a>Vignettes</h2>
+<ul>
+<li><a href="http://www.rsquaredacademy.com/segmentr/articles/Introduction_to_RFM.html">Introduction to RFM</a></li>
+</ul>
+</div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"> </a>Usage</h2>
+<div id="introduction" class="section level3">
+<h3 class="hasAnchor">
+<a href="#introduction" class="anchor"> </a>Introduction</h3>
+<p><strong>RFM</strong> (recency, frequency, monetary) analysis is a behavior based technique used to segment customers by examining their transaction history such as</p>
+<ul>
+<li>how recently a customer has purchased (recency)</li>
+<li>how often they purchase (frequency)</li>
+<li>how much the customer spends (monetary)</li>
+</ul>
+<p>It is based on the marketing axiom that <strong>80% of your business comes from 20% of your customers</strong>. RFM helps to identify customers who are more likely to respond to promotions by segmenting them into various categories.</p>
 </div>
-<div id="rfm-table" class="section level2">
-<h2 class="hasAnchor">
-<a href="#rfm-table" class="anchor"> </a>RFM Table</h2>
+<div id="data" class="section level3">
+<h3 class="hasAnchor">
+<a href="#data" class="anchor"> </a>Data</h3>
+<p>To calculate the RFM score for each customer we need transaction data which should include the following:</p>
+<ul>
+<li>a unique customer id</li>
+<li>date of transaction/order</li>
+<li>transaction/order amount</li>
+</ul>
+</div>
+<div id="rfm-table" class="section level3">
+<h3 class="hasAnchor">
+<a href="#rfm-table" class="anchor"> </a>RFM Table</h3>
+<p>Use <code><a href="reference/rfm_table.html">rfm_table()</a></code> to generate the RFM score.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">analysis_date &lt;-<span class="st"> </span>lubridate<span class="op">::</span><span class="kw">as_date</span>(<span class="st">'2006-12-31'</span>, <span class="dt">tz =</span> <span class="st">'UTC'</span>)
 rfm_result &lt;-<span class="st"> </span><span class="kw"><a href="reference/rfm_table.html">rfm_table</a></span>(rfm_data, customer_id, order_date, revenue, analysis_date)
 rfm_result
@@ -127,51 +156,68 @@ rfm_result
 <span class="co">#&gt; 10      Alannah Borer       2005-04-21          619                 4    196             1               2              1       121</span>
 <span class="co">#&gt; # ... with 985 more rows</span></code></pre></div>
 </div>
+</div>
 <div id="heat-map" class="section level2">
 <h2 class="hasAnchor">
 <a href="#heat-map" class="anchor"> </a>Heat Map</h2>
+<p>The heat map shows the average monetary value for different categories of recency and frequency scores. Higher scores of frequency and recency are characterized by higher average monetary value as indicated by the darker areas in the heatmap.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/rfm_heatmap.html">rfm_heatmap</a></span>(rfm_result)</code></pre></div>
-<p><img src="README-heatmap-1.png" width="672" style="display: block; margin: auto;"></p>
-</div>
-<div id="bins-count" class="section level2">
-<h2 class="hasAnchor">
-<a href="#bins-count" class="anchor"> </a>Bins Count</h2>
+<p><img src="tools/README-heatmap-1.png" width="768" style="display: block; margin: auto;"></p>
+<div id="bar-chart" class="section level3">
+<h3 class="hasAnchor">
+<a href="#bar-chart" class="anchor"> </a>Bar Chart</h3>
+<p>Use <code><a href="reference/rfm_bar_chart.html">rfm_bar_chart()</a></code> to generate the distribution of monetary scores for the different combinations of frequency and recency scores.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/rfm_bar_chart.html">rfm_bar_chart</a></span>(rfm_result)</code></pre></div>
-<p><img src="README-barchart-1.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="tools/README-barchart-1.png" width="768" style="display: block; margin: auto;"></p>
 </div>
-<div id="histogram" class="section level2">
-<h2 class="hasAnchor">
-<a href="#histogram" class="anchor"> </a>Histogram</h2>
+<div id="histogram" class="section level3">
+<h3 class="hasAnchor">
+<a href="#histogram" class="anchor"> </a>Histogram</h3>
+<p>Use <code><a href="reference/rfm_histograms.html">rfm_histograms()</a></code> to examine the relative distribution of</p>
+<ul>
+<li>monetary value (total revenue generated by each customer)</li>
+<li>recency days (days since the most recent visit for each customer)</li>
+<li>frequency (transaction count for each customer)</li>
+</ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/rfm_histograms.html">rfm_histograms</a></span>(rfm_result)</code></pre></div>
-<p><img src="README-rfmhist-1.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="tools/README-rfmhist-1.png" width="768" style="display: block; margin: auto;"></p>
 </div>
-<div id="customers-by-orders" class="section level2">
-<h2 class="hasAnchor">
-<a href="#customers-by-orders" class="anchor"> </a>Customers by Orders</h2>
+<div id="customers-by-orders" class="section level3">
+<h3 class="hasAnchor">
+<a href="#customers-by-orders" class="anchor"> </a>Customers by Orders</h3>
+<p>Visualize the distribution of customers across orders.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/rfm_order_dist.html">rfm_order_dist</a></span>(rfm_result)</code></pre></div>
-<p><img src="README-rfmorders-1.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="tools/README-rfmorders-1.png" width="768" style="display: block; margin: auto;"></p>
 </div>
-<div id="scatter-plots" class="section level2">
-<h2 class="hasAnchor">
-<a href="#scatter-plots" class="anchor"> </a>Scatter Plots</h2>
-<div id="recency-vs-monetary-value" class="section level3">
+<div id="scatter-plots" class="section level3">
 <h3 class="hasAnchor">
-<a href="#recency-vs-monetary-value" class="anchor"> </a>Recency vs Monetary Value</h3>
+<a href="#scatter-plots" class="anchor"> </a>Scatter Plots</h3>
+<p>The best customers are those who:</p>
+<ul>
+<li>bought most recently</li>
+<li>most often</li>
+<li>and spend the most</li>
+</ul>
+<p>Now let us examine the relationship between the above.</p>
+<div id="recency-vs-monetary-value" class="section level4">
+<h4 class="hasAnchor">
+<a href="#recency-vs-monetary-value" class="anchor"> </a>Recency vs Monetary Value</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/rfm_rm_plot.html">rfm_rm_plot</a></span>(rfm_result)</code></pre></div>
-<p><img src="README-mr-1.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="tools/README-mr-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
-<div id="frequency-vs-monetary-value" class="section level3">
-<h3 class="hasAnchor">
-<a href="#frequency-vs-monetary-value" class="anchor"> </a>Frequency vs Monetary Value</h3>
+<div id="frequency-vs-monetary-value" class="section level4">
+<h4 class="hasAnchor">
+<a href="#frequency-vs-monetary-value" class="anchor"> </a>Frequency vs Monetary Value</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/rfm_rm_plot.html">rfm_fm_plot</a></span>(rfm_result)</code></pre></div>
-<p><img src="README-fm-1.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="tools/README-fm-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
-<div id="recency-vs-frequency" class="section level3">
-<h3 class="hasAnchor">
-<a href="#recency-vs-frequency" class="anchor"> </a>Recency vs Frequency</h3>
+<div id="recency-vs-frequency" class="section level4">
+<h4 class="hasAnchor">
+<a href="#recency-vs-frequency" class="anchor"> </a>Recency vs Frequency</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/rfm_rm_plot.html">rfm_rf_plot</a></span>(rfm_result)</code></pre></div>
-<p><img src="README-fr-1.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="tools/README-fr-1.png" width="672" style="display: block; margin: auto;"></p>
 <p>Please note that this project is released with a <a href="CONDUCT.md">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</p>
+</div>
 </div>
 </div>
 </div>
@@ -191,7 +237,7 @@ rfm_result
 <p><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE">LICENSE</a></p>
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li><a href="https://aravindhebbali.com/" target="_blank">Aravind Hebbali</a> <br><small class="roles"> Author, maintainer </small> </li>
+<li><a href="http://www.aravindhebbali.com">Aravind Hebbali</a> <br><small class="roles"> Author, maintainer </small> </li>
 </ul>
 </div>
 
@@ -199,7 +245,7 @@ rfm_result
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://aravindhebbali.com/" target="_blank">Aravind Hebbali</a>.</p>
+  <p>Developed by <a href="http://www.aravindhebbali.com">Aravind Hebbali</a>.</p>
 </div>
 
 <div class="pkgdown">

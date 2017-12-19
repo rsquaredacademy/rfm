@@ -19,8 +19,7 @@ rfm_rf_plot(rfm_table)
 Scatter Plot
 }
 \description{
-Recency vs Monetary Value, Frequency vs Monetary Value and 
-Recency vs Frequency Plots
+Examine the relationship between the above recency, frequency and monetary values
 }
 \examples{
 # rfm table

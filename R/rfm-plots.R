@@ -173,8 +173,7 @@ rfm_order_dist <- function(rfm_table) {
 
 #' @importFrom ggplot2 geom_point
 #' @title RFM Scatter Plot
-#' @description Recency vs Monetary Value, Frequency vs Monetary Value and 
-#' Recency vs Frequency Plots
+#' @description Examine the relationship between the above recency, frequency and monetary values
 #' @param rfm_table an object of class \code{rfm_table}
 #' @return Scatter Plot
 #' @examples

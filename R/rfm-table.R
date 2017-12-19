@@ -3,7 +3,7 @@
 #' @importFrom magrittr extract2
 #' @importFrom rlang quo enquo
 #' @title RFM Table
-#' @description Table with recency, frequency, monetary and RFM score
+#' @description Recency, frequency, monetary and RFM score
 #' @param data a data.frame or tibble
 #' @param customer_id unique id of the customer
 #' @param order_date date of transaction

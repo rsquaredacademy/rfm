@@ -3,7 +3,7 @@ Package: segmentr
 Title: Tools for Segmentation and Clustering
 Version: 0.1.0
 Authors@R: person("Aravind", "Hebbali", email = "hebbali.aravind@gmail.com", role = c("aut", "cre"))
-Description: Tools for segmentation and clustering 
+Description: Tools for segmentation and clustering.
 License: MIT + file LICENSE
 URL: https://rsquaredacademy.github.io/segmentr/, https://github.com/rsquaredacademy/segmentr
 BugReports: https://github.com/rsquaredacademy/segmentr/issues
@@ -27,7 +27,6 @@ Suggests:
     DT,
     kableExtra,
     knitr,
-    RColorBrewer,
     rmarkdown,
     testthat,
     vdiffr

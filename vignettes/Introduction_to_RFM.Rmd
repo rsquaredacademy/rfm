@@ -75,7 +75,7 @@ The customers with the highest RFM scores are most likely to respond to an offer
 - `frequency_bins`: number of rankings for frequency score (default is 5)
 - `monetary_bins`: number of rankings for monetary score (default is 5)
 
-### RFM Table
+## RFM Table
 
 ```{r rfm_table, eval=FALSE}
 analysis_date <- lubridate::as_date("2006-12-31", tz = "UTC")
@@ -105,7 +105,7 @@ rfm_result %>%
 - `monetary_score`: monetary score of the customer
 - `rfm_score`: RFM score of the customer
 
-### Heat Map
+## Heat Map
 
 The heat map shows the average monetary value for different categories of recency and frequency scores. Higher scores of frequency and recency are characterized by higher average monetary value as indicated by the darker areas in the heatmap. 
 
@@ -113,7 +113,7 @@ The heat map shows the average monetary value for different categories of recenc
 rfm_heatmap(rfm_result)
 ```
 
-### Bar Chart
+## Bar Chart
 
 Use `rfm_bar_chart()` to generate the distribution of monetary scores for the different combinations of frequency and recency scores.
 
@@ -154,7 +154,7 @@ Now let us examine the relationship between the above.
 
 #### Recency vs Monetary Value
 
-Customers who visited more recently generated more revenue compared to those who visited in the distant past. The customers who visited in the recent past are more likely to return compared to those who visited long time ago as most of those would be lost customers. As such, higher revenue would be associated with  most recent visits.
+Customers who visited more recently generated more revenue compared to those who visited in the distant past. The customers who visited in the recent past are more likely to return compared to those who visited long time ago as most of those would be lost customers. As such, higher revenue would be associated with most recent visits.
 
 ```{r mr, fig.align='center', fig.width=7, fig.height=7}
 rfm_rm_plot(rfm_result)
@@ -307,4 +307,3 @@ rfm_segments %>%
 University of Illinois at Urbana-Champaign Micheline Kamber .
 - http://www.sciencedirect.com/science/article/pii/S1877050910003868
 - https://joaocorreia.io/blog/rfm-analysis-increase-sales-by-segmenting-your-customers.html
-- https://www.putler.com/rfm-analysis/
