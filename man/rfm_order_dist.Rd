@@ -4,10 +4,23 @@
 \alias{rfm_order_dist}
 \title{Customers by Orders}
 \usage{
-rfm_order_dist(rfm_table)
+rfm_order_dist(rfm_table, bar_color = "blue", xaxis_title = "Orders",
+  yaxis_title = "Customers", plot_title = "Customers by Orders",
+  plot_title_justify = 0.5)
 }
 \arguments{
 \item{rfm_table}{an object of class \code{rfm_table}}
+
+\item{bar_color}{color of the bars}
+
+\item{xaxis_title}{x axis title}
+
+\item{yaxis_title}{y axis title}
+
+\item{plot_title}{title of the plot}
+
+\item{plot_title_justify}{horizontal justification of the plot title;
+0 for left justified and 1 for right justified}
 }
 \value{
 Bar Chart

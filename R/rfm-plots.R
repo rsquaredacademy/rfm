@@ -184,6 +184,12 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #' @title Customers by Orders
 #' @description Visualize the distribution of customers across orders
 #' @param rfm_table an object of class \code{rfm_table}
+#' @param bar_color color of the bars
+#' @param xaxis_title x axis title
+#' @param yaxis_title y axis title
+#' @param plot_title title of the plot
+#' @param plot_title_justify horizontal justification of the plot title;
+#' 0 for left justified and 1 for right justified
 #' @return Bar Chart
 #' @examples
 #' # rfm table
@@ -195,7 +201,10 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #'
 #' @export
 #'
-rfm_order_dist <- function(rfm_table) {
+rfm_order_dist <- function(rfm_table, bar_color = 'blue',
+                           xaxis_title = 'Orders', yaxis_title = 'Customers',
+                           plot_title = 'Customers by Orders',
+                           plot_title_justify = 0.5) {
   data <- rfm_table %>%
     use_series(rfm) %>%
     count(transaction_count)
@@ -208,9 +217,9 @@ rfm_order_dist <- function(rfm_table) {
 
   data %>%
     ggplot(aes(x = transaction_count, y = n)) +
-    geom_bar(stat = "identity", fill = "blue") +
-    xlab("Orders") + ylab("Customers") + ylim(0, ylim_max) +
-    ggtitle("Customers by Orders") +
+    geom_bar(stat = "identity", fill = bar_color) +
+    xlab(xaxis_title) + ylab(yaxis_title) + ylim(0, ylim_max) +
+    ggtitle(plot_title) +
     geom_text(
       aes(label = n, y = n + 3), position = position_dodge(0.9), vjust = 0
     ) +
