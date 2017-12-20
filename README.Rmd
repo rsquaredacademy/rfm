@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-segmentr: Tools for segmentation and clustering <img src="hex_segmentr.png" align="right" />  
+segmentr: Tools for customer segmentation analysis <img src="hex_segmentr.png" align="right" />  
 ---------
 
 
@@ -21,7 +21,7 @@ segmentr: Tools for segmentation and clustering <img src="hex_segmentr.png" alig
 
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/segmentr)](https://cran.r-project.org/package=segmentr) [![Travis-CI Build Status](https://travis-ci.org/rsquaredacademy/segmentr.svg?branch=master)](https://travis-ci.org/rsquaredacademy/segmentr) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/segmentr?branch=master&svg=true)](https://ci.appveyor.com/project/rsquaredacademy/segmentr) [![](https://cranlogs.r-pkg.org/badges/grand-total/segmentr)](https://cran.r-project.org/package=segmentr)
 
-In the long run, the goal of segmentr is to develop tools for segmentation and clustering. Included in version 0.1.0 are tools for RFM (recency, frequency and monetary) analysis.
+In the long run, the goal of segmentr is to develop tools for customer segmentation and lifetime value analysis. Included in version 0.1.0 are tools for RFM (recency, frequency and monetary) analysis.
 
 ## Installation
 
