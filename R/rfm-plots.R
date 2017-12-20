@@ -232,6 +232,10 @@ rfm_order_dist <- function(rfm_table, bar_color = 'blue',
 #' @title RFM Scatter Plot
 #' @description Examine the relationship between the above recency, frequency and monetary values
 #' @param rfm_table an object of class \code{rfm_table}
+#' @param point_color color of the scatter points
+#' @param xaxis_title x axis title
+#' @param yaxis_title y axis title
+#' @param plot_title title of the plot
 #' @return Scatter Plot
 #' @examples
 #' # rfm table
@@ -249,17 +253,19 @@ rfm_order_dist <- function(rfm_table, bar_color = 'blue',
 #'
 #' @export
 #'
-rfm_rm_plot <- function(rfm_table) {
+rfm_rm_plot <- function(rfm_table, point_color = 'blue',
+                        xaxis_title = 'Monetary', yaxis_title = 'Recency',
+                        plot_title = 'Recency vs Monetary') {
   data <- rfm_table %>%
     use_series(rfm)
 
   p <- ggplot(data) +
     geom_point(
       aes(x = amount, y = recency_days),
-      color = "blue"
+      color = point_color
     ) +
-    xlab("Monetary") + ylab("Recency") +
-    ggtitle("Recency vs Monetary")
+    xlab(xaxis_title) + ylab(yaxis_title) +
+    ggtitle(plot_title)
 
   print(p)
 }
@@ -267,17 +273,19 @@ rfm_rm_plot <- function(rfm_table) {
 #' @rdname rfm_rm_plot
 #' @export
 #'
-rfm_fm_plot <- function(rfm_table) {
+rfm_fm_plot <- function(rfm_table, point_color = 'blue',
+                        xaxis_title = 'Monetary', yaxis_title = 'Frequency',
+                        plot_title = 'Frequency vs Monetary') {
   data <- rfm_table %>%
     use_series(rfm)
 
   p <- ggplot(data) +
     geom_point(
       aes(x = amount, y = transaction_count),
-      color = "blue"
+      color = point_color
     ) +
-    xlab("Monetary") + ylab("Frequency") +
-    ggtitle("Frequency vs Monetary")
+    xlab(xaxis_title) + ylab(yaxis_title) +
+    ggtitle(plot_title)
 
   print(p)
 }
@@ -285,17 +293,19 @@ rfm_fm_plot <- function(rfm_table) {
 #' @rdname rfm_rm_plot
 #' @export
 #'
-rfm_rf_plot <- function(rfm_table) {
+rfm_rf_plot <- function(rfm_table, point_color = 'blue',
+                        xaxis_title = 'Frequency', yaxis_title = 'Recency',
+                        plot_title = 'Recency vs Frequency') {
   data <- rfm_table %>%
     use_series(rfm)
 
   p <- ggplot(data) +
     geom_point(
       aes(x = transaction_count, y = recency_days),
-      color = "blue"
+      color = point_color
     ) +
-    xlab("Frequency") + ylab("Recency") +
-    ggtitle("Recency vs Frequency")
+    xlab(xaxis_title) + ylab(yaxis_title) +
+    ggtitle(plot_title)
 
   print(p)
 }

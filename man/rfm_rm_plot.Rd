@@ -6,14 +6,25 @@
 \alias{rfm_rf_plot}
 \title{RFM Scatter Plot}
 \usage{
-rfm_rm_plot(rfm_table)
+rfm_rm_plot(rfm_table, point_color = "blue", xaxis_title = "Monetary",
+  yaxis_title = "Recency", plot_title = "Recency vs Monetary")
 
-rfm_fm_plot(rfm_table)
+rfm_fm_plot(rfm_table, point_color = "blue", xaxis_title = "Monetary",
+  yaxis_title = "Frequency", plot_title = "Frequency vs Monetary")
 
-rfm_rf_plot(rfm_table)
+rfm_rf_plot(rfm_table, point_color = "blue", xaxis_title = "Frequency",
+  yaxis_title = "Recency", plot_title = "Recency vs Frequency")
 }
 \arguments{
 \item{rfm_table}{an object of class \code{rfm_table}}
+
+\item{point_color}{color of the scatter points}
+
+\item{xaxis_title}{x axis title}
+
+\item{yaxis_title}{y axis title}
+
+\item{plot_title}{title of the plot}
 }
 \value{
 Scatter Plot
