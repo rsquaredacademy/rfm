@@ -14,8 +14,8 @@ rfm_heatmap(data, plot_title = "RFM Heat Map", plot_title_justify = 0.5,
 
 \item{plot_title}{title of the plot}
 
-\item{plot_title_justify}{horizontal justification of the plot; 0 for left
-justified and 1 for right justified}
+\item{plot_title_justify}{horizontal justification of the plot title;
+0 for left justified and 1 for right justified}
 
 \item{xaxis_title}{x axis title}
 

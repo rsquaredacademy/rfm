@@ -129,6 +129,11 @@ rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
 #' @description Examine the distribution of monetary scores for the different
 #' combinations of frequency and recency scores.
 #' @param rfm_table an object of class \code{rfm_table}
+#' @param bar_color color of the bars
+#' @param xaxis_title x axis title
+#' @param yaxis_title y axis title
+#' @param sec_xaxis_title secondary x axis title
+#' @param sec_yaxis_title secondary y axis title
 #' @return Bar Chart
 #' @examples
 #' # rfm table
@@ -140,7 +145,11 @@ rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
 #'
 #' @export
 #'
-rfm_bar_chart <- function(rfm_table) {
+rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
+                          xaxis_title = 'Monetary Score',
+                          sec_xaxis_title = 'Frequency Score',
+                          yaxis_title = ' ',
+                          sec_yaxis_title = 'Recency Score') {
 
   data <- rfm_table %>%
     use_series(rfm)
@@ -153,10 +162,10 @@ rfm_bar_chart <- function(rfm_table) {
   data$recency_score <- factor(data$recency_score, levels = rlevels)
 
   p <- ggplot(data = data) +
-    geom_bar(aes(x = monetary_score), fill = "blue") +
+    geom_bar(aes(x = monetary_score), fill = bar_color) +
     facet_grid(recency_score ~ frequency_score) +
-    scale_y_continuous(sec.axis = sec_axis(~ ., name = "Recency Score")) +
-    xlab("Monetary Score") + ylab(" ") + ggtitle("Frequency Score") +
+    scale_y_continuous(sec.axis = sec_axis(~ ., name = sec_yaxis_title)) +
+    xlab(xaxis_title) + ylab(" ") + ggtitle(sec_xaxis_title) +
     theme(
       plot.title = element_text(
         face = "plain", size = 11, hjust = 0.5

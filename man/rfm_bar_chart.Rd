@@ -4,16 +4,28 @@
 \alias{rfm_bar_chart}
 \title{RFM Bar Chart}
 \usage{
-rfm_bar_chart(rfm_table)
+rfm_bar_chart(rfm_table, bar_color = "blue", xaxis_title = "Monetary Score",
+  sec_xaxis_title = "Frequency Score", yaxis_title = " ",
+  sec_yaxis_title = "Recency Score")
 }
 \arguments{
 \item{rfm_table}{an object of class \code{rfm_table}}
+
+\item{bar_color}{color of the bars}
+
+\item{xaxis_title}{x axis title}
+
+\item{sec_xaxis_title}{secondary x axis title}
+
+\item{yaxis_title}{y axis title}
+
+\item{sec_yaxis_title}{secondary y axis title}
 }
 \value{
 Bar Chart
 }
 \description{
-Examine the distribution of monetary scores for the different 
+Examine the distribution of monetary scores for the different
 combinations of frequency and recency scores.
 }
 \examples{
