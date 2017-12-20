@@ -102,16 +102,28 @@
     </div>
 
     
-    <p>Examine the distribution of monetary scores for the different 
+    <p>Examine the distribution of monetary scores for the different
 combinations of frequency and recency scores.</p>
     
 
-    <pre><span class='fu'>rfm_bar_chart</span>(<span class='no'>rfm_table</span>)</pre>
+    <pre><span class='fu'>rfm_bar_chart</span>(<span class='no'>rfm_table</span>, <span class='kw'>bar_color</span> <span class='kw'>=</span> <span class='st'>"blue"</span>, <span class='kw'>xaxis_title</span> <span class='kw'>=</span> <span class='st'>"Monetary Score"</span>,
+  <span class='kw'>sec_xaxis_title</span> <span class='kw'>=</span> <span class='st'>"Frequency Score"</span>, <span class='kw'>yaxis_title</span> <span class='kw'>=</span> <span class='st'>" "</span>,
+  <span class='kw'>sec_yaxis_title</span> <span class='kw'>=</span> <span class='st'>"Recency Score"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
       <dt>rfm_table</dt>
       <dd>an object of class <code>rfm_table</code></dd>
+      <dt>bar_color</dt>
+      <dd>color of the bars</dd>
+      <dt>xaxis_title</dt>
+      <dd>x axis title</dd>
+      <dt>sec_xaxis_title</dt>
+      <dd>secondary x axis title</dd>
+      <dt>yaxis_title</dt>
+      <dd>y axis title</dd>
+      <dt>sec_yaxis_title</dt>
+      <dd>secondary y axis title</dd>
     </dl>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>

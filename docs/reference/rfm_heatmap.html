@@ -102,18 +102,38 @@
     </div>
 
     
-    <p>The heat map shows the average monetary value for different 
-categories of recency and frequency scores. Higher scores of frequency and 
-recency are characterized by higher average monetary value as indicated by 
+    <p>The heat map shows the average monetary value for different
+categories of recency and frequency scores. Higher scores of frequency and
+recency are characterized by higher average monetary value as indicated by
 the darker areas in the heatmap.</p>
     
 
-    <pre><span class='fu'>rfm_heatmap</span>(<span class='no'>data</span>)</pre>
+    <pre><span class='fu'>rfm_heatmap</span>(<span class='no'>data</span>, <span class='kw'>plot_title</span> <span class='kw'>=</span> <span class='st'>"RFM Heat Map"</span>, <span class='kw'>plot_title_justify</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
+  <span class='kw'>xaxis_title</span> <span class='kw'>=</span> <span class='st'>"Frequency"</span>, <span class='kw'>yaxis_title</span> <span class='kw'>=</span> <span class='st'>"Recency"</span>,
+  <span class='kw'>legend_title</span> <span class='kw'>=</span> <span class='st'>"Mean Monetary Value"</span>, <span class='kw'>brewer_n</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='kw'>brewer_name</span> <span class='kw'>=</span> <span class='st'>"PuBu"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
       <dt>data</dt>
       <dd>an object of class <code>rfm_table</code></dd>
+      <dt>plot_title</dt>
+      <dd>title of the plot</dd>
+      <dt>plot_title_justify</dt>
+      <dd>horizontal justification of the plot title;
+0 for left justified and 1 for right justified</dd>
+      <dt>xaxis_title</dt>
+      <dd>x axis title</dd>
+      <dt>yaxis_title</dt>
+      <dd>y axis title</dd>
+      <dt>legend_title</dt>
+      <dd>legend title</dd>
+      <dt>brewer_n</dt>
+      <dd>indicates the number of colors in the palette; RColorBrewer is
+used for the color palette of the heatmap; check the documentation of
+<code>brewer.pal</code></dd>
+      <dt>brewer_name</dt>
+      <dd>palette name; heck the documentation of <code>brewer.pal</code></dd>
     </dl>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>

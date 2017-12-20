@@ -105,12 +105,34 @@
     <p>Histograms of recency, frequency and monetary value</p>
     
 
-    <pre><span class='fu'>rfm_histograms</span>(<span class='no'>rfm_table</span>)</pre>
+    <pre><span class='fu'>rfm_histograms</span>(<span class='no'>rfm_table</span>, <span class='kw'>hist_bins</span> <span class='kw'>=</span> <span class='fl'>9</span>, <span class='kw'>hist_color</span> <span class='kw'>=</span> <span class='st'>"blue"</span>,
+  <span class='kw'>plot_title</span> <span class='kw'>=</span> <span class='st'>"RFM Histograms"</span>, <span class='kw'>xaxis_title</span> <span class='kw'>=</span> <span class='st'>" "</span>, <span class='kw'>yaxis_title</span> <span class='kw'>=</span> <span class='st'>"Count"</span>,
+  <span class='kw'>hist_m_label</span> <span class='kw'>=</span> <span class='st'>"Monetary"</span>, <span class='kw'>hist_r_label</span> <span class='kw'>=</span> <span class='st'>"Recency"</span>,
+  <span class='kw'>hist_f_label</span> <span class='kw'>=</span> <span class='st'>"Frequency"</span>, <span class='kw'>plot_title_justify</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
       <dt>rfm_table</dt>
       <dd>an object of class <code>rfm_table</code></dd>
+      <dt>hist_bins</dt>
+      <dd>number of bins of the histograms</dd>
+      <dt>hist_color</dt>
+      <dd>color of the histogram</dd>
+      <dt>plot_title</dt>
+      <dd>title of the plot</dd>
+      <dt>xaxis_title</dt>
+      <dd>x axis title</dd>
+      <dt>yaxis_title</dt>
+      <dd>y axis title</dd>
+      <dt>hist_m_label</dt>
+      <dd>label of the monetary value histogram</dd>
+      <dt>hist_r_label</dt>
+      <dd>label of the recency histogram</dd>
+      <dt>hist_f_label</dt>
+      <dd>label of the frequency histogram</dd>
+      <dt>plot_title_justify</dt>
+      <dd>horizontal justification of the plot title;
+0 for left justified and 1 for right justified</dd>
     </dl>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>

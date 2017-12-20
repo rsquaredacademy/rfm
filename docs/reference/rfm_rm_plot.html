@@ -105,16 +105,27 @@
     <p>Examine the relationship between the above recency, frequency and monetary values</p>
     
 
-    <pre><span class='fu'>rfm_rm_plot</span>(<span class='no'>rfm_table</span>)
+    <pre><span class='fu'>rfm_rm_plot</span>(<span class='no'>rfm_table</span>, <span class='kw'>point_color</span> <span class='kw'>=</span> <span class='st'>"blue"</span>, <span class='kw'>xaxis_title</span> <span class='kw'>=</span> <span class='st'>"Monetary"</span>,
+  <span class='kw'>yaxis_title</span> <span class='kw'>=</span> <span class='st'>"Recency"</span>, <span class='kw'>plot_title</span> <span class='kw'>=</span> <span class='st'>"Recency vs Monetary"</span>)
 
-<span class='fu'>rfm_fm_plot</span>(<span class='no'>rfm_table</span>)
+<span class='fu'>rfm_fm_plot</span>(<span class='no'>rfm_table</span>, <span class='kw'>point_color</span> <span class='kw'>=</span> <span class='st'>"blue"</span>, <span class='kw'>xaxis_title</span> <span class='kw'>=</span> <span class='st'>"Monetary"</span>,
+  <span class='kw'>yaxis_title</span> <span class='kw'>=</span> <span class='st'>"Frequency"</span>, <span class='kw'>plot_title</span> <span class='kw'>=</span> <span class='st'>"Frequency vs Monetary"</span>)
 
-<span class='fu'>rfm_rf_plot</span>(<span class='no'>rfm_table</span>)</pre>
+<span class='fu'>rfm_rf_plot</span>(<span class='no'>rfm_table</span>, <span class='kw'>point_color</span> <span class='kw'>=</span> <span class='st'>"blue"</span>, <span class='kw'>xaxis_title</span> <span class='kw'>=</span> <span class='st'>"Frequency"</span>,
+  <span class='kw'>yaxis_title</span> <span class='kw'>=</span> <span class='st'>"Recency"</span>, <span class='kw'>plot_title</span> <span class='kw'>=</span> <span class='st'>"Recency vs Frequency"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
       <dt>rfm_table</dt>
       <dd>an object of class <code>rfm_table</code></dd>
+      <dt>point_color</dt>
+      <dd>color of the scatter points</dd>
+      <dt>xaxis_title</dt>
+      <dd>x axis title</dd>
+      <dt>yaxis_title</dt>
+      <dd>y axis title</dd>
+      <dt>plot_title</dt>
+      <dd>title of the plot</dd>
     </dl>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
