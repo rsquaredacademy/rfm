@@ -4,11 +4,21 @@
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom grDevices topo.colors
 #' @title RFM Heatmap
-#' @description The heat map shows the average monetary value for different 
-#' categories of recency and frequency scores. Higher scores of frequency and 
-#' recency are characterized by higher average monetary value as indicated by 
+#' @description The heat map shows the average monetary value for different
+#' categories of recency and frequency scores. Higher scores of frequency and
+#' recency are characterized by higher average monetary value as indicated by
 #' the darker areas in the heatmap.
 #' @param data an object of class \code{rfm_table}
+#' @param plot_title title of the plot
+#' @param plot_title_justify horizontal justification of the plot; 0 for left
+#' justified and 1 for right justified
+#' @param xaxis_title x axis title
+#' @param yaxis_title y axis title
+#' @param legend_title legend title
+#' @param brewer_n indicates the number of colors in the palette; RColorBrewer is
+#' used for the color palette of the heatmap; check the documentation of
+#' \code{brewer.pal}
+#' @param brewer_name palette name; heck the documentation of \code{brewer.pal}
 #' @return Heatmap
 #' @examples
 #' # rfm table
@@ -20,7 +30,11 @@
 #'
 #' @export
 #'
-rfm_heatmap <- function(data) {
+rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
+                        plot_title_justify = 0.5, xaxis_title = "Frequency",
+                        yaxis_title = "Recency",
+                        legend_title = "Mean Monetary Value",
+                        brewer_n = 5, brewer_name = "PuBu") {
   mapdata <- heatmap_data(rfm_table = data)
 
   ulm <- mapdata %>%
@@ -33,19 +47,24 @@ rfm_heatmap <- function(data) {
     min() %>%
     floor()
 
-  guide_breaks <- seq(llm, ulm, length.out = 6) %>%
+  bins <- mapdata %>%
+    use_series(frequency_score) %>%
+    max
+
+  guide_breaks <- seq(llm, ulm, length.out = bins) %>%
     round()
 
   p <- ggplot(data = mapdata) +
     geom_tile(aes(x = frequency_score, y = recency_score, fill = monetary)) +
     scale_fill_gradientn(
-      limits = c(llm, ulm), colours = brewer.pal(n = 5, name = "PuBu"),
-      breaks = guide_breaks,
-      name = "Mean Monetary Value"
+      limits = c(llm, ulm), colours = brewer.pal(n = brewer_n,
+                                                 name = brewer_name),
+      # breaks = guide_breaks,
+      name = legend_title
     ) +
-    ggtitle("RFM Heat Map") + xlab("Frequency") + ylab("Recency") +
+    ggtitle(plot_title) + xlab(xaxis_title) + ylab(yaxis_title) +
     theme(
-      plot.title = element_text(hjust = 0.5)
+      plot.title = element_text(hjust = plot_title_justify)
     )
 
   print(p)
@@ -93,7 +112,7 @@ rfm_histograms <- function(rfm_table) {
 
 #' @importFrom ggplot2 geom_bar facet_grid
 #' @title RFM Bar Chart
-#' @description Examine the distribution of monetary scores for the different 
+#' @description Examine the distribution of monetary scores for the different
 #' combinations of frequency and recency scores.
 #' @param rfm_table an object of class \code{rfm_table}
 #' @return Bar Chart
