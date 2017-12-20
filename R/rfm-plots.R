@@ -141,10 +141,16 @@ rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
 #' @export
 #'
 rfm_bar_chart <- function(rfm_table) {
+
   data <- rfm_table %>%
     use_series(rfm)
 
-  data$recency_score <- factor(data$recency_score, levels = c(5, 4, 3, 2, 1))
+  rlevels <- rfm_table %>%
+    use_series(recency_bins) %>%
+    seq_len() %>%
+    rev()
+
+  data$recency_score <- factor(data$recency_score, levels = rlevels)
 
   p <- ggplot(data = data) +
     geom_bar(aes(x = monetary_score), fill = "blue") +
