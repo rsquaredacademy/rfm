@@ -10,8 +10,8 @@
 #' the darker areas in the heatmap.
 #' @param data an object of class \code{rfm_table}
 #' @param plot_title title of the plot
-#' @param plot_title_justify horizontal justification of the plot; 0 for left
-#' justified and 1 for right justified
+#' @param plot_title_justify horizontal justification of the plot title;
+#' 0 for left justified and 1 for right justified
 #' @param xaxis_title x axis title
 #' @param yaxis_title y axis title
 #' @param legend_title legend title
@@ -75,6 +75,16 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
 #' @title RFM Histograms
 #' @description Histograms of recency, frequency and monetary value
 #' @param rfm_table an object of class \code{rfm_table}
+#' @param hist_bins number of bins of the histograms
+#' @param hist_color color of the histogram
+#' @param plot_title title of the plot
+#' @param xaxis_title x axis title
+#' @param yaxis_title y axis title
+#' @param hist_m_label label of the monetary value histogram
+#' @param hist_r_label label of the recency histogram
+#' @param hist_f_label label of the frequency histogram
+#' @param plot_title_justify horizontal justification of the plot title;
+#' 0 for left justified and 1 for right justified
 #' @return Histograms
 #' @examples
 #' # rfm table
@@ -86,25 +96,29 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
 #'
 #' @export
 #'
-rfm_histograms <- function(rfm_table) {
+rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
+                           plot_title = 'RFM Histograms', xaxis_title = ' ',
+                           yaxis_title = 'Count', hist_m_label = 'Monetary',
+                           hist_r_label = 'Recency', hist_f_label = 'Frequency',
+                           plot_title_justify = 0.5) {
   rfm_table %>%
     use_series(rfm) %>%
     select(recency_days, transaction_count, amount) %>%
     gather(rfm, score) %>%
     ggplot(aes(score)) +
-    geom_histogram(bins = 9, fill = "blue") +
-    ylab("Count") + ggtitle("RFM Histograms") + xlab(" ") +
+    geom_histogram(bins = hist_bins, fill = hist_color) +
+    ylab(yaxis_title) + ggtitle(plot_title) + xlab(xaxis_title) +
     facet_grid(
       . ~ rfm, scales = "free_x",
       labeller = labeller(
         rfm = c(
-          amount = "Monetary", recency_days = "Recency",
-          transaction_count = "Frequency"
+          amount = hist_m_label, recency_days = hist_r_label,
+          transaction_count = hist_f_label
         )
       )
     ) +
     theme(
-      plot.title = element_text(hjust = 0.5)
+      plot.title = element_text(hjust = plot_title_justify)
     )
 }
 

@@ -4,10 +4,32 @@
 \alias{rfm_histograms}
 \title{RFM Histograms}
 \usage{
-rfm_histograms(rfm_table)
+rfm_histograms(rfm_table, hist_bins = 9, hist_color = "blue",
+  plot_title = "RFM Histograms", xaxis_title = " ", yaxis_title = "Count",
+  hist_m_label = "Monetary", hist_r_label = "Recency",
+  hist_f_label = "Frequency", plot_title_justify = 0.5)
 }
 \arguments{
 \item{rfm_table}{an object of class \code{rfm_table}}
+
+\item{hist_bins}{number of bins of the histograms}
+
+\item{hist_color}{color of the histogram}
+
+\item{plot_title}{title of the plot}
+
+\item{xaxis_title}{x axis title}
+
+\item{yaxis_title}{y axis title}
+
+\item{hist_m_label}{label of the monetary value histogram}
+
+\item{hist_r_label}{label of the recency histogram}
+
+\item{hist_f_label}{label of the frequency histogram}
+
+\item{plot_title_justify}{horizontal justification of the plot title;
+0 for left justified and 1 for right justified}
 }
 \value{
 Histograms
