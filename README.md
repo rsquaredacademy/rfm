@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-## rfm: Tools for customer segmentation analysis <img src="hex_segmentr.png" align="right" />
+## rfm: Tools for customer segmentation analysis <img src="hex_rfm.png" align="right" />
 
 **Author:** [Aravind Hebbali](https://www.aravindhebbali.com)<br/>
 **License:**

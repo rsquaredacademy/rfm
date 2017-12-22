@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-rfm: Tools for customer segmentation analysis <img src="hex_segmentr.png" align="right" />  
+rfm: Tools for customer segmentation analysis <img src="hex_rfm.png" align="right" />  
 ---------
 
 
