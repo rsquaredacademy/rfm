@@ -1,7 +1,7 @@
 Type: Package
 Package: segmentr
 Title: Tools for Customer Segmentation Analysis
-Version: 0.1.0
+Version: 0.0.1
 Authors@R: person("Aravind", "Hebbali", email = "hebbali.aravind@gmail.com", role = c("aut", "cre"))
 Description: Tools for segmentation of customers using RFM (recency, frequency and monetary) analysis. Generate RFM score,
     heatmap for average monetary value for different recency and frequency scores, histograms of scores, examine the distribution

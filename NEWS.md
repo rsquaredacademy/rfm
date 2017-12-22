@@ -1,6 +1,3 @@
-# segmentr 0.1.0
+# segmentr 0.0.1
 
 First release
-
-
-
