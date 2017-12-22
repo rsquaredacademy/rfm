@@ -1,6 +1,6 @@
 Type: Package
-Package: segmentr
-Title: Tools for Customer Segmentation Analysis
+Package: rfm
+Title: Recency, Frequency and Monetary Value Analysis
 Version: 0.0.1
 Authors@R: person("Aravind", "Hebbali", email = "hebbali.aravind@gmail.com", role = c("aut", "cre"))
 Description: Tools for segmentation of customers using RFM (recency, frequency and monetary) analysis. Generate RFM score,
@@ -8,8 +8,8 @@ Description: Tools for segmentation of customers using RFM (recency, frequency a
     of monetary score for the different combinations of frequency and recency scores, scatter plots for examining the relationship
     between the scores.
 License: MIT + file LICENSE
-URL: https://rsquaredacademy.github.io/segmentr/, https://github.com/rsquaredacademy/segmentr
-BugReports: https://github.com/rsquaredacademy/segmentr/issues
+URL: https://rsquaredacademy.github.io/rfm/, https://github.com/rsquaredacademy/rfm
+BugReports: https://github.com/rsquaredacademy/rfm/issues
 Depends: 
     R (>= 3.2.4)
 Imports: 

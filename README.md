@@ -1,42 +1,42 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-## segmentr: Tools for customer segmentation analysis <img src="hex_segmentr.png" align="right" />
+## rfm: Tools for customer segmentation analysis <img src="hex_segmentr.png" align="right" />
 
 **Author:** [Aravind Hebbali](https://www.aravindhebbali.com)<br/>
 **License:**
 [MIT](https://opensource.org/licenses/MIT)
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/segmentr)](https://cran.r-project.org/package=segmentr)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/rfm)](https://cran.r-project.org/package=rfm)
 [![Travis-CI Build
-Status](https://travis-ci.org/rsquaredacademy/segmentr.svg?branch=master)](https://travis-ci.org/rsquaredacademy/segmentr)
+Status](https://travis-ci.org/rsquaredacademy/rfm.svg?branch=master)](https://travis-ci.org/rsquaredacademy/rfm)
 [![AppVeyor Build
-Status](https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/segmentr?branch=master&svg=true)](https://ci.appveyor.com/project/rsquaredacademy/segmentr)
+Status](https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/rfm?branch=master&svg=true)](https://ci.appveyor.com/project/rsquaredacademy/rfm)
 [![Coverage
-Status](https://img.shields.io/codecov/c/github/rsquaredacademy/segmentr/master.svg)](https://codecov.io/github/rsquaredacademy/segmentr?branch=master)
+Status](https://img.shields.io/codecov/c/github/rsquaredacademy/rfm/master.svg)](https://codecov.io/github/rsquaredacademy/rfm?branch=master)
 ![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
 
-In the long run, the goal of segmentr is to develop tools for customer
+In the long run, the goal of rfm is to develop tools for customer
 segmentation and lifetime value analysis. Included in version 0.0.1 are
 tools for RFM (recency, frequency and monetary) analysis.
 
 ## Installation
 
-You can install segmentr from github with:
+You can install rfm from github with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("rsquaredacademy/segmentr")
+devtools::install_github("rsquaredacademy/rfm")
 ```
 
 ## Consistent Prefix
 
-segmentr uses consistent prefix `rfm_` for easy tab completion.
+rfm uses consistent prefix `rfm_` for easy tab completion.
 
 ## Vignettes
 
   - [Introduction to
-    RFM](http://www.rsquaredacademy.com/segmentr/articles/Introduction_to_RFM.html)
+    RFM](http://www.rsquaredacademy.com/rfm/articles/Introduction_to_RFM.html)
 
 ## Usage
 

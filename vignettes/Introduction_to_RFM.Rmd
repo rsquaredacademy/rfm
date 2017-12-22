@@ -12,7 +12,7 @@ vignette: >
 ## Introduction
 
 ```{r, echo=FALSE, message=FALSE}
-library(segmentr)
+library(rfm)
 library(knitr)
 library(kableExtra)
 library(magrittr)
@@ -41,7 +41,7 @@ To calculate the RFM score for each customer we need transaction data which shou
 - date of transaction/order
 - transaction/order amount
 
-`segmentr` includes a sample data set `rfm_data` which includes the above details:
+`rfm` includes a sample data set `rfm_data` which includes the above details:
 
 ```{r rfm_data}
 rfm_data

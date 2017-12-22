@@ -1,9 +1,9 @@
-#' \code{segmentr} package
+#' \code{rfm} package
 #'
-#' Tools for segmentation and clustering
+#' Tools for customer segmentation analysis
 #'
 #' @docType package
-#' @name segmentr
+#' @name rfm
 NULL
 
 ## quiets concerns of R CMD check re: the .'s that appear in pipelines

@@ -1,3 +1,3 @@
-# segmentr 0.0.1
+# rfm 0.0.1
 
 First release
