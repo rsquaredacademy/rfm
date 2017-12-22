@@ -1,16 +1,26 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-segmentr: Tools for segmentation and clustering <img src="hex_segmentr.png" align="right" />
---------------------------------------------------------------------------------------------
 
-**Author:** [Aravind Hebbali](https://www.aravindhebbali.com)<br/> **License:** [MIT](https://opensource.org/licenses/MIT)
+## segmentr: Tools for customer segmentation analysis <img src="hex_segmentr.png" align="right" />
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/segmentr)](https://cran.r-project.org/package=segmentr) [![Travis-CI Build Status](https://travis-ci.org/rsquaredacademy/segmentr.svg?branch=master)](https://travis-ci.org/rsquaredacademy/segmentr) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/segmentr?branch=master&svg=true)](https://ci.appveyor.com/project/rsquaredacademy/segmentr) [![Coverage Status](https://img.shields.io/codecov/c/github/rsquaredacademy/segmentr/master.svg)](https://codecov.io/github/rsquaredacademy/segmentr?branch=master) [![](https://cranlogs.r-pkg.org/badges/grand-total/segmentr)](https://cran.r-project.org/package=segmentr) ![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
+**Author:** [Aravind Hebbali](https://www.aravindhebbali.com)<br/>
+**License:**
+[MIT](https://opensource.org/licenses/MIT)
 
-In the long run, the goal of segmentr is to develop tools for segmentation and clustering. Included in version 0.1.0 are tools for RFM (recency, frequency and monetary) analysis.
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/segmentr)](https://cran.r-project.org/package=segmentr)
+[![Travis-CI Build
+Status](https://travis-ci.org/rsquaredacademy/segmentr.svg?branch=master)](https://travis-ci.org/rsquaredacademy/segmentr)
+[![AppVeyor Build
+Status](https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/segmentr?branch=master&svg=true)](https://ci.appveyor.com/project/rsquaredacademy/segmentr)
+[![Coverage
+Status](https://img.shields.io/codecov/c/github/rsquaredacademy/segmentr/master.svg)](https://codecov.io/github/rsquaredacademy/segmentr?branch=master)
+![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
 
-Installation
-------------
+In the long run, the goal of segmentr is to develop tools for customer
+segmentation and lifetime value analysis. Included in version 0.0.1 are
+tools for RFM (recency, frequency and monetary) analysis.
+
+## Installation
 
 You can install segmentr from github with:
 
@@ -19,36 +29,40 @@ You can install segmentr from github with:
 devtools::install_github("rsquaredacademy/segmentr")
 ```
 
-Consistent Prefix
------------------
+## Consistent Prefix
 
 segmentr uses consistent prefix `rfm_` for easy tab completion.
 
-Vignettes
----------
+## Vignettes
 
--   [Introduction to RFM](http://www.rsquaredacademy.com/segmentr/articles/Introduction_to_RFM.html)
+  - [Introduction to
+    RFM](http://www.rsquaredacademy.com/segmentr/articles/Introduction_to_RFM.html)
 
-Usage
------
+## Usage
 
 ### Introduction
 
-**RFM** (recency, frequency, monetary) analysis is a behavior based technique used to segment customers by examining their transaction history such as
+**RFM** (recency, frequency, monetary) analysis is a behavior based
+technique used to segment customers by examining their transaction
+history such as
 
--   how recently a customer has purchased (recency)
--   how often they purchase (frequency)
--   how much the customer spends (monetary)
+  - how recently a customer has purchased (recency)
+  - how often they purchase (frequency)
+  - how much the customer spends (monetary)
 
-It is based on the marketing axiom that **80% of your business comes from 20% of your customers**. RFM helps to identify customers who are more likely to respond to promotions by segmenting them into various categories.
+It is based on the marketing axiom that **80% of your business comes
+from 20% of your customers**. RFM helps to identify customers who are
+more likely to respond to promotions by segmenting them into various
+categories.
 
 ### Data
 
-To calculate the RFM score for each customer we need transaction data which should include the following:
+To calculate the RFM score for each customer we need transaction data
+which should include the following:
 
--   a unique customer id
--   date of transaction/order
--   transaction/order amount
+  - a unique customer id
+  - date of transaction/order
+  - transaction/order amount
 
 ### RFM Table
 
@@ -74,58 +88,65 @@ rfm_result
 #> # ... with 985 more rows
 ```
 
-Heat Map
---------
+## Heat Map
 
-The heat map shows the average monetary value for different categories of recency and frequency scores. Higher scores of frequency and recency are characterized by higher average monetary value as indicated by the darker areas in the heatmap.
+The heat map shows the average monetary value for different categories
+of recency and frequency scores. Higher scores of frequency and recency
+are characterized by higher average monetary value as indicated by the
+darker areas in the heatmap.
 
 ``` r
 rfm_heatmap(rfm_result)
 ```
 
-<img src="tools/README-heatmap-1.png" style="display: block; margin: auto;" />
+<img src="README-heatmap-1.png" style="display: block; margin: auto;" />
 
 ### Bar Chart
 
-Use `rfm_bar_chart()` to generate the distribution of monetary scores for the different combinations of frequency and recency scores.
+Use `rfm_bar_chart()` to generate the distribution of monetary scores
+for the different combinations of frequency and recency
+scores.
 
 ``` r
 rfm_bar_chart(rfm_result)
 ```
 
-<img src="tools/README-barchart-1.png" style="display: block; margin: auto;" />
+<img src="README-barchart-1.png" style="display: block; margin: auto;" />
 
 ### Histogram
 
 Use `rfm_histograms()` to examine the relative distribution of
 
--   monetary value (total revenue generated by each customer)
--   recency days (days since the most recent visit for each customer)
--   frequency (transaction count for each customer)
+  - monetary value (total revenue generated by each customer)
+  - recency days (days since the most recent visit for each customer)
+  - frequency (transaction count for each customer)
+
+<!-- end list -->
 
 ``` r
 rfm_histograms(rfm_result)
 ```
 
-<img src="tools/README-rfmhist-1.png" style="display: block; margin: auto;" />
+<img src="README-rfmhist-1.png" style="display: block; margin: auto;" />
 
 ### Customers by Orders
 
-Visualize the distribution of customers across orders.
+Visualize the distribution of customers across
+orders.
 
 ``` r
 rfm_order_dist(rfm_result)
 ```
 
-<img src="tools/README-rfmorders-1.png" style="display: block; margin: auto;" />
+<img src="README-rfmorders-1.png" style="display: block; margin: auto;" />
 
 ### Scatter Plots
 
 The best customers are those who:
 
--   bought most recently
--   most often
--   and spend the most
+  - bought most recently
+  - most often
+  - and spend the most
 
 Now let us examine the relationship between the above.
 
@@ -135,7 +156,7 @@ Now let us examine the relationship between the above.
 rfm_rm_plot(rfm_result)
 ```
 
-<img src="tools/README-mr-1.png" style="display: block; margin: auto;" />
+<img src="README-mr-1.png" style="display: block; margin: auto;" />
 
 #### Frequency vs Monetary Value
 
@@ -143,7 +164,7 @@ rfm_rm_plot(rfm_result)
 rfm_fm_plot(rfm_result)
 ```
 
-<img src="tools/README-fm-1.png" style="display: block; margin: auto;" />
+<img src="README-fm-1.png" style="display: block; margin: auto;" />
 
 #### Recency vs Frequency
 
@@ -151,6 +172,8 @@ rfm_fm_plot(rfm_result)
 rfm_rf_plot(rfm_result)
 ```
 
-<img src="tools/README-fr-1.png" style="display: block; margin: auto;" />
+<img src="README-fr-1.png" style="display: block; margin: auto;" />
 
-Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
+Please note that this project is released with a [Contributor Code of
+Conduct](CONDUCT.md). By participating in this project you agree to
+abide by its terms.
