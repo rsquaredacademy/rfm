@@ -6,10 +6,20 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Recency, Frequency and Monetary Value Analysis • rfm</title>
-<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<meta name="description" content="Rsquared Academy rfm Package">
+    <meta name="author" content="Rsquared Academy">
+    <link rel="canonical" href="https://rfm.rsquaredacademy.com/" />
+    <meta property="og:url" content="https://rfm.rsquaredacademy.com/"/>
+    <meta property="og:title" content="Rsquared Academy"/>
+    <meta property="og:site_name" content="rfm.rsquaredacademy.com"/>
+    <meta property="og:description" content="Rsquared Academy rfm Package."/>
+    <meta name="keywords" content="aravind, hebbali, rsquared, academy, interactive, shiny, rfm, package, recency, frequency, monetary, R" />
+    <meta name="description" content="Rsquared Academy olsrr Package" />
+
+<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="jquery.sticky-kit.min.js"></script><script src="pkgdown.js"></script><!-- mathjax --><script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
+<script src="jquery.sticky-kit.min.js"></script><script src="pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
@@ -85,7 +95,7 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <div id="rfm-tools-for-customer-segmentation-analysis" class="section level2">
 <h2 class="hasAnchor">
-<a href="#rfm-tools-for-customer-segmentation-analysis" class="anchor"> </a>rfm: Tools for customer segmentation analysis <img src="hex_rfm.png" align="right">
+<a href="#rfm-tools-for-customer-segmentation-analysis" class="anchor"></a>rfm: Tools for customer segmentation analysis <img src="hex_rfm.png" align="right">
 </h2>
 <p><strong>Author:</strong> <a href="https://www.aravindhebbali.com">Aravind Hebbali</a><br><strong>License:</strong> <a href="https://opensource.org/licenses/MIT">MIT</a></p>
 <p><a href="https://cran.r-project.org/package=rfm"><img src="http://www.r-pkg.org/badges/version/rfm" alt="CRAN_Status_Badge"></a> <a href="https://travis-ci.org/rsquaredacademy/rfm"><img src="https://travis-ci.org/rsquaredacademy/rfm.svg?branch=master" alt="Travis-CI Build Status"></a> <a href="https://ci.appveyor.com/project/rsquaredacademy/rfm"><img src="https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/rfm?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a> <a href="https://codecov.io/github/rsquaredacademy/rfm?branch=master"><img src="https://img.shields.io/codecov/c/github/rsquaredacademy/rfm/master.svg" alt="Coverage Status"></a> <img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg"></p>
@@ -93,29 +103,29 @@
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#installation" class="anchor"> </a>Installation</h2>
+<a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install rfm from github with:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"rsquaredacademy/rfm"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"rsquaredacademy/rfm"</span>)</a></code></pre></div>
 </div>
 <div id="consistent-prefix" class="section level2">
 <h2 class="hasAnchor">
-<a href="#consistent-prefix" class="anchor"> </a>Consistent Prefix</h2>
+<a href="#consistent-prefix" class="anchor"></a>Consistent Prefix</h2>
 <p>rfm uses consistent prefix <code>rfm_</code> for easy tab completion.</p>
 </div>
 <div id="vignettes" class="section level2">
 <h2 class="hasAnchor">
-<a href="#vignettes" class="anchor"> </a>Vignettes</h2>
+<a href="#vignettes" class="anchor"></a>Vignettes</h2>
 <ul>
 <li><a href="http://www.rsquaredacademy.com/rfm/articles/Introduction_to_RFM.html">Introduction to RFM</a></li>
 </ul>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
-<a href="#usage" class="anchor"> </a>Usage</h2>
+<a href="#usage" class="anchor"></a>Usage</h2>
 <div id="introduction" class="section level3">
 <h3 class="hasAnchor">
-<a href="#introduction" class="anchor"> </a>Introduction</h3>
+<a href="#introduction" class="anchor"></a>Introduction</h3>
 <p><strong>RFM</strong> (recency, frequency, monetary) analysis is a behavior based technique used to segment customers by examining their transaction history such as</p>
 <ul>
 <li>how recently a customer has purchased (recency)</li>
@@ -126,7 +136,7 @@
 </div>
 <div id="data" class="section level3">
 <h3 class="hasAnchor">
-<a href="#data" class="anchor"> </a>Data</h3>
+<a href="#data" class="anchor"></a>Data</h3>
 <p>To calculate the RFM score for each customer we need transaction data which should include the following:</p>
 <ul>
 <li>a unique customer id</li>
@@ -136,43 +146,55 @@
 </div>
 <div id="rfm-table" class="section level3">
 <h3 class="hasAnchor">
-<a href="#rfm-table" class="anchor"> </a>RFM Table</h3>
+<a href="#rfm-table" class="anchor"></a>RFM Table</h3>
 <p>Use <code><a href="reference/rfm_table.html">rfm_table()</a></code> to generate the RFM score.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">analysis_date &lt;-<span class="st"> </span>lubridate<span class="op">::</span><span class="kw">as_date</span>(<span class="st">'2006-12-31'</span>, <span class="dt">tz =</span> <span class="st">'UTC'</span>)</a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">analysis_date &lt;-<span class="st"> </span>lubridate<span class="op">::</span><span class="kw"><a href="http://lubridate.tidyverse.org/reference/as_date.html">as_date</a></span>(<span class="st">'2006-12-31'</span>, <span class="dt">tz =</span> <span class="st">'UTC'</span>)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">rfm_result &lt;-<span class="st"> </span><span class="kw"><a href="reference/rfm_table.html">rfm_table</a></span>(rfm_data, customer_id, order_date, revenue, analysis_date)</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">rfm_result</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt; # A tibble: 995 x 9</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt;           customer_id date_most_recent recency_days transaction_count amount recency_score frequency_score monetary_score rfm_score</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">#&gt;                 &lt;chr&gt;           &lt;date&gt;        &lt;dbl&gt;             &lt;dbl&gt;  &lt;dbl&gt;         &lt;int&gt;           &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt;  1 Abbey O'Reilly DVM       2006-06-09          205                 6    472             3               4              3       343</span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt;  2         Add Senger       2006-08-13          140                 3    340             4               1              2       412</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt;  3     Aden Lesch Sr.       2006-06-20          194                 4    405             3               2              3       323</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt;  4     Admiral Senger       2006-08-21          132                 5    448             4               3              3       433</span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt;  5     Agness O'Keefe       2006-10-02           90                 9    843             5               5              5       555</span></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#&gt;  6      Aileen Barton       2006-10-08           84                 9    763             5               5              5       555</span></a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt;  7     Ailene Hermann       2006-03-25          281                 8    699             3               5              5       355</span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt;  8  Aiyanna Bruen PhD       2006-04-29          246                 4    157             3               2              1       321</span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt;  9    Ala Schmidt DDS       2006-01-16          349                 3    363             2               1              2       212</span></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt; 10      Alannah Borer       2005-04-21          619                 4    196             1               2              1       121</span></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#&gt; # ... with 985 more rows</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt;    customer_id        date_most_recent recency_days transaction_count</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">#&gt;    &lt;chr&gt;              &lt;date&gt;                  &lt;dbl&gt;             &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt;  1 Abbey O'Reilly DVM 2006-06-09              205                6.00</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt;  2 Add Senger         2006-08-13              140                3.00</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt;  3 Aden Lesch Sr.     2006-06-20              194                4.00</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt;  4 Admiral Senger     2006-08-21              132                5.00</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt;  5 Agness O'Keefe     2006-10-02               90.0              9.00</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#&gt;  6 Aileen Barton      2006-10-08               84.0              9.00</span></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt;  7 Ailene Hermann     2006-03-25              281                8.00</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt;  8 Aiyanna Bruen PhD  2006-04-29              246                4.00</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt;  9 Ala Schmidt DDS    2006-01-16              349                3.00</span></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt; 10 Alannah Borer      2005-04-21              619                4.00</span></a>
+<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#&gt;    amount recency_score frequency_score monetary_score rfm_score</span></a>
+<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">#&gt;     &lt;dbl&gt;         &lt;int&gt;           &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt;  1    472             3               4              3       343</span></a>
+<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">#&gt;  2    340             4               1              2       412</span></a>
+<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co">#&gt;  3    405             3               2              3       323</span></a>
+<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="co">#&gt;  4    448             4               3              3       433</span></a>
+<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="co">#&gt;  5    843             5               5              5       555</span></a>
+<a class="sourceLine" id="cb2-24" data-line-number="24"><span class="co">#&gt;  6    763             5               5              5       555</span></a>
+<a class="sourceLine" id="cb2-25" data-line-number="25"><span class="co">#&gt;  7    699             3               5              5       355</span></a>
+<a class="sourceLine" id="cb2-26" data-line-number="26"><span class="co">#&gt;  8    157             3               2              1       321</span></a>
+<a class="sourceLine" id="cb2-27" data-line-number="27"><span class="co">#&gt;  9    363             2               1              2       212</span></a>
+<a class="sourceLine" id="cb2-28" data-line-number="28"><span class="co">#&gt; 10    196             1               2              1       121</span></a>
+<a class="sourceLine" id="cb2-29" data-line-number="29"><span class="co">#&gt; # ... with 985 more rows</span></a></code></pre></div>
 </div>
 </div>
 <div id="heat-map" class="section level2">
 <h2 class="hasAnchor">
-<a href="#heat-map" class="anchor"> </a>Heat Map</h2>
+<a href="#heat-map" class="anchor"></a>Heat Map</h2>
 <p>The heat map shows the average monetary value for different categories of recency and frequency scores. Higher scores of frequency and recency are characterized by higher average monetary value as indicated by the darker areas in the heatmap.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="reference/rfm_heatmap.html">rfm_heatmap</a></span>(rfm_result)</a></code></pre></div>
 <p><img src="README-heatmap-1.png" width="768" style="display: block; margin: auto;"></p>
 <div id="bar-chart" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bar-chart" class="anchor"> </a>Bar Chart</h3>
+<a href="#bar-chart" class="anchor"></a>Bar Chart</h3>
 <p>Use <code><a href="reference/rfm_bar_chart.html">rfm_bar_chart()</a></code> to generate the distribution of monetary scores for the different combinations of frequency and recency scores.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="reference/rfm_bar_chart.html">rfm_bar_chart</a></span>(rfm_result)</a></code></pre></div>
 <p><img src="README-barchart-1.png" width="768" style="display: block; margin: auto;"></p>
 </div>
 <div id="histogram" class="section level3">
 <h3 class="hasAnchor">
-<a href="#histogram" class="anchor"> </a>Histogram</h3>
+<a href="#histogram" class="anchor"></a>Histogram</h3>
 <p>Use <code><a href="reference/rfm_histograms.html">rfm_histograms()</a></code> to examine the relative distribution of</p>
 <ul>
 <li>monetary value (total revenue generated by each customer)</li>
@@ -184,14 +206,14 @@
 </div>
 <div id="customers-by-orders" class="section level3">
 <h3 class="hasAnchor">
-<a href="#customers-by-orders" class="anchor"> </a>Customers by Orders</h3>
+<a href="#customers-by-orders" class="anchor"></a>Customers by Orders</h3>
 <p>Visualize the distribution of customers across orders.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="reference/rfm_order_dist.html">rfm_order_dist</a></span>(rfm_result)</a></code></pre></div>
 <p><img src="README-rfmorders-1.png" width="768" style="display: block; margin: auto;"></p>
 </div>
 <div id="scatter-plots" class="section level3">
 <h3 class="hasAnchor">
-<a href="#scatter-plots" class="anchor"> </a>Scatter Plots</h3>
+<a href="#scatter-plots" class="anchor"></a>Scatter Plots</h3>
 <p>The best customers are those who:</p>
 <ul>
 <li>bought most recently</li>
@@ -201,19 +223,19 @@
 <p>Now let us examine the relationship between the above.</p>
 <div id="recency-vs-monetary-value" class="section level4">
 <h4 class="hasAnchor">
-<a href="#recency-vs-monetary-value" class="anchor"> </a>Recency vs Monetary Value</h4>
+<a href="#recency-vs-monetary-value" class="anchor"></a>Recency vs Monetary Value</h4>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="reference/rfm_rm_plot.html">rfm_rm_plot</a></span>(rfm_result)</a></code></pre></div>
 <p><img src="README-mr-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 <div id="frequency-vs-monetary-value" class="section level4">
 <h4 class="hasAnchor">
-<a href="#frequency-vs-monetary-value" class="anchor"> </a>Frequency vs Monetary Value</h4>
+<a href="#frequency-vs-monetary-value" class="anchor"></a>Frequency vs Monetary Value</h4>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="reference/rfm_rm_plot.html">rfm_fm_plot</a></span>(rfm_result)</a></code></pre></div>
 <p><img src="README-fm-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 <div id="recency-vs-frequency" class="section level4">
 <h4 class="hasAnchor">
-<a href="#recency-vs-frequency" class="anchor"> </a>Recency vs Frequency</h4>
+<a href="#recency-vs-frequency" class="anchor"></a>Recency vs Frequency</h4>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="reference/rfm_rm_plot.html">rfm_rf_plot</a></span>(rfm_result)</a></code></pre></div>
 <p><img src="README-fr-1.png" width="672" style="display: block; margin: auto;"></p>
 <p>Please note that this project is released with a <a href="CONDUCT.md">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</p>
@@ -224,20 +246,21 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Links</h2>
+    <h2 class="hasAnchor">
+<a href="#sidebar" class="anchor"></a>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://rsquaredacademy.github.io/rfm/">https://​rsquaredacademy.github.io/​rfm/​</a>
+<li>Browse source code at <br><a href="https://github.com/rsquaredacademy/rfm">https://​github.com/​rsquaredacademy/​rfm</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/rsquaredacademy/rfm/issues">https://​github.com/​rsquaredacademy/​rfm/​issues</a>
 </li>
-<li>Learn more at <br><a href="http://www.rsquaredacademy.com">http://​www.rsquaredacademy.com</a>
+<li>Learn more at <br><a href="https://www.rsquaredacademy.com">https://​www.rsquaredacademy.com</a>
 </li>
 </ul>
 <h2>License</h2>
-<p><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE">LICENSE</a></p>
+<p><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE.html">LICENSE</a></p>
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Aravind Hebbali <br><small class="roles"> Author, maintainer </small> </li>
+<li><a href="reference/index.html">Aravind Hebbali </a><br><small class="roles"> Author, maintainer </small> </li>
 </ul>
 </div>
 
@@ -245,7 +268,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Aravind Hebbali.</p>
+  <p>Developed by <a href="reference/index.html">Aravind Hebbali</a>.</p>
 </div>
 
 <div class="pkgdown">

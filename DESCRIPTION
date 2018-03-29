@@ -8,7 +8,7 @@ Description: Tools for segmentation of customers using RFM (recency, frequency a
     of monetary score for the different combinations of frequency and recency scores, scatter plots for examining the relationship
     between the scores.
 License: MIT + file LICENSE
-URL: https://rsquaredacademy.github.io/rfm/, https://github.com/rsquaredacademy/rfm
+URL: https://github.com/rsquaredacademy/rfm, https://rfm.rsquaredacademy.com/ 
 BugReports: https://github.com/rsquaredacademy/rfm/issues
 Depends: 
     R (>= 3.2.4)
