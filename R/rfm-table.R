@@ -157,6 +157,7 @@ print.rfm_table_order <- function(x, ...) {
 #' @param customer_id Unique id of the customer.
 #' @param n_transactions Number of transactions/orders.
 #' @param recency_days Number of days since the last transaction.
+#' @param total_revenue Total revenue from the customer.
 #' @param analysis_date Date of analysis.
 #' @param recency_bins Number of bins for recency.
 #' @param frequency_bins Number of bins for frequency.

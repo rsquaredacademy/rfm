@@ -17,6 +17,8 @@ rfm_table_customer(data = NULL, customer_id = NULL, n_transactions = NULL,
 
 \item{recency_days}{Number of days since the last transaction.}
 
+\item{total_revenue}{Total revenue from the customer.}
+
 \item{analysis_date}{Date of analysis.}
 
 \item{recency_bins}{Number of bins for recency.}

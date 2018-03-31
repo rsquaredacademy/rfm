@@ -23,7 +23,7 @@
 #' @examples
 #' # rfm table
 #' analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
-#' rfm_result <- rfm_table_order(rfm_data, customer_id, order_date, revenue, analysis_date)
+#' rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
 #'
 #' # heat map
 #' rfm_heatmap(rfm_result)
@@ -89,7 +89,7 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
 #' @examples
 #' # rfm table
 #' analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
-#' rfm_result <- rfm_table_order(rfm_data, customer_id, order_date, revenue, analysis_date)
+#' rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
 #'
 #' # histograms
 #' rfm_histograms(rfm_result)
@@ -138,7 +138,7 @@ rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
 #' @examples
 #' # rfm table
 #' analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
-#' rfm_result <- rfm_table_order(rfm_data, customer_id, order_date, revenue, analysis_date)
+#' rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
 #'
 #' # bar chart
 #' rfm_bar_chart(rfm_result)
@@ -194,7 +194,7 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #' @examples
 #' # rfm table
 #' analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
-#' rfm_result <- rfm_table_order(rfm_data, customer_id, order_date, revenue, analysis_date)
+#' rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
 #'
 #' # bar chart
 #' rfm_order_dist(rfm_result)
@@ -240,7 +240,7 @@ rfm_order_dist <- function(rfm_table, bar_color = 'blue',
 #' @examples
 #' # rfm table
 #' analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
-#' rfm_result <- rfm_table_order(rfm_data, customer_id, order_date, revenue, analysis_date)
+#' rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
 #'
 #' # monetary value vs recency
 #' rfm_rm_plot(rfm_result)
