@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>RFM transaction data — rfm_data_orders â€¢ rfm</title>
+<title>RFM customer data — rfm_data_customer â€¢ rfm</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -101,21 +101,23 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>RFM transaction data</h1>
+    <h1>RFM customer data</h1>
     </div>
 
     
-    <p>A dataset containing transactions of different customers.</p>
+    <p>A dataset containing customer level data.</p>
     
 
-    <pre class="usage"><span class='no'>rfm_data_orders</span></pre>
+    <pre class="usage"><span class='no'>rfm_data_customer</span></pre>
         
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A tibble with 49.6 rows and 3 variables:</p><dl class='dl-horizontal'>
-  <dt>order_date</dt><dd><p>order date</p></dd>
-  <dt>customer_id</dt><dd><p>customer id</p></dd>
-  <dt>revenue</dt><dd><p>transaction amount</p></dd>
+    <p>A tibble with 39,999 rows and 5 variables:</p><dl class='dl-horizontal'>
+  <dt>customer_id</dt><dd><p>Customer id.</p></dd>
+  <dt>total_amount</dt><dd><p>Total amount of all orders.</p></dd>
+  <dt>most_recent_visit</dt><dd><p>Date of the most recent transaction.</p></dd>
+  <dt>number_of_purchases</dt><dd><p>Total number of transactions/orders.</p></dd>
+  <dt>purchase_interval</dt><dd><p>Number of days since last transaction/order.</p></dd>
 </dl>
     
 

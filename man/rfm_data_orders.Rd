@@ -3,7 +3,7 @@
 \docType{data}
 \name{rfm_data_orders}
 \alias{rfm_data_orders}
-\title{RFM Data Set}
+\title{RFM transaction data}
 \format{A tibble with 49.6 rows and 3 variables:
 \describe{
   \item{order_date}{order date}
