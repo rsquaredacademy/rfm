@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Customers by Orders — rfm_order_dist â€¢ rfm</title>
+<title>Customers by orders — rfm_order_dist â€¢ rfm</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -101,11 +101,11 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Customers by Orders</h1>
+    <h1>Customers by orders</h1>
     </div>
 
     
-    <p>Visualize the distribution of customers across orders</p>
+    <p>Visualize the distribution of customers across orders.</p>
     
 
     <pre class="usage"><span class='fu'>rfm_order_dist</span>(<span class='no'>rfm_table</span>, <span class='kw'>bar_color</span> <span class='kw'>=</span> <span class='st'>"blue"</span>, <span class='kw'>xaxis_title</span> <span class='kw'>=</span> <span class='st'>"Orders"</span>,
@@ -117,43 +117,51 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>rfm_table</th>
-      <td><p>an object of class <code>rfm_table</code></p></td>
+      <td><p>An object of class <code>rfm_table</code>.</p></td>
     </tr>
     <tr>
       <th>bar_color</th>
-      <td><p>color of the bars</p></td>
+      <td><p>Color of the bars.</p></td>
     </tr>
     <tr>
       <th>xaxis_title</th>
-      <td><p>x axis title</p></td>
+      <td><p>X axis title.</p></td>
     </tr>
     <tr>
       <th>yaxis_title</th>
-      <td><p>y axis title</p></td>
+      <td><p>Y axis title.</p></td>
     </tr>
     <tr>
       <th>plot_title</th>
-      <td><p>title of the plot</p></td>
+      <td><p>Title of the plot.</p></td>
     </tr>
     <tr>
       <th>plot_title_justify</th>
-      <td><p>horizontal justification of the plot title;
-0 for left justified and 1 for right justified</p></td>
+      <td><p>Horizontal justification of the plot title;
+0 for left justified and 1 for right justified.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Bar Chart</p>
+    <p>Bar chart.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># rfm table</span>
+    <pre class="examples"><div class='input'><span class='co'># using transaction data</span>
 <span class='no'>analysis_date</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/as_date.html'>as_date</a></span>(<span class='st'>'2006-12-31'</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>'UTC'</span>)
-<span class='no'>rfm_result</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rfm_table_order.html'>rfm_table_order</a></span>(<span class='no'>rfm_data_orders</span>, <span class='no'>customer_id</span>, <span class='no'>order_date</span>, <span class='no'>revenue</span>, <span class='no'>analysis_date</span>)
+<span class='no'>rfm_order</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rfm_table_order.html'>rfm_table_order</a></span>(<span class='no'>rfm_data_orders</span>, <span class='no'>customer_id</span>, <span class='no'>order_date</span>,
+<span class='no'>revenue</span>, <span class='no'>analysis_date</span>)
 
-<span class='co'># bar chart</span>
-<span class='fu'>rfm_order_dist</span>(<span class='no'>rfm_result</span>)</div><div class='img'><img src='rfm_order_dist-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='co'># order distribution</span>
+<span class='fu'>rfm_order_dist</span>(<span class='no'>rfm_order</span>)</div><div class='img'><img src='rfm_order_dist-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='co'># using customer data</span>
+<span class='no'>analysis_date</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/as_date.html'>as_date</a></span>(<span class='st'>'2007-01-01'</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>'UTC'</span>)
+<span class='no'>rfm_customer</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rfm_table_customer.html'>rfm_table_customer</a></span>(<span class='no'>rfm_data_customer</span>, <span class='no'>customer_id</span>,
+<span class='no'>number_of_purchases</span>, <span class='no'>purchase_interval</span>, <span class='no'>total_amount</span>, <span class='no'>analysis_date</span>)
+
+<span class='co'># order distribution</span>
+<span class='fu'>rfm_order_dist</span>(<span class='no'>rfm_customer</span>)</div><div class='img'><img src='rfm_order_dist-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

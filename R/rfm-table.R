@@ -41,11 +41,12 @@ rfm_table_order.default <- function(data = NULL, customer_id = NULL, order_date 
                               revenue = NULL, analysis_date = NULL, recency_bins = 5,
                               frequency_bins = 5, monetary_bins = 5, ...) {
 
-  cust_id <- enquo(customer_id)
-  odate <- enquo(order_date)
+  cust_id  <- enquo(customer_id)
+  odate    <- enquo(order_date)
   revenues <- enquo(revenue)
 
-  result <- data %>%
+  result <-
+    data %>%
     select(!! cust_id, !! odate, !! revenues) %>%
     group_by(!! cust_id) %>%
     summarise(
@@ -60,9 +61,9 @@ rfm_table_order.default <- function(data = NULL, customer_id = NULL, order_date 
       amount
     )
 
-  result$recency_score <- NA
+  result$recency_score   <- NA
   result$frequency_score <- NA
-  result$monetary_score <- NA
+  result$monetary_score  <- NA
 
   rscore <-
     recency_bins %>%
@@ -130,9 +131,11 @@ rfm_table_order.default <- function(data = NULL, customer_id = NULL, order_date 
   result$transaction_count <- as.numeric(result$transaction_count)
 
   out <- list(
-    rfm = result, analysis_date = analysis_date,
-    frequency_bins = frequency_bins, recency_bins = recency_bins,
-    monetary_bins = monetary_bins
+    rfm            = result,
+    analysis_date  = analysis_date,
+    frequency_bins = frequency_bins,
+    recency_bins   = recency_bins,
+    monetary_bins  = monetary_bins
   )
 
   class(out) <- c("rfm_table_order", "tibble", "data.frame")
@@ -190,19 +193,19 @@ rfm_table_customer.default <- function(data = NULL, customer_id = NULL, n_transa
                                        recency_days = NULL, total_revenue = NULL, analysis_date = NULL, recency_bins = 5,
                                        frequency_bins = 5, monetary_bins = 5, ...) {
 
-  cust_id <- enquo(customer_id)
+  cust_id     <- enquo(customer_id)
   order_count <- enquo(n_transactions)
-  n_recency <- enquo(recency_days)
-  revenues <- enquo(total_revenue)
+  n_recency   <- enquo(recency_days)
+  revenues    <- enquo(total_revenue)
 
   result <-
     data %>%
     select(!! cust_id, !! n_recency, !! order_count, !! revenues) %>%
     set_names(c("customer_id", "recency_days", "transaction_count", "amount"))
 
-  result$recency_score <- NA
+  result$recency_score   <- NA
   result$frequency_score <- NA
-  result$monetary_score <- NA
+  result$monetary_score  <- NA
 
   rscore <-
     recency_bins %>%
@@ -266,9 +269,11 @@ rfm_table_customer.default <- function(data = NULL, customer_id = NULL, n_transa
   result$transaction_count <- as.numeric(result$transaction_count)
 
   out <- list(
-    rfm = result, analysis_date = analysis_date,
-    frequency_bins = frequency_bins, recency_bins = recency_bins,
-    monetary_bins = monetary_bins
+    rfm            = result,
+    analysis_date  = analysis_date,
+    frequency_bins = frequency_bins,
+    recency_bins   = recency_bins,
+    monetary_bins  = monetary_bins
   )
 
   class(out) <- c("rfm_table_customer", "tibble", "data.frame")

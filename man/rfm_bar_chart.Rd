@@ -2,38 +2,47 @@
 % Please edit documentation in R/rfm-plots.R
 \name{rfm_bar_chart}
 \alias{rfm_bar_chart}
-\title{RFM Bar Chart}
+\title{RFM bar chart}
 \usage{
 rfm_bar_chart(rfm_table, bar_color = "blue", xaxis_title = "Monetary Score",
   sec_xaxis_title = "Frequency Score", yaxis_title = " ",
   sec_yaxis_title = "Recency Score")
 }
 \arguments{
-\item{rfm_table}{an object of class \code{rfm_table}}
+\item{rfm_table}{An object of class \code{rfm_table}.}
 
-\item{bar_color}{color of the bars}
+\item{bar_color}{Color of the bars.}
 
-\item{xaxis_title}{x axis title}
+\item{xaxis_title}{X axis title.}
 
-\item{sec_xaxis_title}{secondary x axis title}
+\item{sec_xaxis_title}{Secondary x axis title.}
 
-\item{yaxis_title}{y axis title}
+\item{yaxis_title}{Y axis title.}
 
-\item{sec_yaxis_title}{secondary y axis title}
+\item{sec_yaxis_title}{Secondary y axis title.}
 }
 \value{
-Bar Chart
+Bar chart.
 }
 \description{
 Examine the distribution of monetary scores for the different
-combinations of frequency and recency scores.
+  combinations of frequency and recency scores.
 }
 \examples{
-# rfm table
+# using transaction data
 analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
-rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
+rfm_order <- rfm_table_order(rfm_data_orders, customer_id, order_date,
+revenue, analysis_date)
 
 # bar chart
-rfm_bar_chart(rfm_result)
+rfm_bar_chart(rfm_order)
+
+# using customer data
+analysis_date <- lubridate::as_date('2007-01-01', tz = 'UTC')
+rfm_customer <- rfm_table_customer(rfm_data_customer, customer_id,
+number_of_purchases, purchase_interval, total_amount, analysis_date)
+
+# bar chart
+rfm_bar_chart(rfm_customer)
 
 }

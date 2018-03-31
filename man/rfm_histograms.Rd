@@ -2,7 +2,7 @@
 % Please edit documentation in R/rfm-plots.R
 \name{rfm_histograms}
 \alias{rfm_histograms}
-\title{RFM Histograms}
+\title{RFM histograms}
 \usage{
 rfm_histograms(rfm_table, hist_bins = 9, hist_color = "blue",
   plot_title = "RFM Histograms", xaxis_title = " ", yaxis_title = "Count",
@@ -10,39 +10,48 @@ rfm_histograms(rfm_table, hist_bins = 9, hist_color = "blue",
   hist_f_label = "Frequency", plot_title_justify = 0.5)
 }
 \arguments{
-\item{rfm_table}{an object of class \code{rfm_table}}
+\item{rfm_table}{An object of class \code{rfm_table}.}
 
-\item{hist_bins}{number of bins of the histograms}
+\item{hist_bins}{Number of bins of the histograms.}
 
-\item{hist_color}{color of the histogram}
+\item{hist_color}{Color of the histogram.}
 
-\item{plot_title}{title of the plot}
+\item{plot_title}{Title of the plot.}
 
-\item{xaxis_title}{x axis title}
+\item{xaxis_title}{X axis title.}
 
-\item{yaxis_title}{y axis title}
+\item{yaxis_title}{Y axis title.}
 
-\item{hist_m_label}{label of the monetary value histogram}
+\item{hist_m_label}{Label of the monetary value histogram.}
 
-\item{hist_r_label}{label of the recency histogram}
+\item{hist_r_label}{Label of the recency histogram.}
 
-\item{hist_f_label}{label of the frequency histogram}
+\item{hist_f_label}{Label of the frequency histogram.}
 
-\item{plot_title_justify}{horizontal justification of the plot title;
-0 for left justified and 1 for right justified}
+\item{plot_title_justify}{Horizontal justification of the plot title;
+0 for left justified and 1 for right justified.}
 }
 \value{
 Histograms
 }
 \description{
-Histograms of recency, frequency and monetary value
+Histograms of recency, frequency and monetary value.
 }
 \examples{
-# rfm table
+# using transaction data
 analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
-rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
+rfm_order <- rfm_table_order(rfm_data_orders, customer_id, order_date,
+revenue, analysis_date)
 
-# histograms
-rfm_histograms(rfm_result)
+# histogram
+rfm_histograms(rfm_order)
+
+# using customer data
+analysis_date <- lubridate::as_date('2007-01-01', tz = 'UTC')
+rfm_customer <- rfm_table_customer(rfm_data_customer, customer_id,
+number_of_purchases, purchase_interval, total_amount, analysis_date)
+
+# histogram
+rfm_histograms(rfm_customer)
 
 }

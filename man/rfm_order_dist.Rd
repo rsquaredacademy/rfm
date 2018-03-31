@@ -2,38 +2,47 @@
 % Please edit documentation in R/rfm-plots.R
 \name{rfm_order_dist}
 \alias{rfm_order_dist}
-\title{Customers by Orders}
+\title{Customers by orders}
 \usage{
 rfm_order_dist(rfm_table, bar_color = "blue", xaxis_title = "Orders",
   yaxis_title = "Customers", plot_title = "Customers by Orders",
   plot_title_justify = 0.5)
 }
 \arguments{
-\item{rfm_table}{an object of class \code{rfm_table}}
+\item{rfm_table}{An object of class \code{rfm_table}.}
 
-\item{bar_color}{color of the bars}
+\item{bar_color}{Color of the bars.}
 
-\item{xaxis_title}{x axis title}
+\item{xaxis_title}{X axis title.}
 
-\item{yaxis_title}{y axis title}
+\item{yaxis_title}{Y axis title.}
 
-\item{plot_title}{title of the plot}
+\item{plot_title}{Title of the plot.}
 
-\item{plot_title_justify}{horizontal justification of the plot title;
-0 for left justified and 1 for right justified}
+\item{plot_title_justify}{Horizontal justification of the plot title;
+0 for left justified and 1 for right justified.}
 }
 \value{
-Bar Chart
+Bar chart.
 }
 \description{
-Visualize the distribution of customers across orders
+Visualize the distribution of customers across orders.
 }
 \examples{
-# rfm table
+# using transaction data
 analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
-rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
+rfm_order <- rfm_table_order(rfm_data_orders, customer_id, order_date,
+revenue, analysis_date)
 
-# bar chart
-rfm_order_dist(rfm_result)
+# order distribution
+rfm_order_dist(rfm_order)
+
+# using customer data
+analysis_date <- lubridate::as_date('2007-01-01', tz = 'UTC')
+rfm_customer <- rfm_table_customer(rfm_data_customer, customer_id,
+number_of_purchases, purchase_interval, total_amount, analysis_date)
+
+# order distribution
+rfm_order_dist(rfm_customer)
 
 }
