@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>RFM Bar Chart — rfm_bar_chart â€¢ rfm</title>
+<title>RFM table — rfm_table_order â€¢ rfm</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -101,59 +101,86 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>RFM Bar Chart</h1>
+    <h1>RFM table</h1>
     </div>
 
     
-    <p>Examine the distribution of monetary scores for the different
-combinations of frequency and recency scores.</p>
+    <p>Recency, frequency, monetary and RFM score.</p>
     
 
-    <pre class="usage"><span class='fu'>rfm_bar_chart</span>(<span class='no'>rfm_table</span>, <span class='kw'>bar_color</span> <span class='kw'>=</span> <span class='st'>"blue"</span>, <span class='kw'>xaxis_title</span> <span class='kw'>=</span> <span class='st'>"Monetary Score"</span>,
-  <span class='kw'>sec_xaxis_title</span> <span class='kw'>=</span> <span class='st'>"Frequency Score"</span>, <span class='kw'>yaxis_title</span> <span class='kw'>=</span> <span class='st'>" "</span>,
-  <span class='kw'>sec_yaxis_title</span> <span class='kw'>=</span> <span class='st'>"Recency Score"</span>)</pre>
+    <pre class="usage"><span class='fu'>rfm_table_order</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>customer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>order_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>revenue</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>analysis_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>recency_bins</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='kw'>frequency_bins</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>monetary_bins</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>rfm_table</th>
-      <td><p>an object of class <code>rfm_table</code></p></td>
+      <th>data</th>
+      <td><p>A <code>data.frame</code> or <code>tibble</code>.</p></td>
     </tr>
     <tr>
-      <th>bar_color</th>
-      <td><p>color of the bars</p></td>
+      <th>customer_id</th>
+      <td><p>Unique id of the customer.</p></td>
     </tr>
     <tr>
-      <th>xaxis_title</th>
-      <td><p>x axis title</p></td>
+      <th>order_date</th>
+      <td><p>Date of the transaction.</p></td>
     </tr>
     <tr>
-      <th>sec_xaxis_title</th>
-      <td><p>secondary x axis title</p></td>
+      <th>revenue</th>
+      <td><p>Revenue from the customer.</p></td>
     </tr>
     <tr>
-      <th>yaxis_title</th>
-      <td><p>y axis title</p></td>
+      <th>analysis_date</th>
+      <td><p>Date of analysis.</p></td>
     </tr>
     <tr>
-      <th>sec_yaxis_title</th>
-      <td><p>secondary y axis title</p></td>
+      <th>recency_bins</th>
+      <td><p>Number of bins for recency.</p></td>
+    </tr>
+    <tr>
+      <th>frequency_bins</th>
+      <td><p>Number of bins for frequency.</p></td>
+    </tr>
+    <tr>
+      <th>monetary_bins</th>
+      <td><p>Number of bins for monetary.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Other arguments.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Bar Chart</p>
+    <p><code>rfm_table</code> returns a tibble with the following columns:</p>
+<dt>customer_id</dt><dd><p>Unique id of the customer.</p></dd>
+<dt>date_most_recent</dt><dd><p>Date of the most recent transaction.</p></dd>
+<dt>recency_days</dt><dd><p>Number of days since the most recent transaction.</p></dd>
+<dt>transaction_count</dt><dd><p>Total number of transactions of the customer.</p></dd>
+<dt>revenue</dt><dd><p>Revenue from the customer.</p></dd>
+
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># rfm table</span>
-<span class='no'>analysis_date</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/as_date.html'>as_date</a></span>(<span class='st'>'2006-12-31'</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>'UTC'</span>)
-<span class='no'>rfm_result</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rfm_table_order.html'>rfm_table_order</a></span>(<span class='no'>rfm_data</span>, <span class='no'>customer_id</span>, <span class='no'>order_date</span>, <span class='no'>revenue</span>, <span class='no'>analysis_date</span>)
-
-<span class='co'># bar chart</span>
-<span class='fu'>rfm_bar_chart</span>(<span class='no'>rfm_result</span>)</div><div class='img'><img src='rfm_bar_chart-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='no'>analysis_date</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/as_date.html'>as_date</a></span>(<span class='st'>'2006-12-31'</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>'UTC'</span>)
+<span class='fu'>rfm_table_order</span>(<span class='no'>rfm_data</span>, <span class='no'>customer_id</span>, <span class='no'>order_date</span>, <span class='no'>revenue</span>, <span class='no'>analysis_date</span>)</div><div class='output co'>#&gt; # A tibble: 995 x 9
+#&gt;    customer_id        date_most_recent recency_days transaction_count amount
+#&gt;    &lt;chr&gt;              &lt;date&gt;                  &lt;dbl&gt;             &lt;dbl&gt;  &lt;dbl&gt;
+#&gt;  1 Abbey O'Reilly DVM 2006-06-09              205                6.00    472
+#&gt;  2 Add Senger         2006-08-13              140                3.00    340
+#&gt;  3 Aden Lesch Sr.     2006-06-20              194                4.00    405
+#&gt;  4 Admiral Senger     2006-08-21              132                5.00    448
+#&gt;  5 Agness O'Keefe     2006-10-02               90.0              9.00    843
+#&gt;  6 Aileen Barton      2006-10-08               84.0              9.00    763
+#&gt;  7 Ailene Hermann     2006-03-25              281                8.00    699
+#&gt;  8 Aiyanna Bruen PhD  2006-04-29              246                4.00    157
+#&gt;  9 Ala Schmidt DDS    2006-01-16              349                3.00    363
+#&gt; 10 Alannah Borer      2005-04-21              619                4.00    196
+#&gt; # ... with 985 more rows, and 4 more variables: recency_score &lt;int&gt;,
+#&gt; #   frequency_score &lt;int&gt;, monetary_score &lt;int&gt;, rfm_score &lt;dbl&gt;</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

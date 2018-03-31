@@ -6,16 +6,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Recency, Frequency and Monetary Value Analysis • rfm</title>
-<meta name="description" content="Rsquared Academy rfm Package">
-    <meta name="author" content="Rsquared Academy">
-    <link rel="canonical" href="https://rfm.rsquaredacademy.com/" />
-    <meta property="og:url" content="https://rfm.rsquaredacademy.com/"/>
-    <meta property="og:title" content="Rsquared Academy"/>
-    <meta property="og:site_name" content="rfm.rsquaredacademy.com"/>
-    <meta property="og:description" content="Rsquared Academy rfm Package."/>
-    <meta name="keywords" content="aravind, hebbali, rsquared, academy, interactive, shiny, rfm, package, recency, frequency, monetary, R" />
-    <meta name="description" content="Rsquared Academy olsrr Package" />
-
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
@@ -147,9 +137,9 @@
 <div id="rfm-table" class="section level3">
 <h3 class="hasAnchor">
 <a href="#rfm-table" class="anchor"></a>RFM Table</h3>
-<p>Use <code><a href="reference/rfm_table.html">rfm_table()</a></code> to generate the RFM score.</p>
+<p>Use <code><a href="reference/rfm_table_order.html">rfm_table_order()</a></code> to generate the RFM score.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">analysis_date &lt;-<span class="st"> </span>lubridate<span class="op">::</span><span class="kw"><a href="http://lubridate.tidyverse.org/reference/as_date.html">as_date</a></span>(<span class="st">'2006-12-31'</span>, <span class="dt">tz =</span> <span class="st">'UTC'</span>)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">rfm_result &lt;-<span class="st"> </span><span class="kw"><a href="reference/rfm_table.html">rfm_table</a></span>(rfm_data, customer_id, order_date, revenue, analysis_date)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">rfm_result &lt;-<span class="st"> </span><span class="kw"><a href="reference/rfm_table_order.html">rfm_table_order</a></span>(rfm_data, customer_id, order_date, revenue, analysis_date)</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">rfm_result</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt; # A tibble: 995 x 9</span></a>
 <a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt;    customer_id        date_most_recent recency_days transaction_count</span></a>
@@ -260,7 +250,7 @@
 <p><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE.html">LICENSE</a></p>
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li><a href="reference/index.html">Aravind Hebbali </a><br><small class="roles"> Author, maintainer </small> </li>
+<li>Aravind Hebbali <br><small class="roles"> Author, maintainer </small> </li>
 </ul>
 </div>
 
@@ -268,7 +258,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="reference/index.html">Aravind Hebbali</a>.</p>
+  <p>Developed by Aravind Hebbali.</p>
 </div>
 
 <div class="pkgdown">

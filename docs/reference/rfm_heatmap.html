@@ -6,13 +6,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>RFM Heatmap — rfm_heatmap â€¢ segmentr</title>
+<title>RFM Heatmap — rfm_heatmap â€¢ rfm</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -23,14 +23,17 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -44,7 +47,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">segmentr</a>
+      <a class="navbar-brand" href="../index.html">rfm</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -82,7 +85,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/rsquaredacademy/segmentr">
+  <a href="https://github.com/rsquaredacademy/rfm">
     <span class="fa fa-github"></span>
      
   </a>
@@ -108,33 +111,50 @@ recency are characterized by higher average monetary value as indicated by
 the darker areas in the heatmap.</p>
     
 
-    <pre><span class='fu'>rfm_heatmap</span>(<span class='no'>data</span>, <span class='kw'>plot_title</span> <span class='kw'>=</span> <span class='st'>"RFM Heat Map"</span>, <span class='kw'>plot_title_justify</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
+    <pre class="usage"><span class='fu'>rfm_heatmap</span>(<span class='no'>data</span>, <span class='kw'>plot_title</span> <span class='kw'>=</span> <span class='st'>"RFM Heat Map"</span>, <span class='kw'>plot_title_justify</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
   <span class='kw'>xaxis_title</span> <span class='kw'>=</span> <span class='st'>"Frequency"</span>, <span class='kw'>yaxis_title</span> <span class='kw'>=</span> <span class='st'>"Recency"</span>,
   <span class='kw'>legend_title</span> <span class='kw'>=</span> <span class='st'>"Mean Monetary Value"</span>, <span class='kw'>brewer_n</span> <span class='kw'>=</span> <span class='fl'>5</span>,
   <span class='kw'>brewer_name</span> <span class='kw'>=</span> <span class='st'>"PuBu"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>data</dt>
-      <dd>an object of class <code>rfm_table</code></dd>
-      <dt>plot_title</dt>
-      <dd>title of the plot</dd>
-      <dt>plot_title_justify</dt>
-      <dd>horizontal justification of the plot title;
-0 for left justified and 1 for right justified</dd>
-      <dt>xaxis_title</dt>
-      <dd>x axis title</dd>
-      <dt>yaxis_title</dt>
-      <dd>y axis title</dd>
-      <dt>legend_title</dt>
-      <dd>legend title</dd>
-      <dt>brewer_n</dt>
-      <dd>indicates the number of colors in the palette; RColorBrewer is
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>data</th>
+      <td><p>an object of class <code>rfm_table</code></p></td>
+    </tr>
+    <tr>
+      <th>plot_title</th>
+      <td><p>title of the plot</p></td>
+    </tr>
+    <tr>
+      <th>plot_title_justify</th>
+      <td><p>horizontal justification of the plot title;
+0 for left justified and 1 for right justified</p></td>
+    </tr>
+    <tr>
+      <th>xaxis_title</th>
+      <td><p>x axis title</p></td>
+    </tr>
+    <tr>
+      <th>yaxis_title</th>
+      <td><p>y axis title</p></td>
+    </tr>
+    <tr>
+      <th>legend_title</th>
+      <td><p>legend title</p></td>
+    </tr>
+    <tr>
+      <th>brewer_n</th>
+      <td><p>indicates the number of colors in the palette; RColorBrewer is
 used for the color palette of the heatmap; check the documentation of
-<code>brewer.pal</code></dd>
-      <dt>brewer_name</dt>
-      <dd>palette name; heck the documentation of <code>brewer.pal</code></dd>
-    </dl>
+<code>brewer.pal</code></p></td>
+    </tr>
+    <tr>
+      <th>brewer_name</th>
+      <td><p>palette name; heck the documentation of <code>brewer.pal</code></p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -143,11 +163,11 @@ used for the color palette of the heatmap; check the documentation of
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># rfm table</span>
-<span class='no'>analysis_date</span> <span class='kw'>&lt;-</span> <span class='kw'>lubridate</span><span class='kw'>::</span><span class='fu'>as_date</span>(<span class='st'>'2006-12-31'</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>'UTC'</span>)
-<span class='no'>rfm_result</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rfm_table.html'>rfm_table</a></span>(<span class='no'>rfm_data</span>, <span class='no'>customer_id</span>, <span class='no'>order_date</span>, <span class='no'>revenue</span>, <span class='no'>analysis_date</span>)
+<span class='no'>analysis_date</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/as_date.html'>as_date</a></span>(<span class='st'>'2006-12-31'</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>'UTC'</span>)
+<span class='no'>rfm_result</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rfm_table_order.html'>rfm_table_order</a></span>(<span class='no'>rfm_data</span>, <span class='no'>customer_id</span>, <span class='no'>order_date</span>, <span class='no'>revenue</span>, <span class='no'>analysis_date</span>)
 
 <span class='co'># heat map</span>
-<span class='fu'>rfm_heatmap</span>(<span class='no'>rfm_result</span>)</div><img src='rfm_heatmap-2.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>rfm_heatmap</span>(<span class='no'>rfm_result</span>)</div><div class='img'><img src='rfm_heatmap-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

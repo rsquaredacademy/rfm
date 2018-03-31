@@ -66,25 +66,37 @@ which should include the following:
 
 ### RFM Table
 
-Use `rfm_table()` to generate the RFM score.
+Use `rfm_table_order()` to generate the RFM score.
 
 ``` r
 analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
-rfm_result <- rfm_table(rfm_data, customer_id, order_date, revenue, analysis_date)
+rfm_result <- rfm_table_order(rfm_data, customer_id, order_date, revenue, analysis_date)
 rfm_result
 #> # A tibble: 995 x 9
-#>           customer_id date_most_recent recency_days transaction_count amount recency_score frequency_score monetary_score rfm_score
-#>                 <chr>           <date>        <dbl>             <dbl>  <dbl>         <int>           <int>          <int>     <dbl>
-#>  1 Abbey O'Reilly DVM       2006-06-09          205                 6    472             3               4              3       343
-#>  2         Add Senger       2006-08-13          140                 3    340             4               1              2       412
-#>  3     Aden Lesch Sr.       2006-06-20          194                 4    405             3               2              3       323
-#>  4     Admiral Senger       2006-08-21          132                 5    448             4               3              3       433
-#>  5     Agness O'Keefe       2006-10-02           90                 9    843             5               5              5       555
-#>  6      Aileen Barton       2006-10-08           84                 9    763             5               5              5       555
-#>  7     Ailene Hermann       2006-03-25          281                 8    699             3               5              5       355
-#>  8  Aiyanna Bruen PhD       2006-04-29          246                 4    157             3               2              1       321
-#>  9    Ala Schmidt DDS       2006-01-16          349                 3    363             2               1              2       212
-#> 10      Alannah Borer       2005-04-21          619                 4    196             1               2              1       121
+#>    customer_id        date_most_recent recency_days transaction_count
+#>    <chr>              <date>                  <dbl>             <dbl>
+#>  1 Abbey O'Reilly DVM 2006-06-09              205                6.00
+#>  2 Add Senger         2006-08-13              140                3.00
+#>  3 Aden Lesch Sr.     2006-06-20              194                4.00
+#>  4 Admiral Senger     2006-08-21              132                5.00
+#>  5 Agness O'Keefe     2006-10-02               90.0              9.00
+#>  6 Aileen Barton      2006-10-08               84.0              9.00
+#>  7 Ailene Hermann     2006-03-25              281                8.00
+#>  8 Aiyanna Bruen PhD  2006-04-29              246                4.00
+#>  9 Ala Schmidt DDS    2006-01-16              349                3.00
+#> 10 Alannah Borer      2005-04-21              619                4.00
+#>    amount recency_score frequency_score monetary_score rfm_score
+#>     <dbl>         <int>           <int>          <int>     <dbl>
+#>  1    472             3               4              3       343
+#>  2    340             4               1              2       412
+#>  3    405             3               2              3       323
+#>  4    448             4               3              3       433
+#>  5    843             5               5              5       555
+#>  6    763             5               5              5       555
+#>  7    699             3               5              5       355
+#>  8    157             3               2              1       321
+#>  9    363             2               1              2       212
+#> 10    196             1               2              1       121
 #> # ... with 985 more rows
 ```
 

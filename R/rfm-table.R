@@ -1,41 +1,46 @@
+#' RFM table
+#'
+#' Recency, frequency, monetary and RFM score.
+#'
+#' @param data A \code{data.frame} or \code{tibble}.
+#' @param customer_id Unique id of the customer.
+#' @param order_date Date of the transaction.
+#' @param revenue Revenue from the customer.
+#' @param analysis_date Date of analysis.
+#' @param recency_bins Number of bins for recency.
+#' @param frequency_bins Number of bins for frequency.
+#' @param monetary_bins Number of bins for monetary.
+#' @param ... Other arguments.
+#'
+#' @return \code{rfm_table} returns a tibble with the following columns:
+#'
+#' \item{customer_id}{Unique id of the customer.}
+#' \item{date_most_recent}{Date of the most recent transaction.}
+#' \item{recency_days}{Number of days since the most recent transaction.}
+#' \item{transaction_count}{Total number of transactions of the customer.}
+#' \item{revenue}{Revenue from the customer.}
+#'
 #' @importFrom dplyr pull select group_by summarise mutate n
 #' @importFrom lubridate ddays is.POSIXct
 #' @importFrom magrittr extract2
 #' @importFrom rlang quo enquo
-#' @title RFM Table
-#' @description Recency, frequency, monetary and RFM score
-#' @param data a data.frame or tibble
-#' @param customer_id unique id of the customer
-#' @param order_date date of transaction
-#' @param revenue revenue from the customer
-#' @param analysis_date data of analysis
-#' @param recency_bins number of bins for recency
-#' @param frequency_bins number of bins for frequency
-#' @param monetary_bins number of bins for monetary
-#' @param ... other arguments
-#' @param x an object of class \code{rfm_table}
-#' @return \code{rfm_table} returns a tibble with the following columns:
-#'
-#' \item{customer_id}{unique id of the customer}
-#' \item{date_most_recent}{date of the most recent transaction}
-#' \item{recency_days}{number of days since the most recent transaction}
-#' \item{transaction_count}{total number of transactions of the customer}
-#' \item{revenue}{revenue from the customer}
 #'
 #' @examples
 #' analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
-#' rfm_table(rfm_data, customer_id, order_date, revenue, analysis_date)
+#' rfm_table_order(rfm_data, customer_id, order_date, revenue, analysis_date)
+#'
 #' @export
 #'
-rfm_table <- function(data = NULL, customer_id = NULL, order_date = NULL,
+rfm_table_order <- function(data = NULL, customer_id = NULL, order_date = NULL,
                       revenue = NULL, analysis_date = NULL, recency_bins = 5,
-                      frequency_bins = 5, monetary_bins = 5, ...) UseMethod("rfm_table")
+                      frequency_bins = 5, monetary_bins = 5, ...) UseMethod("rfm_table_order")
 
 #' @export
 #'
-rfm_table.default <- function(data = NULL, customer_id = NULL, order_date = NULL,
+rfm_table_order.default <- function(data = NULL, customer_id = NULL, order_date = NULL,
                               revenue = NULL, analysis_date = NULL, recency_bins = 5,
                               frequency_bins = 5, monetary_bins = 5, ...) {
+
   cust_id <- enquo(customer_id)
   odate <- enquo(order_date)
   revenues <- enquo(revenue)
@@ -59,7 +64,8 @@ rfm_table.default <- function(data = NULL, customer_id = NULL, order_date = NULL
   result$frequency_score <- NA
   result$monetary_score <- NA
 
-  rscore <- recency_bins %>%
+  rscore <-
+    recency_bins %>%
     seq_len() %>%
     rev()
 
@@ -76,7 +82,8 @@ rfm_table.default <- function(data = NULL, customer_id = NULL, order_date = NULL
       result$recency_days < upper_recency[i]] <- rscore[i]
   }
 
-  fscore <- frequency_bins %>%
+  fscore <-
+    frequency_bins %>%
     seq_len() %>%
     rev()
 
@@ -93,7 +100,8 @@ rfm_table.default <- function(data = NULL, customer_id = NULL, order_date = NULL
       result$transaction_count < upper_frequency[i]] <- i
   }
 
-  mscore <- monetary_bins %>%
+  mscore <-
+    monetary_bins %>%
     seq_len() %>%
     rev()
 
@@ -126,14 +134,16 @@ rfm_table.default <- function(data = NULL, customer_id = NULL, order_date = NULL
     frequency_bins = frequency_bins, recency_bins = recency_bins,
     monetary_bins = monetary_bins
   )
-  class(out) <- c("rfm_table", "tibble", "data.frame")
+
+  class(out) <- c("rfm_table_order", "tibble", "data.frame")
   return(out)
+
 }
 
 
-#' @rdname rfm_table
+
 #' @export
 #'
-print.rfm_table <- function(x, ...) {
+print.rfm_table_order <- function(x, ...) {
   print(x$rfm)
 }
