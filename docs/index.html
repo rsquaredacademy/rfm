@@ -139,7 +139,7 @@
 <a href="#rfm-table" class="anchor"></a>RFM Table</h3>
 <p>Use <code><a href="reference/rfm_table_order.html">rfm_table_order()</a></code> to generate the RFM score.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">analysis_date &lt;-<span class="st"> </span>lubridate<span class="op">::</span><span class="kw"><a href="http://lubridate.tidyverse.org/reference/as_date.html">as_date</a></span>(<span class="st">'2006-12-31'</span>, <span class="dt">tz =</span> <span class="st">'UTC'</span>)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">rfm_result &lt;-<span class="st"> </span><span class="kw"><a href="reference/rfm_table_order.html">rfm_table_order</a></span>(rfm_data, customer_id, order_date, revenue, analysis_date)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">rfm_result &lt;-<span class="st"> </span><span class="kw"><a href="reference/rfm_table_order.html">rfm_table_order</a></span>(rfm_data_orders, customer_id, order_date, revenue, analysis_date)</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">rfm_result</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt; # A tibble: 995 x 9</span></a>
 <a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt;    customer_id        date_most_recent recency_days transaction_count</span></a>

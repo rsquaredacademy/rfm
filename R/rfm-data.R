@@ -9,4 +9,4 @@
 #'   \item{revenue}{transaction amount}
 #' }
 #'
-"rfm_data"
+"rfm_data_orders"

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • rfm</title>
+<title>RFM Data Set � rfm_data_orders • rfm</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -37,7 +37,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
@@ -99,91 +99,34 @@
       </header>
 
       <div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>
-        Reference
-        <small>version&nbsp;0.0.1</small>
-      </h1>
+    <h1>RFM Data Set</h1>
     </div>
 
-    <div class="contents">
-      <table class="ref-index">
+    
+    <p>A dataset containing transactions of different customers.</p>
+    
 
-      <colgroup>
-        <col class="alias" />
-        <col class="title" />
-      </colgroup>
+    <pre class="usage"><span class='no'>rfm_data_orders</span></pre>
+        
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-      <tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-rfm" class="hasAnchor"><a href="#section-rfm" class="anchor"></a>RFM</h2>
-            <p class="section-desc"></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="rfm_table_order.html">rfm_table_order</a></code> </p>
-          </td>
-          <td><p>RFM table</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="rfm_heatmap.html">rfm_heatmap</a></code> </p>
-          </td>
-          <td><p>RFM Heatmap</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="rfm_bar_chart.html">rfm_bar_chart</a></code> </p>
-          </td>
-          <td><p>RFM Bar Chart</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="rfm_histograms.html">rfm_histograms</a></code> </p>
-          </td>
-          <td><p>RFM Histograms</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="rfm_order_dist.html">rfm_order_dist</a></code> </p>
-          </td>
-          <td><p>Customers by Orders</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="rfm_rm_plot.html">rfm_rm_plot</a></code> <code><a href="rfm_rm_plot.html">rfm_fm_plot</a></code> <code><a href="rfm_rm_plot.html">rfm_rf_plot</a></code> </p>
-          </td>
-          <td><p>RFM Scatter Plot</p></td>
-        </tr>
-      </tbody><tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-data" class="hasAnchor"><a href="#section-data" class="anchor"></a>Data</h2>
-            <p class="section-desc"></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="rfm_data_orders.html">rfm_data_orders</a></code> </p>
-          </td>
-          <td><p>RFM Data Set</p></td>
-        </tr>
-      </tbody>
-      </table>
-    </div>
+    <p>A tibble with 49.6 rows and 3 variables:</p><dl class='dl-horizontal'>
+  <dt>order_date</dt><dd><p>order date</p></dd>
+  <dt>customer_id</dt><dd><p>customer id</p></dd>
+  <dt>revenue</dt><dd><p>transaction amount</p></dd>
+</dl>
+    
+
   </div>
-
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-rfm">RFM</a></li>
-      <li><a href="#section-data">Data</a></li>
-    </ul>
+      
+      <li><a href="#format">Format</a></li>
+          </ul>
+
   </div>
 </div>
 

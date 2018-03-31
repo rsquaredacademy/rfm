@@ -25,7 +25,7 @@ test_that('output from bins_upper is as expected', {
 test_that('output from heatmap_data is as expected', {
 
   analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
-  actual <- rfm_table_order(rfm_data, customer_id, order_date, revenue,
+  actual <- rfm_table_order(rfm_data_orders, customer_id, order_date, revenue,
                       analysis_date) %>%
     heatmap_data() %>%
     pull(monetary) %>%
@@ -39,7 +39,7 @@ test_that('output from heatmap_data is as expected', {
 test_that('output from check_levels is as expected', {
 
   analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
-  actual <- rfm_table_order(rfm_data, customer_id, order_date, revenue,
+  actual <- rfm_table_order(rfm_data_orders, customer_id, order_date, revenue,
                       analysis_date) %>%
     heatmap_data() %>%
     check_levels(column = 2)
@@ -51,7 +51,7 @@ test_that('output from check_levels is as expected', {
 test_that('output from modify_rfm is as expected', {
 
   analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
-  heat <- rfm_table_order(rfm_data, customer_id, order_date, revenue,
+  heat <- rfm_table_order(rfm_data_orders, customer_id, order_date, revenue,
                     analysis_date) %>%
     heatmap_data()
 

@@ -27,7 +27,7 @@
 #'
 #' @examples
 #' analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
-#' rfm_table_order(rfm_data, customer_id, order_date, revenue, analysis_date)
+#' rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
 #'
 #' @export
 #'

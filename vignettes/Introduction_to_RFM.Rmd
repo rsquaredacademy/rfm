@@ -41,10 +41,10 @@ To calculate the RFM score for each customer we need transaction data which shou
 - date of transaction/order
 - transaction/order amount
 
-`rfm` includes a sample data set `rfm_data` which includes the above details:
+`rfm` includes a sample data set `rfm_data_orders` which includes the above details:
 
-```{r rfm_data}
-rfm_data
+```{r rfm_data_orders}
+rfm_data_orders
 ```
 
 ## RFM Score
@@ -59,7 +59,7 @@ So how is the RFM score computed for each customer? THe below steps explain the 
 
 - A fourth score, RFM score is generated which is simply the three individual scores concatenated into a single value.
 
-The customers with the highest RFM scores are most likely to respond to an offer. Now that we have understood how the RFM score is computed, it is time to put it into practice. Use `rfm_table_order()` to generate the score for each customer from the sample data set `rfm_data`.
+The customers with the highest RFM scores are most likely to respond to an offer. Now that we have understood how the RFM score is computed, it is time to put it into practice. Use `rfm_table_order()` to generate the score for each customer from the sample data set `rfm_data_orders`.
 
 `rfm_table_order()` takes 8 inputs:
 
@@ -79,13 +79,13 @@ The customers with the highest RFM scores are most likely to respond to an offer
 
 ```{r rfm_table_order, eval=FALSE}
 analysis_date <- lubridate::as_date("2006-12-31", tz = "UTC")
-rfm_result <- rfm_table_order(rfm_data, customer_id, order_date, revenue, analysis_date)
+rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
 rfm_result
 ```
 
 ```{r rfm_table_order2, eval=TRUE, echo=FALSE}
 analysis_date <- lubridate::as_date("2006-12-31", tz = "UTC")
-rfm_result <- rfm_table_order(rfm_data, customer_id, order_date, revenue, analysis_date)
+rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
 rfm_result %>%
   use_series(rfm) %>%
   slice(1:10) %>%

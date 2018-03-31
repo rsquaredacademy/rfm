@@ -2,7 +2,7 @@ context("rfm_table")
 
 test_that("output from rfm_table_order is as expected", {
   analysis_date <- lubridate::as_date("2006-12-31", tz = "UTC")
-  result <- rfm_table_order(rfm_data, customer_id, order_date, revenue, analysis_date)
+  result <- rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
   actual <- result %>%
     use_series(rfm) %>%
     extract2("transaction_count") %>%
