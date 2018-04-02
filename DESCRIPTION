@@ -1,12 +1,13 @@
 Type: Package
 Package: rfm
 Title: Recency, Frequency and Monetary Value Analysis
-Version: 0.0.1
+Version: 1.0.0
 Authors@R: person("Aravind", "Hebbali", email = "hebbali.aravind@gmail.com", role = c("aut", "cre"))
-Description: Tools for segmentation of customers using RFM (recency, frequency and monetary) analysis. Generate RFM score,
-    heatmap for average monetary value for different recency and frequency scores, histograms of scores, examine the distribution
-    of monetary score for the different combinations of frequency and recency scores, scatter plots for examining the relationship
-    between the scores.
+Description: Tools for RFM (recency, frequency and monetary) analysis. Generate 
+    RFM score, heatmap for average monetary value for different recency and 
+    frequency scores, histograms of scores, examine the distribution of monetary 
+    score for the different combinations of frequency and recency scores, 
+    scatter plots for examining the relationship between the scores.
 License: MIT + file LICENSE
 URL: https://github.com/rsquaredacademy/rfm, https://rfm.rsquaredacademy.com/ 
 BugReports: https://github.com/rsquaredacademy/rfm/issues
@@ -22,16 +23,26 @@ Imports:
     magrittr,
     purrr,
     rlang,
+    shiny,
     stats,
     tidyr,
     RColorBrewer
 Suggests: 
     covr,
     DT,
+    haven,
+    jsonlite,
     kableExtra,
     knitr,
+    readr,
+    readxl,
     rmarkdown,
+    shinyBS,
+    shinycssloaders,
+    shinythemes,
+    stringr,
     testthat,
+    tools,
     vdiffr
 VignetteBuilder: knitr
 Encoding: UTF-8

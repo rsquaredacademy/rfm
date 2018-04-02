@@ -32,7 +32,8 @@ reference:
 - title: RFM
 
   contents:
-  - rfm_table
+  - rfm_table_order
+  - rfm_table_customer
   - rfm_heatmap
   - rfm_bar_chart
   - rfm_histograms
@@ -43,4 +44,5 @@ reference:
 
 - title: Data
   contents:
-  - rfm_data
+  - rfm_data_orders
+  - rfm_data_customer

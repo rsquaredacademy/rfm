@@ -2,7 +2,7 @@
 % Please edit documentation in R/rfm-plots.R
 \name{rfm_heatmap}
 \alias{rfm_heatmap}
-\title{RFM Heatmap}
+\title{RFM heatmap}
 \usage{
 rfm_heatmap(data, plot_title = "RFM Heat Map", plot_title_justify = 0.5,
   xaxis_title = "Frequency", yaxis_title = "Recency",
@@ -10,40 +10,47 @@ rfm_heatmap(data, plot_title = "RFM Heat Map", plot_title_justify = 0.5,
   brewer_name = "PuBu")
 }
 \arguments{
-\item{data}{an object of class \code{rfm_table}}
+\item{data}{An object of class \code{rfm_table}.}
 
-\item{plot_title}{title of the plot}
+\item{plot_title}{Title of the plot.}
 
-\item{plot_title_justify}{horizontal justification of the plot title;
-0 for left justified and 1 for right justified}
+\item{plot_title_justify}{Horizontal justification of the plot title;
+0 for left justified and 1 for right justified.}
 
-\item{xaxis_title}{x axis title}
+\item{xaxis_title}{X axis title.}
 
-\item{yaxis_title}{y axis title}
+\item{yaxis_title}{Y axis title.}
 
-\item{legend_title}{legend title}
+\item{legend_title}{Legend title.}
 
-\item{brewer_n}{indicates the number of colors in the palette; RColorBrewer is
-used for the color palette of the heatmap; check the documentation of
-\code{brewer.pal}}
+\item{brewer_n}{Indicates the number of colors in the palette; RColorBrewer
+is used for the color palette of the heatmap; check the documentation of
+\code{brewer.pal}.}
 
-\item{brewer_name}{palette name; heck the documentation of \code{brewer.pal}}
-}
-\value{
-Heatmap
+\item{brewer_name}{Palette name; check the documentation of
+\code{brewer.pal}.}
 }
 \description{
 The heat map shows the average monetary value for different
-categories of recency and frequency scores. Higher scores of frequency and
-recency are characterized by higher average monetary value as indicated by
-the darker areas in the heatmap.
+  categories of recency and frequency scores. Higher scores of frequency and
+  recency are characterized by higher average monetary value as indicated by
+  the darker areas in the heatmap.
 }
 \examples{
-# rfm table
+# using transaction data
 analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
-rfm_result <- rfm_table(rfm_data, customer_id, order_date, revenue, analysis_date)
+rfm_order <- rfm_table_order(rfm_data_orders, customer_id, order_date,
+revenue, analysis_date)
 
 # heat map
-rfm_heatmap(rfm_result)
+rfm_heatmap(rfm_order)
+
+# using customer data
+analysis_date <- lubridate::as_date('2007-01-01', tz = 'UTC')
+rfm_customer <- rfm_table_customer(rfm_data_customer, customer_id,
+number_of_purchases, purchase_interval, total_amount, analysis_date)
+
+# heat map
+rfm_heatmap(rfm_customer)
 
 }

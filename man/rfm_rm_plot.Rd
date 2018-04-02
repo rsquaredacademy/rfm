@@ -4,7 +4,7 @@
 \alias{rfm_rm_plot}
 \alias{rfm_fm_plot}
 \alias{rfm_rf_plot}
-\title{RFM Scatter Plot}
+\title{RFM Scatter plot}
 \usage{
 rfm_rm_plot(rfm_table, point_color = "blue", xaxis_title = "Monetary",
   yaxis_title = "Recency", plot_title = "Recency vs Monetary")
@@ -16,26 +16,27 @@ rfm_rf_plot(rfm_table, point_color = "blue", xaxis_title = "Frequency",
   yaxis_title = "Recency", plot_title = "Recency vs Frequency")
 }
 \arguments{
-\item{rfm_table}{an object of class \code{rfm_table}}
+\item{rfm_table}{An object of class \code{rfm_table}.}
 
-\item{point_color}{color of the scatter points}
+\item{point_color}{Color of the scatter points.}
 
-\item{xaxis_title}{x axis title}
+\item{xaxis_title}{X axis title.}
 
-\item{yaxis_title}{y axis title}
+\item{yaxis_title}{Y axis title.}
 
-\item{plot_title}{title of the plot}
+\item{plot_title}{Title of the plot.}
 }
 \value{
-Scatter Plot
+Scatter plot.
 }
 \description{
-Examine the relationship between the above recency, frequency and monetary values
+Examine the relationship between the above recency, frequency
+  and monetary values.
 }
 \examples{
 # rfm table
 analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
-rfm_result <- rfm_table(rfm_data, customer_id, order_date, revenue, analysis_date)
+rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
 
 # monetary value vs recency
 rfm_rm_plot(rfm_result)

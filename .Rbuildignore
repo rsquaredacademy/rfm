@@ -7,6 +7,6 @@
 ^codecov\.yml$
 ^appveyor\.yml$
 ^CONDUCT\.md$
-^olsrr\.jpg$
+^hex_rfm\.png$
 ^_pkgdown\.yml$
 ^docs$
