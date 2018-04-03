@@ -3,6 +3,14 @@ tabPanel('Histogram', value = 'tab_rfm_histogram',
 	fluidPage(
 
 		fluidRow(
+      column(6, align = 'left',
+        h4('Histograms')
+      )
+    ),
+
+    hr(),
+
+		fluidRow(
 
 			br(),
 			br(),

@@ -1,32 +1,32 @@
-observeEvent(input$rfm_data_type == "Customer Data", {
+observe({
 
-	updateSelectInput(
-		session,
-		inputId = "rfm_customer_id_c",
-		choices = names(final_sel$a),
-		selected = names(final_sel$a)
-	)
+		updateSelectInput(
+			session,
+			inputId = "rfm_customer_id_c",
+			choices = names(final_sel$a),
+			selected = names(final_sel$a)
+		)
 
-	updateSelectInput(
-		session,
-		inputId = "rfm_n_transactions_c",
-		choices = names(final_sel$a),
-		selected = names(final_sel$a)
-	)
+		updateSelectInput(
+			session,
+			inputId = "rfm_n_transactions_c",
+			choices = names(final_sel$a),
+			selected = names(final_sel$a)
+		)
 
-	updateSelectInput(
-		session,
-		inputId = "rfm_recency_days_c",
-		choices = names(final_sel$a),
-		selected = names(final_sel$a)
-	)
+		updateSelectInput(
+			session,
+			inputId = "rfm_recency_days_c",
+			choices = names(final_sel$a),
+			selected = names(final_sel$a)
+		)
 
-	updateSelectInput(
-		session,
-		inputId = "rfm_total_revenue_c",
-		choices = names(final_sel$a),
-		selected = names(final_sel$a)
-	)
+		updateSelectInput(
+			session,
+			inputId = "rfm_total_revenue_c",
+			choices = names(final_sel$a),
+			selected = names(final_sel$a)
+		)
 
 }) 
 
@@ -189,14 +189,13 @@ output$ui_revenue <- renderUI({
 
 		fluidRow(
 
-			column(8, align = "right",
-				br(),
+			column(4, align = "right",
 				h6("Days since last transaction:")
 			),
 
-			column(4, align = "left",
+			column(8, align = "left",
 				selectInput("rfm_recency_days_c", label = '',
-					choices = "", selected = "", width = '100px'
+					choices = "", selected = "", width = '150px'
 				),
 	      bsTooltip("rfm_recency_days_c", "Select the variable representing the days since last transaction.",
 	      	"bottom", options = list(container = "body")
@@ -261,7 +260,7 @@ output$ui_analysisdate <- renderUI({
 			),
 
 			column(8, align = "left",
-				dateInput("rfm_analysis_date_t", label = ''),
+				dateInput("rfm_analysis_date_t", label = '', width = '150px'),
 	      bsTooltip("rfm_analysis_date_t", "Select the date of analysis.",
 	      	"bottom", options = list(container = "body")
 	      )
@@ -285,7 +284,7 @@ output$ui_recency <- renderUI({
 			),
 
 			column(8, align = "left",
-				dateInput("rfm_analysis_date_t", label = ''),
+				dateInput("rfm_analysis_date_c", label = '', width = '150px'),
 	      bsTooltip("rfm_analysis_date_c", "Select the date of analysis.",
 	      	"bottom", options = list(container = "body")
 	      )
@@ -297,14 +296,14 @@ output$ui_recency <- renderUI({
 
 		fluidRow(
 
-			column(6, align = "right",
+			column(4, align = "right",
 				br(),
 				h5("Recency Bins:")
 			),
 
-			column(6, align = "left",
+			column(8, align = "left",
 				numericInput("rfm_recency_bins_t", label = '',
-					min = 1, step = 1, value = 5, width = '70px'
+					min = 1, step = 1, value = 5, width = '150px'
 				),
 	      bsTooltip("rfm_recency_bins_t", "Specify the number of bins for recency.",
 	      	"bottom", options = list(container = "body")
@@ -323,14 +322,14 @@ output$ui_frequency <- renderUI({
 
 		fluidRow(
 
-			column(6, align = "right",
+			column(4, align = "right",
 				br(),
 				h5("Recency Bins:")
 			),
 
-			column(6, align = "left",
+			column(8, align = "left",
 				numericInput("rfm_recency_bins_c", label = '',
-					min = 1, step = 1, value = 5, width = '70px'
+					min = 1, step = 1, value = 5, width = '150px'
 				),
 	      bsTooltip("rfm_recency_bins_c", "Specify the number of bins for recency.",
 	      	"bottom", options = list(container = "body")
@@ -343,14 +342,14 @@ output$ui_frequency <- renderUI({
 
 		fluidRow(
 
-			column(6, align = "right",
+			column(4, align = "right",
 				br(),
 				h5("Frequency Bins:")
 			),
 
-			column(6, align = "left",
+			column(8, align = "left",
 				numericInput("rfm_frequency_bins_t", label = '',
-					min = 1, step = 1, value = 5, width = '70px'
+					min = 1, step = 1, value = 5, width = '150px'
 				),
 	      bsTooltip("rfm_recency_bins_t", "Specify the number of bins for recency.",
 	      	"bottom", options = list(container = "body")
@@ -369,14 +368,14 @@ output$ui_monetary <- renderUI({
 
 		fluidRow(
 
-			column(6, align = "right",
+			column(4, align = "right",
 				br(),
 				h5("Frequency Bins:")
 			),
 
-			column(6, align = "left",
+			column(8, align = "left",
 				numericInput("rfm_frequency_bins_c", label = '',
-					min = 1, step = 1, value = 5, width = '70px'
+					min = 1, step = 1, value = 5, width = '150px'
 				),
 	      bsTooltip("rfm_frequency_bins_c", "Specify the number of bins for frequency.",
 	      	"bottom", options = list(container = "body")
@@ -389,14 +388,14 @@ output$ui_monetary <- renderUI({
 
 		fluidRow(
 
-			column(6, align = "right",
+			column(4, align = "right",
 				br(),
 				h5("Monetary Bins:")
 			),
 
-			column(6, align = "left",
+			column(8, align = "left",
 				numericInput("rfm_monetary_bins_t", label = '',
-					min = 1, step = 1, value = 5, width = '70px'
+					min = 1, step = 1, value = 5, width = '150px'
 				),
 	      bsTooltip("rfm_monetary_bins_t", "Specify the number of bins for monetary value.",
 	      	"bottom", options = list(container = "body")
@@ -415,14 +414,14 @@ output$ui_extra <- renderUI({
 
 		fluidRow(
 
-			column(6, align = "right",
+			column(4, align = "right",
 				br(),
 				h5("Monetary Bins:")
 			),
 
-			column(6, align = "left",
+			column(8, align = "left",
 				numericInput("rfm_monetary_bins_c", label = '',
-					min = 1, step = 1, value = 5, width = '70px'
+					min = 1, step = 1, value = 5, width = '150px'
 				),
 	      bsTooltip("rfm_monetary_bins_c", "Specify the number of bins for monetary value",
 	      	"bottom", options = list(container = "body")

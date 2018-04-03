@@ -1,10 +1,10 @@
-tabPanel("Average Recency", value = "tab_average_recency",
+tabPanel("Average Monetary Value", value = "tab_average_monetary",
 
 	fluidPage(
 
 		fluidRow(
       column(6, align = 'left',
-        h4('Average Recency by Segment')
+        h4('Average Monetary Value by Segment')
       )
     ),
 
@@ -16,7 +16,7 @@ tabPanel("Average Recency", value = "tab_average_recency",
 			br(),
 			column(2),
 			column(8, align = 'center', 
-				plotOutput('segment_average_recency') %>% 
+				plotOutput('segment_average_monetary') %>% 
 					withSpinner()
 			),
 			column(2)

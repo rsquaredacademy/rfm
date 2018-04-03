@@ -3,6 +3,14 @@ tabPanel("Segmentation", value = "tab_rfm_segments",
 	fluidPage(
 
 		fluidRow(
+      column(6, align = 'left',
+        h4('Generate Segments')
+      )
+    ),
+
+    hr(),
+
+		fluidRow(
 
 			column(6, align = "right", br(), h5("Number of Segments:")),
 			column(6, align = "left",
@@ -21,7 +29,8 @@ tabPanel("Segmentation", value = "tab_rfm_segments",
 		hr(),
 		
 		fluidRow(
-      column(3, h5('Segment')),
+			column(1),
+      column(2, h5('Segment')),
       column(3, h5('Recency Score')),
       column(3, h5('Frequency Score')),
       column(3, h5('Monetary Score'))

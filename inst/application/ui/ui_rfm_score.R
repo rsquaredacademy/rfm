@@ -3,12 +3,20 @@ tabPanel('RFM Score', value = 'tab_rfm_score',
 	# check box for transcation or customer data
 	fluidPage(
 
+    fluidRow(
+      column(6, align = 'left',
+        h4('Generate RFM Score')
+      )
+    ),
+
+    hr(),
+
 		fluidRow(
       column(2, align = 'right', br(), h5('Data Type:')),
       column(4, align = 'left',
         selectInput('rfm_data_type', label = '', width = '300px',
           choices = c("Customer Data", "Transaction Data"),
-          selected = "Transaction Data")
+          selected = "Customer Data")
         )
     ),
 

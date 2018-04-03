@@ -3,6 +3,14 @@ tabPanel('Scatter Plots', value = 'tab_rfm_scatter',
 	fluidPage(
 
 		fluidRow(
+      column(6, align = 'left',
+        h4('Scatter Plots')
+      )
+    ),
+
+    hr(),
+
+		fluidRow(
 
 			br(),
 			br(),
