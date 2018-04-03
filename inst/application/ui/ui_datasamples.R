@@ -16,8 +16,8 @@ tabPanel('Sample Data', value = 'tab_use_sample',
 
 			column(4, align = 'center',
 				actionButton(
-					inputId = 'german_data',
-					label = 'German Credit',
+					inputId = 'rfm_transactions',
+					label = 'Transaction Data',
 					width = '200px',
 					onclick ="window.open('https://archive.ics.uci.edu/ml/datasets/Statlog+(German+Credit+Data)', 'newwindow', 'width=800,height=600')"
 				)

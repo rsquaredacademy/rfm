@@ -1,3 +1,5 @@
+library(rfm)
+
 # importing data
 inFile1 <- reactive({
     if(is.null(input$file1)) {
@@ -134,8 +136,7 @@ ext_type <- reactive({
 sampdata <- reactiveValues(s = NULL)
 
 observeEvent(input$german_data, {
-  data("GermanCredit")
-  sampdata$s <- GermanCredit
+  sampdata$s <- rfm_data_orders
 })
 
 observeEvent(input$iris_data, {

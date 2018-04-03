@@ -59,7 +59,8 @@ rfm_table_order.default <- function(data = NULL, customer_id = NULL, order_date 
     select(
       !! cust_id, date_most_recent, recency_days, transaction_count,
       amount
-    )
+    ) %>%
+    set_names(c("customer_id", "date_most_recent", "recency_days", "transaction_count", "amount"))
 
   result$recency_score   <- NA
   result$frequency_score <- NA
@@ -124,7 +125,7 @@ rfm_table_order.default <- function(data = NULL, customer_id = NULL, order_date 
       rfm_score = recency_score * 100 + frequency_score * 10 + monetary_score
     ) %>%
     select(
-      !! cust_id, date_most_recent, recency_days, transaction_count, amount,
+      customer_id, date_most_recent, recency_days, transaction_count, amount,
       recency_score, frequency_score, monetary_score, rfm_score
     )
 
