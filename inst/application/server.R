@@ -1,3 +1,4 @@
+library(rfm)
 library(descriptr)
 library(dplyr)
 library(tibble)
@@ -13,8 +14,10 @@ library(stringr)
 library(rlang)
 library(ggplot2)
 library(forcats)
-
-
+library(purrr)
+library(RColorBrewer)
+library(knitr)
+library(kableExtra)
 
 shinyServer(function(input, output, session) {
 
@@ -27,6 +30,7 @@ shinyServer(function(input, output, session) {
     source("logic/logic_home.R", local = T)
     source("logic/logic_exit_button.R", local = T)
     source("logic/logic_rfm_score.R", local = T)
+    source("logic/logic_segments.R", local = T)
 
 })
 
