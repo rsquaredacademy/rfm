@@ -55,7 +55,8 @@ observeEvent(input$button_selvar_yes, {
 final_sel <- reactiveValues(a = NULL)
 
 finalsel <- eventReactive(input$submit_dply_selvar, {
-	k <- final() %>%
+	k <- 
+    final() %>%
 		select(input$dplyr_selvar)
 	k
 })

@@ -14,10 +14,12 @@ tabPanel('Bar Chart', value = 'tab_rfm_barchart',
 
 			br(),
 			br(),
-			column(12, align = 'center', 
+			column(2),
+			column(8, align = 'center', 
 				plotOutput('plot_barchart', height = '500px') %>% 
 				  withSpinner()
-			)
+			),
+			column(2)
 
 		)
 

@@ -1,4 +1,4 @@
-observe({
+observeEvent(input$finalok, {
 
 		updateSelectInput(
 			session,
@@ -30,7 +30,7 @@ observe({
 
 }) 
 
-observeEvent(input$rfm_data_type == "Transaction Data", {
+observeEvent(input$finalok, {
 
 	updateSelectInput(
 		session,
@@ -55,398 +55,8 @@ observeEvent(input$rfm_data_type == "Transaction Data", {
 
 }) 
 
-output$ui_helplink <- renderUI({
 
-	if (input$rfm_data_type == "Customer Data") {
-
-		fluidRow(
-
-			column(6, align = 'left',
-          h4('RFM Analysis'),
-          p('Recency, frequency and monetary value analysis for customer level data.')
-        ),
-        column(6, align = 'right',
-          actionButton(inputId='rvsp1', label="Help", icon = icon("question-circle"),
-            onclick ="window.open('https://rfm.rsquaredacademy.com/reference/rfm_table_customer.html', '_blank')")
-        )
-
-		)
-
-	} else {
-
-		fluidRow(
-
-			column(6, align = 'left',
-          h4('RFM Analysis'),
-          p('Recency, frequency and monetary value analysis for transaction level data.')
-        ),
-        column(6, align = 'right',
-          actionButton(inputId='rvsp1', label="Help", icon = icon("question-circle"),
-            onclick ="window.open('https://rfm.rsquaredacademy.com/reference/rfm_table_order.html', '_blank')")
-        )
-
-		)
-
-	}
-
-})
-
-output$ui_customerid <- renderUI({
-
-	if (input$rfm_data_type == "Customer Data") {
-
-		fluidRow(
-
-			column(4, align = "right",
-				br(),
-				h5("Unique ID:")
-			),
-
-			column(8, align = "left",
-				selectInput("rfm_customer_id_c", label = '',
-					choices = "", selected = "", width = '150px'
-				),
-	      bsTooltip("rfm_customer_id_c", "Select the variable representing the unique id of the customer.",
-	      	"bottom", options = list(container = "body")
-	      )
-			)
-
-		)
-
-	} else {
-
-		fluidRow(
-
-			column(4, align = "right",
-				br(),
-				h5("Unique ID:")
-			),
-
-			column(8, align = "left",
-				selectInput("rfm_customer_id_t", label = '',
-					choices = "", selected = "", width = '150px'
-				),
-	      bsTooltip("rfm_customer_id_t", "Select the variable representing the unique id of the customer.",
-	      	"bottom", options = list(container = "body")
-	      )
-			)
-
-		)		
-
-	}
-
-})
-
-output$ui_orderdate <- renderUI({
-
-	if (input$rfm_data_type == "Customer Data") {
-
-		fluidRow(
-
-			column(4, align = "right",
-				br(),
-				h5("Orders:")
-			),
-
-			column(8, align = "left",
-				selectInput("rfm_n_transactions_c", label = '',
-					choices = "", selected = "", width = '150px'
-				),
-	      bsTooltip("rfm_n_transactions_c", "Select the variable representing the number of orders/purchases.",
-	      	"bottom", options = list(container = "body")
-	      )
-			)
-
-		)
-
-	} else {
-
-		fluidRow(
-
-			column(4, align = "right",
-				br(),
-				h5("Order Date:")
-			),
-
-			column(8, align = "left",
-				selectInput("rfm_order_date_t", label = '',
-					choices = "", selected = "", width = '150px'
-				),
-	      bsTooltip("rfm_order_date_t", "Select the variable representing the date of the order/transaction.",
-	      	"bottom", options = list(container = "body")
-	      )
-			)
-
-		)
-
-	}
-
-})
-
-output$ui_revenue <- renderUI({
-
-	if (input$rfm_data_type == "Customer Data") {
-
-		fluidRow(
-
-			column(4, align = "right",
-				h6("Days since last transaction:")
-			),
-
-			column(8, align = "left",
-				selectInput("rfm_recency_days_c", label = '',
-					choices = "", selected = "", width = '150px'
-				),
-	      bsTooltip("rfm_recency_days_c", "Select the variable representing the days since last transaction.",
-	      	"bottom", options = list(container = "body")
-	      )
-			)
-
-		)
-
-	} else {
-
-		fluidRow(
-
-			column(4, align = "right",
-				br(),
-				h5("Revenue:")
-			),
-
-			column(8, align = "left",
-				selectInput("rfm_revenue_t", label = '',
-					choices = "", selected = "", width = '150px'
-				),
-	      bsTooltip("rfm_revenue_t", "Select the variable representing the total revenue from the transaction.",
-	      	"bottom", options = list(container = "body")
-	      )
-			)
-
-		)
-
-	}
-
-})
-
-output$ui_analysisdate <- renderUI({
-
-	if (input$rfm_data_type == "Customer Data") {
-
-		fluidRow(
-
-			column(4, align = "right",
-				br(),
-				h5("Revenue:")
-			),
-
-			column(8, align = "left",
-				selectInput("rfm_total_revenue_c", label = '',
-					choices = "", selected = "", width = '150px'
-				),
-	      bsTooltip("rfm_total_revenue_c", "Select the variable representing the total revenue from the customer.",
-	      	"bottom", options = list(container = "body")
-	      )
-			)
-
-		)
-
-	} else {
-
-		fluidRow(
-
-			column(4, align = "right",
-				br(),
-				h5("Analysis Date:")
-			),
-
-			column(8, align = "left",
-				dateInput("rfm_analysis_date_t", label = '', width = '150px'),
-	      bsTooltip("rfm_analysis_date_t", "Select the date of analysis.",
-	      	"bottom", options = list(container = "body")
-	      )
-			)
-
-		)
-
-	}
-
-})
-
-output$ui_recency <- renderUI({
-
-	if (input$rfm_data_type == "Customer Data") {
-
-		fluidRow(
-
-			column(4, align = "right",
-				br(),
-				h5("Analysis Date:")
-			),
-
-			column(8, align = "left",
-				dateInput("rfm_analysis_date_c", label = '', width = '150px'),
-	      bsTooltip("rfm_analysis_date_c", "Select the date of analysis.",
-	      	"bottom", options = list(container = "body")
-	      )
-			)
-
-		)
-
-	} else {
-
-		fluidRow(
-
-			column(4, align = "right",
-				br(),
-				h5("Recency Bins:")
-			),
-
-			column(8, align = "left",
-				numericInput("rfm_recency_bins_t", label = '',
-					min = 1, step = 1, value = 5, width = '150px'
-				),
-	      bsTooltip("rfm_recency_bins_t", "Specify the number of bins for recency.",
-	      	"bottom", options = list(container = "body")
-	      )
-			)
-
-		)
-
-	}
-
-})
-
-output$ui_frequency <- renderUI({
-
-	if (input$rfm_data_type == "Customer Data") {
-
-		fluidRow(
-
-			column(4, align = "right",
-				br(),
-				h5("Recency Bins:")
-			),
-
-			column(8, align = "left",
-				numericInput("rfm_recency_bins_c", label = '',
-					min = 1, step = 1, value = 5, width = '150px'
-				),
-	      bsTooltip("rfm_recency_bins_c", "Specify the number of bins for recency.",
-	      	"bottom", options = list(container = "body")
-	      )
-			)
-
-		)
-
-	} else {
-
-		fluidRow(
-
-			column(4, align = "right",
-				br(),
-				h5("Frequency Bins:")
-			),
-
-			column(8, align = "left",
-				numericInput("rfm_frequency_bins_t", label = '',
-					min = 1, step = 1, value = 5, width = '150px'
-				),
-	      bsTooltip("rfm_recency_bins_t", "Specify the number of bins for recency.",
-	      	"bottom", options = list(container = "body")
-	      )
-			)
-
-		)
-
-	}
-
-})
-
-output$ui_monetary <- renderUI({
-
-	if (input$rfm_data_type == "Customer Data") {
-
-		fluidRow(
-
-			column(4, align = "right",
-				br(),
-				h5("Frequency Bins:")
-			),
-
-			column(8, align = "left",
-				numericInput("rfm_frequency_bins_c", label = '',
-					min = 1, step = 1, value = 5, width = '150px'
-				),
-	      bsTooltip("rfm_frequency_bins_c", "Specify the number of bins for frequency.",
-	      	"bottom", options = list(container = "body")
-	      )
-			)
-
-		)
-
-	} else {
-
-		fluidRow(
-
-			column(4, align = "right",
-				br(),
-				h5("Monetary Bins:")
-			),
-
-			column(8, align = "left",
-				numericInput("rfm_monetary_bins_t", label = '',
-					min = 1, step = 1, value = 5, width = '150px'
-				),
-	      bsTooltip("rfm_monetary_bins_t", "Specify the number of bins for monetary value.",
-	      	"bottom", options = list(container = "body")
-	      )
-			)
-
-		)
-
-	}
-
-})
-
-output$ui_extra <- renderUI({
-
-	if (input$rfm_data_type == "Customer Data") {
-
-		fluidRow(
-
-			column(4, align = "right",
-				br(),
-				h5("Monetary Bins:")
-			),
-
-			column(8, align = "left",
-				numericInput("rfm_monetary_bins_c", label = '',
-					min = 1, step = 1, value = 5, width = '150px'
-				),
-	      bsTooltip("rfm_monetary_bins_c", "Specify the number of bins for monetary value",
-	      	"bottom", options = list(container = "body")
-	      )
-			)
-
-		)
-
-	} 
-
-})
-
-
-comp_rfm_score <- eventReactive(input$submit_rfm_score, {
-
-	if (input$rfm_data_type == "Customer Data") {
-
-		rfm_table_customer(data = final_sel$a, customer_id = !! sym(as.character(input$rfm_customer_id_c)),
-			n_transactions = !! sym(as.character(input$rfm_n_transactions_c)), 
-			recency_days = !! sym(as.character(input$rfm_recency_days_c)), 
-			total_revenue = !! sym(as.character(input$rfm_total_revenue_c)),
-			analysis_date = input$rfm_analysis_date_c, recency_bins = input$rfm_recency_bins_c,
-			frequency_bins = input$rfm_frequency_bins_c, monetary_bins = input$rfm_monetary_bins_c)
-
-	} else {
+comp_rfm_transaction_score <- eventReactive(input$submit_rfm_transaction_score, {
 
 		rfm_table_order(data = final_sel$a, customer_id = !! sym(as.character(input$rfm_customer_id_t)),
 			order_date = !! sym(as.character(input$rfm_order_date_t)), 
@@ -454,69 +64,126 @@ comp_rfm_score <- eventReactive(input$submit_rfm_score, {
 			analysis_date = input$rfm_analysis_date_t, recency_bins = input$rfm_recency_bins_t,
 			frequency_bins = input$rfm_frequency_bins_t, monetary_bins = input$rfm_monetary_bins_t)
 
-	}
+}) 
+
+comp_rfm_customer_score <- eventReactive(input$submit_rfm_customer_score, {
+
+		rfm_table_customer(data = final_sel$a, customer_id = !! sym(as.character(input$rfm_customer_id_c)),
+			n_transactions = !! sym(as.character(input$rfm_n_transactions_c)),
+			recency_days = !! sym(as.character(input$rfm_recency_days_c)), 
+			total_revenue = !! sym(as.character(input$rfm_total_revenue_c)),
+			analysis_date = input$rfm_analysis_date_c, recency_bins = input$rfm_recency_bins_c,
+			frequency_bins = input$rfm_frequency_bins_c, monetary_bins = input$rfm_monetary_bins_c)
 
 }) 
 
-
-output$rfm_score_out <- renderDataTable({
-	comp_rfm_score() %>%
+output$rfm_transaction_score_out <- renderDataTable({
+	comp_rfm_transaction_score() %>%
 	  use_series(rfm) %>%
 	  as.data.frame()
 
 })
 
-generate_heatmap <- eventReactive(input$submit_rfm_score, {
-  rfm_heatmap(comp_rfm_score())
+output$rfm_customer_score_out <- renderDataTable({
+	comp_rfm_customer_score() %>%
+	  use_series(rfm) %>%
+	  as.data.frame()
+
 })
 
+rfm_final_score <- reactiveValues(a = NULL)
+
+observeEvent(input$submit_rfm_transaction_score, {
+  rfm_final_score$a <- comp_rfm_transaction_score()
+})
+
+observeEvent(input$submit_rfm_customer_score, {
+  rfm_final_score$a <- comp_rfm_customer_score()
+})
+
+rfm_heatmap_generate <- reactiveValues(a = NULL)
+
+observeEvent(input$submit_rfm_transaction_score, {
+  rfm_heatmap_generate$a <- rfm_heatmap(rfm_final_score$a)
+})
+
+observeEvent(input$submit_rfm_customer_score, {
+  rfm_heatmap_generate$a <- rfm_heatmap(rfm_final_score$a)
+})
 
 output$plot_heatmap <- renderPlot({
-  print(generate_heatmap())
+  print(rfm_heatmap_generate$a)
 })
 
-generate_barchart <- eventReactive(input$submit_rfm_score, {
-  rfm_bar_chart(comp_rfm_score())
+rfm_barchart_generate <- reactiveValues(a = NULL)
+
+observeEvent(input$submit_rfm_transaction_score, {
+  rfm_barchart_generate$a <- rfm_bar_chart(rfm_final_score$a)
 })
 
+observeEvent(input$submit_rfm_customer_score, {
+  rfm_barchart_generate$a <- rfm_bar_chart(rfm_final_score$a)
+})
 
 output$plot_barchart <- renderPlot({
-  print(generate_barchart())
+  print(rfm_barchart_generate$a)
 })
 
-generate_histogram <- eventReactive(input$submit_rfm_score, {
-  rfm_histograms(comp_rfm_score())
+rfm_histogram_generate <- reactiveValues(a = NULL)
+
+observeEvent(input$submit_rfm_transaction_score, {
+  rfm_histogram_generate$a <- rfm_histograms(rfm_final_score$a)
 })
 
+observeEvent(input$submit_rfm_customer_score, {
+  rfm_histogram_generate$a <- rfm_histograms(rfm_final_score$a)
+})
 
 output$plot_histogram <- renderPlot({
-  print(generate_histogram())
+  print(rfm_histogram_generate$a)
 })
 
-generate_scatter_1 <- eventReactive(input$submit_rfm_score, {
-  rfm_rm_plot(comp_rfm_score())
+rfm_scatter_1_generate <- reactiveValues(a = NULL)
+
+observeEvent(input$submit_rfm_transaction_score, {
+  rfm_scatter_1_generate$a <- rfm_rm_plot(rfm_final_score$a)
 })
 
+observeEvent(input$submit_rfm_customer_score, {
+  rfm_scatter_1_generate$a <- rfm_rm_plot(rfm_final_score$a)
+})
 
 output$plot_scatter_1 <- renderPlot({
-  print(generate_scatter_1())
+  print(rfm_scatter_1_generate$a)
 })
 
-generate_scatter_2 <- eventReactive(input$submit_rfm_score, {
-  rfm_fm_plot(comp_rfm_score())
+rfm_scatter_2_generate <- reactiveValues(a = NULL)
+
+observeEvent(input$submit_rfm_transaction_score, {
+  rfm_scatter_2_generate$a <- rfm_fm_plot(rfm_final_score$a)
+})
+
+observeEvent(input$submit_rfm_customer_score, {
+  rfm_scatter_2_generate$a <- rfm_fm_plot(rfm_final_score$a)
 })
 
 output$plot_scatter_2 <- renderPlot({
-  print(generate_scatter_2())
+  print(rfm_scatter_2_generate$a)
 })
 
+rfm_scatter_3_generate <- reactiveValues(a = NULL)
 
-generate_scatter_3 <- eventReactive(input$submit_rfm_score, {
-  rfm_rf_plot(comp_rfm_score())
+observeEvent(input$submit_rfm_transaction_score, {
+  rfm_scatter_3_generate$a <- rfm_rf_plot(rfm_final_score$a)
 })
+
+observeEvent(input$submit_rfm_customer_score, {
+  rfm_scatter_3_generate$a <- rfm_rf_plot(rfm_final_score$a)
+})
+
 
 output$plot_scatter_3 <- renderPlot({
-  print(generate_scatter_3())
+  print(rfm_scatter_3_generate$a)
 })
 
 

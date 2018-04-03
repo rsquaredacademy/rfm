@@ -30,12 +30,16 @@ rfm_table_customer(data = NULL, customer_id = NULL, n_transactions = NULL,
 \item{...}{Other arguments.}
 }
 \value{
-\code{rfm_table} returns a tibble with the following columns:
+\code{rfm_table_customer} returns a tibble with the following columns:
 
 \item{customer_id}{Unique id of the customer.}
 \item{recency_days}{Number of days since the most recent transaction.}
 \item{transaction_count}{Total number of transactions of the customer.}
-\item{revenue}{Revenue from the customer.}
+\item{amount}{Revenue from the customer.}
+\item{recency_score}{Recency score of the customer.}
+\item{frequency_score}{Frequency score of the customer.}
+\item{monetary_score}{Monetary score of the customer.}
+\item{rfm_score}{RFM score of the customer.}
 }
 \description{
 Recency, frequency, monetary and RFM score.

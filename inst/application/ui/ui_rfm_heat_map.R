@@ -14,10 +14,12 @@ tabPanel('Heat Map', value = 'tab_rfm_heatmap',
 
 			br(),
 			br(),
-			column(12, align = 'center', 
+			column(2),
+			column(8, align = 'center', 
 				plotOutput('plot_heatmap', height = '500px') %>% 
 					withSpinner()
-			)
+			),
+			column(2)
 
 		)
 

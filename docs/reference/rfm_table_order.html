@@ -62,7 +62,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Introduction_to_RFM.html">Introduction to RFM</a>
+      <a href="../articles/rfm-customer-level-data.html">RFM - Customer Level Data</a>
+    </li>
+    <li>
+      <a href="../articles/rfm-transaction-level-data.html">RFM - Transaction Level Data</a>
     </li>
   </ul>
 </li>
@@ -155,12 +158,16 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>rfm_table</code> returns a tibble with the following columns:</p>
+    <p><code>rfm_table_order</code> returns a tibble with the following columns:</p>
 <dt>customer_id</dt><dd><p>Unique id of the customer.</p></dd>
 <dt>date_most_recent</dt><dd><p>Date of the most recent transaction.</p></dd>
 <dt>recency_days</dt><dd><p>Number of days since the most recent transaction.</p></dd>
 <dt>transaction_count</dt><dd><p>Total number of transactions of the customer.</p></dd>
-<dt>revenue</dt><dd><p>Revenue from the customer.</p></dd>
+<dt>amount</dt><dd><p>Revenue from the customer.</p></dd>
+<dt>recency_score</dt><dd><p>Recency score of the customer.</p></dd>
+<dt>frequency_score</dt><dd><p>Frequency score of the customer.</p></dd>
+<dt>monetary_score</dt><dd><p>Monetary score of the customer.</p></dd>
+<dt>rfm_score</dt><dd><p>RFM score of the customer.</p></dd>
 
     
 
