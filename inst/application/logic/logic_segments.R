@@ -165,15 +165,66 @@ fill_segments <- reactive({
 
 output$segment_average_recency <- renderPlot({
 
-	prep_segment() %>%
+	data <- 
+	  prep_segment() %>%
 	  group_by(segment) %>%
 	  select(segment, recency_days) %>%
-	  summarize(mean(recency_days)) %>%
-	  rename(segment = segment, avg_recency = `mean(recency_days)`) %>%
-	  ggplot(aes(segment, avg_recency)) +
-	  geom_bar(stat = "identity", fill = brewer.pal(n = fill_segments(), name = "Set1")) +
-	  xlab("Segment") + ylab("Average Recency") +
-	  ggtitle("Average Recency by Segment") +
+	  summarize(median(recency_days)) %>%
+	  rename(segment = segment, avg_recency = `median(recency_days)`) %>%
+	  arrange(avg_recency) 
+
+	n_fill <- nrow(data)
+
+	ggplot(data, aes(segment, avg_recency)) +
+	  geom_bar(stat = "identity", fill = brewer.pal(n = n_fill, name = "Set1")) +
+	  xlab("Segment") + ylab("Median Recency") +
+	  ggtitle("Median Recency by Segment") +
+	  coord_flip() +
+	  theme(
+	    plot.title = element_text(hjust = 0.5)
+	  )
+
+})
+
+output$segment_average_frequency <- renderPlot({
+
+	data <- 
+		prep_segment() %>%
+	  group_by(segment) %>%
+	  select(segment, transaction_count) %>%
+	  summarize(median(transaction_count)) %>%
+	  rename(segment = segment, avg_frequency = `median(transaction_count)`) %>%
+	  arrange(avg_frequency) 
+
+	n_fill <- nrow(data)
+
+	ggplot(data, aes(segment, avg_frequency)) +
+	  geom_bar(stat = "identity", fill = brewer.pal(n = n_fill, name = "Set1")) +
+	  xlab("Segment") + ylab("Median Frequency") +
+	  ggtitle("Median Frequency by Segment") +
+	  coord_flip() +
+	  theme(
+	    plot.title = element_text(hjust = 0.5)
+	  )
+
+})
+
+output$segment_average_monetary <- renderPlot({
+
+	data <- 
+		prep_segment() %>%
+	  group_by(segment) %>%
+	  select(segment, amount) %>%
+	  summarize(median(amount)) %>%
+	  rename(segment = segment, avg_monetary = `median(amount)`) %>%
+	  arrange(avg_monetary) 
+
+	n_fill <- nrow(data)
+
+	ggplot(data, aes(segment, avg_monetary)) +
+	  geom_bar(stat = "identity", fill = brewer.pal(n = n_fill, name = "Set1")) +
+	  xlab("Segment") + ylab("Median Monetary Value") +
+	  ggtitle("Median Monetary Value by Segment") +
 	  coord_flip() +
 	  theme(
 	    plot.title = element_text(hjust = 0.5)

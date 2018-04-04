@@ -10,8 +10,10 @@ navbar:
       href: index.html
     - text: "Guides"
       menu:
-        - text: "Introduction to RFM"
-          href: articles/Introduction_to_RFM.html
+        - text: "RFM - Customer Level Data"
+          href: articles/rfm-customer-level-data.html
+        - text: "RFM - Transaction Level Data"
+          href: articles/rfm-transaction-level-data.html
     - text: "Reference"
       menu:
         - text: "Functions"
@@ -29,11 +31,17 @@ home:
 
 
 reference:
+- title: Shiny App
+  
+  contents:
+  - rfm_launch_shiny_app
+
 - title: RFM
 
   contents:
   - rfm_table_order
   - rfm_table_customer
+  - rfm_table_customer_2
   - rfm_heatmap
   - rfm_bar_chart
   - rfm_histograms

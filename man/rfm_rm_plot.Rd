@@ -36,7 +36,8 @@ Examine the relationship between the above recency, frequency
 \examples{
 # rfm table
 analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
-rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
+rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
+revenue, analysis_date)
 
 # monetary value vs recency
 rfm_rm_plot(rfm_result)

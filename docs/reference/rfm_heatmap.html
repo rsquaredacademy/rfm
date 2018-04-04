@@ -62,7 +62,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Introduction_to_RFM.html">Introduction to RFM</a>
+      <a href="../articles/rfm-customer-level-data.html">RFM - Customer Level Data</a>
+    </li>
+    <li>
+      <a href="../articles/rfm-transaction-level-data.html">RFM - Transaction Level Data</a>
     </li>
   </ul>
 </li>
@@ -165,14 +168,14 @@ is used for the color palette of the heatmap; check the documentation of
 <span class='no'>revenue</span>, <span class='no'>analysis_date</span>)
 
 <span class='co'># heat map</span>
-<span class='fu'>rfm_heatmap</span>(<span class='no'>rfm_order</span>)</div><div class='img'><img src='rfm_heatmap-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>rfm_heatmap</span>(<span class='no'>rfm_order</span>)</div><div class='img'><img src='rfm_heatmap-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># using customer data</span>
 <span class='no'>analysis_date</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/as_date.html'>as_date</a></span>(<span class='st'>'2007-01-01'</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>'UTC'</span>)
 <span class='no'>rfm_customer</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rfm_table_customer.html'>rfm_table_customer</a></span>(<span class='no'>rfm_data_customer</span>, <span class='no'>customer_id</span>,
-<span class='no'>number_of_purchases</span>, <span class='no'>purchase_interval</span>, <span class='no'>total_amount</span>, <span class='no'>analysis_date</span>)
+<span class='no'>number_of_orders</span>, <span class='no'>recency_days</span>, <span class='no'>revenue</span>, <span class='no'>analysis_date</span>)
 
 <span class='co'># heat map</span>
-<span class='fu'>rfm_heatmap</span>(<span class='no'>rfm_customer</span>)</div><div class='img'><img src='rfm_heatmap-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>rfm_heatmap</span>(<span class='no'>rfm_customer</span>)</div><div class='img'><img src='rfm_heatmap-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

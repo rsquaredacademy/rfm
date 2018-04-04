@@ -3,6 +3,14 @@ tabPanel("Average Recency", value = "tab_average_recency",
 	fluidPage(
 
 		fluidRow(
+      column(6, align = 'left',
+        h4('Average Recency by Segment')
+      )
+    ),
+
+    hr(),
+
+		fluidRow(
 
 			br(),
 			br(),

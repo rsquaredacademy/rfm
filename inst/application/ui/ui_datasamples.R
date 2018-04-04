@@ -14,63 +14,21 @@ tabPanel('Sample Data', value = 'tab_use_sample',
 
 		fluidRow(
 
-			column(4, align = 'center',
+			column(6, align = 'center',
 				actionButton(
-					inputId = 'rfm_transactions',
+					inputId = 'orders_data',
 					label = 'Transaction Data',
 					width = '200px',
-					onclick ="window.open('https://archive.ics.uci.edu/ml/datasets/Statlog+(German+Credit+Data)', 'newwindow', 'width=800,height=600')"
+					onclick ="window.open('https://rfm.rsquaredacademy.com/reference/rfm_data_orders.html', 'newwindow', 'width=800,height=600')"
 				)
 			),
 
-			column(4, align = 'center',
+			column(6, align = 'center',
 				actionButton(
-					inputId = 'iris_data',
-					label = 'Iris',
+					inputId = 'customer_data',
+					label = 'Customer Data',
 					width = '200px',
-					onclick ="window.open('https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/iris.html', 'newwindow', 'width=800,height=600')"
-				)
-			),
-
-			column(4, align = 'center',
-				actionButton(
-					inputId = 'mtcars_data',
-					label = 'mtcars',
-					width = '200px',
-					onclick ="window.open('https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html', 'newwindow', 'width=800,height=600')"
-				)
-			)
-
-		),
-
-		fluidRow(column(12, br())),
-
-		fluidRow(
-
-			column(4, align = 'center',
-				actionButton(
-					inputId = 'mpg_data',
-					label = 'mpg',
-					width = '200px',
-					onclick ="window.open('http://ggplot2.tidyverse.org/reference/mpg.html', 'newwindow', 'width=800,height=600')"
-				)
-			),
-
-			column(4, align = 'center',
-				actionButton(
-					inputId = 'hsb_data',
-					label = 'hsb',
-					width = '200px',
-					onclick ="window.open('http://www.rsquaredacademy.com/descriptr/reference/hsb.html', 'newwindow', 'width=800,height=600')"
-				)
-			),
-
-			column(4, align = 'center',
-				actionButton(
-					inputId = 'diamonds_data',
-					label = 'diamonds',
-					width = '200px',
-					onclick ="window.open('http://ggplot2.tidyverse.org/reference/diamonds.html', 'newwindow', 'width=800,height=600')"
+					onclick ="window.open('https://rfm.rsquaredacademy.com/reference/rfm_data_customer.html', 'newwindow', 'width=800,height=600')"
 				)
 			)
 
