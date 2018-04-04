@@ -48,7 +48,7 @@ rfm_heatmap(rfm_order)
 # using customer data
 analysis_date <- lubridate::as_date('2007-01-01', tz = 'UTC')
 rfm_customer <- rfm_table_customer(rfm_data_customer, customer_id,
-number_of_orders, recency_days, revenue, analysis_date, analysis_date)
+number_of_orders, recency_days, revenue, analysis_date)
 
 # heat map
 rfm_heatmap(rfm_customer)

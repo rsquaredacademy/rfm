@@ -62,7 +62,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Introduction_to_RFM.html">Introduction to RFM</a>
+      <a href="../articles/rfm-customer-level-data.html">RFM - Customer Level Data</a>
+    </li>
+    <li>
+      <a href="../articles/rfm-transaction-level-data.html">RFM - Transaction Level Data</a>
     </li>
   </ul>
 </li>
@@ -151,14 +154,15 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># rfm table</span>
 <span class='no'>analysis_date</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/as_date.html'>as_date</a></span>(<span class='st'>'2006-12-31'</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>'UTC'</span>)
-<span class='no'>rfm_result</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rfm_table_order.html'>rfm_table_order</a></span>(<span class='no'>rfm_data_orders</span>, <span class='no'>customer_id</span>, <span class='no'>order_date</span>, <span class='no'>revenue</span>, <span class='no'>analysis_date</span>)
+<span class='no'>rfm_result</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rfm_table_order.html'>rfm_table_order</a></span>(<span class='no'>rfm_data_orders</span>, <span class='no'>customer_id</span>, <span class='no'>order_date</span>,
+<span class='no'>revenue</span>, <span class='no'>analysis_date</span>)
 
 <span class='co'># monetary value vs recency</span>
-<span class='fu'>rfm_rm_plot</span>(<span class='no'>rfm_result</span>)</div><div class='img'><img src='rfm_rm_plot-4.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>rfm_rm_plot</span>(<span class='no'>rfm_result</span>)</div><div class='img'><img src='rfm_rm_plot-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># frequency vs monetary value</span>
-<span class='fu'>rfm_fm_plot</span>(<span class='no'>rfm_result</span>)</div><div class='img'><img src='rfm_rm_plot-5.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>rfm_fm_plot</span>(<span class='no'>rfm_result</span>)</div><div class='img'><img src='rfm_rm_plot-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># frequency vs recency</span>
-<span class='fu'>rfm_rf_plot</span>(<span class='no'>rfm_result</span>)</div><div class='img'><img src='rfm_rm_plot-6.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>rfm_rf_plot</span>(<span class='no'>rfm_result</span>)</div><div class='img'><img src='rfm_rm_plot-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

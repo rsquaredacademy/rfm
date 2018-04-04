@@ -36,7 +36,7 @@
 #' # using customer data
 #' analysis_date <- lubridate::as_date('2007-01-01', tz = 'UTC')
 #' rfm_customer <- rfm_table_customer(rfm_data_customer, customer_id,
-#' number_of_orders, recency_days, revenue, analysis_date, analysis_date)
+#' number_of_orders, recency_days, revenue, analysis_date)
 #'
 #' # heat map
 #' rfm_heatmap(rfm_customer)
@@ -304,7 +304,8 @@ rfm_order_dist <- function(rfm_table, bar_color = 'blue',
 #' @examples
 #' # rfm table
 #' analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
-#' rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
+#' rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
+#' revenue, analysis_date)
 #'
 #' # monetary value vs recency
 #' rfm_rm_plot(rfm_result)
