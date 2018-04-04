@@ -40,7 +40,7 @@ rfm_order_dist(rfm_order)
 # using customer data
 analysis_date <- lubridate::as_date('2007-01-01', tz = 'UTC')
 rfm_customer <- rfm_table_customer(rfm_data_customer, customer_id,
-number_of_purchases, purchase_interval, total_amount, analysis_date)
+number_of_orders, recency_days, revenue, analysis_date)
 
 # order distribution
 rfm_order_dist(rfm_customer)

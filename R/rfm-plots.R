@@ -36,7 +36,7 @@
 #' # using customer data
 #' analysis_date <- lubridate::as_date('2007-01-01', tz = 'UTC')
 #' rfm_customer <- rfm_table_customer(rfm_data_customer, customer_id,
-#' number_of_purchases, purchase_interval, total_amount, analysis_date)
+#' number_of_orders, recency_days, revenue, analysis_date, analysis_date)
 #'
 #' # heat map
 #' rfm_heatmap(rfm_customer)
@@ -119,7 +119,7 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
 #' # using customer data
 #' analysis_date <- lubridate::as_date('2007-01-01', tz = 'UTC')
 #' rfm_customer <- rfm_table_customer(rfm_data_customer, customer_id,
-#' number_of_purchases, purchase_interval, total_amount, analysis_date)
+#' number_of_orders, recency_days, revenue, analysis_date)
 #'
 #' # histogram
 #' rfm_histograms(rfm_customer)
@@ -175,7 +175,7 @@ rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
 #' # using customer data
 #' analysis_date <- lubridate::as_date('2007-01-01', tz = 'UTC')
 #' rfm_customer <- rfm_table_customer(rfm_data_customer, customer_id,
-#' number_of_purchases, purchase_interval, total_amount, analysis_date)
+#' number_of_orders, recency_days, revenue, analysis_date)
 #'
 #' # bar chart
 #' rfm_bar_chart(rfm_customer)
@@ -249,7 +249,7 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #' # using customer data
 #' analysis_date <- lubridate::as_date('2007-01-01', tz = 'UTC')
 #' rfm_customer <- rfm_table_customer(rfm_data_customer, customer_id,
-#' number_of_purchases, purchase_interval, total_amount, analysis_date)
+#' number_of_orders, recency_days, revenue, analysis_date)
 #'
 #' # order distribution
 #' rfm_order_dist(rfm_customer)
