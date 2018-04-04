@@ -80,15 +80,15 @@ The customers with the highest RFM scores are most likely to respond to an offer
 
 ```{r rfm_table_order, eval=FALSE}
 analysis_date <- lubridate::as_date('2007-01-01', tz = 'UTC')
-rfm_result <- rfm_table_customer(rfm_data_customer, customer_id, number_of_purchases,
-  purchase_interval, total_amount, analysis_date)
+rfm_result <- rfm_table_customer(rfm_data_customer, customer_id, number_of_orders,
+  recency_days, revenue, analysis_date)
 rfm_result
 ```
 
 ```{r rfm_table_order2, eval=TRUE, echo=FALSE}
 analysis_date <- lubridate::as_date('2007-01-01', tz = 'UTC')
-rfm_result <- rfm_table_customer(rfm_data_customer, customer_id, number_of_purchases,
-  purchase_interval, total_amount, analysis_date)
+rfm_result <- rfm_table_customer(rfm_data_customer, customer_id, number_of_orders,
+  recency_days, revenue, analysis_date)
 rfm_result %>%
   use_series(rfm) %>%
   slice(1:10) %>%
@@ -284,9 +284,11 @@ rfm_segments %>%
   rename(Segment = segment, Count = n)
 ```
 
-## Average Recency
+## Segments
 
-We can also examine the average frequency across the different segments. As you can observe, average recency in days is higher for customers in the segments such as `Needs Attention`, `Hibernating`, `At Risk` and `About To Sleep`.
+We can also examine the median recency, frequency and monetary value across segments.
+
+### Median Recency
 
 ```{r avg_recency, fig.align='center', fig.height=5, fig.width=6}
 data <- 
@@ -309,7 +311,7 @@ data <-
     )
 ```
 
-## Average Frequency
+### Median Frequency
 
 ```{r avg_frequency, fig.align='center', fig.height=5, fig.width=6}
 data <- 
@@ -332,7 +334,7 @@ ggplot(data, aes(segment, avg_frequency)) +
     )
 ```
 
-## Average Monetary Value
+### Median Monetary Value
 
 ```{r avg_monetary, fig.align='center', fig.height=5, fig.width=6}
 data <- 

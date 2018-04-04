@@ -281,9 +281,11 @@ rfm_segments %>%
   rename(Segment = segment, Count = n)
 ```
 
-## Average Recency
+## Segments
 
-We can also examine the average recency across the different segments. As you can observe, average recency in days is higher for customers in the segments such as `Needs Attention`, `Hibernating`, `At Risk` and `About To Sleep`.
+We can also examine the median recency, frequency and monetary value across segments.
+
+### Median Recency
 
 ```{r avg_recency, fig.align='center', fig.height=5, fig.width=6}
 data <- 
@@ -306,7 +308,7 @@ data <-
     )
 ```
 
-## Average Frequency
+### Median Frequency
 
 ```{r avg_frequency, fig.align='center', fig.height=5, fig.width=6}
 data <- 
@@ -329,7 +331,7 @@ ggplot(data, aes(segment, avg_frequency)) +
     )
 ```
 
-## Average Monetary Value
+### Median Monetary Value
 
 ```{r avg_monetary, fig.align='center', fig.height=5, fig.width=6}
 data <- 
