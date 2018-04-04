@@ -7,7 +7,8 @@ tabPanel('Transaction Data', value = 'tab_rfm_transaction_score',
 
       column(6, align = 'left',
           h4('RFM Analysis'),
-          p('Recency, frequency and monetary value analysis for transaction level data.')
+          p('Recency, frequency and monetary value analysis for transaction level data. Each row represents 
+            a transaction/order.')
         ),
         column(6, align = 'right',
           actionButton(inputId='rvsp1', label="Help", icon = icon("question-circle"),
@@ -116,6 +117,8 @@ tabPanel('Transaction Data', value = 'tab_rfm_transaction_score',
         )
       )
     ),
+
+    br(),
 
     fluidRow(
     	column(12, align = "center",

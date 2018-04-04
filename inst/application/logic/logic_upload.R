@@ -135,28 +135,12 @@ ext_type <- reactive({
 # choosing sample data
 sampdata <- reactiveValues(s = NULL)
 
-observeEvent(input$german_data, {
+observeEvent(input$orders_data, {
   sampdata$s <- rfm_data_orders
 })
 
-observeEvent(input$iris_data, {
-  sampdata$s <- iris
-})
-
-observeEvent(input$mtcars_data, {
-  sampdata$s <- descriptr::mtcarz
-})
-
-observeEvent(input$hsb_data, {
-  sampdata$s <- hsb
-})
-
-observeEvent(input$mpg_data, {
-  sampdata$s <- mpg
-})
-
-observeEvent(input$diamonds_data, {
-  sampdata$s <- diamonds
+observeEvent(input$customer_data, {
+  sampdata$s <- rfm_data_customer
 })
 
 uploadata <- reactiveValues(t = NULL)
