@@ -1,4 +1,4 @@
-tabPanel('RFM', value = 'tab_rfm', icon = icon('stats', lib = 'glyphicon'),
+tabPanel('RFM', value = 'tab_rfm', icon = icon('sitemap'),
          
     navlistPanel(id = 'navlist_rfm',
         well = FALSE,

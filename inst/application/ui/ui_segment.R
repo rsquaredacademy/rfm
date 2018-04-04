@@ -1,4 +1,4 @@
-tabPanel('Segments', value = 'tab_segment', icon = icon('stats', lib = 'glyphicon'),
+tabPanel('Segments', value = 'tab_segment', icon = icon('object-ungroup'),
          
     navlistPanel(id = 'navlist_rfm',
         well = FALSE,
