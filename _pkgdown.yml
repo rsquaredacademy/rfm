@@ -28,7 +28,8 @@ home:
   links:
   - text: Learn more
     href: https://www.rsquaredacademy.com
-
+  - text: Shiny app
+    href: https://apps.rsquaredacademy.com
 
 reference:
 - title: Shiny App
