@@ -39,7 +39,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/Introduction_to_RFM.html">Introduction to RFM</a>
+      <a href="articles/rfm-customer-level-data.html">RFM - Customer Level Data</a>
+    </li>
+    <li>
+      <a href="articles/rfm-transaction-level-data.html">RFM - Transaction Level Data</a>
     </li>
   </ul>
 </li>
@@ -83,13 +86,13 @@
     
 <div class="contents">
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-<div id="rfm-tools-for-customer-segmentation-analysis" class="section level2">
+<div id="rfm-recency-frequency-and-monetary-value-analysis" class="section level2">
 <h2 class="hasAnchor">
-<a href="#rfm-tools-for-customer-segmentation-analysis" class="anchor"></a>rfm: Tools for customer segmentation analysis <img src="hex_rfm.png" align="right">
+<a href="#rfm-recency-frequency-and-monetary-value-analysis" class="anchor"></a>rfm: Recency, Frequency and Monetary Value Analysis <img src="hex_rfm.png" align="right">
 </h2>
 <p><strong>Author:</strong> <a href="https://www.aravindhebbali.com">Aravind Hebbali</a><br><strong>License:</strong> <a href="https://opensource.org/licenses/MIT">MIT</a></p>
 <p><a href="https://cran.r-project.org/package=rfm"><img src="http://www.r-pkg.org/badges/version/rfm" alt="CRAN_Status_Badge"></a> <a href="https://travis-ci.org/rsquaredacademy/rfm"><img src="https://travis-ci.org/rsquaredacademy/rfm.svg?branch=master" alt="Travis-CI Build Status"></a> <a href="https://ci.appveyor.com/project/rsquaredacademy/rfm"><img src="https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/rfm?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a> <a href="https://codecov.io/github/rsquaredacademy/rfm?branch=master"><img src="https://img.shields.io/codecov/c/github/rsquaredacademy/rfm/master.svg" alt="Coverage Status"></a> <img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg"></p>
-<p>In the long run, the goal of rfm is to develop tools for customer segmentation and lifetime value analysis. Included in version 0.0.1 are tools for RFM (recency, frequency and monetary) analysis.</p>
+<p>Tools for RFM (recency, frequency and monetary) analysis. Generate RFM score from both transaction and customer level data. Visualize the relationship between recency, frequency and monetary value using heatmap, histograms, bar charts and scatter plots. Includes a shiny app for interactive segmentation.</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -103,11 +106,17 @@
 <a href="#consistent-prefix" class="anchor"></a>Consistent Prefix</h2>
 <p>rfm uses consistent prefix <code>rfm_</code> for easy tab completion.</p>
 </div>
+<div id="shiny-app" class="section level2">
+<h2 class="hasAnchor">
+<a href="#shiny-app" class="anchor"></a>Shiny App</h2>
+<p>rfm includes a shiny app for interactive analysis and can be launched using <code><a href="reference/rfm_launch_app.html">rfm_launch_app()</a></code>.</p>
+</div>
 <div id="vignettes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#vignettes" class="anchor"></a>Vignettes</h2>
 <ul>
-<li><a href="http://www.rsquaredacademy.com/rfm/articles/Introduction_to_RFM.html">Introduction to RFM</a></li>
+<li><a href="https://rfm.rsquaredacademy.com/rfm/articles/rfm-customer-level-data.html">RFM Customer Data</a></li>
+<li><a href="https://rfm.rsquaredacademy.com/rfm/articles/rfm-transaction-level-data.html">RFM Transaction Data</a></li>
 </ul>
 </div>
 <div id="usage" class="section level2">
@@ -138,7 +147,7 @@
 <h3 class="hasAnchor">
 <a href="#rfm-table" class="anchor"></a>RFM Table</h3>
 <p>Use <code><a href="reference/rfm_table_order.html">rfm_table_order()</a></code> to generate the RFM score.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">analysis_date &lt;-<span class="st"> </span>lubridate<span class="op">::</span><span class="kw"><a href="http://lubridate.tidyverse.org/reference/as_date.html">as_date</a></span>(<span class="st">'2006-12-31'</span>, <span class="dt">tz =</span> <span class="st">'UTC'</span>)</a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">analysis_date &lt;-<span class="st"> </span>lubridate<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/lubridate/topics/as_date">as_date</a></span>(<span class="st">'2006-12-31'</span>, <span class="dt">tz =</span> <span class="st">'UTC'</span>)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">rfm_result &lt;-<span class="st"> </span><span class="kw"><a href="reference/rfm_table_order.html">rfm_table_order</a></span>(rfm_data_orders, customer_id, order_date, revenue, analysis_date)</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">rfm_result</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt; # A tibble: 995 x 9</span></a>

@@ -4,7 +4,8 @@ tabPanel('Histogram', value = 'tab_rfm_histogram',
 
 		fluidRow(
       column(6, align = 'left',
-        h4('Histograms')
+        h4('Histograms'),
+        p("Histograms of recency, frequency and monetary value.")
       )
     ),
 

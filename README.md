@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-## rfm: Tools for customer segmentation analysis <img src="hex_rfm.png" align="right" />
+## rfm: Recency, Frequency and Monetary Value Analysis <img src="hex_rfm.png" align="right" />
 
 **Author:** [Aravind Hebbali](https://www.aravindhebbali.com)<br/>
 **License:**
@@ -16,9 +16,11 @@ Status](https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/rfm?b
 Status](https://img.shields.io/codecov/c/github/rsquaredacademy/rfm/master.svg)](https://codecov.io/github/rsquaredacademy/rfm?branch=master)
 ![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
 
-In the long run, the goal of rfm is to develop tools for customer
-segmentation and lifetime value analysis. Included in version 0.0.1 are
-tools for RFM (recency, frequency and monetary) analysis.
+Tools for RFM (recency, frequency and monetary) analysis. Generate RFM
+score from both transaction and customer level data. Visualize the
+relationship between recency, frequency and monetary value using
+heatmap, histograms, bar charts and scatter plots. Includes a shiny app
+for interactive segmentation.
 
 ## Installation
 
@@ -33,10 +35,17 @@ devtools::install_github("rsquaredacademy/rfm")
 
 rfm uses consistent prefix `rfm_` for easy tab completion.
 
+## Shiny App
+
+rfm includes a shiny app for interactive analysis and can be launched
+using `rfm_launch_app()`.
+
 ## Vignettes
 
-  - [Introduction to
-    RFM](http://www.rsquaredacademy.com/rfm/articles/Introduction_to_RFM.html)
+  - [RFM Customer
+    Data](https://rfm.rsquaredacademy.com/rfm/articles/rfm-customer-level-data.html)
+  - [RFM Transaction
+    Data](https://rfm.rsquaredacademy.com/rfm/articles/rfm-transaction-level-data.html)
 
 ## Usage
 

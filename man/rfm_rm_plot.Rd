@@ -30,7 +30,7 @@ rfm_rf_plot(rfm_table, point_color = "blue", xaxis_title = "Frequency",
 Scatter plot.
 }
 \description{
-Examine the relationship between the above recency, frequency
+Examine the relationship between recency, frequency
   and monetary values.
 }
 \examples{

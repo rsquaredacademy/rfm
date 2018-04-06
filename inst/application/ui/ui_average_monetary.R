@@ -1,10 +1,10 @@
-tabPanel("Average Monetary Value", value = "tab_average_monetary",
+tabPanel("Median Monetary Value", value = "tab_average_monetary",
 
 	fluidPage(
 
 		fluidRow(
       column(6, align = 'left',
-        h4('Average Monetary Value by Segment')
+        h4('Median Monetary Value by Segment')
       )
     ),
 

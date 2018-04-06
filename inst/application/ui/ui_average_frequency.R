@@ -1,10 +1,10 @@
-tabPanel("Average Frequency", value = "tab_average_frequency",
+tabPanel("Median Frequency", value = "tab_average_frequency",
 
 	fluidPage(
 
 		fluidRow(
       column(6, align = 'left',
-        h4('Average Frequency by Segment')
+        h4('Median Frequency by Segment')
       )
     ),
 

@@ -1,10 +1,10 @@
-tabPanel("Average Recency", value = "tab_average_recency",
+tabPanel("Median Recency", value = "tab_average_recency",
 
 	fluidPage(
 
 		fluidRow(
       column(6, align = 'left',
-        h4('Average Recency by Segment')
+        h4('Median Recency by Segment')
       )
     ),
 

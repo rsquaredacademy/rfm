@@ -286,7 +286,8 @@ rfm_segments %>%
 
 ## Segments
 
-We can also examine the median recency, frequency and monetary value across segments.
+We can also examine the median recency, frequency and monetary value across segments to ensure that the
+logic used for customer classification is sound and practical.
 
 ### Median Recency
 

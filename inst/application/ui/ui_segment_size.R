@@ -4,7 +4,8 @@ tabPanel("Segment Size", value = "tab_segment_size",
 
 		fluidRow(
       column(6, align = 'left',
-        h4('Segment Distribution')
+        h4('Segment Distribution'),
+        p("Distribution of customers across the segments.")
       )
     ),
 

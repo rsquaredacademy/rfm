@@ -7,8 +7,8 @@ tabPanel('Customer Data - I', value = 'tab_rfm_customer_score',
 
       column(6, align = 'left',
           h4('RFM Analysis'),
-          p('Recency, frequency and monetary value analysis for customer level data. Each row represents 
-            transactions of a customer. The data includes the number of days since the last transaction.')
+          p('Recency, frequency and monetary value analysis for customer level data i.e. each row represents 
+            transactions of a customer and the data includes the number of days since the last transaction.')
         ),
         column(6, align = 'right',
           actionButton(inputId='rvsp1', label="Help", icon = icon("question-circle"),
