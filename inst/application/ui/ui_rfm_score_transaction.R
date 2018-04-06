@@ -7,7 +7,7 @@ tabPanel('Transaction Data', value = 'tab_rfm_transaction_score',
 
       column(6, align = 'left',
           h4('RFM Analysis'),
-          p('Recency, frequency and monetary value analysis for transaction level data. Each row represents 
+          p('Recency, frequency and monetary value analysis for transaction level data i.e. each row represents 
             a transaction/order.')
         ),
         column(6, align = 'right',

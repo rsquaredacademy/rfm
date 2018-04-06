@@ -4,7 +4,8 @@ tabPanel('Scatter Plots', value = 'tab_rfm_scatter',
 
 		fluidRow(
       column(6, align = 'left',
-        h4('Scatter Plots')
+        h4('Scatter Plots'),
+        p("Examine the relationship between recency, frequency and monetary values.")
       )
     ),
 

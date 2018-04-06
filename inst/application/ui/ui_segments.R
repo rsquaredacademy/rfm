@@ -4,7 +4,9 @@ tabPanel("Segmentation", value = "tab_rfm_segments",
 
 		fluidRow(
       column(6, align = 'left',
-        h4('Generate Segments')
+        h4('Generate Segments'),
+        p("Classify customers based on the individual recency, frequency and monetary scores. Those
+          customers who do not fall into any of the below segments will be classified as 'Others'.")
       )
     ),
 

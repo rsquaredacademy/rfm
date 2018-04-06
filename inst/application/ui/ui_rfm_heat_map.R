@@ -4,7 +4,11 @@ tabPanel('Heat Map', value = 'tab_rfm_heatmap',
 
 		fluidRow(
       column(6, align = 'left',
-        h4('RFM Heatmap')
+        h4('RFM Heatmap'),
+        p("The heat map shows the average monetary value for different
+					categories of recency and frequency scores. Higher scores of frequency and
+					recency are characterized by higher average monetary value as indicated by
+					the darker areas in the heatmap.")
       )
     ),
 

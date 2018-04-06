@@ -4,7 +4,9 @@ tabPanel('Bar Chart', value = 'tab_rfm_barchart',
 
 		fluidRow(
       column(6, align = 'left',
-        h4('RFM Bar Chart')
+        h4('RFM Bar Chart'),
+        p("Examine the distribution of monetary scores for the different 
+        	combinations of frequency and recency scores.")
       )
     ),
 
