@@ -5,8 +5,8 @@ tabPanel("Home", value = "tab_welcome", icon = icon('home'),
 		br(),
 
     fluidRow(
-      column(1),
-      column(4, align = 'center', 
+      column(2),
+      column(3, align = 'left', 
         br(),
 
         h3('RFM Analysis'),
@@ -48,19 +48,19 @@ tabPanel("Home", value = "tab_welcome", icon = icon('home'),
 
     fluidRow(hr()),
 
-    fluidRow(
-    	column(12, align = "center", h4("Quick Demo"))
-    ),
+    # fluidRow(
+    # 	column(12, align = "center", h4("Quick Demo"))
+    # ),
 
-    fluidRow(
-      column(12, align = 'center',
-        div(style = "height:550px;",
-          br(),
-          br(),
-          tags$iframe(width="760", height="515", src="https://www.youtube.com/embed/aM0bjrYCvv8?rel=0&autoplay=0")
-        )
-      )
-    ),
+    # fluidRow(
+    #   column(12, align = 'center',
+    #     div(style = "height:550px;",
+    #       br(),
+    #       br(),
+    #       tags$iframe(width="760", height="515", src="https://www.youtube.com/embed/aM0bjrYCvv8?rel=0&autoplay=0")
+    #     )
+    #   )
+    # ),
 
     br(),
     br(),
@@ -68,8 +68,6 @@ tabPanel("Home", value = "tab_welcome", icon = icon('home'),
     fluidRow(
     	column(12, align = "center", h4("Data Sources"))
     ),
-
-    hr(),
 
     fluidRow(
     	column(12, align = "center",
