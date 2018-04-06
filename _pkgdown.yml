@@ -34,7 +34,7 @@ reference:
 - title: Shiny App
   
   contents:
-  - rfm_launch_shiny_app
+  - rfm_launch_app
 
 - title: RFM
 

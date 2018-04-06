@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>RFM Scatter plot — rfm_rm_plot â€¢ rfm</title>
+<title>Launch shiny app — rfm_launch_app â€¢ rfm</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -104,74 +104,25 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>RFM Scatter plot</h1>
+    <h1>Launch shiny app</h1>
     </div>
 
     
-    <p>Examine the relationship between recency, frequency
-  and monetary values.</p>
+    <p>Launches shiny app.</p>
     
 
-    <pre class="usage"><span class='fu'>rfm_rm_plot</span>(<span class='no'>rfm_table</span>, <span class='kw'>point_color</span> <span class='kw'>=</span> <span class='st'>"blue"</span>, <span class='kw'>xaxis_title</span> <span class='kw'>=</span> <span class='st'>"Monetary"</span>,
-  <span class='kw'>yaxis_title</span> <span class='kw'>=</span> <span class='st'>"Recency"</span>, <span class='kw'>plot_title</span> <span class='kw'>=</span> <span class='st'>"Recency vs Monetary"</span>)
-
-<span class='fu'>rfm_fm_plot</span>(<span class='no'>rfm_table</span>, <span class='kw'>point_color</span> <span class='kw'>=</span> <span class='st'>"blue"</span>, <span class='kw'>xaxis_title</span> <span class='kw'>=</span> <span class='st'>"Monetary"</span>,
-  <span class='kw'>yaxis_title</span> <span class='kw'>=</span> <span class='st'>"Frequency"</span>, <span class='kw'>plot_title</span> <span class='kw'>=</span> <span class='st'>"Frequency vs Monetary"</span>)
-
-<span class='fu'>rfm_rf_plot</span>(<span class='no'>rfm_table</span>, <span class='kw'>point_color</span> <span class='kw'>=</span> <span class='st'>"blue"</span>, <span class='kw'>xaxis_title</span> <span class='kw'>=</span> <span class='st'>"Frequency"</span>,
-  <span class='kw'>yaxis_title</span> <span class='kw'>=</span> <span class='st'>"Recency"</span>, <span class='kw'>plot_title</span> <span class='kw'>=</span> <span class='st'>"Recency vs Frequency"</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>rfm_table</th>
-      <td><p>An object of class <code>rfm_table</code>.</p></td>
-    </tr>
-    <tr>
-      <th>point_color</th>
-      <td><p>Color of the scatter points.</p></td>
-    </tr>
-    <tr>
-      <th>xaxis_title</th>
-      <td><p>X axis title.</p></td>
-    </tr>
-    <tr>
-      <th>yaxis_title</th>
-      <td><p>Y axis title.</p></td>
-    </tr>
-    <tr>
-      <th>plot_title</th>
-      <td><p>Title of the plot.</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>Scatter plot.</p>
-    
+    <pre class="usage"><span class='fu'>rfm_launch_app</span>()</pre>
+        
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># rfm table</span>
-<span class='no'>analysis_date</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/as_date.html'>as_date</a></span>(<span class='st'>'2006-12-31'</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>'UTC'</span>)
-<span class='no'>rfm_result</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rfm_table_order.html'>rfm_table_order</a></span>(<span class='no'>rfm_data_orders</span>, <span class='no'>customer_id</span>, <span class='no'>order_date</span>,
-<span class='no'>revenue</span>, <span class='no'>analysis_date</span>)
-
-<span class='co'># monetary value vs recency</span>
-<span class='fu'>rfm_rm_plot</span>(<span class='no'>rfm_result</span>)</div><div class='img'><img src='rfm_rm_plot-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
-<span class='co'># frequency vs monetary value</span>
-<span class='fu'>rfm_fm_plot</span>(<span class='no'>rfm_result</span>)</div><div class='img'><img src='rfm_rm_plot-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
-<span class='co'># frequency vs recency</span>
-<span class='fu'>rfm_rf_plot</span>(<span class='no'>rfm_result</span>)</div><div class='img'><img src='rfm_rm_plot-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'>rfm_launch_app</span>()
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-      
+            
       <li><a href="#examples">Examples</a></li>
     </ul>
 

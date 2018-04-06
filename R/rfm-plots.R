@@ -132,7 +132,8 @@ rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
                            hist_r_label = 'Recency', hist_f_label = 'Frequency',
                            plot_title_justify = 0.5) {
 
-  rfm_table %>%
+  p <- 
+    rfm_table %>%
     use_series(rfm) %>%
     select(recency_days, transaction_count, amount) %>%
     gather(rfm, score) %>%
@@ -144,6 +145,9 @@ rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
         rfm = c(amount = hist_m_label, recency_days = hist_r_label,
                 transaction_count = hist_f_label))) +
     theme(plot.title = element_text(hjust = plot_title_justify))
+
+  print(p)
+
 }
 
 
@@ -273,7 +277,8 @@ rfm_order_dist <- function(rfm_table, bar_color = 'blue',
     multiply_by(1.1) %>%
     ceiling()
 
-  data %>%
+  p <- 
+    data %>%
     ggplot(aes(x = transaction_count, y = n)) +
     geom_bar(stat = "identity", fill = bar_color) +
     xlab(xaxis_title) + ylab(yaxis_title) + ylim(0, ylim_max) +
@@ -283,12 +288,14 @@ rfm_order_dist <- function(rfm_table, bar_color = 'blue',
     ) +
     theme(plot.title = element_text(hjust = 0.5))
 
+  print(p)
+
 }
 
 
 #' RFM Scatter plot
 #'
-#' @description Examine the relationship between the above recency, frequency
+#' @description Examine the relationship between recency, frequency
 #'   and monetary values.
 #'
 #' @param rfm_table An object of class \code{rfm_table}.
