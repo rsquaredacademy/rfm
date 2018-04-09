@@ -37,12 +37,4 @@ revenue, analysis_date)
 # bar chart
 rfm_bar_chart(rfm_order)
 
-# using customer data
-analysis_date <- lubridate::as_date('2007-01-01', tz = 'UTC')
-rfm_customer <- rfm_table_customer(rfm_data_customer, customer_id,
-number_of_orders, recency_days, revenue, analysis_date)
-
-# bar chart
-rfm_bar_chart(rfm_customer)
-
 }
