@@ -15,7 +15,7 @@ Status](https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/rfm?b
 [![Coverage
 Status](https://img.shields.io/codecov/c/github/rsquaredacademy/rfm/master.svg)](https://codecov.io/github/rsquaredacademy/rfm?branch=master)
 [![](https://cranlogs.r-pkg.org/badges/grand-total/rfm)](https://cran.r-project.org/package=rfm)
-![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
+![](https://img.shields.io/badge/lifecycle-maturing-blue.svg)
 
 Tools for RFM (recency, frequency and monetary) analysis. Generate RFM
 score from both transaction and customer level data. Visualize the
