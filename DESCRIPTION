@@ -1,7 +1,7 @@
 Type: Package
 Package: rfm
 Title: Recency, Frequency and Monetary Value Analysis
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: person("Aravind", "Hebbali", email = "hebbali.aravind@gmail.com", role = c("aut", "cre"))
 Description: Tools for RFM (recency, frequency and monetary value) analysis. 
     Generate RFM score from both transaction and customer level data. Visualize the
@@ -13,7 +13,7 @@ License: MIT + file LICENSE
 URL: https://github.com/rsquaredacademy/rfm, https://rfm.rsquaredacademy.com/ 
 BugReports: https://github.com/rsquaredacademy/rfm/issues
 Depends: 
-    R (>= 3.2.4)
+    R (>= 3.2)
 Imports: 
     assertthat,
     dplyr,

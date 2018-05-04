@@ -33,7 +33,7 @@ output$segment_prep <- renderUI({
 })
 
 segment_names <- reactive({
-  
+
   ncol <- as.integer(input$n_segments)
 
   collect <- list(lapply(1:ncol, function(i) {
@@ -114,22 +114,24 @@ monetary_upper <- reactive({
 	ncol <- as.integer(input$n_segments)
 
   collect <- list(lapply(1:ncol, function(i) {
+
     input[[paste("monetary_interval_", i)]]
   }))
 
   collect[[1]] %>%
+
     map_int(2)
 
 })
 
 prep_segment <- eventReactive(input$button_create_segments, {
 
-	rfm_score_table <- 
-		comp_rfm_score() %>%
-		  use_series(rfm)
+	rfm_score_table <-
+		rfm_final_score$a %>%
+	  use_series(rfm)
 
 	for (i in seq_len(input$n_segments)) {
-		rfm_score_table$segment[((rfm_score_table$recency_score %>% between(recency_lower()[i], recency_upper()[i])) & 
+		rfm_score_table$segment[((rfm_score_table$recency_score %>% between(recency_lower()[i], recency_upper()[i])) &
 		  (rfm_score_table$frequency_score %>% between(frequency_lower()[i], frequency_upper()[i])) &
 		  (rfm_score_table$monetary_score %>% between(monetary_lower()[i], monetary_upper()[i])))] <- segment_names()[i]
 	}
@@ -140,12 +142,13 @@ prep_segment <- eventReactive(input$button_create_segments, {
 	  select(
 	    customer_id, segment, rfm_score, transaction_count, recency_days,
 	    amount
+
 	  )
 
 })
 
 output$segment_out <- renderDataTable({
-	prep_segment() 
+	prep_segment()
 })
 
 output$segment_size_out <- renderPrint({
@@ -153,7 +156,7 @@ output$segment_size_out <- renderPrint({
 	prep_segment() %>%
 	  count(segment) %>%
 	  arrange(desc(n)) %>%
-	  rename(Segment = segment, Count = n) %>% 
+	  rename(Segment = segment, Count = n) %>%
 	  kable() %>%
   	kable_styling(full_width = TRUE, font_size = 30)
 
@@ -165,13 +168,13 @@ fill_segments <- reactive({
 
 output$segment_average_recency <- renderPlot({
 
-	data <- 
+	data <-
 	  prep_segment() %>%
 	  group_by(segment) %>%
 	  select(segment, recency_days) %>%
 	  summarize(median(recency_days)) %>%
 	  rename(segment = segment, avg_recency = `median(recency_days)`) %>%
-	  arrange(avg_recency) 
+	  arrange(avg_recency)
 
 	n_fill <- nrow(data)
 
@@ -188,13 +191,13 @@ output$segment_average_recency <- renderPlot({
 
 output$segment_average_frequency <- renderPlot({
 
-	data <- 
+	data <-
 		prep_segment() %>%
 	  group_by(segment) %>%
 	  select(segment, transaction_count) %>%
 	  summarize(median(transaction_count)) %>%
 	  rename(segment = segment, avg_frequency = `median(transaction_count)`) %>%
-	  arrange(avg_frequency) 
+	  arrange(avg_frequency)
 
 	n_fill <- nrow(data)
 
@@ -211,13 +214,13 @@ output$segment_average_frequency <- renderPlot({
 
 output$segment_average_monetary <- renderPlot({
 
-	data <- 
+	data <-
 		prep_segment() %>%
 	  group_by(segment) %>%
 	  select(segment, amount) %>%
 	  summarize(median(amount)) %>%
 	  rename(segment = segment, avg_monetary = `median(amount)`) %>%
-	  arrange(avg_monetary) 
+	  arrange(avg_monetary)
 
 	n_fill <- nrow(data)
 
