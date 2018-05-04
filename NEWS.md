@@ -1,3 +1,7 @@
+# rfm 0.1.1
+
+Patch release to fix the shiny app.
+
 # rfm 0.1.0
 
 This is a minor release for bug fixes and enhancements.
