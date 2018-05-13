@@ -1,78 +1,62 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+rfm: Recency, Frequency and Monetary Value Analysis <img src="hex_rfm.png" align="right" />
+-------------------------------------------------------------------------------------------
 
-## rfm: Recency, Frequency and Monetary Value Analysis <img src="hex_rfm.png" align="right" />
+**Author:** [Aravind Hebbali](https://www.aravindhebbali.com)<br/> **License:** [MIT](https://opensource.org/licenses/MIT)
 
-**Author:** [Aravind Hebbali](https://www.aravindhebbali.com)<br/>
-**License:**
-[MIT](https://opensource.org/licenses/MIT)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/rfm)](https://cran.r-project.org/package=rfm) [![Travis-CI Build Status](https://travis-ci.org/rsquaredacademy/rfm.svg?branch=master)](https://travis-ci.org/rsquaredacademy/rfm) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/rfm?branch=master&svg=true)](https://ci.appveyor.com/project/rsquaredacademy/rfm) [![Coverage Status](https://img.shields.io/codecov/c/github/rsquaredacademy/rfm/master.svg)](https://codecov.io/github/rsquaredacademy/rfm?branch=master) [![](https://cranlogs.r-pkg.org/badges/grand-total/rfm)](https://cran.r-project.org/package=rfm) ![](https://img.shields.io/badge/lifecycle-maturing-blue.svg)
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/rfm)](https://cran.r-project.org/package=rfm)
-[![Travis-CI Build
-Status](https://travis-ci.org/rsquaredacademy/rfm.svg?branch=master)](https://travis-ci.org/rsquaredacademy/rfm)
-[![AppVeyor Build
-Status](https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/rfm?branch=master&svg=true)](https://ci.appveyor.com/project/rsquaredacademy/rfm)
-[![Coverage
-Status](https://img.shields.io/codecov/c/github/rsquaredacademy/rfm/master.svg)](https://codecov.io/github/rsquaredacademy/rfm?branch=master)
-[![](https://cranlogs.r-pkg.org/badges/grand-total/rfm)](https://cran.r-project.org/package=rfm)
-![](https://img.shields.io/badge/lifecycle-maturing-blue.svg)
+Tools for RFM (recency, frequency and monetary) analysis. Generate RFM score from both transaction and customer level data. Visualize the relationship between recency, frequency and monetary value using heatmap, histograms, bar charts and scatter plots. Includes a shiny app for interactive segmentation.
 
-Tools for RFM (recency, frequency and monetary) analysis. Generate RFM
-score from both transaction and customer level data. Visualize the
-relationship between recency, frequency and monetary value using
-heatmap, histograms, bar charts and scatter plots. Includes a shiny app
-for interactive segmentation.
-
-## Installation
-
-You can install rfm from github with:
+Installation
+------------
 
 ``` r
+# Install rfm from CRAN
+install.packages("rfm")
+
+# Or the development version from GitHub
 # install.packages("devtools")
 devtools::install_github("rsquaredacademy/rfm")
 ```
 
-## Consistent Prefix
+Consistent Prefix
+-----------------
 
 rfm uses consistent prefix `rfm_` for easy tab completion.
 
-## Shiny App
+Shiny App
+---------
 
-rfm includes a shiny app for interactive analysis and can be launched
-using `rfm_launch_app()`.
+rfm includes a shiny app for interactive analysis and can be launched using `rfm_launch_app()`.
 
-## Vignettes
+Vignettes
+---------
 
-  - [RFM Customer
-    Data](https://rfm.rsquaredacademy.com/articles/rfm-customer-level-data.html)
-  - [RFM Transaction
-    Data](https://rfm.rsquaredacademy.com/articles/rfm-transaction-level-data.html)
+-   [RFM Customer Data](https://rfm.rsquaredacademy.com/articles/rfm-customer-level-data.html)
+-   [RFM Transaction Data](https://rfm.rsquaredacademy.com/articles/rfm-transaction-level-data.html)
 
-## Usage
+Usage
+-----
 
 ### Introduction
 
-**RFM** (recency, frequency, monetary) analysis is a behavior based
-technique used to segment customers by examining their transaction
-history such as
+**RFM** (recency, frequency, monetary) analysis is a behavior based technique used to segment customers by examining their transaction history such as
 
-  - how recently a customer has purchased (recency)
-  - how often they purchase (frequency)
-  - how much the customer spends (monetary)
+-   how recently a customer has purchased (recency)
+-   how often they purchase (frequency)
+-   how much the customer spends (monetary)
 
-It is based on the marketing axiom that **80% of your business comes
-from 20% of your customers**. RFM helps to identify customers who are
-more likely to respond to promotions by segmenting them into various
-categories.
+It is based on the marketing axiom that **80% of your business comes from 20% of your customers**. RFM helps to identify customers who are more likely to respond to promotions by segmenting them into various categories.
 
 ### Data
 
-To calculate the RFM score for each customer we need transaction data
-which should include the following:
+To calculate the RFM score for each customer we need transaction data which should include the following:
 
-  - a unique customer id
-  - date of transaction/order
-  - transaction/order amount
+-   a unique customer id
+-   date of transaction/order
+-   transaction/order amount
 
 ### RFM Table
 
@@ -85,16 +69,16 @@ rfm_result
 #> # A tibble: 995 x 9
 #>    customer_id        date_most_recent recency_days transaction_count
 #>    <chr>              <date>                  <dbl>             <dbl>
-#>  1 Abbey O'Reilly DVM 2006-06-09              205                6.00
-#>  2 Add Senger         2006-08-13              140                3.00
-#>  3 Aden Lesch Sr.     2006-06-20              194                4.00
-#>  4 Admiral Senger     2006-08-21              132                5.00
-#>  5 Agness O'Keefe     2006-10-02               90.0              9.00
-#>  6 Aileen Barton      2006-10-08               84.0              9.00
-#>  7 Ailene Hermann     2006-03-25              281                8.00
-#>  8 Aiyanna Bruen PhD  2006-04-29              246                4.00
-#>  9 Ala Schmidt DDS    2006-01-16              349                3.00
-#> 10 Alannah Borer      2005-04-21              619                4.00
+#>  1 Abbey O'Reilly DVM 2006-06-09                205                 6
+#>  2 Add Senger         2006-08-13                140                 3
+#>  3 Aden Lesch Sr.     2006-06-20                194                 4
+#>  4 Admiral Senger     2006-08-21                132                 5
+#>  5 Agness O'Keefe     2006-10-02                 90                 9
+#>  6 Aileen Barton      2006-10-08                 84                 9
+#>  7 Ailene Hermann     2006-03-25                281                 8
+#>  8 Aiyanna Bruen PhD  2006-04-29                246                 4
+#>  9 Ala Schmidt DDS    2006-01-16                349                 3
+#> 10 Alannah Borer      2005-04-21                619                 4
 #>    amount recency_score frequency_score monetary_score rfm_score
 #>     <dbl>         <int>           <int>          <int>     <dbl>
 #>  1    472             3               4              3       343
@@ -110,13 +94,10 @@ rfm_result
 #> # ... with 985 more rows
 ```
 
-## Heat Map
+Heat Map
+--------
 
-The heat map shows the average monetary value for different categories
-of recency and frequency scores. Higher scores of frequency and recency
-are characterized by higher average monetary value as indicated by the
-darker areas in the
-heatmap.
+The heat map shows the average monetary value for different categories of recency and frequency scores. Higher scores of frequency and recency are characterized by higher average monetary value as indicated by the darker areas in the heatmap.
 
 ``` r
 rfm_heatmap(rfm_result)
@@ -126,9 +107,7 @@ rfm_heatmap(rfm_result)
 
 ### Bar Chart
 
-Use `rfm_bar_chart()` to generate the distribution of monetary scores
-for the different combinations of frequency and recency
-scores.
+Use `rfm_bar_chart()` to generate the distribution of monetary scores for the different combinations of frequency and recency scores.
 
 ``` r
 rfm_bar_chart(rfm_result)
@@ -140,12 +119,9 @@ rfm_bar_chart(rfm_result)
 
 Use `rfm_histograms()` to examine the relative distribution of
 
-  - monetary value (total revenue generated by each customer)
-  - recency days (days since the most recent visit for each customer)
-  - frequency (transaction count for each
-customer)
-
-<!-- end list -->
+-   monetary value (total revenue generated by each customer)
+-   recency days (days since the most recent visit for each customer)
+-   frequency (transaction count for each customer)
 
 ``` r
 rfm_histograms(rfm_result)
@@ -155,8 +131,7 @@ rfm_histograms(rfm_result)
 
 ### Customers by Orders
 
-Visualize the distribution of customers across
-orders.
+Visualize the distribution of customers across orders.
 
 ``` r
 rfm_order_dist(rfm_result)
@@ -168,12 +143,11 @@ rfm_order_dist(rfm_result)
 
 The best customers are those who:
 
-  - bought most recently
-  - most often
-  - and spend the most
+-   bought most recently
+-   most often
+-   and spend the most
 
-Now let us examine the relationship between the
-above.
+Now let us examine the relationship between the above.
 
 #### Recency vs Monetary Value
 
@@ -199,6 +173,4 @@ rfm_rf_plot(rfm_result)
 
 <img src="tools/README-fr-1.png" style="display: block; margin: auto;" />
 
-Please note that this project is released with a [Contributor Code of
-Conduct](CONDUCT.md). By participating in this project you agree to
-abide by its terms.
+Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
