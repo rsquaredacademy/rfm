@@ -26,9 +26,11 @@ Tools for RFM (recency, frequency and monetary) analysis. Generate RFM score fro
 
 ## Installation
 
-You can install rfm from github with:
-
 ```{r gh-installation, eval = FALSE}
+# Install rfm from CRAN
+install.packages("rfm")
+
+# Or the development version from GitHub
 # install.packages("devtools")
 devtools::install_github("rsquaredacademy/rfm")
 ```
