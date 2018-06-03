@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-rfm: Recency, Frequency and Monetary Value Analysis <img src="hex_rfm.png" align="right" />
--------------------------------------------------------------------------------------------
+rfm: Recency, Frequency and Monetary Value Analysis <img src="hex_rfm.png" height="100px" align="right" />
+----------------------------------------------------------------------------------------------------------
 
 **Author:** [Aravind Hebbali](https://www.aravindhebbali.com)<br/> **License:** [MIT](https://opensource.org/licenses/MIT)
 

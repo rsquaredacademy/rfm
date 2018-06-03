@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-rfm: Recency, Frequency and Monetary Value Analysis <img src="hex_rfm.png" align="right" />
+rfm: Recency, Frequency and Monetary Value Analysis <img src="hex_rfm.png" height="100px" align="right" />
 ---------
 
 
