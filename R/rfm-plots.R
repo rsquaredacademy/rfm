@@ -133,10 +133,7 @@ rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
                            plot_title_justify = 0.5) {
 
   p <-
-    rfm_table %>%
-    use_series(rfm) %>%
-    select(recency_days, transaction_count, amount) %>%
-    gather(rfm, score) %>%
+    rfm_hist_data(rfm_table) %>%
     ggplot(aes(score)) +
     geom_histogram(bins = hist_bins, fill = hist_color) +
     ylab(yaxis_title) + ggtitle(plot_title) + xlab(xaxis_title) +
