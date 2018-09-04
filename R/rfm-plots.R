@@ -49,7 +49,7 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
                         legend_title = "Mean Monetary Value",
                         brewer_n = 5, brewer_name = "PuBu") {
 
-  mapdata <- heatmap_data(rfm_table = data)
+  mapdata <- rfm_heatmap_data(rfm_table = data)
 
   ulm <-
     mapdata %>%
@@ -66,7 +66,7 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
   bins <-
     mapdata %>%
     use_series(frequency_score) %>%
-    max
+    max()
 
   guide_breaks <-
     seq(llm, ulm, length.out = bins) %>%
@@ -132,7 +132,7 @@ rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
                            hist_r_label = 'Recency', hist_f_label = 'Frequency',
                            plot_title_justify = 0.5) {
 
-  p <- 
+  p <-
     rfm_table %>%
     use_series(rfm) %>%
     select(recency_days, transaction_count, amount) %>%
@@ -269,7 +269,7 @@ rfm_order_dist <- function(rfm_table, bar_color = 'blue',
     multiply_by(1.1) %>%
     ceiling()
 
-  p <- 
+  p <-
     data %>%
     ggplot(aes(x = transaction_count, y = n)) +
     geom_bar(stat = "identity", fill = bar_color) +

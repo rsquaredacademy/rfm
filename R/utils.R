@@ -41,42 +41,6 @@ bins_upper <- function(data, value, bins) {
 
 }
 
-heatmap_data <- function(rfm_table) {
-
-  result <-
-    rfm_table %>%
-    use_series(rfm) %>%
-    group_by(frequency_score, recency_score) %>%
-    select(frequency_score, recency_score, amount) %>%
-    summarise(monetary = mean(amount))
-
-  l_frequency <- check_levels(result, frequency_score)
-  l_recency   <- check_levels(result, recency_score)
-
-  levels_frequency <- check_levels(result, frequency_score) %>% length()
-  levels_recency   <- check_levels(result, recency_score) %>% length()
-
-  f_frequency <-
-    rfm_table %>%
-    use_series(frequency_bins)
-
-  if (!are_equal(levels_frequency, f_frequency)) {
-    result %<>%
-      modify_rfm(., f_frequency, l_frequency)
-  }
-
-  r_recency <-
-    rfm_table %>%
-    use_series(recency_bins)
-
-  if (!are_equal(levels_recency, r_recency)) {
-    result %<>%
-      modify_rfm(., r_recency, l_recency)
-  }
-
-  return(result)
-
-}
 
 check_levels <- function(heatmap_data, column) {
 

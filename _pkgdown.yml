@@ -46,12 +46,16 @@ reference:
   contents:
   - rfm_launch_app
 
-- title: RFM
+- title: RFM Table
 
   contents:
   - rfm_table_order
   - rfm_table_customer
   - rfm_table_customer_2
+
+- title: Plots
+
+  contents:
   - rfm_heatmap
   - rfm_bar_chart
   - rfm_histograms
@@ -59,6 +63,11 @@ reference:
   - rfm_fm_plot
   - rfm_rf_plot
   - rfm_rm_plot
+
+- title: Plot Data
+
+  contents:
+  - rfm_heatmap_data
 
 - title: Data
   contents:
