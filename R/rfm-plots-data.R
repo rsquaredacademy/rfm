@@ -118,7 +118,7 @@ rfm_barchart_data <- function(rfm_table) {
   rlevels <-
     rfm_table %>%
     use_series(recency_bins) %>%
-    seq_len() %>%
+    seq_len(.) %>%
     rev()
 
   data <- use_series(rfm_table, rfm)

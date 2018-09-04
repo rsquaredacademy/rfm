@@ -76,7 +76,7 @@ rfm_table_order.default <- function(data = NULL, customer_id = NULL, order_date 
 
   rscore <-
     recency_bins %>%
-    seq_len() %>%
+    seq_len(.) %>%
     rev()
 
   if (length(recency_bins) == 1) {
@@ -94,7 +94,7 @@ rfm_table_order.default <- function(data = NULL, customer_id = NULL, order_date 
 
   fscore <-
     frequency_bins %>%
-    seq_len() %>%
+    seq_len(.) %>%
     rev()
 
   if (length(frequency_bins) == 1) {
@@ -112,7 +112,7 @@ rfm_table_order.default <- function(data = NULL, customer_id = NULL, order_date 
 
   mscore <-
     monetary_bins %>%
-    seq_len() %>%
+    seq_len(.) %>%
     rev()
 
   if (length(monetary_bins) == 1) {

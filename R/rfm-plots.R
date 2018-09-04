@@ -55,13 +55,13 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
     mapdata %>%
     extract2("monetary") %>%
     max() %>%
-    ceiling()
+    ceiling(.)
 
   llm <-
     mapdata %>%
     extract2("monetary") %>%
     min() %>%
-    floor()
+    floor(.)
 
   bins <-
     mapdata %>%
@@ -253,7 +253,7 @@ rfm_order_dist <- function(rfm_table, bar_color = 'blue',
     pull(n) %>%
     max() %>%
     multiply_by(1.1) %>%
-    ceiling()
+    ceiling(.)
 
   p <-
     data %>%

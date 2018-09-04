@@ -67,7 +67,7 @@ rfm_table_customer_2.default <- function(data = NULL, customer_id = NULL, n_tran
 
   rscore <-
     recency_bins %>%
-    seq_len() %>%
+    seq_len(.) %>%
     rev()
 
   if (length(recency_bins) == 1) {
@@ -85,7 +85,7 @@ rfm_table_customer_2.default <- function(data = NULL, customer_id = NULL, n_tran
 
   fscore <-
     frequency_bins %>%
-    seq_len() %>%
+    seq_len(.) %>%
     rev()
 
   if (length(frequency_bins) == 1) {
@@ -103,7 +103,7 @@ rfm_table_customer_2.default <- function(data = NULL, customer_id = NULL, n_tran
 
   mscore <-
     monetary_bins %>%
-    seq_len() %>%
+    seq_len(.) %>%
     rev()
 
   if (length(monetary_bins) == 1) {
