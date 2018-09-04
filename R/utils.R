@@ -42,11 +42,11 @@ bins_upper <- function(data, value, bins) {
 }
 
 
-check_levels <- function(heatmap_data, column) {
+check_levels <- function(rfm_heatmap_data, column) {
 
   my_column <- enquo(column)
 
-  heatmap_data %>%
+  rfm_heatmap_data %>%
     pull(!! my_column) %>%
     as.factor() %>%
     fct_unique() %>%
@@ -55,14 +55,13 @@ check_levels <- function(heatmap_data, column) {
 
 }
 
-modify_rfm <- function(heatmap_data, n_bins, check_levels) {
+modify_rfm <- function(rfm_heatmap_data, n_bins, check_levels) {
 
   missing           <- !(seq_len(n_bins) %in% check_levels)
   missing2          <- seq_len(n_bins)[missing]
   extra_data        <- expand.grid(missing2, seq_len(n_bins), 0)
   names(extra_data) <- names(heatmap_data)
 
-  heatmap_data %<>%
-    bind_rows(extra_data)
+  bind_rows(rfm_heatmap_data, extra_data)
 
 }
