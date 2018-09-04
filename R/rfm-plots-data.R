@@ -88,3 +88,42 @@ rfm_hist_data <- function(rfm_table) {
 
 }
 
+#' Bar chart data
+#'
+#' Data for generating bar charts.
+#'
+#' @param rfm_table An object of class \code{rfm_table}.
+#'
+#' @examples
+#' # using transaction data
+#' analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
+#' rfm_order <- rfm_table_order(rfm_data_orders, customer_id, order_date,
+#' revenue, analysis_date)
+#'
+#' # bar chart data
+#' rfm_barchart_data(rfm_order)
+#'
+#' # using customer data
+#' analysis_date <- lubridate::as_date('2007-01-01', tz = 'UTC')
+#' rfm_customer <- rfm_table_customer(rfm_data_customer, customer_id,
+#' number_of_orders, recency_days, revenue, analysis_date)
+#'
+#' # bar chart data
+#' rfm_barchart_data(rfm_customer)
+#'
+#' @export
+#'
+rfm_barchart_data <- function(rfm_table) {
+
+  rlevels <-
+    rfm_table %>%
+    use_series(recency_bins) %>%
+    seq_len() %>%
+    rev()
+
+  data <- use_series(rfm_table, rfm)
+  data$recency_score <- factor(data$recency_score, levels = rlevels)
+
+  return(data)
+
+}

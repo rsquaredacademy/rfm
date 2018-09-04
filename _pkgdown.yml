@@ -69,6 +69,7 @@ reference:
   contents:
   - rfm_heatmap_data
   - rfm_hist_data
+  - rfm_barchart_data
 
 - title: Data
   contents:

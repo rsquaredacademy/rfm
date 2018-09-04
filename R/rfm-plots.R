@@ -181,20 +181,9 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
                           yaxis_title = ' ',
                           sec_yaxis_title = 'Recency Score') {
 
-  data <-
-    rfm_table %>%
-    use_series(rfm)
-
-  rlevels <-
-    rfm_table %>%
-    use_series(recency_bins) %>%
-    seq_len() %>%
-    rev()
-
-  data$recency_score <- factor(data$recency_score, levels = rlevels)
-
   p <-
-    ggplot(data = data) +
+    rfm_barchart_data(rfm_table) %>%
+    ggplot() +
     geom_bar(aes(x = monetary_score), fill = bar_color) +
     facet_grid(recency_score ~ frequency_score) +
     scale_y_continuous(sec.axis = sec_axis(~ ., name = sec_yaxis_title)) +
