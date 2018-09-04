@@ -343,7 +343,7 @@ rfm_rf_plot <- function(rfm_table, point_color = 'blue',
                         xaxis_title = 'Frequency', yaxis_title = 'Recency',
                         plot_title = 'Recency vs Frequency') {
 
-  data <-
+  p <-
     rfm_table %>%
     use_series(rfm) %>%
     ggplot() +
