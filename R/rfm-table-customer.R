@@ -31,6 +31,11 @@
 #' rfm_table_customer(rfm_data_customer, customer_id, number_of_orders,
 #' recency_days, revenue, analysis_date)
 #'
+#' # access rfm table
+#' result <- rfm_table_customer(rfm_data_customer, customer_id, number_of_orders,
+#' recency_days, revenue, analysis_date)
+#' result$rfm
+#'
 #' @export
 #'
 rfm_table_customer <- function(data = NULL, customer_id = NULL, n_transactions = NULL,

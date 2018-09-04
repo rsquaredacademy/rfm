@@ -31,6 +31,11 @@
 #' rfm_table_customer_2(rfm_data_customer, customer_id, number_of_orders,
 #' most_recent_visit, revenue, analysis_date)
 #'
+#' # access rfm table
+#' result <- rfm_table_customer_2(rfm_data_customer, customer_id, number_of_orders,
+#' most_recent_visit, revenue, analysis_date)
+#' result$rfm
+#'
 #' @export
 #'
 rfm_table_customer_2 <- function(data = NULL, customer_id = NULL, n_transactions = NULL,
@@ -40,7 +45,7 @@ rfm_table_customer_2 <- function(data = NULL, customer_id = NULL, n_transactions
 #' @export
 #'
 rfm_table_customer_2.default <- function(data = NULL, customer_id = NULL, n_transactions = NULL,
-                                       latest_visit_date = NULL, total_revenue = NULL, analysis_date = NULL, 
+                                       latest_visit_date = NULL, total_revenue = NULL, analysis_date = NULL,
                                        recency_bins = 5, frequency_bins = 5, monetary_bins = 5, ...) {
 
   cust_id      <- enquo(customer_id)

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>RFM bar chart � rfm_bar_chart • rfm</title>
+<title>RFM bar chart — rfm_bar_chart • rfm</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -18,13 +18,23 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="RFM bar chart — rfm_bar_chart" />
+
+<meta property="og:description" content="Examine the distribution of monetary scores for the different
+  combinations of frequency and recency scores." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +57,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">rfm</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">rfm</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.1.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -94,6 +108,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -101,22 +116,26 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>RFM bar chart</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rsquaredacademy/rfm/blob/master/R/rfm-plots.R'><code>R/rfm-plots.R</code></a></small>
+    <div class="hidden name"><code>rfm_bar_chart.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Examine the distribution of monetary scores for the different
   combinations of frequency and recency scores.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>rfm_bar_chart</span>(<span class='no'>rfm_table</span>, <span class='kw'>bar_color</span> <span class='kw'>=</span> <span class='st'>"blue"</span>, <span class='kw'>xaxis_title</span> <span class='kw'>=</span> <span class='st'>"Monetary Score"</span>,
   <span class='kw'>sec_xaxis_title</span> <span class='kw'>=</span> <span class='st'>"Frequency Score"</span>, <span class='kw'>yaxis_title</span> <span class='kw'>=</span> <span class='st'>" "</span>,
   <span class='kw'>sec_yaxis_title</span> <span class='kw'>=</span> <span class='st'>"Recency Score"</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -157,14 +176,7 @@
 <span class='no'>revenue</span>, <span class='no'>analysis_date</span>)
 
 <span class='co'># bar chart</span>
-<span class='fu'>rfm_bar_chart</span>(<span class='no'>rfm_order</span>)</div><div class='img'><img src='rfm_bar_chart-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
-<span class='co'># using customer data</span>
-<span class='no'>analysis_date</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/as_date.html'>as_date</a></span>(<span class='st'>'2007-01-01'</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>'UTC'</span>)
-<span class='no'>rfm_customer</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rfm_table_customer.html'>rfm_table_customer</a></span>(<span class='no'>rfm_data_customer</span>, <span class='no'>customer_id</span>,
-<span class='no'>number_of_orders</span>, <span class='no'>recency_days</span>, <span class='no'>revenue</span>, <span class='no'>analysis_date</span>)
-
-<span class='co'># bar chart</span>
-<span class='fu'>rfm_bar_chart</span>(<span class='no'>rfm_customer</span>)</div><div class='img'><img src='rfm_bar_chart-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>rfm_bar_chart</span>(<span class='no'>rfm_order</span>)</div><div class='img'><img src='rfm_bar_chart-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -182,15 +194,18 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Aravind Hebbali.</p>
+  <p>Developed by <a href='https://www.aravindhebbali.com'>Aravind Hebbali</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+
