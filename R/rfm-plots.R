@@ -307,12 +307,10 @@ rfm_rm_plot <- function(rfm_table, point_color = 'blue',
                         xaxis_title = 'Monetary', yaxis_title = 'Recency',
                         plot_title = 'Recency vs Monetary') {
 
-  data <-
-    rfm_table %>%
-    use_series(rfm)
-
   p <-
-    ggplot(data) +
+    rfm_table %>%
+    use_series(rfm) %>%
+    ggplot() +
     geom_point(aes(x = amount, y = recency_days), color = point_color) +
     xlab(xaxis_title) + ylab(yaxis_title) + ggtitle(plot_title)
 
@@ -327,11 +325,10 @@ rfm_fm_plot <- function(rfm_table, point_color = 'blue',
                         xaxis_title = 'Monetary', yaxis_title = 'Frequency',
                         plot_title = 'Frequency vs Monetary') {
 
-  data <-
+  p <-
     rfm_table %>%
-    use_series(rfm)
-
-  p <- ggplot(data) +
+    use_series(rfm) %>%
+    ggplot() +
     geom_point(aes(x = amount, y = transaction_count), color = point_color) +
     xlab(xaxis_title) + ylab(yaxis_title) + ggtitle(plot_title)
 
@@ -348,12 +345,10 @@ rfm_rf_plot <- function(rfm_table, point_color = 'blue',
 
   data <-
     rfm_table %>%
-    use_series(rfm)
-
-  p <-
-    ggplot(data) + geom_point(aes(x = transaction_count, y = recency_days),
-               color = point_color) + xlab(xaxis_title) + ylab(yaxis_title) +
-    ggtitle(plot_title)
+    use_series(rfm) %>%
+    ggplot() +
+    geom_point(aes(x = transaction_count, y = recency_days), color = point_color) +
+    xlab(xaxis_title) + ylab(yaxis_title) + ggtitle(plot_title)
 
   print(p)
 
