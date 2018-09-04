@@ -41,48 +41,12 @@ bins_upper <- function(data, value, bins) {
 
 }
 
-heatmap_data <- function(rfm_table) {
 
-  result <-
-    rfm_table %>%
-    use_series(rfm) %>%
-    group_by(frequency_score, recency_score) %>%
-    select(frequency_score, recency_score, amount) %>%
-    summarise(monetary = mean(amount))
-
-  l_frequency <- check_levels(result, frequency_score)
-  l_recency   <- check_levels(result, recency_score)
-
-  levels_frequency <- check_levels(result, frequency_score) %>% length()
-  levels_recency   <- check_levels(result, recency_score) %>% length()
-
-  f_frequency <-
-    rfm_table %>%
-    use_series(frequency_bins)
-
-  if (!are_equal(levels_frequency, f_frequency)) {
-    result %<>%
-      modify_rfm(., f_frequency, l_frequency)
-  }
-
-  r_recency <-
-    rfm_table %>%
-    use_series(recency_bins)
-
-  if (!are_equal(levels_recency, r_recency)) {
-    result %<>%
-      modify_rfm(., r_recency, l_recency)
-  }
-
-  return(result)
-
-}
-
-check_levels <- function(heatmap_data, column) {
+check_levels <- function(rfm_heatmap_data, column) {
 
   my_column <- enquo(column)
 
-  heatmap_data %>%
+  rfm_heatmap_data %>%
     pull(!! my_column) %>%
     as.factor() %>%
     fct_unique() %>%
@@ -91,14 +55,13 @@ check_levels <- function(heatmap_data, column) {
 
 }
 
-modify_rfm <- function(heatmap_data, n_bins, check_levels) {
+modify_rfm <- function(rfm_heatmap_data, n_bins, check_levels) {
 
   missing           <- !(seq_len(n_bins) %in% check_levels)
   missing2          <- seq_len(n_bins)[missing]
   extra_data        <- expand.grid(missing2, seq_len(n_bins), 0)
-  names(extra_data) <- names(heatmap_data)
+  names(extra_data) <- names(rfm_heatmap_data)
 
-  heatmap_data %<>%
-    bind_rows(extra_data)
+  bind_rows(rfm_heatmap_data, extra_data)
 
 }

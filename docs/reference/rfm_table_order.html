@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>RFM table (transaction data) � rfm_table_order • rfm</title>
+<title>RFM table (transaction data) — rfm_table_order • rfm</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -18,13 +18,22 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="RFM table (transaction data) — rfm_table_order" />
+
+<meta property="og:description" content="Recency, frequency, monetary and RFM score." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">rfm</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">rfm</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.1.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -94,6 +107,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -101,21 +115,25 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>RFM table (transaction data)</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rsquaredacademy/rfm/blob/master/R/rfm-table-transaction.R'><code>R/rfm-table-transaction.R</code></a></small>
+    <div class="hidden name"><code>rfm_table_order.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Recency, frequency, monetary and RFM score.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>rfm_table_order</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>customer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>order_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>revenue</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>analysis_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>recency_bins</span> <span class='kw'>=</span> <span class='fl'>5</span>,
   <span class='kw'>frequency_bins</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>monetary_bins</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -176,16 +194,33 @@
 <span class='fu'>rfm_table_order</span>(<span class='no'>rfm_data_orders</span>, <span class='no'>customer_id</span>, <span class='no'>order_date</span>, <span class='no'>revenue</span>, <span class='no'>analysis_date</span>)</div><div class='output co'>#&gt; # A tibble: 995 x 9
 #&gt;    customer_id        date_most_recent recency_days transaction_count amount
 #&gt;    &lt;chr&gt;              &lt;date&gt;                  &lt;dbl&gt;             &lt;dbl&gt;  &lt;dbl&gt;
-#&gt;  1 Abbey O'Reilly DVM 2006-06-09              205                6.00    472
-#&gt;  2 Add Senger         2006-08-13              140                3.00    340
-#&gt;  3 Aden Lesch Sr.     2006-06-20              194                4.00    405
-#&gt;  4 Admiral Senger     2006-08-21              132                5.00    448
-#&gt;  5 Agness O'Keefe     2006-10-02               90.0              9.00    843
-#&gt;  6 Aileen Barton      2006-10-08               84.0              9.00    763
-#&gt;  7 Ailene Hermann     2006-03-25              281                8.00    699
-#&gt;  8 Aiyanna Bruen PhD  2006-04-29              246                4.00    157
-#&gt;  9 Ala Schmidt DDS    2006-01-16              349                3.00    363
-#&gt; 10 Alannah Borer      2005-04-21              619                4.00    196
+#&gt;  1 Abbey O'Reilly DVM 2006-06-09                205                 6    472
+#&gt;  2 Add Senger         2006-08-13                140                 3    340
+#&gt;  3 Aden Lesch Sr.     2006-06-20                194                 4    405
+#&gt;  4 Admiral Senger     2006-08-21                132                 5    448
+#&gt;  5 Agness O'Keefe     2006-10-02                 90                 9    843
+#&gt;  6 Aileen Barton      2006-10-08                 84                 9    763
+#&gt;  7 Ailene Hermann     2006-03-25                281                 8    699
+#&gt;  8 Aiyanna Bruen PhD  2006-04-29                246                 4    157
+#&gt;  9 Ala Schmidt DDS    2006-01-16                349                 3    363
+#&gt; 10 Alannah Borer      2005-04-21                619                 4    196
+#&gt; # ... with 985 more rows, and 4 more variables: recency_score &lt;int&gt;,
+#&gt; #   frequency_score &lt;int&gt;, monetary_score &lt;int&gt;, rfm_score &lt;dbl&gt;</div><div class='input'>
+<span class='co'># access rfm table</span>
+<span class='no'>result</span> <span class='kw'>&lt;-</span> <span class='fu'>rfm_table_order</span>(<span class='no'>rfm_data_orders</span>, <span class='no'>customer_id</span>, <span class='no'>order_date</span>, <span class='no'>revenue</span>, <span class='no'>analysis_date</span>)
+<span class='no'>result</span>$<span class='no'>rfm</span></div><div class='output co'>#&gt; # A tibble: 995 x 9
+#&gt;    customer_id        date_most_recent recency_days transaction_count amount
+#&gt;    &lt;chr&gt;              &lt;date&gt;                  &lt;dbl&gt;             &lt;dbl&gt;  &lt;dbl&gt;
+#&gt;  1 Abbey O'Reilly DVM 2006-06-09                205                 6    472
+#&gt;  2 Add Senger         2006-08-13                140                 3    340
+#&gt;  3 Aden Lesch Sr.     2006-06-20                194                 4    405
+#&gt;  4 Admiral Senger     2006-08-21                132                 5    448
+#&gt;  5 Agness O'Keefe     2006-10-02                 90                 9    843
+#&gt;  6 Aileen Barton      2006-10-08                 84                 9    763
+#&gt;  7 Ailene Hermann     2006-03-25                281                 8    699
+#&gt;  8 Aiyanna Bruen PhD  2006-04-29                246                 4    157
+#&gt;  9 Ala Schmidt DDS    2006-01-16                349                 3    363
+#&gt; 10 Alannah Borer      2005-04-21                619                 4    196
 #&gt; # ... with 985 more rows, and 4 more variables: recency_score &lt;int&gt;,
 #&gt; #   frequency_score &lt;int&gt;, monetary_score &lt;int&gt;, rfm_score &lt;dbl&gt;</div><div class='input'>
 </div></pre>
@@ -205,15 +240,18 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Aravind Hebbali.</p>
+  <p>Developed by <a href='https://www.aravindhebbali.com'>Aravind Hebbali</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

@@ -49,24 +49,24 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
                         legend_title = "Mean Monetary Value",
                         brewer_n = 5, brewer_name = "PuBu") {
 
-  mapdata <- heatmap_data(rfm_table = data)
+  mapdata <- rfm_heatmap_data(rfm_table = data)
 
   ulm <-
     mapdata %>%
     extract2("monetary") %>%
     max() %>%
-    ceiling()
+    ceiling(.)
 
   llm <-
     mapdata %>%
     extract2("monetary") %>%
     min() %>%
-    floor()
+    floor(.)
 
   bins <-
     mapdata %>%
     use_series(frequency_score) %>%
-    max
+    max()
 
   guide_breaks <-
     seq(llm, ulm, length.out = bins) %>%
@@ -132,11 +132,8 @@ rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
                            hist_r_label = 'Recency', hist_f_label = 'Frequency',
                            plot_title_justify = 0.5) {
 
-  p <- 
-    rfm_table %>%
-    use_series(rfm) %>%
-    select(recency_days, transaction_count, amount) %>%
-    gather(rfm, score) %>%
+  p <-
+    rfm_hist_data(rfm_table) %>%
     ggplot(aes(score)) +
     geom_histogram(bins = hist_bins, fill = hist_color) +
     ylab(yaxis_title) + ggtitle(plot_title) + xlab(xaxis_title) +
@@ -184,20 +181,9 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
                           yaxis_title = ' ',
                           sec_yaxis_title = 'Recency Score') {
 
-  data <-
-    rfm_table %>%
-    use_series(rfm)
-
-  rlevels <-
-    rfm_table %>%
-    use_series(recency_bins) %>%
-    seq_len() %>%
-    rev()
-
-  data$recency_score <- factor(data$recency_score, levels = rlevels)
-
   p <-
-    ggplot(data = data) +
+    rfm_barchart_data(rfm_table) %>%
+    ggplot() +
     geom_bar(aes(x = monetary_score), fill = bar_color) +
     facet_grid(recency_score ~ frequency_score) +
     scale_y_continuous(sec.axis = sec_axis(~ ., name = sec_yaxis_title)) +
@@ -267,9 +253,9 @@ rfm_order_dist <- function(rfm_table, bar_color = 'blue',
     pull(n) %>%
     max() %>%
     multiply_by(1.1) %>%
-    ceiling()
+    ceiling(.)
 
-  p <- 
+  p <-
     data %>%
     ggplot(aes(x = transaction_count, y = n)) +
     geom_bar(stat = "identity", fill = bar_color) +
@@ -321,12 +307,10 @@ rfm_rm_plot <- function(rfm_table, point_color = 'blue',
                         xaxis_title = 'Monetary', yaxis_title = 'Recency',
                         plot_title = 'Recency vs Monetary') {
 
-  data <-
-    rfm_table %>%
-    use_series(rfm)
-
   p <-
-    ggplot(data) +
+    rfm_table %>%
+    use_series(rfm) %>%
+    ggplot() +
     geom_point(aes(x = amount, y = recency_days), color = point_color) +
     xlab(xaxis_title) + ylab(yaxis_title) + ggtitle(plot_title)
 
@@ -341,11 +325,10 @@ rfm_fm_plot <- function(rfm_table, point_color = 'blue',
                         xaxis_title = 'Monetary', yaxis_title = 'Frequency',
                         plot_title = 'Frequency vs Monetary') {
 
-  data <-
+  p <-
     rfm_table %>%
-    use_series(rfm)
-
-  p <- ggplot(data) +
+    use_series(rfm) %>%
+    ggplot() +
     geom_point(aes(x = amount, y = transaction_count), color = point_color) +
     xlab(xaxis_title) + ylab(yaxis_title) + ggtitle(plot_title)
 
@@ -360,14 +343,12 @@ rfm_rf_plot <- function(rfm_table, point_color = 'blue',
                         xaxis_title = 'Frequency', yaxis_title = 'Recency',
                         plot_title = 'Recency vs Frequency') {
 
-  data <-
-    rfm_table %>%
-    use_series(rfm)
-
   p <-
-    ggplot(data) + geom_point(aes(x = transaction_count, y = recency_days),
-               color = point_color) + xlab(xaxis_title) + ylab(yaxis_title) +
-    ggtitle(plot_title)
+    rfm_table %>%
+    use_series(rfm) %>%
+    ggplot() +
+    geom_point(aes(x = transaction_count, y = recency_days), color = point_color) +
+    xlab(xaxis_title) + ylab(yaxis_title) + ggtitle(plot_title)
 
   print(p)
 

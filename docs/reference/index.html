@@ -18,13 +18,19 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Function reference" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +53,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">rfm</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">rfm</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.1.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -94,6 +104,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -101,123 +112,154 @@
       
       </header>
 
-      <div class="row">
-  <div class="col-md-9">
+<div class="row">
+  <div class="contents col-md-9">
     <div class="page-header">
-      <h1>
-        Reference
-        <small>version&nbsp;1.0.0</small>
-      </h1>
+      <h1>Reference</h1>
     </div>
 
-    <div class="contents">
-      <table class="ref-index">
+    <table class="ref-index">
 
-      <colgroup>
-        <col class="alias" />
-        <col class="title" />
-      </colgroup>
+    <colgroup>
+      <col class="alias" />
+      <col class="title" />
+    </colgroup>
 
-      <tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-shiny-app" class="hasAnchor"><a href="#section-shiny-app" class="anchor"></a>Shiny App</h2>
-            <p class="section-desc"></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="rfm_launch_app.html">rfm_launch_app</a></code> </p>
-          </td>
-          <td><p>Launch shiny app</p></td>
-        </tr>
-      </tbody><tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-rfm" class="hasAnchor"><a href="#section-rfm" class="anchor"></a>RFM</h2>
-            <p class="section-desc"></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="rfm_table_order.html">rfm_table_order</a></code> </p>
-          </td>
-          <td><p>RFM table (transaction data)</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="rfm_table_customer.html">rfm_table_customer</a></code> </p>
-          </td>
-          <td><p>RFM table (customer data)</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="rfm_table_customer_2.html">rfm_table_customer_2</a></code> </p>
-          </td>
-          <td><p>RFM table 2 (customer data)</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="rfm_heatmap.html">rfm_heatmap</a></code> </p>
-          </td>
-          <td><p>RFM heatmap</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="rfm_bar_chart.html">rfm_bar_chart</a></code> </p>
-          </td>
-          <td><p>RFM bar chart</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="rfm_histograms.html">rfm_histograms</a></code> </p>
-          </td>
-          <td><p>RFM histograms</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="rfm_order_dist.html">rfm_order_dist</a></code> </p>
-          </td>
-          <td><p>Customers by orders</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="rfm_rm_plot.html">rfm_rm_plot</a></code> <code><a href="rfm_rm_plot.html">rfm_fm_plot</a></code> <code><a href="rfm_rm_plot.html">rfm_rf_plot</a></code> </p>
-          </td>
-          <td><p>RFM Scatter plot</p></td>
-        </tr>
-      </tbody><tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-data" class="hasAnchor"><a href="#section-data" class="anchor"></a>Data</h2>
-            <p class="section-desc"></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="rfm_data_orders.html">rfm_data_orders</a></code> </p>
-          </td>
-          <td><p>RFM transaction data</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="rfm_data_customer.html">rfm_data_customer</a></code> </p>
-          </td>
-          <td><p>RFM customer data</p></td>
-        </tr>
-      </tbody>
-      </table>
-    </div>
+    <tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-shiny-app" class="hasAnchor"><a href="#section-shiny-app" class="anchor"></a>Shiny App</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="rfm_launch_app.html">rfm_launch_app()</a></code> </p>
+        </td>
+        <td><p>Launch shiny app</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-rfm-table" class="hasAnchor"><a href="#section-rfm-table" class="anchor"></a>RFM Table</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="rfm_table_order.html">rfm_table_order()</a></code> </p>
+        </td>
+        <td><p>RFM table (transaction data)</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="rfm_table_customer.html">rfm_table_customer()</a></code> </p>
+        </td>
+        <td><p>RFM table (customer data)</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="rfm_table_customer_2.html">rfm_table_customer_2()</a></code> </p>
+        </td>
+        <td><p>RFM table 2 (customer data)</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-plots" class="hasAnchor"><a href="#section-plots" class="anchor"></a>Plots</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="rfm_heatmap.html">rfm_heatmap()</a></code> </p>
+        </td>
+        <td><p>RFM heatmap</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="rfm_bar_chart.html">rfm_bar_chart()</a></code> </p>
+        </td>
+        <td><p>RFM bar chart</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="rfm_histograms.html">rfm_histograms()</a></code> </p>
+        </td>
+        <td><p>RFM histograms</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="rfm_order_dist.html">rfm_order_dist()</a></code> </p>
+        </td>
+        <td><p>Customers by orders</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="rfm_rm_plot.html">rfm_rm_plot()</a></code> <code><a href="rfm_rm_plot.html">rfm_fm_plot()</a></code> <code><a href="rfm_rm_plot.html">rfm_rf_plot()</a></code> </p>
+        </td>
+        <td><p>RFM Scatter plot</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-plot-data" class="hasAnchor"><a href="#section-plot-data" class="anchor"></a>Plot Data</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="rfm_heatmap_data.html">rfm_heatmap_data()</a></code> </p>
+        </td>
+        <td><p>Heatmap data</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="rfm_hist_data.html">rfm_hist_data()</a></code> </p>
+        </td>
+        <td><p>Histogram data</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="rfm_barchart_data.html">rfm_barchart_data()</a></code> </p>
+        </td>
+        <td><p>Bar chart data</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-data" class="hasAnchor"><a href="#section-data" class="anchor"></a>Data</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="rfm_data_orders.html">rfm_data_orders</a></code> </p>
+        </td>
+        <td><p>RFM transaction data</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="rfm_data_customer.html">rfm_data_customer</a></code> </p>
+        </td>
+        <td><p>RFM customer data</p></td>
+      </tr>
+    </tbody>
+    </table>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#section-shiny-app">Shiny App</a></li>
-      <li><a href="#section-rfm">RFM</a></li>
+      <li><a href="#section-rfm-table">RFM Table</a></li>
+      <li><a href="#section-plots">Plots</a></li>
+      <li><a href="#section-plot-data">Plot Data</a></li>
       <li><a href="#section-data">Data</a></li>
     </ul>
   </div>
@@ -225,15 +267,18 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href="https://www.aravindhebbali.com/">Aravind Hebbali</a>.</p>
+  <p>Developed by <a href='https://www.aravindhebbali.com'>Aravind Hebbali</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

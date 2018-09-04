@@ -31,6 +31,11 @@
 #' rfm_table_customer(rfm_data_customer, customer_id, number_of_orders,
 #' recency_days, revenue, analysis_date)
 #'
+#' # access rfm table
+#' result <- rfm_table_customer(rfm_data_customer, customer_id, number_of_orders,
+#' recency_days, revenue, analysis_date)
+#' result$rfm
+#'
 #' @export
 #'
 rfm_table_customer <- function(data = NULL, customer_id = NULL, n_transactions = NULL,
@@ -59,7 +64,7 @@ rfm_table_customer.default <- function(data = NULL, customer_id = NULL, n_transa
 
   rscore <-
     recency_bins %>%
-    seq_len() %>%
+    seq_len(.) %>%
     rev()
 
   if (length(recency_bins) == 1) {
@@ -77,7 +82,7 @@ rfm_table_customer.default <- function(data = NULL, customer_id = NULL, n_transa
 
   fscore <-
     frequency_bins %>%
-    seq_len() %>%
+    seq_len(.) %>%
     rev()
 
   if (length(frequency_bins) == 1) {
@@ -95,7 +100,7 @@ rfm_table_customer.default <- function(data = NULL, customer_id = NULL, n_transa
 
   mscore <-
     monetary_bins %>%
-    seq_len() %>%
+    seq_len(.) %>%
     rev()
 
   if (length(monetary_bins) == 1) {

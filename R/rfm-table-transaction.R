@@ -33,6 +33,10 @@
 #' analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
 #' rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
 #'
+#' # access rfm table
+#' result <- rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
+#' result$rfm
+#'
 #' @export
 #'
 rfm_table_order <- function(data = NULL, customer_id = NULL, order_date = NULL,
@@ -72,7 +76,7 @@ rfm_table_order.default <- function(data = NULL, customer_id = NULL, order_date 
 
   rscore <-
     recency_bins %>%
-    seq_len() %>%
+    seq_len(.) %>%
     rev()
 
   if (length(recency_bins) == 1) {
@@ -90,7 +94,7 @@ rfm_table_order.default <- function(data = NULL, customer_id = NULL, order_date 
 
   fscore <-
     frequency_bins %>%
-    seq_len() %>%
+    seq_len(.) %>%
     rev()
 
   if (length(frequency_bins) == 1) {
@@ -108,7 +112,7 @@ rfm_table_order.default <- function(data = NULL, customer_id = NULL, order_date 
 
   mscore <-
     monetary_bins %>%
-    seq_len() %>%
+    seq_len(.) %>%
     rev()
 
   if (length(monetary_bins) == 1) {
