@@ -53,6 +53,11 @@ reference:
   - rfm_table_customer
   - rfm_table_customer_2
 
+- title: Segmentation
+
+  contents:
+  - rfm_segment  
+
 - title: Plots
 
   contents:
