@@ -56,7 +56,8 @@ reference:
 - title: Segmentation
 
   contents:
-  - rfm_segment  
+  - rfm_segment
+  - rfm_plot_median_recency  
 
 - title: Plots
 
