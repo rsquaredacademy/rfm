@@ -30,12 +30,18 @@
 #' rfm_segment(rfm_result, segment_names, recency_lower, recency_upper,
 #' frequency_lower, frequency_upper, monetary_lower, monetary_upper)
 #'
+#' @importFrom dplyr between
+#' @importFrom stats median
+#'
 #'@export
 #'
 rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
                         recency_upper = NULL, frequency_lower = NULL,
                         frequency_upper = NULL, monetary_lower = NULL,
                         monetary_upper = NULL) {
+
+  customer_id <- NULL
+  segment <- NULL
 
   rfm_score_table <-
     data %>%
@@ -100,6 +106,10 @@ rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
 #'
 rfm_plot_median_recency <- function(rfm_segment_table) {
 
+  segment <- NULL
+  avg_recency <- NULL
+  `median(recency_days)` <- NULL
+
   data <-
     rfm_segment_table %>%
     group_by(segment) %>%
@@ -128,6 +138,10 @@ rfm_plot_median_recency <- function(rfm_segment_table) {
 #' @export
 #'
 rfm_plot_median_frequency <- function(rfm_segment_table) {
+
+  segment <- NULL
+  avg_frequency <- NULL
+  `median(transaction_count)` <- NULL
 
   data <-
     rfm_segment_table %>%
@@ -158,6 +172,10 @@ rfm_plot_median_frequency <- function(rfm_segment_table) {
 #' @export
 #'
 rfm_plot_median_monetary <- function(rfm_segment_table) {
+
+  segment <- NULL
+  avg_monetary <- NULL
+  `median(amount)` <- NULL	
 
   data <-
     rfm_segment_table %>%

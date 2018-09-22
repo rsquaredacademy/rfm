@@ -10,3 +10,4 @@
 ^hex_rfm\.png$
 ^_pkgdown\.yml$
 ^docs$
+^debug\.log$
