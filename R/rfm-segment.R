@@ -114,7 +114,7 @@ rfm_plot_median_recency <- function(rfm_segment_table) {
     rfm_segment_table %>%
     group_by(segment) %>%
     select(segment, recency_days) %>%
-    summarize(median(recency_days)) %>%
+    summarise(median(recency_days)) %>%
     rename(segment = segment, avg_recency = `median(recency_days)`) %>%
     arrange(avg_recency)
 
@@ -147,7 +147,7 @@ rfm_plot_median_frequency <- function(rfm_segment_table) {
     rfm_segment_table %>%
     group_by(segment) %>%
     select(segment, transaction_count) %>%
-    summarize(median(transaction_count)) %>%
+    summarise(median(transaction_count)) %>%
     rename(segment = segment, avg_frequency = `median(transaction_count)`) %>%
     arrange(avg_frequency)
 
@@ -181,7 +181,7 @@ rfm_plot_median_monetary <- function(rfm_segment_table) {
     rfm_segment_table %>%
     group_by(segment) %>%
     select(segment, amount) %>%
-    summarize(median(amount)) %>%
+    summarise(median(amount)) %>%
     rename(segment = segment, avg_monetary = `median(amount)`) %>%
     arrange(avg_monetary)
 
