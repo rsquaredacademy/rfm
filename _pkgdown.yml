@@ -53,6 +53,12 @@ reference:
   - rfm_table_customer
   - rfm_table_customer_2
 
+- title: Segmentation
+
+  contents:
+  - rfm_segment
+  - rfm_plot_median_recency  
+
 - title: Plots
 
   contents:

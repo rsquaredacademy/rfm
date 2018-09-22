@@ -20,6 +20,7 @@ Imports:
     forcats,
     ggplot2,
     grDevices,
+    ggthemes,
     lubridate,
     magrittr,
     purrr,
