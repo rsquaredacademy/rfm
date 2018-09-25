@@ -1,11 +1,12 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 rfm: Recency, Frequency and Monetary Value Analysis <img src="hex_rfm.png" height="100px" align="right" />
-----------------------------------------------------------------------------------------------------------
-
-**Author:** [Aravind Hebbali](https://www.aravindhebbali.com)<br/> **License:** [MIT](https://opensource.org/licenses/MIT)
+==========================================================================================================
 
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/rfm)](https://cran.r-project.org/package=rfm) [![cran checks](https://cranchecks.info/badges/summary/rfm)](https://cran.r-project.org/web/checks/check_results_rfm.html) [![Travis-CI Build Status](https://travis-ci.org/rsquaredacademy/rfm.svg?branch=master)](https://travis-ci.org/rsquaredacademy/rfm) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/rfm?branch=master&svg=true)](https://ci.appveyor.com/project/rsquaredacademy/rfm) [![Coverage Status](https://img.shields.io/codecov/c/github/rsquaredacademy/rfm/master.svg)](https://codecov.io/github/rsquaredacademy/rfm?branch=master) [![](https://cranlogs.r-pkg.org/badges/grand-total/rfm)](https://cran.r-project.org/package=rfm) ![](https://img.shields.io/badge/lifecycle-maturing-blue.svg)
+
+Overview
+--------
 
 Tools for RFM (recency, frequency and monetary) analysis. Generate RFM score from both transaction and customer level data. Visualize the relationship between recency, frequency and monetary value using heatmap, histograms, bar charts and scatter plots. Includes a shiny app for interactive segmentation.
 
@@ -21,18 +22,13 @@ install.packages("rfm")
 devtools::install_github("rsquaredacademy/rfm")
 ```
 
-Consistent Prefix
------------------
-
-rfm uses consistent prefix `rfm_` for easy tab completion.
-
 Shiny App
 ---------
 
 rfm includes a shiny app for interactive analysis and can be launched using `rfm_launch_app()`.
 
-Vignettes
----------
+Articles
+--------
 
 -   [RFM Customer Data](https://rfm.rsquaredacademy.com/articles/rfm-customer-level-data.html)
 -   [RFM Transaction Data](https://rfm.rsquaredacademy.com/articles/rfm-transaction-level-data.html)
@@ -60,7 +56,7 @@ To calculate the RFM score for each customer we need transaction data which shou
 
 ### RFM Table
 
-Use `rfm_table_order()` to generate the RFM score.
+rfm uses consistent prefix `rfm_` for easy tab completion. Use `rfm_table_order()` to generate the RFM score.
 
 ``` r
 analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
@@ -94,8 +90,7 @@ rfm_result
 #> # ... with 985 more rows
 ```
 
-Heat Map
---------
+### Heat Map
 
 The heat map shows the average monetary value for different categories of recency and frequency scores. Higher scores of frequency and recency are characterized by higher average monetary value as indicated by the darker areas in the heatmap.
 
@@ -172,5 +167,11 @@ rfm_rf_plot(rfm_result)
 ```
 
 <img src="tools/README-fr-1.png" style="display: block; margin: auto;" />
+
+Getting Help
+------------
+
+Code of Conduct
+---------------
 
 Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
