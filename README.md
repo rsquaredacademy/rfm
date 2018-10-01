@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-rfm: Recency, Frequency and Monetary Value Analysis <img src="hex_rfm.png" height="100px" align="right" />
-==========================================================================================================
+rfm <img src="hex_rfm.png" height="100px" align="right" />
+==========================================================
 
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/rfm)](https://cran.r-project.org/package=rfm) [![cran checks](https://cranchecks.info/badges/summary/rfm)](https://cran.r-project.org/web/checks/check_results_rfm.html) [![Travis-CI Build Status](https://travis-ci.org/rsquaredacademy/rfm.svg?branch=master)](https://travis-ci.org/rsquaredacademy/rfm) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/rfm?branch=master&svg=true)](https://ci.appveyor.com/project/rsquaredacademy/rfm) [![Coverage Status](https://img.shields.io/codecov/c/github/rsquaredacademy/rfm/master.svg)](https://codecov.io/github/rsquaredacademy/rfm?branch=master) [![](https://cranlogs.r-pkg.org/badges/grand-total/rfm)](https://cran.r-project.org/package=rfm) ![](https://img.shields.io/badge/lifecycle-maturing-blue.svg)
 
@@ -170,6 +170,8 @@ rfm_rf_plot(rfm_result)
 
 Getting Help
 ------------
+
+If you encounter a bug, please file a minimal reproducible example using [reprex](https://reprex.tidyverse.org/index.html) on github. For questions and clarifications, use [StackOverflow](https://stackoverflow.com/).
 
 Code of Conduct
 ---------------
