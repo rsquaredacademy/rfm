@@ -1,0 +1,10 @@
+pandoc: 1.19.2.1
+pkgdown: 1.0.0
+pkgdown_sha: ~
+articles:
+  rfm-customer-level-data: rfm-customer-level-data.html
+  rfm-transaction-level-data: rfm-transaction-level-data.html
+urls:
+  reference: https://rfm.rsquaredacademy.com/reference
+  article: https://rfm.rsquaredacademy.com/articles
+
