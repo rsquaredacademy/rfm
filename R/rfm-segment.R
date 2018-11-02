@@ -101,14 +101,13 @@ rfm_plot_median_recency <- function(rfm_segment_table) {
 
   segment <- NULL
   avg_recency <- NULL
-  `median(recency_days)` <- NULL
 
   data <-
     rfm_segment_table %>%
     dplyr::group_by(segment) %>%
     dplyr::select(segment, recency_days) %>%
-    dplyr::summarise(stats::median(recency_days)) %>%
-    dplyr::rename(segment = segment, avg_recency = `median(recency_days)`) %>%
+    dplyr::summarise(avg_recency = stats::median(recency_days)) %>%
+    # dplyr::rename(segment = segment, avg_recency = `median(recency_days)`) %>%
     dplyr::arrange(avg_recency)
 
   n_fill <- nrow(data)
@@ -134,14 +133,13 @@ rfm_plot_median_frequency <- function(rfm_segment_table) {
 
   segment <- NULL
   avg_frequency <- NULL
-  `median(transaction_count)` <- NULL
 
   data <-
     rfm_segment_table %>%
     dplyr::group_by(segment) %>%
     dplyr::select(segment, transaction_count) %>%
-    dplyr::summarise(stats::median(transaction_count)) %>%
-    dplyr::rename(segment = segment, avg_frequency = `median(transaction_count)`) %>%
+    dplyr::summarise(avg_frequency = stats::median(transaction_count)) %>%
+    # dplyr::rename(segment = segment, avg_frequency = `median(transaction_count)`) %>%
     dplyr::arrange(avg_frequency)
 
   n_fill <- nrow(data)
@@ -168,14 +166,13 @@ rfm_plot_median_monetary <- function(rfm_segment_table) {
 
   segment <- NULL
   avg_monetary <- NULL
-  `median(amount)` <- NULL	
 
   data <-
     rfm_segment_table %>%
     dplyr::group_by(segment) %>%
     dplyr::select(segment, amount) %>%
-    dplyr::summarise(stats::median(amount)) %>%
-    dplyr::rename(segment = segment, avg_monetary = `median(amount)`) %>%
+    dplyr::summarise(avg_monetary = stats::median(amount)) %>%
+    # dplyr::rename(segment = segment, avg_monetary = `median(amount)`) %>%
     dplyr::arrange(avg_monetary)
 
   n_fill <- nrow(data)
