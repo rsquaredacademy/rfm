@@ -183,7 +183,7 @@ rfm_plot_median_monetary <- function(rfm_segment_table) {
   p <-
     ggplot2::ggplot(data, ggplot2::aes(segment, avg_monetary)) +
     ggplot2::geom_bar(stat = "identity", fill = ggthemes::calc_pal()(n_fill)) +
-    ggplot2::xlab("Segment") + ylab("Median Monetary Value") +
+    ggplot2::xlab("Segment") + ggplot2::ylab("Median Monetary Value") +
     ggplot2::ggtitle("Median Monetary Value by Segment") +
     ggplot2::coord_flip() +
     ggplot2::theme(

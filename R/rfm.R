@@ -12,6 +12,6 @@ if (getRversion() >= "2.15.1") {
     ".", "amount", "score",
     "date_most_recent", "frequency_bins", "frequency_score", "monetary",
     "monetary_score", "recency_bins", "recency_days", "recency_score",
-    "rfm", "rfm_score", "transaction_count"
+    "rfm", "rfm_score", "transaction_count", "n"
   ))
 }

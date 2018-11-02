@@ -1,4 +1,4 @@
-#' @importFrom magrittr %>% 
+#' @importFrom magrittr %>% %<>%
 bins <- function(data, value, n_bins) {
 
   my_value   <- rlang::enquo(value)
