@@ -30,9 +30,6 @@
 #' rfm_segment(rfm_result, segment_names, recency_lower, recency_upper,
 #' frequency_lower, frequency_upper, monetary_lower, monetary_upper)
 #'
-#' @importFrom dplyr between
-#' @importFrom stats median
-#'
 #'@export
 #'
 rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
@@ -45,23 +42,23 @@ rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
 
   rfm_score_table <-
     data %>%
-    use_series(rfm) %>%
-    mutate(segment = 1)
+    magrittr::use_series(rfm) %>%
+    dplyr::mutate(segment = 1)
 
   n_segments <- length(segment_names)
 
   for (i in seq_len(n_segments)) {
     rfm_score_table$segment[(
-      (rfm_score_table$recency_score %>% between(recency_lower[i], recency_upper[i])) &
-        (rfm_score_table$frequency_score %>% between(frequency_lower[i], frequency_upper[i])) &
-        (rfm_score_table$monetary_score %>% between(monetary_lower[i], monetary_upper[i])))] <- segment_names[i]
+      (rfm_score_table$recency_score %>% dplyr::between(recency_lower[i], recency_upper[i])) &
+        (rfm_score_table$frequency_score %>% dplyr::between(frequency_lower[i], frequency_upper[i])) &
+        (rfm_score_table$monetary_score %>% dplyr::between(monetary_lower[i], monetary_upper[i])))] <- segment_names[i]
   }
 
   rfm_score_table$segment[is.na(rfm_score_table$segment)] <- "Others"
   rfm_score_table$segment[rfm_score_table$segment == 1]   <- "Others"
 
   rfm_score_table %>%
-    select(customer_id, segment, rfm_score, transaction_count, recency_days,
+    dplyr::select(customer_id, segment, rfm_score, transaction_count, recency_days,
            amount, date_most_recent, recency_score, frequency_score,
            monetary_score)
 
@@ -98,36 +95,31 @@ rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
 #' rfm_plot_median_frequency(segments)
 #' rfm_plot_median_monetary(segments)
 #'
-#' @importFrom dplyr arrange rename
-#' @importFrom ggplot2 coord_flip
-#' @importFrom ggthemes calc_pal
-#'
 #' @export
 #'
 rfm_plot_median_recency <- function(rfm_segment_table) {
 
   segment <- NULL
   avg_recency <- NULL
-  `median(recency_days)` <- NULL
 
   data <-
     rfm_segment_table %>%
-    group_by(segment) %>%
-    select(segment, recency_days) %>%
-    summarise(median(recency_days)) %>%
-    rename(segment = segment, avg_recency = `median(recency_days)`) %>%
-    arrange(avg_recency)
+    dplyr::group_by(segment) %>%
+    dplyr::select(segment, recency_days) %>%
+    dplyr::summarise(avg_recency = stats::median(recency_days)) %>%
+    # dplyr::rename(segment = segment, avg_recency = `median(recency_days)`) %>%
+    dplyr::arrange(avg_recency)
 
   n_fill <- nrow(data)
 
   p <-
-    ggplot(data, aes(segment, avg_recency)) +
-    geom_bar(stat = "identity", fill = calc_pal()(n_fill)) +
-    xlab("Segment") + ylab("Median Recency") +
-    ggtitle("Median Recency by Segment") +
-    coord_flip() +
-    theme(
-      plot.title = element_text(hjust = 0.5)
+    ggplot2::ggplot(data, ggplot2::aes(segment, avg_recency)) +
+    ggplot2::geom_bar(stat = "identity", fill = ggthemes::calc_pal()(n_fill)) +
+    ggplot2::xlab("Segment") + ggplot2::ylab("Median Recency") +
+    ggplot2::ggtitle("Median Recency by Segment") +
+    ggplot2::coord_flip() +
+    ggplot2::theme(
+      plot.title = ggplot2::element_text(hjust = 0.5)
     )
 
   print(p)
@@ -141,26 +133,25 @@ rfm_plot_median_frequency <- function(rfm_segment_table) {
 
   segment <- NULL
   avg_frequency <- NULL
-  `median(transaction_count)` <- NULL
 
   data <-
     rfm_segment_table %>%
-    group_by(segment) %>%
-    select(segment, transaction_count) %>%
-    summarise(median(transaction_count)) %>%
-    rename(segment = segment, avg_frequency = `median(transaction_count)`) %>%
-    arrange(avg_frequency)
+    dplyr::group_by(segment) %>%
+    dplyr::select(segment, transaction_count) %>%
+    dplyr::summarise(avg_frequency = stats::median(transaction_count)) %>%
+    # dplyr::rename(segment = segment, avg_frequency = `median(transaction_count)`) %>%
+    dplyr::arrange(avg_frequency)
 
   n_fill <- nrow(data)
 
   p <-
-    ggplot(data, aes(segment, avg_frequency)) +
-    geom_bar(stat = "identity", fill = calc_pal()(n_fill)) +
-    xlab("Segment") + ylab("Median Frequency") +
-    ggtitle("Median Frequency by Segment") +
-    coord_flip() +
-    theme(
-      plot.title = element_text(hjust = 0.5)
+    ggplot2::ggplot(data, ggplot2::aes(segment, avg_frequency)) +
+    ggplot2::geom_bar(stat = "identity", fill = ggthemes::calc_pal()(n_fill)) +
+    ggplot2::xlab("Segment") + ggplot2::ylab("Median Frequency") +
+    ggplot2::ggtitle("Median Frequency by Segment") +
+    ggplot2::coord_flip() +
+    ggplot2::theme(
+      plot.title = ggplot2::element_text(hjust = 0.5)
     )
 
   print(p)
@@ -175,26 +166,25 @@ rfm_plot_median_monetary <- function(rfm_segment_table) {
 
   segment <- NULL
   avg_monetary <- NULL
-  `median(amount)` <- NULL	
 
   data <-
     rfm_segment_table %>%
-    group_by(segment) %>%
-    select(segment, amount) %>%
-    summarise(median(amount)) %>%
-    rename(segment = segment, avg_monetary = `median(amount)`) %>%
-    arrange(avg_monetary)
+    dplyr::group_by(segment) %>%
+    dplyr::select(segment, amount) %>%
+    dplyr::summarise(avg_monetary = stats::median(amount)) %>%
+    # dplyr::rename(segment = segment, avg_monetary = `median(amount)`) %>%
+    dplyr::arrange(avg_monetary)
 
   n_fill <- nrow(data)
 
   p <-
-    ggplot(data, aes(segment, avg_monetary)) +
-    geom_bar(stat = "identity", fill = calc_pal()(n_fill)) +
-    xlab("Segment") + ylab("Median Monetary Value") +
-    ggtitle("Median Monetary Value by Segment") +
-    coord_flip() +
-    theme(
-      plot.title = element_text(hjust = 0.5)
+    ggplot2::ggplot(data, ggplot2::aes(segment, avg_monetary)) +
+    ggplot2::geom_bar(stat = "identity", fill = ggthemes::calc_pal()(n_fill)) +
+    ggplot2::xlab("Segment") + ggplot2::ylab("Median Monetary Value") +
+    ggplot2::ggtitle("Median Monetary Value by Segment") +
+    ggplot2::coord_flip() +
+    ggplot2::theme(
+      plot.title = ggplot2::element_text(hjust = 0.5)
     )
 
   print(p)

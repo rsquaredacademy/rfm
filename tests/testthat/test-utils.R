@@ -29,7 +29,7 @@ test_that('output from rfm_heatmap_data is as expected', {
   actual <- 
     rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date) %>%
     rfm_heatmap_data() %>%
-    pull(monetary) %>%
+    dplyr::pull(monetary) %>%
     sum() %>%
     round()
   
@@ -64,7 +64,7 @@ test_that('output from modify_rfm is as expected', {
 
   actual <- 
     modify_rfm(heat, 5, clevel) %>%
-    pull(monetary) %>%
+    dplyr::pull(monetary) %>%
     sum() %>%
     round()
 
