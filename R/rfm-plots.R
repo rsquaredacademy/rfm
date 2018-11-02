@@ -18,12 +18,6 @@
 #' @param brewer_name Palette name; check the documentation of
 #'   \code{brewer.pal}.
 #'
-#' @importFrom magrittr extract2
-#' @importFrom ggplot2 ggplot geom_tile aes scale_fill_gradientn ggtitle xlab
-#' ylab theme element_text scale_y_continuous sec_axis element_blank
-#' @importFrom RColorBrewer brewer.pal
-#' @importFrom grDevices topo.colors
-#'
 #' @examples
 #' # using transaction data
 #' analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
@@ -53,19 +47,19 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
 
   ulm <-
     mapdata %>%
-    extract2("monetary") %>%
+    magrittr::extract2("monetary") %>%
     max() %>%
     ceiling(.)
 
   llm <-
     mapdata %>%
-    extract2("monetary") %>%
+    magrittr::extract2("monetary") %>%
     min() %>%
     floor(.)
 
   bins <-
     mapdata %>%
-    use_series(frequency_score) %>%
+    magrittr::use_series(frequency_score) %>%
     max()
 
   guide_breaks <-
@@ -73,13 +67,13 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
     round()
 
   p <-
-    ggplot(data = mapdata) +
-    geom_tile(aes(x = frequency_score, y = recency_score, fill = monetary)) +
-    scale_fill_gradientn(limits = c(llm, ulm),
-                         colours = brewer.pal(n = brewer_n, name = brewer_name),
+    ggplot2::ggplot(data = mapdata) +
+    ggplot2::geom_tile(ggplot2::aes(x = frequency_score, y = recency_score, fill = monetary)) +
+    ggplot2::scale_fill_gradientn(limits = c(llm, ulm),
+                         colours = RColorBrewer::brewer.pal(n = brewer_n, name = brewer_name),
                          name = legend_title) +
-    ggtitle(plot_title) + xlab(xaxis_title) + ylab(yaxis_title) +
-    theme(plot.title = element_text(hjust = plot_title_justify))
+    ggplot2::ggtitle(plot_title) + ggplot2::xlab(xaxis_title) + ggplot2::ylab(yaxis_title) +
+    ggplot2::theme(plot.title = ggplot2::element_text(hjust = plot_title_justify))
 
   print(p)
 
@@ -103,9 +97,6 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
 #'   0 for left justified and 1 for right justified.
 #'
 #' @return Histograms
-#'
-#' @importFrom tidyr gather
-#' @importFrom ggplot2 geom_histogram labeller
 #'
 #' @examples
 #' # using transaction data
@@ -134,14 +125,14 @@ rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
 
   p <-
     rfm_hist_data(rfm_table) %>%
-    ggplot(aes(score)) +
-    geom_histogram(bins = hist_bins, fill = hist_color) +
-    ylab(yaxis_title) + ggtitle(plot_title) + xlab(xaxis_title) +
-    facet_grid(. ~ rfm, scales = "free_x",
-      labeller = labeller(
+    ggplot2::ggplot(ggplot2::aes(score)) +
+    ggplot2::geom_histogram(bins = hist_bins, fill = hist_color) +
+    ggplot2::ylab(yaxis_title) + ggplot2::ggtitle(plot_title) + ggplot2::xlab(xaxis_title) +
+    ggplot2::facet_grid(. ~ rfm, scales = "free_x",
+      labeller = ggplot2::labeller(
         rfm = c(amount = hist_m_label, recency_days = hist_r_label,
                 transaction_count = hist_f_label))) +
-    theme(plot.title = element_text(hjust = plot_title_justify))
+    ggplot2::theme(plot.title = ggplot2::element_text(hjust = plot_title_justify))
 
   print(p)
 
@@ -162,8 +153,6 @@ rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
 #'
 #' @return Bar chart.
 #'
-#' @importFrom ggplot2 geom_bar facet_grid
-#'
 #' @examples
 #' # using transaction data
 #' analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
@@ -183,17 +172,17 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 
   p <-
     rfm_barchart_data(rfm_table) %>%
-    ggplot() +
-    geom_bar(aes(x = monetary_score), fill = bar_color) +
-    facet_grid(recency_score ~ frequency_score) +
-    scale_y_continuous(sec.axis = sec_axis(~ ., name = sec_yaxis_title)) +
-    xlab(xaxis_title) + ylab(" ") + ggtitle(sec_xaxis_title) +
-    theme(
-      plot.title = element_text(
+    ggplot2::ggplot() +
+    ggplot2::geom_bar(ggplot2::aes(x = monetary_score), fill = bar_color) +
+    ggplot2::facet_grid(recency_score ~ frequency_score) +
+    ggplot2::scale_y_continuous(sec.axis = ggplot2::sec_axis(~ ., name = sec_yaxis_title)) +
+    ggplot2::xlab(xaxis_title) + ggplot2::ylab(" ") + ggplot2::ggtitle(sec_xaxis_title) +
+    ggplot2::theme(
+      plot.title = ggplot2::element_text(
         face = "plain", size = 11, hjust = 0.5
       ),
-      axis.text.y = element_blank(),
-      axis.ticks.y = element_blank()
+      axis.text.y = ggplot2::element_blank(),
+      axis.ticks.y = ggplot2::element_blank()
     )
 
   print(p)
@@ -214,10 +203,6 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #'   0 for left justified and 1 for right justified.
 #'
 #' @return Bar chart.
-#'
-#' @importFrom dplyr count
-#' @importFrom magrittr multiply_by
-#' @importFrom ggplot2 ylim geom_text position_dodge
 #'
 #' @examples
 #' # using transaction data
@@ -245,26 +230,26 @@ rfm_order_dist <- function(rfm_table, bar_color = 'blue',
 
   data <-
     rfm_table %>%
-    use_series(rfm) %>%
-    count(transaction_count)
+    magrittr::use_series(rfm) %>%
+    dplyr::count(transaction_count)
 
   ylim_max <-
     data %>%
-    pull(n) %>%
+    dplyr::pull(n) %>%
     max() %>%
-    multiply_by(1.1) %>%
+    magrittr::multiply_by(1.1) %>%
     ceiling(.)
 
   p <-
     data %>%
-    ggplot(aes(x = transaction_count, y = n)) +
-    geom_bar(stat = "identity", fill = bar_color) +
-    xlab(xaxis_title) + ylab(yaxis_title) + ylim(0, ylim_max) +
-    ggtitle(plot_title) +
-    geom_text(
-      aes(label = n, y = n + 3), position = position_dodge(0.9), vjust = 0
+    ggplot2::ggplot(ggplot2::aes(x = transaction_count, y = n)) +
+    ggplot2::geom_bar(stat = "identity", fill = bar_color) +
+    ggplot2::xlab(xaxis_title) + ggplot2::ylab(yaxis_title) + ggplot2::ylim(0, ylim_max) +
+    ggplot2::ggtitle(plot_title) +
+    ggplot2::geom_text(
+      ggplot2::aes(label = n, y = n + 3), position = ggplot2::position_dodge(0.9), vjust = 0
     ) +
-    theme(plot.title = element_text(hjust = 0.5))
+    ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
 
   print(p)
 
@@ -283,8 +268,6 @@ rfm_order_dist <- function(rfm_table, bar_color = 'blue',
 #' @param plot_title Title of the plot.
 #'
 #' @return Scatter plot.
-#'
-#' @importFrom ggplot2 geom_point
 #'
 #' @examples
 #' # rfm table
@@ -309,10 +292,10 @@ rfm_rm_plot <- function(rfm_table, point_color = 'blue',
 
   p <-
     rfm_table %>%
-    use_series(rfm) %>%
-    ggplot() +
-    geom_point(aes(x = amount, y = recency_days), color = point_color) +
-    xlab(xaxis_title) + ylab(yaxis_title) + ggtitle(plot_title)
+    magrittr::use_series(rfm) %>%
+    ggplot2::ggplot() +
+    ggplot2::geom_point(ggplot2::aes(x = amount, y = recency_days), color = point_color) +
+    ggplot2::xlab(xaxis_title) + ggplot2::ylab(yaxis_title) + ggplot2::ggtitle(plot_title)
 
   print(p)
 
@@ -327,10 +310,10 @@ rfm_fm_plot <- function(rfm_table, point_color = 'blue',
 
   p <-
     rfm_table %>%
-    use_series(rfm) %>%
-    ggplot() +
-    geom_point(aes(x = amount, y = transaction_count), color = point_color) +
-    xlab(xaxis_title) + ylab(yaxis_title) + ggtitle(plot_title)
+    magrittr::use_series(rfm) %>%
+    ggplot2::ggplot() +
+    ggplot2::geom_point(ggplot2::aes(x = amount, y = transaction_count), color = point_color) +
+    ggplot2::xlab(xaxis_title) + ggplot2::ylab(yaxis_title) + ggplot2::ggtitle(plot_title)
 
   print(p)
 
@@ -345,10 +328,10 @@ rfm_rf_plot <- function(rfm_table, point_color = 'blue',
 
   p <-
     rfm_table %>%
-    use_series(rfm) %>%
-    ggplot() +
-    geom_point(aes(x = transaction_count, y = recency_days), color = point_color) +
-    xlab(xaxis_title) + ylab(yaxis_title) + ggtitle(plot_title)
+    magrittr::use_series(rfm) %>%
+    ggplot2::ggplot() +
+    ggplot2::geom_point(ggplot2::aes(x = transaction_count, y = recency_days), color = point_color) +
+    ggplot2::xlab(xaxis_title) + ggplot2::ylab(yaxis_title) + ggplot2::ggtitle(plot_title)
 
   print(p)
 

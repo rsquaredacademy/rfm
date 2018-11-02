@@ -24,8 +24,6 @@
 #' \item{monetary_score}{Monetary score of the customer.}
 #' \item{rfm_score}{RFM score of the customer.}
 #'
-#' @importFrom magrittr set_names
-#'
 #' @examples
 #' analysis_date <- lubridate::as_date('2007-01-01', tz = 'UTC')
 #' rfm_table_customer_2(rfm_data_customer, customer_id, number_of_orders,
@@ -48,18 +46,18 @@ rfm_table_customer_2.default <- function(data = NULL, customer_id = NULL, n_tran
                                        latest_visit_date = NULL, total_revenue = NULL, analysis_date = NULL,
                                        recency_bins = 5, frequency_bins = 5, monetary_bins = 5, ...) {
 
-  cust_id      <- enquo(customer_id)
-  order_count  <- enquo(n_transactions)
-  recent_visit <- enquo(latest_visit_date)
-  revenues     <- enquo(total_revenue)
+  cust_id      <- rlang::enquo(customer_id)
+  order_count  <- rlang::enquo(n_transactions)
+  recent_visit <- rlang::enquo(latest_visit_date)
+  revenues     <- rlang::enquo(total_revenue)
 
   result <-
     data %>%
-    mutate(
-      recency_days = (analysis_date - !! recent_visit) / ddays()
+    dplyr::mutate(
+      recency_days = (analysis_date - !! recent_visit) / lubridate::ddays()
     ) %>%
-    select(!! cust_id, recency_days, !! order_count, !! revenues) %>%
-    set_names(c("customer_id", "recency_days", "transaction_count", "amount"))
+    dplyr::select(!! cust_id, recency_days, !! order_count, !! revenues) %>%
+    magrittr::set_names(c("customer_id", "recency_days", "transaction_count", "amount"))
 
   result$recency_score   <- NA
   result$frequency_score <- NA
@@ -120,7 +118,7 @@ rfm_table_customer_2.default <- function(data = NULL, customer_id = NULL, n_tran
   }
 
   result %<>%
-    mutate(
+    dplyr::mutate(
       rfm_score = recency_score * 100 + frequency_score * 10 + monetary_score
     )
 

@@ -24,11 +24,6 @@
 #' \item{monetary_score}{Monetary score of the customer.}
 #' \item{rfm_score}{RFM score of the customer.}
 #'
-#' @importFrom dplyr pull select group_by summarise mutate n
-#' @importFrom lubridate ddays is.POSIXct
-#' @importFrom magrittr extract2
-#' @importFrom rlang quo enquo
-#'
 #' @examples
 #' analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
 #' rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
@@ -49,26 +44,26 @@ rfm_table_order.default <- function(data = NULL, customer_id = NULL, order_date 
                               revenue = NULL, analysis_date = NULL, recency_bins = 5,
                               frequency_bins = 5, monetary_bins = 5, ...) {
 
-  cust_id  <- enquo(customer_id)
-  odate    <- enquo(order_date)
-  revenues <- enquo(revenue)
+  cust_id  <- rlang::enquo(customer_id)
+  odate    <- rlang::enquo(order_date)
+  revenues <- rlang::enquo(revenue)
 
   result <-
     data %>%
-    select(!! cust_id, !! odate, !! revenues) %>%
-    group_by(!! cust_id) %>%
-    summarise(
+    dplyr::select(!! cust_id, !! odate, !! revenues) %>%
+    dplyr::group_by(!! cust_id) %>%
+    dplyr::summarise(
       date_most_recent = max(!! odate), amount = sum(!! revenues),
-      transaction_count = n()
+      transaction_count = dplyr::n()
     ) %>%
-    mutate(
-      recency_days = (analysis_date - date_most_recent) / ddays()
+    dplyr::mutate(
+      recency_days = (analysis_date - date_most_recent) / lubridate::ddays()
     ) %>%
-    select(
+    dplyr::select(
       !! cust_id, date_most_recent, recency_days, transaction_count,
       amount
     ) %>%
-    set_names(c("customer_id", "date_most_recent", "recency_days", "transaction_count", "amount"))
+    magrittr::set_names(c("customer_id", "date_most_recent", "recency_days", "transaction_count", "amount"))
 
   result$recency_score   <- NA
   result$frequency_score <- NA
@@ -129,10 +124,10 @@ rfm_table_order.default <- function(data = NULL, customer_id = NULL, order_date 
   }
 
   result %<>%
-    mutate(
+    dplyr::mutate(
       rfm_score = recency_score * 100 + frequency_score * 10 + monetary_score
     ) %>%
-    select(
+    dplyr::select(
       customer_id, date_most_recent, recency_days, transaction_count, amount,
       recency_score, frequency_score, monetary_score, rfm_score
     )

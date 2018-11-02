@@ -27,25 +27,25 @@ rfm_heatmap_data <- function(rfm_table) {
 
   result <-
     rfm_table %>%
-    use_series(rfm) %>%
-    group_by(frequency_score, recency_score) %>%
-    select(frequency_score, recency_score, amount) %>%
-    summarise(monetary = mean(amount))
+    magrittr::use_series(rfm) %>%
+    dplyr::group_by(frequency_score, recency_score) %>%
+    dplyr::select(frequency_score, recency_score, amount) %>%
+    dplyr::summarise(monetary = mean(amount))
 
   l_frequency      <- check_levels(result, frequency_score)
   l_recency        <- check_levels(result, recency_score)
   levels_frequency <- check_levels(result, frequency_score) %>% length()
   levels_recency   <- check_levels(result, recency_score) %>% length()
 
-  f_frequency <- use_series(rfm_table, frequency_bins)
-  r_recency   <- use_series(rfm_table, recency_bins)
+  f_frequency <- magrittr::use_series(rfm_table, frequency_bins)
+  r_recency   <- magrittr::use_series(rfm_table, recency_bins)
 
-  if (!are_equal(levels_frequency, f_frequency)) {
+  if (!assertthat::are_equal(levels_frequency, f_frequency)) {
     result %<>%
       modify_rfm(., f_frequency, l_frequency)
   }
 
-  if (!are_equal(levels_recency, r_recency)) {
+  if (!assertthat::are_equal(levels_recency, r_recency)) {
     result %<>%
       modify_rfm(., r_recency, l_recency)
   }
@@ -82,9 +82,9 @@ rfm_heatmap_data <- function(rfm_table) {
 rfm_hist_data <- function(rfm_table) {
 
   rfm_table %>%
-    use_series(rfm) %>%
-    select(recency_days, transaction_count, amount) %>%
-    gather(rfm, score)
+    magrittr::use_series(rfm) %>%
+    dplyr::select(recency_days, transaction_count, amount) %>%
+    tidyr::gather(rfm, score)
 
 }
 
@@ -117,11 +117,11 @@ rfm_barchart_data <- function(rfm_table) {
 
   rlevels <-
     rfm_table %>%
-    use_series(recency_bins) %>%
+    magrittr::use_series(recency_bins) %>%
     seq_len(.) %>%
     rev()
 
-  data <- use_series(rfm_table, rfm)
+  data <- magrittr::use_series(rfm_table, rfm)
   data$recency_score <- factor(data$recency_score, levels = rlevels)
 
   return(data)
