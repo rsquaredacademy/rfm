@@ -4,9 +4,10 @@
 \alias{rfm_table_customer}
 \title{RFM table (customer data)}
 \usage{
-rfm_table_customer(data = NULL, customer_id = NULL, n_transactions = NULL,
-  recency_days = NULL, total_revenue = NULL, analysis_date = NULL,
-  recency_bins = 5, frequency_bins = 5, monetary_bins = 5, ...)
+rfm_table_customer(data = NULL, customer_id = NULL,
+  n_transactions = NULL, recency_days = NULL, total_revenue = NULL,
+  analysis_date = NULL, recency_bins = 5, frequency_bins = 5,
+  monetary_bins = 5, ...)
 }
 \arguments{
 \item{data}{A \code{data.frame} or \code{tibble}.}

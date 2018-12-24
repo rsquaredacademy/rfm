@@ -4,9 +4,9 @@
 \alias{rfm_bar_chart}
 \title{RFM bar chart}
 \usage{
-rfm_bar_chart(rfm_table, bar_color = "blue", xaxis_title = "Monetary Score",
-  sec_xaxis_title = "Frequency Score", yaxis_title = " ",
-  sec_yaxis_title = "Recency Score")
+rfm_bar_chart(rfm_table, bar_color = "blue",
+  xaxis_title = "Monetary Score", sec_xaxis_title = "Frequency Score",
+  yaxis_title = " ", sec_yaxis_title = "Recency Score")
 }
 \arguments{
 \item{rfm_table}{An object of class \code{rfm_table}.}
