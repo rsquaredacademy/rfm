@@ -4,10 +4,10 @@
 \alias{rfm_heatmap}
 \title{RFM heatmap}
 \usage{
-rfm_heatmap(data, plot_title = "RFM Heat Map", plot_title_justify = 0.5,
-  xaxis_title = "Frequency", yaxis_title = "Recency",
-  legend_title = "Mean Monetary Value", brewer_n = 5,
-  brewer_name = "PuBu")
+rfm_heatmap(data, plot_title = "RFM Heat Map",
+  plot_title_justify = 0.5, xaxis_title = "Frequency",
+  yaxis_title = "Recency", legend_title = "Mean Monetary Value",
+  brewer_n = 5, brewer_name = "PuBu")
 }
 \arguments{
 \item{data}{An object of class \code{rfm_table}.}

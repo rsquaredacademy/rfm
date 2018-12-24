@@ -5,8 +5,9 @@
 \title{Segmentation}
 \usage{
 rfm_segment(data, segment_names = NULL, recency_lower = NULL,
-  recency_upper = NULL, frequency_lower = NULL, frequency_upper = NULL,
-  monetary_lower = NULL, monetary_upper = NULL)
+  recency_upper = NULL, frequency_lower = NULL,
+  frequency_upper = NULL, monetary_lower = NULL,
+  monetary_upper = NULL)
 }
 \arguments{
 \item{data}{An object of class \code{rfm_table}.}

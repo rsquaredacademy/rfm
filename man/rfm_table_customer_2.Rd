@@ -5,9 +5,9 @@
 \title{RFM table 2 (customer data)}
 \usage{
 rfm_table_customer_2(data = NULL, customer_id = NULL,
-  n_transactions = NULL, latest_visit_date = NULL, total_revenue = NULL,
-  analysis_date = NULL, recency_bins = 5, frequency_bins = 5,
-  monetary_bins = 5, ...)
+  n_transactions = NULL, latest_visit_date = NULL,
+  total_revenue = NULL, analysis_date = NULL, recency_bins = 5,
+  frequency_bins = 5, monetary_bins = 5, ...)
 }
 \arguments{
 \item{data}{A \code{data.frame} or \code{tibble}.}

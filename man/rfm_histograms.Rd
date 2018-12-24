@@ -5,9 +5,10 @@
 \title{RFM histograms}
 \usage{
 rfm_histograms(rfm_table, hist_bins = 9, hist_color = "blue",
-  plot_title = "RFM Histograms", xaxis_title = " ", yaxis_title = "Count",
-  hist_m_label = "Monetary", hist_r_label = "Recency",
-  hist_f_label = "Frequency", plot_title_justify = 0.5)
+  plot_title = "RFM Histograms", xaxis_title = " ",
+  yaxis_title = "Count", hist_m_label = "Monetary",
+  hist_r_label = "Recency", hist_f_label = "Frequency",
+  plot_title_justify = 0.5)
 }
 \arguments{
 \item{rfm_table}{An object of class \code{rfm_table}.}

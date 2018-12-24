@@ -24,29 +24,20 @@ Imports:
     lubridate,
     magrittr,
     purrr,
+    RColorBrewer,
     rlang,
-    shiny,
     stats,
     tidyr,
-    RColorBrewer
+    utils
 Suggests: 
     covr,
     DT,
-    haven,
-    jsonlite,
     kableExtra,
     knitr,
-    readr,
-    readxl,
     rmarkdown,
-    shinyBS,
-    shinycssloaders,
-    shinythemes,
-    stringr,
     testthat,
-    tools,
     vdiffr
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
