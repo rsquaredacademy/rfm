@@ -41,11 +41,6 @@ home:
     href: https://www.rsquaredcomputing.com/shiny/rfm/
 
 reference:
-- title: Shiny App
-  
-  contents:
-  - rfm_launch_app
-
 - title: RFM Table
 
   contents:
