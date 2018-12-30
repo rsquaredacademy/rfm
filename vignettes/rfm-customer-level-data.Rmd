@@ -4,7 +4,7 @@ author: "Aravind Hebbali"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to RFM}
+  %\VignetteIndexEntry{RFM - Customer Level Data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
