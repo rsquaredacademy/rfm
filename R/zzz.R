@@ -1,3 +1,4 @@
+#' @importFrom utils packageVersion
 .onAttach <- function(...) {
 
   if (!interactive() || stats::runif(1) > 0.1) return()
@@ -22,7 +23,7 @@
   tip <- sample(tips, 1)
 
   if (behind_cran) {
-    packageStartupMessage("A new version of rfm (0.2.0) is available with bug fixes and new features.")
+    packageStartupMessage("A new version of rfm is available with bug fixes and new features.")
   } else {
     packageStartupMessage(paste(strwrap(tip), collapse = "\n"))
   }   
