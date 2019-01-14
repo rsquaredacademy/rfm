@@ -60,3 +60,26 @@ modify_rfm <- function(rfm_heatmap_data, n_bins, check_levels) {
   dplyr::bind_rows(rfm_heatmap_data, extra_data)
 
 }
+
+#' @importFrom utils packageVersion menu install.packages
+check_suggests <- function(pkg) {
+  
+  pkg_flag <- tryCatch(utils::packageVersion(pkg), error = function(e) NA)
+  
+  if (is.na(pkg_flag)) {
+    
+    msg <- message(paste0('\n', pkg, ' must be installed for this functionality.'))
+    
+    if (interactive()) {
+      message(msg, "\nWould you like to install it?")
+      if (utils::menu(c("Yes", "No")) == 1) {
+        utils::install.packages(pkg)
+      } else {
+        stop(msg, call. = FALSE)
+      }
+    } else {
+      stop(msg, call. = FALSE)
+    } 
+  }
+
+}
