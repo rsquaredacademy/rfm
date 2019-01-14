@@ -1,10 +1,10 @@
 ## Test environments
-* local Windows 10, R 3.4.4
-* ubuntu 14.04 (on travis-ci), R 3.3.3, R 3.4.4, R-devel
+* local Windows 10, R 3.5.1
+* ubuntu 14.04 (on travis-ci), R 3.4.4, R 3.5.2, R-devel
 * win-builder (devel and release)
 
 ## R CMD check results
 
 0 errors | 0 warnings | 1 note
 
-* This is a new release.
+* There was 1 NOTE about ORCID ID in R 3.4.4
