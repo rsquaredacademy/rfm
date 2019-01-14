@@ -1,132 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
-
-
-<url>
-  <loc>https://rfm.rsquaredacademy.com/</loc>
-  <lastmod>2018-09-29T18:13:39+00:00</lastmod>
-  <priority>1.00</priority>
-</url>
-<url>
-  <loc>https://rfm.rsquaredacademy.com/index.html</loc>
-  <lastmod>2018-09-29T18:13:39+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://rfm.rsquaredacademy.com/articles/rfm-customer-level-data.html</loc>
-  <lastmod>2018-09-29T18:13:39+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://rfm.rsquaredacademy.com/articles/rfm-transaction-level-data.html</loc>
-  <lastmod>2018-09-29T18:13:39+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://rfm.rsquaredacademy.com/reference/index.html</loc>
-  <lastmod>2018-09-29T18:13:39+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://rfm.rsquaredacademy.com/news/index.html</loc>
-  <lastmod>2018-09-29T18:13:39+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://rfm.rsquaredacademy.com/reference/rfm_launch_app.html</loc>
-  <lastmod>2018-09-29T18:13:39+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://rfm.rsquaredacademy.com/reference/rfm_table_order.html</loc>
-  <lastmod>2018-09-29T18:13:39+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://rfm.rsquaredacademy.com/reference/rfm_heatmap.html</loc>
-  <lastmod>2018-09-29T18:13:39+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://rfm.rsquaredacademy.com/reference/rfm_bar_chart.html</loc>
-  <lastmod>2018-09-29T18:13:39+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://rfm.rsquaredacademy.com/reference/rfm_histograms.html</loc>
-  <lastmod>2018-09-29T18:13:39+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://rfm.rsquaredacademy.com/reference/rfm_order_dist.html</loc>
-  <lastmod>2018-09-29T18:13:39+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://rfm.rsquaredacademy.com/reference/rfm_rm_plot.html</loc>
-  <lastmod>2018-09-29T18:13:39+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://rfm.rsquaredacademy.com/conduct</loc>
-  <lastmod>2018-09-29T18:13:39+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://rfm.rsquaredacademy.com/license-text</loc>
-  <lastmod>2018-09-29T18:13:39+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://rfm.rsquaredacademy.com/reference/rfm_table_customer.html</loc>
-  <lastmod>2018-09-29T18:13:39+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://rfm.rsquaredacademy.com/reference/rfm_table_customer_2.html</loc>
-  <lastmod>2018-09-29T18:13:39+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://rfm.rsquaredacademy.com/reference/rfm_segment.html</loc>
-  <lastmod>2018-09-29T18:13:39+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://rfm.rsquaredacademy.com/reference/rfm_plot_median_recency.html</loc>
-  <lastmod>2018-09-29T18:13:39+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://rfm.rsquaredacademy.com/reference/rfm_heatmap_data.html</loc>
-  <lastmod>2018-09-29T18:13:39+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://rfm.rsquaredacademy.com/reference/rfm_hist_data.html</loc>
-  <lastmod>2018-09-29T18:13:39+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://rfm.rsquaredacademy.com/reference/rfm_barchart_data.html</loc>
-  <lastmod>2018-09-29T18:13:39+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://rfm.rsquaredacademy.com/reference/rfm_data_orders.html</loc>
-  <lastmod>2018-09-29T18:13:39+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://rfm.rsquaredacademy.com/reference/rfm_data_customer.html</loc>
-  <lastmod>2018-09-29T18:13:39+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-
-
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/index.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/reference/rfm.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/reference/rfm_barchart_data.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/reference/rfm_bar_chart.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/reference/rfm_data_customer.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/reference/rfm_data_orders.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/reference/rfm_heatmap.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/reference/rfm_heatmap_data.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/reference/rfm_histograms.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/reference/rfm_hist_data.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/reference/rfm_launch_app.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/reference/rfm_order_dist.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/reference/rfm_plot_median_recency.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/reference/rfm_rm_plot.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/reference/rfm_segment.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/reference/rfm_table_customer.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/reference/rfm_table_customer_2.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/reference/rfm_table_order.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/articles/rfm-customer-level-data.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/articles/rfm-transaction-level-data.html</loc>
+  </url>
 </urlset>
