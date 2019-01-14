@@ -28,7 +28,8 @@ Imports:
     rlang,
     stats,
     tidyr,
-    utils
+    utils,
+    xplorerr
 Suggests: 
     covr,
     DT,
