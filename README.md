@@ -6,7 +6,7 @@
 > Tools for RFM
 Analysis
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/rfm)](https://cran.r-project.org/package=rfm)
+[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/rfm)](https://cran.r-project.org/package=rfm)
 [![cran
 checks](https://cranchecks.info/badges/summary/rfm)](https://cran.r-project.org/web/checks/check_results_rfm.html)
 [![Travis-CI Build

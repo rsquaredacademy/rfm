@@ -22,10 +22,16 @@
 
   tip <- sample(tips, 1)
 
-  if (behind_cran) {
-    packageStartupMessage("A new version of rfm is available with bug fixes and new features.")
-  } else {
-    packageStartupMessage(paste(strwrap(tip), collapse = "\n"))
+  if (interactive()) {
+    if (behind_cran) {
+      msg <- message("A new version of rfm is available with bug fixes and new features.")
+      message(msg, "\nWould you like to install it?")
+      if (utils::menu(c("Yes", "No")) == 1) {
+        utils::update.packages("rfm")
+      } 
+    } else {
+      packageStartupMessage(paste(strwrap(tip), collapse = "\n"))
+    }   
   }   
 
 }
