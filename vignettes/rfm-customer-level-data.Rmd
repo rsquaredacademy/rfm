@@ -210,6 +210,7 @@ segments <- tibble(
   Segment = segment, Description = description,
   R = recency, `F` = frequency, M = monetary
 )
+
 segments %>%
   kable() %>%
   kable_styling(full_width = TRUE, font_size = 12)
@@ -227,42 +228,21 @@ We can use the segmented data to identify
 Once we have classified a customer into a particular segment, we can take appropriate action to increase his/her lifetime value. 
 
 ```{r criteria, echo=FALSE}
-rfm_segments <- rfm_result %>%
-  use_series(rfm) %>%
-  mutate(
-    segment = case_when(
-      (recency_score %>% between(4, 5)) & (frequency_score %>% between(4, 5)) &
-        (monetary_score %>% between(4, 5))  ~ "Champions",
-      (recency_score %>% between(2, 5)) & (frequency_score %>% between(3, 5)) &
-        (monetary_score %>% between(3, 5)) ~ "Loyal Customers",
-      (recency_score %>% between(3, 5)) & (frequency_score %>% between(1, 3)) &
-        (monetary_score %>% between(1, 3)) ~ "Potential Loyalist",
-      (recency_score %>% between(4, 5)) & (frequency_score == 1) &
-        (monetary_score == 1) ~ "New Customers",
-      (recency_score %>% between(3, 4)) & (frequency_score == 1) &
-        (monetary_score == 1) ~ "Promising",
-      (recency_score %>% between(2, 3)) & (frequency_score %>% between(2, 3)) &
-        (monetary_score %>% between(2, 3)) ~ "Needs Attention",
-      (recency_score %>% between(2, 3)) & (frequency_score <= 2) &
-        (monetary_score <= 2) ~ "About To Sleep",
-      (recency_score <= 2) & (frequency_score %>% between(2, 5)) &
-        (monetary_score %>% between(2, 5)) ~ "At Risk",
-      (recency_score == 1) & (frequency_score %>% between(4, 5)) &
-        (monetary_score %>% between(4, 5)) ~ "Cant Lose Them",
-      (recency_score %>% between(1, 2)) & (frequency_score %>% between(1, 2)) &
-        (monetary_score %>% between(1, 2)) ~ "Hibernating",
-      (recency_score <= 2) & (frequency_score <= 2) &
-        (monetary_score <= 2) ~ "Lost",
-      TRUE ~ "Others"
-    )
-  ) %>%
-  select(
-    customer_id, segment, rfm_score, transaction_count, recency_days,
-    amount
-  )
+segment_names <- c("Champions", "Loyal Customers", "Potential Loyalist",
+  "New Customers", "Promising", "Need Attention", "About To Sleep",
+  "At Risk", "Can't Lose Them", "Lost")
+
+recency_lower <- c(4, 2, 3, 4, 3, 2, 2, 1, 1, 1)
+recency_upper <- c(5, 5, 5, 5, 4, 3, 3, 2, 1, 2)
+frequency_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
+frequency_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
+monetary_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
+monetary_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
+
+segments <- rfm_segment(rfm_result, segment_names, recency_lower, recency_upper, frequency_lower, frequency_upper, monetary_lower, monetary_upper)
 
 # use datatable
-rfm_segments %>%
+segments %>%
   datatable(
     filter = "top",
     options = list(pageLength = 5, autoWidth = TRUE),
@@ -278,13 +258,11 @@ rfm_segments %>%
 Now that we have defined and segmented our customers, let us examine the distribution of customers across the segments. Ideally, we should have very few or no customer in segments such as `At Risk` or `Needs Attention`. 
 
 ```{r rfm_customers}
-rfm_segments %>%
+segments %>%
   count(segment) %>%
   arrange(desc(n)) %>%
   rename(Segment = segment, Count = n)
 ```
-
-## Segments
 
 We can also examine the median recency, frequency and monetary value across segments to ensure that the
 logic used for customer classification is sound and practical.
@@ -292,70 +270,19 @@ logic used for customer classification is sound and practical.
 ### Median Recency
 
 ```{r avg_recency, fig.align='center', fig.height=5, fig.width=6}
-data <- 
-    rfm_segments %>%
-    group_by(segment) %>%
-    select(segment, recency_days) %>%
-    summarize(median(recency_days)) %>%
-    rename(segment = segment, avg_recency = `median(recency_days)`) %>%
-    arrange(avg_recency) 
-
-  n_fill <- nrow(data)
-
-  ggplot(data, aes(segment, avg_recency)) +
-    geom_bar(stat = "identity", fill = brewer.pal(n = n_fill, name = "Set1")) +
-    xlab("Segment") + ylab("Median Recency") +
-    ggtitle("Median Recency by Segment") +
-    coord_flip() +
-    theme(
-      plot.title = element_text(hjust = 0.5)
-    )
+rfm_plot_median_recency(segments)
 ```
 
 ### Median Frequency
 
 ```{r avg_frequency, fig.align='center', fig.height=5, fig.width=6}
-data <- 
-    rfm_segments %>%
-    group_by(segment) %>%
-    select(segment, transaction_count) %>%
-    summarize(median(transaction_count)) %>%
-    rename(segment = segment, avg_frequency = `median(transaction_count)`) %>%
-    arrange(avg_frequency) 
-
-n_fill <- nrow(data)
-
-ggplot(data, aes(segment, avg_frequency)) +
-    geom_bar(stat = "identity", fill = brewer.pal(n = n_fill, name = "Set1")) +
-    xlab("Segment") + ylab("Median Frequency") +
-    ggtitle("Median Frequency by Segment") +
-    coord_flip() +
-    theme(
-      plot.title = element_text(hjust = 0.5)
-    )
+rfm_plot_median_frequency(segments)
 ```
 
 ### Median Monetary Value
 
 ```{r avg_monetary, fig.align='center', fig.height=5, fig.width=6}
-data <- 
-    rfm_segments %>%
-    group_by(segment) %>%
-    select(segment, amount) %>%
-    summarize(median(amount)) %>%
-    rename(segment = segment, avg_monetary = `median(amount)`) %>%
-    arrange(avg_monetary) 
-
-n_fill <- nrow(data)
-
-ggplot(data, aes(segment, avg_monetary)) +
-    geom_bar(stat = "identity", fill = brewer.pal(n = n_fill, name = "Set1")) +
-    xlab("Segment") + ylab("Median Monetary Value") +
-    ggtitle("Median Monetary Value by Segment") +
-    coord_flip() +
-    theme(
-      plot.title = element_text(hjust = 0.5)
-    )
+rfm_plot_median_monetary(segments)
 ```
 
 ## References 
