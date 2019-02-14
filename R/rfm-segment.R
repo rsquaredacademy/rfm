@@ -59,7 +59,7 @@ rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
 
   rfm_score_table %>%
     dplyr::select(customer_id, segment, rfm_score, transaction_count, recency_days,
-           amount, date_most_recent, recency_score, frequency_score,
+           amount, recency_score, frequency_score,
            monetary_score)
 
 
