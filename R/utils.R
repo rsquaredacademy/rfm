@@ -28,12 +28,13 @@ bins_upper <- function(data, value, bins) {
 
   my_value <- rlang::enquo(value)
 
-  data %>%
+  data_max <-
+    data %>%
     dplyr::pull(!! my_value) %>%
     max() %>%
-    magrittr::add(1) %>%
-    purrr::prepend(bins)
+    magrittr::add(1)
 
+  c(bins, data_max)
 }
 
 

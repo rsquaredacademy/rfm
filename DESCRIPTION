@@ -21,7 +21,6 @@ Imports:
     ggthemes,
     lubridate,
     magrittr,
-    purrr,
     RColorBrewer,
     rlang,
     stats,
