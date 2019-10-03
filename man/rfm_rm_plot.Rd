@@ -7,13 +7,16 @@
 \title{RFM Scatter plot}
 \usage{
 rfm_rm_plot(rfm_table, point_color = "blue", xaxis_title = "Monetary",
-  yaxis_title = "Recency", plot_title = "Recency vs Monetary")
+  yaxis_title = "Recency", plot_title = "Recency vs Monetary",
+  print_plot = TRUE)
 
 rfm_fm_plot(rfm_table, point_color = "blue", xaxis_title = "Monetary",
-  yaxis_title = "Frequency", plot_title = "Frequency vs Monetary")
+  yaxis_title = "Frequency", plot_title = "Frequency vs Monetary",
+  print_plot = TRUE)
 
 rfm_rf_plot(rfm_table, point_color = "blue", xaxis_title = "Frequency",
-  yaxis_title = "Recency", plot_title = "Recency vs Frequency")
+  yaxis_title = "Recency", plot_title = "Recency vs Frequency",
+  print_plot = TRUE)
 }
 \arguments{
 \item{rfm_table}{An object of class \code{rfm_table}.}
@@ -25,6 +28,8 @@ rfm_rf_plot(rfm_table, point_color = "blue", xaxis_title = "Frequency",
 \item{yaxis_title}{Y axis title.}
 
 \item{plot_title}{Title of the plot.}
+
+\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
 }
 \value{
 Scatter plot.

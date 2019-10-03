@@ -7,7 +7,7 @@
 rfm_heatmap(data, plot_title = "RFM Heat Map",
   plot_title_justify = 0.5, xaxis_title = "Frequency",
   yaxis_title = "Recency", legend_title = "Mean Monetary Value",
-  brewer_n = 5, brewer_name = "PuBu")
+  brewer_n = 5, brewer_name = "PuBu", print_plot = TRUE)
 }
 \arguments{
 \item{data}{An object of class \code{rfm_table}.}
@@ -29,6 +29,8 @@ is used for the color palette of the heatmap; check the documentation of
 
 \item{brewer_name}{Palette name; check the documentation of
 \code{brewer.pal}.}
+
+\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
 }
 \description{
 The heat map shows the average monetary value for different

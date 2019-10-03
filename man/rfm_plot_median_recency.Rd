@@ -6,14 +6,16 @@
 \alias{rfm_plot_median_monetary}
 \title{Segmentation plots}
 \usage{
-rfm_plot_median_recency(rfm_segment_table)
+rfm_plot_median_recency(rfm_segment_table, print_plot = TRUE)
 
-rfm_plot_median_frequency(rfm_segment_table)
+rfm_plot_median_frequency(rfm_segment_table, print_plot = TRUE)
 
-rfm_plot_median_monetary(rfm_segment_table)
+rfm_plot_median_monetary(rfm_segment_table, print_plot = TRUE)
 }
 \arguments{
 \item{rfm_segment_table}{Output from \code{rfm_segment}.}
+
+\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
 }
 \description{
 Segment wise median recency, frequency & monetary value plot.

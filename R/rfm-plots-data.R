@@ -36,16 +36,15 @@ rfm_heatmap_data <- function(rfm_table) {
   l_recency        <- check_levels(result, recency_score)
   levels_frequency <- check_levels(result, frequency_score) %>% length()
   levels_recency   <- check_levels(result, recency_score) %>% length()
+  f_frequency      <- magrittr::use_series(rfm_table, frequency_bins)
+  r_recency        <- magrittr::use_series(rfm_table, recency_bins)
 
-  f_frequency <- magrittr::use_series(rfm_table, frequency_bins)
-  r_recency   <- magrittr::use_series(rfm_table, recency_bins)
-
-  if (!assertthat::are_equal(levels_frequency, f_frequency)) {
+  if (levels_frequency != f_frequency) {
     result %<>%
       modify_rfm(., f_frequency, l_frequency)
   }
 
-  if (!assertthat::are_equal(levels_recency, r_recency)) {
+  if (levels_recency != r_recency) {
     result %<>%
       modify_rfm(., r_recency, l_recency)
   }

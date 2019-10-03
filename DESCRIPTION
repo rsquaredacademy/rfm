@@ -16,14 +16,11 @@ BugReports: https://github.com/rsquaredacademy/rfm/issues
 Depends: 
     R (>= 3.2)
 Imports: 
-    assertthat,
     dplyr,
-    forcats,
     ggplot2,
     ggthemes,
     lubridate,
     magrittr,
-    purrr,
     RColorBrewer,
     rlang,
     stats,

@@ -70,6 +70,7 @@ rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
 #' Segment wise median recency, frequency & monetary value plot.
 #'
 #' @param rfm_segment_table Output from \code{rfm_segment}.
+#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @examples
 #' analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
@@ -97,7 +98,7 @@ rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
 #'
 #' @export
 #'
-rfm_plot_median_recency <- function(rfm_segment_table) {
+rfm_plot_median_recency <- function(rfm_segment_table, print_plot = TRUE) {
 
   segment <- NULL
   avg_recency <- NULL
@@ -122,14 +123,18 @@ rfm_plot_median_recency <- function(rfm_segment_table) {
       plot.title = ggplot2::element_text(hjust = 0.5)
     )
 
-  print(p)
+  if (print_plot) {
+    print(p)
+  } else {
+    return(p)
+  }
 
 }
 
 #' @rdname rfm_plot_median_recency
 #' @export
 #'
-rfm_plot_median_frequency <- function(rfm_segment_table) {
+rfm_plot_median_frequency <- function(rfm_segment_table, print_plot = TRUE) {
 
   segment <- NULL
   avg_frequency <- NULL
@@ -154,7 +159,11 @@ rfm_plot_median_frequency <- function(rfm_segment_table) {
       plot.title = ggplot2::element_text(hjust = 0.5)
     )
 
-  print(p)
+  if (print_plot) {
+    print(p)
+  } else {
+    return(p)
+  }
 
 }
 
@@ -162,7 +171,7 @@ rfm_plot_median_frequency <- function(rfm_segment_table) {
 #' @rdname rfm_plot_median_recency
 #' @export
 #'
-rfm_plot_median_monetary <- function(rfm_segment_table) {
+rfm_plot_median_monetary <- function(rfm_segment_table, print_plot = TRUE) {
 
   segment <- NULL
   avg_monetary <- NULL
@@ -187,6 +196,10 @@ rfm_plot_median_monetary <- function(rfm_segment_table) {
       plot.title = ggplot2::element_text(hjust = 0.5)
     )
 
-  print(p)
+  if (print_plot) {
+    print(p)
+  } else {
+    return(p)
+  }
 
 }

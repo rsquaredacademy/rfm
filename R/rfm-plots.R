@@ -17,6 +17,7 @@
 #'   \code{brewer.pal}.
 #' @param brewer_name Palette name; check the documentation of
 #'   \code{brewer.pal}.
+#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @examples
 #' # using transaction data
@@ -41,7 +42,8 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
                         plot_title_justify = 0.5, xaxis_title = "Frequency",
                         yaxis_title = "Recency",
                         legend_title = "Mean Monetary Value",
-                        brewer_n = 5, brewer_name = "PuBu") {
+                        brewer_n = 5, brewer_name = "PuBu",
+                        print_plot = TRUE) {
 
   mapdata <- rfm_heatmap_data(rfm_table = data)
 
@@ -75,7 +77,11 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
     ggplot2::ggtitle(plot_title) + ggplot2::xlab(xaxis_title) + ggplot2::ylab(yaxis_title) +
     ggplot2::theme(plot.title = ggplot2::element_text(hjust = plot_title_justify))
 
-  print(p)
+  if (print_plot) {
+    print(p)
+  } else {
+    return(p)
+  }
 
 }
 
@@ -95,6 +101,7 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
 #' @param hist_f_label Label of the frequency histogram.
 #' @param plot_title_justify Horizontal justification of the plot title;
 #'   0 for left justified and 1 for right justified.
+#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @return Histograms
 #'
@@ -121,7 +128,7 @@ rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
                            plot_title = 'RFM Histograms', xaxis_title = ' ',
                            yaxis_title = 'Count', hist_m_label = 'Monetary',
                            hist_r_label = 'Recency', hist_f_label = 'Frequency',
-                           plot_title_justify = 0.5) {
+                           plot_title_justify = 0.5, print_plot = TRUE) {
 
   p <-
     rfm_hist_data(rfm_table) %>%
@@ -134,7 +141,11 @@ rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
                 transaction_count = hist_f_label))) +
     ggplot2::theme(plot.title = ggplot2::element_text(hjust = plot_title_justify))
 
-  print(p)
+  if (print_plot) {
+    print(p)
+  } else {
+    return(p)
+  }
 
 }
 
@@ -150,6 +161,7 @@ rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
 #' @param yaxis_title Y axis title.
 #' @param sec_xaxis_title Secondary x axis title.
 #' @param sec_yaxis_title Secondary y axis title.
+#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @return Bar chart.
 #'
@@ -168,7 +180,8 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
                           xaxis_title = 'Monetary Score',
                           sec_xaxis_title = 'Frequency Score',
                           yaxis_title = ' ',
-                          sec_yaxis_title = 'Recency Score') {
+                          sec_yaxis_title = 'Recency Score',
+                          print_plot = TRUE) {
 
   p <-
     rfm_barchart_data(rfm_table) %>%
@@ -185,7 +198,11 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
       axis.ticks.y = ggplot2::element_blank()
     )
 
-  print(p)
+  if (print_plot) {
+    print(p)
+  } else {
+    return(p)
+  }
 
 }
 
@@ -201,6 +218,7 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #' @param plot_title Title of the plot.
 #' @param plot_title_justify Horizontal justification of the plot title;
 #'   0 for left justified and 1 for right justified.
+#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @return Bar chart.
 #'
@@ -226,7 +244,7 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 rfm_order_dist <- function(rfm_table, bar_color = 'blue',
                            xaxis_title = 'Orders', yaxis_title = 'Customers',
                            plot_title = 'Customers by Orders',
-                           plot_title_justify = 0.5) {
+                           plot_title_justify = 0.5, print_plot = TRUE) {
 
   data <-
     rfm_table %>%
@@ -251,7 +269,11 @@ rfm_order_dist <- function(rfm_table, bar_color = 'blue',
     ) +
     ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
 
-  print(p)
+  if (print_plot) {
+    print(p)
+  } else {
+    return(p)
+  }
 
 }
 
@@ -266,6 +288,7 @@ rfm_order_dist <- function(rfm_table, bar_color = 'blue',
 #' @param xaxis_title X axis title.
 #' @param yaxis_title Y axis title.
 #' @param plot_title Title of the plot.
+#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @return Scatter plot.
 #'
@@ -288,7 +311,8 @@ rfm_order_dist <- function(rfm_table, bar_color = 'blue',
 #'
 rfm_rm_plot <- function(rfm_table, point_color = 'blue',
                         xaxis_title = 'Monetary', yaxis_title = 'Recency',
-                        plot_title = 'Recency vs Monetary') {
+                        plot_title = 'Recency vs Monetary',
+                        print_plot = TRUE) {
 
   p <-
     rfm_table %>%
@@ -297,7 +321,11 @@ rfm_rm_plot <- function(rfm_table, point_color = 'blue',
     ggplot2::geom_point(ggplot2::aes(x = amount, y = recency_days), color = point_color) +
     ggplot2::xlab(xaxis_title) + ggplot2::ylab(yaxis_title) + ggplot2::ggtitle(plot_title)
 
-  print(p)
+  if (print_plot) {
+    print(p)
+  } else {
+    return(p)
+  }
 
 }
 
@@ -306,7 +334,8 @@ rfm_rm_plot <- function(rfm_table, point_color = 'blue',
 #'
 rfm_fm_plot <- function(rfm_table, point_color = 'blue',
                         xaxis_title = 'Monetary', yaxis_title = 'Frequency',
-                        plot_title = 'Frequency vs Monetary') {
+                        plot_title = 'Frequency vs Monetary',
+                        print_plot = TRUE) {
 
   p <-
     rfm_table %>%
@@ -315,7 +344,11 @@ rfm_fm_plot <- function(rfm_table, point_color = 'blue',
     ggplot2::geom_point(ggplot2::aes(x = amount, y = transaction_count), color = point_color) +
     ggplot2::xlab(xaxis_title) + ggplot2::ylab(yaxis_title) + ggplot2::ggtitle(plot_title)
 
-  print(p)
+  if (print_plot) {
+    print(p)
+  } else {
+    return(p)
+  }
 
 }
 
@@ -324,7 +357,8 @@ rfm_fm_plot <- function(rfm_table, point_color = 'blue',
 #'
 rfm_rf_plot <- function(rfm_table, point_color = 'blue',
                         xaxis_title = 'Frequency', yaxis_title = 'Recency',
-                        plot_title = 'Recency vs Frequency') {
+                        plot_title = 'Recency vs Frequency',
+                        print_plot = TRUE) {
 
   p <-
     rfm_table %>%
@@ -333,6 +367,10 @@ rfm_rf_plot <- function(rfm_table, point_color = 'blue',
     ggplot2::geom_point(ggplot2::aes(x = transaction_count, y = recency_days), color = point_color) +
     ggplot2::xlab(xaxis_title) + ggplot2::ylab(yaxis_title) + ggplot2::ggtitle(plot_title)
 
-  print(p)
+  if (print_plot) {
+    print(p)
+  } else {
+    return(p)
+  }
 
 }
