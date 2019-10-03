@@ -8,7 +8,7 @@ rfm_histograms(rfm_table, hist_bins = 9, hist_color = "blue",
   plot_title = "RFM Histograms", xaxis_title = " ",
   yaxis_title = "Count", hist_m_label = "Monetary",
   hist_r_label = "Recency", hist_f_label = "Frequency",
-  plot_title_justify = 0.5)
+  plot_title_justify = 0.5, print_plot = TRUE)
 }
 \arguments{
 \item{rfm_table}{An object of class \code{rfm_table}.}
@@ -31,6 +31,8 @@ rfm_histograms(rfm_table, hist_bins = 9, hist_color = "blue",
 
 \item{plot_title_justify}{Horizontal justification of the plot title;
 0 for left justified and 1 for right justified.}
+
+\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
 }
 \value{
 Histograms

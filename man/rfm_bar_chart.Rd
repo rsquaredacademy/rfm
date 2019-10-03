@@ -6,7 +6,8 @@
 \usage{
 rfm_bar_chart(rfm_table, bar_color = "blue",
   xaxis_title = "Monetary Score", sec_xaxis_title = "Frequency Score",
-  yaxis_title = " ", sec_yaxis_title = "Recency Score")
+  yaxis_title = " ", sec_yaxis_title = "Recency Score",
+  print_plot = TRUE)
 }
 \arguments{
 \item{rfm_table}{An object of class \code{rfm_table}.}
@@ -20,6 +21,8 @@ rfm_bar_chart(rfm_table, bar_color = "blue",
 \item{yaxis_title}{Y axis title.}
 
 \item{sec_yaxis_title}{Secondary y axis title.}
+
+\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
 }
 \value{
 Bar chart.

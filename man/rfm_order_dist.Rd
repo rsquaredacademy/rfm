@@ -6,7 +6,7 @@
 \usage{
 rfm_order_dist(rfm_table, bar_color = "blue", xaxis_title = "Orders",
   yaxis_title = "Customers", plot_title = "Customers by Orders",
-  plot_title_justify = 0.5)
+  plot_title_justify = 0.5, print_plot = TRUE)
 }
 \arguments{
 \item{rfm_table}{An object of class \code{rfm_table}.}
@@ -21,6 +21,8 @@ rfm_order_dist(rfm_table, bar_color = "blue", xaxis_title = "Orders",
 
 \item{plot_title_justify}{Horizontal justification of the plot title;
 0 for left justified and 1 for right justified.}
+
+\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
 }
 \value{
 Bar chart.
