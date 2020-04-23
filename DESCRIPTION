@@ -1,7 +1,7 @@
 Type: Package
 Package: rfm
 Title: Recency, Frequency and Monetary Value Analysis
-Version: 0.2.0.9000
+Version: 0.2.1
 Authors@R: person("Aravind", "Hebbali", email = "hebbali.aravind@gmail.com", role = c("aut", "cre"),
     comment = c(ORCID = "0000-0001-9220-9669"))
 Description: Tools for RFM (recency, frequency and monetary value) analysis. 
