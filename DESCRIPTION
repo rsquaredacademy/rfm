@@ -24,6 +24,7 @@ Imports:
     RColorBrewer,
     rlang,
     stats,
+    tibble,
     tidyr,
     utils,
     xplorerr
