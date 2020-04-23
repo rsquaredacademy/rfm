@@ -1,3 +1,13 @@
+# rfm 0.2.1
+
+This is a patch release for minor bug fixes and enhancements.
+
+- update vignettes ([#50](https://github.com/rsquaredacademy/rfm/issues/50))
+- ggplot2 changes ([#54](https://github.com/rsquaredacademy/rfm/issues/54))
+- option to return plot objects ([#60](https://github.com/rsquaredacademy/rfm/issues/60))
+- frequency bin class ([#57](https://github.com/rsquaredacademy/rfm/issues/57))
+- user specified threshold for scores ([#63](https://github.com/rsquaredacademy/rfm/issues/63))
+
 # rfm 0.2.0
 
 This is a minor release for bug fixes and enhancements.

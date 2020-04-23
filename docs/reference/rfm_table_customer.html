@@ -16,13 +16,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -47,6 +49,7 @@
 <![endif]-->
 
 
+
   </head>
 
   <body>
@@ -63,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rfm</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
       </span>
     </div>
 
@@ -118,6 +121,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -168,15 +172,15 @@
     </tr>
     <tr>
       <th>recency_bins</th>
-      <td><p>Number of bins for recency.</p></td>
+      <td><p>Number of bins for recency or custom threshold.</p></td>
     </tr>
     <tr>
       <th>frequency_bins</th>
-      <td><p>Number of bins for frequency.</p></td>
+      <td><p>Number of bins for frequency or custom threshold.</p></td>
     </tr>
     <tr>
       <th>monetary_bins</th>
-      <td><p>Number of bins for monetary.</p></td>
+      <td><p>Number of bins for monetary or custom threshold.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -186,20 +190,18 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>rfm_table_customer</code> returns a tibble with the following columns:</p>
-<dt>customer_id</dt><dd><p>Unique id of the customer.</p></dd>
-<dt>recency_days</dt><dd><p>Number of days since the most recent transaction.</p></dd>
-<dt>transaction_count</dt><dd><p>Total number of transactions of the customer.</p></dd>
-<dt>amount</dt><dd><p>Revenue from the customer.</p></dd>
-<dt>recency_score</dt><dd><p>Recency score of the customer.</p></dd>
-<dt>frequency_score</dt><dd><p>Frequency score of the customer.</p></dd>
-<dt>monetary_score</dt><dd><p>Monetary score of the customer.</p></dd>
-<dt>rfm_score</dt><dd><p>RFM score of the customer.</p></dd>
+    <p><code>rfm_table_order</code> returns a list with the following:</p>
+<dt>rfm</dt><dd><p>RFM table.</p></dd>
+<dt>analysis_date</dt><dd><p>Date of analysis.</p></dd>
+<dt>frequency_bins</dt><dd><p>Number of bins used for frequency score.</p></dd>
+<dt>recency_bins</dt><dd><p>Number of bins used for recency score.</p></dd>
+<dt>monetary_bins</dt><dd><p>Number of bins used for monetary score.</p></dd>
+<dt>threshold</dt><dd><p>tibble with thresholds used for generating RFM scores.</p></dd>
 
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>analysis_date</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/lubridate/topics/as_date'>as_date</a></span>(<span class='st'>'2007-01-01'</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>'UTC'</span>)
+    <pre class="examples"><div class='input'><span class='no'>analysis_date</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/as_date.html'>as_date</a></span>(<span class='st'>'2007-01-01'</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>'UTC'</span>)
 <span class='fu'>rfm_table_customer</span>(<span class='no'>rfm_data_customer</span>, <span class='no'>customer_id</span>, <span class='no'>number_of_orders</span>,
 <span class='no'>recency_days</span>, <span class='no'>revenue</span>, <span class='no'>analysis_date</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 39,999 x 8</span><span>
 #&gt;    customer_id recency_days transaction_cou~ amount recency_score
@@ -234,6 +236,24 @@
 #&gt; </span><span style='color: #555555;'>10</span><span>       </span><span style='text-decoration: underline;'>27</span><span>650          131               10    970             3
 #&gt; </span><span style='color: #555555;'># ... with 39,989 more rows, and 3 more variables: frequency_score </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>,
 #&gt; #   monetary_score </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, rfm_score </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
+<span class='co'># using custom threshold </span>
+<span class='fu'>rfm_table_customer</span>(<span class='no'>rfm_data_customer</span>, <span class='no'>customer_id</span>, <span class='no'>number_of_orders</span>,
+<span class='no'>recency_days</span>, <span class='no'>revenue</span>, <span class='no'>analysis_date</span>, <span class='kw'>recency_bins</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>115</span>, <span class='fl'>181</span>, <span class='fl'>297</span>, <span class='fl'>482</span>),
+<span class='kw'>frequency_bins</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>4</span>, <span class='fl'>5</span>, <span class='fl'>6</span>, <span class='fl'>8</span>), <span class='kw'>monetary_bins</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>256</span>, <span class='fl'>382</span>, <span class='fl'>506</span>, <span class='fl'>666</span>))</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 39,999 x 8</span><span>
+#&gt;    customer_id recency_days transaction_cou~ amount recency_score
+#&gt;          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span>       </span><span style='text-decoration: underline;'>22</span><span>086          232                9    777             3
+#&gt; </span><span style='color: #555555;'> 2</span><span>        </span><span style='text-decoration: underline;'>2</span><span>290          115               16   </span><span style='text-decoration: underline;'>1</span><span>555             4
+#&gt; </span><span style='color: #555555;'> 3</span><span>       </span><span style='text-decoration: underline;'>26</span><span>377           43                5    336             5
+#&gt; </span><span style='color: #555555;'> 4</span><span>       </span><span style='text-decoration: underline;'>24</span><span>650           64               12   </span><span style='text-decoration: underline;'>1</span><span>189             5
+#&gt; </span><span style='color: #555555;'> 5</span><span>       </span><span style='text-decoration: underline;'>12</span><span>883           23               12   </span><span style='text-decoration: underline;'>1</span><span>229             5
+#&gt; </span><span style='color: #555555;'> 6</span><span>        </span><span style='text-decoration: underline;'>2</span><span>119           72               11    929             5
+#&gt; </span><span style='color: #555555;'> 7</span><span>       </span><span style='text-decoration: underline;'>31</span><span>283          112               17   </span><span style='text-decoration: underline;'>1</span><span>569             5
+#&gt; </span><span style='color: #555555;'> 8</span><span>       </span><span style='text-decoration: underline;'>33</span><span>815          142               11    778             4
+#&gt; </span><span style='color: #555555;'> 9</span><span>       </span><span style='text-decoration: underline;'>15</span><span>972           43                9    641             5
+#&gt; </span><span style='color: #555555;'>10</span><span>       </span><span style='text-decoration: underline;'>27</span><span>650          131               10    970             4
+#&gt; </span><span style='color: #555555;'># ... with 39,989 more rows, and 3 more variables: frequency_score </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>,
+#&gt; #   monetary_score </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, rfm_score </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -249,19 +269,23 @@
   </div>
 </div>
 
+
       <footer>
       <div class="copyright">
   <p>Developed by <a href='https://www.aravindhebbali.com'>Aravind Hebbali</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

@@ -22,25 +22,23 @@ rfm_table_customer_2(data = NULL, customer_id = NULL,
 
 \item{analysis_date}{Date of analysis.}
 
-\item{recency_bins}{Number of bins for recency.}
+\item{recency_bins}{Number of bins for recency or custom threshold.}
 
-\item{frequency_bins}{Number of bins for frequency.}
+\item{frequency_bins}{Number of bins for frequency or custom threshold.}
 
-\item{monetary_bins}{Number of bins for monetary.}
+\item{monetary_bins}{Number of bins for monetary or custom threshold.}
 
 \item{...}{Other arguments.}
 }
 \value{
-\code{rfm_table_customer_2} returns a tibble with the following columns:
+\code{rfm_table_order} returns a list with the following:
 
-\item{customer_id}{Unique id of the customer.}
-\item{recency_days}{Number of days since the most recent transaction.}
-\item{transaction_count}{Total number of transactions of the customer.}
-\item{amount}{Revenue from the customer.}
-\item{recency_score}{Recency score of the customer.}
-\item{frequency_score}{Frequency score of the customer.}
-\item{monetary_score}{Monetary score of the customer.}
-\item{rfm_score}{RFM score of the customer.}
+\item{rfm}{RFM table.}
+\item{analysis_date}{Date of analysis.}
+\item{frequency_bins}{Number of bins used for frequency score.}
+\item{recency_bins}{Number of bins used for recency score.}
+\item{monetary_bins}{Number of bins used for monetary score.}
+\item{threshold}{tibble with thresholds used for generating RFM scores.}
 }
 \description{
 Recency, frequency, monetary and RFM score.
@@ -54,5 +52,10 @@ most_recent_visit, revenue, analysis_date)
 result <- rfm_table_customer_2(rfm_data_customer, customer_id, number_of_orders,
 most_recent_visit, revenue, analysis_date)
 result$rfm
+
+# using custom threshold 
+rfm_table_customer_2(rfm_data_customer, customer_id, number_of_orders,
+most_recent_visit, revenue, analysis_date, recency_bins = c(115, 181, 297, 482), 
+frequency_bins = c(4, 5, 6, 8), monetary_bins = c(256, 382, 506, 666))
 
 }
