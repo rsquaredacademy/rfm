@@ -1,3 +1,9 @@
+# rfm 0.2.2
+
+This is a patch release for an urgent bug fix.
+
+- Avoid overwriting of segments (@leungi, [#67](https://github.com/rsquaredacademy/rfm/issues/67))
+
 # rfm 0.2.1
 
 This is a patch release for minor bug fixes and enhancements.
