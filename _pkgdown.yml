@@ -24,10 +24,16 @@ navbar:
         - text: "RFM - Transaction Level Data"
           href: articles/rfm-transaction-level-data.html
     - text: "Reference"
+      href: reference/index.html
+    - text: "News"
       menu:
-        - text: "Functions"
-          href: reference/index.html
-        - text: "News"
+        - text: Blog
+          href: https://blog.rsquaredacademy.com/customer-segmentation-using-rfm-analysis/
+        - text: Version 0.2.1
+          href: https://blog.rsquaredacademy.com/rfm-0-2-1/
+        - text: Version 0.2.0
+          href: https://blog.rsquaredacademy.com/introducing-rfm/
+        - text: Change log
           href: news/index.html
   right:
    - icon: fa-github
@@ -52,7 +58,7 @@ reference:
 
   contents:
   - rfm_segment
-  - rfm_plot_median_recency  
+  - rfm_plot_median_recency
 
 - title: Plots
 

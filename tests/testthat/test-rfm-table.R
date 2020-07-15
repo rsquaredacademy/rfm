@@ -2,7 +2,7 @@ context("rfm_table")
 
 test_that("output from rfm_table_order is as expected", {
 
-  analysis_date <- lubridate::as_date("2006-12-31", tz = "UTC")
+  analysis_date <- lubridate::as_date("2006-12-31")
   result <- rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
 
   actual <-
@@ -19,7 +19,7 @@ test_that("output from rfm_table_order is as expected", {
 
 test_that("output from rfm_table_order is as expected when using custom thresholds", {
 
-  analysis_date <- lubridate::as_date("2006-12-31", tz = "UTC")
+  analysis_date <- lubridate::as_date("2006-12-31")
   result <-  rfm_table_order(rfm_data_orders, customer_id, order_date, revenue,
                              analysis_date, recency_bins = c(115, 181, 297, 482),
                              frequency_bins = c(4, 5, 6, 8),
@@ -39,7 +39,7 @@ test_that("output from rfm_table_order is as expected when using custom threshol
 
 test_that("output from rfm_table_customer is as expected", {
 
-  analysis_date <- lubridate::as_date('2007-01-01', tz = 'UTC')
+  analysis_date <- lubridate::as_date('2007-01-01')
   result <- rfm_table_customer(rfm_data_customer, customer_id, number_of_orders,
   	recency_days, revenue, analysis_date)
 
@@ -58,7 +58,7 @@ test_that("output from rfm_table_customer is as expected", {
 test_that("output from rfm_table_customer is as expected when using custom
           thresholds", {
 
-  analysis_date <- lubridate::as_date('2007-01-01', tz = 'UTC')
+  analysis_date <- lubridate::as_date('2007-01-01')
   result <- rfm_table_customer(rfm_data_customer, customer_id, number_of_orders,
                                recency_days, revenue, analysis_date,
                                recency_bins = c(115, 181, 297, 482),
@@ -79,7 +79,7 @@ test_that("output from rfm_table_customer is as expected when using custom
 
 test_that("output from rfm_table_customer_2 is as expected", {
 
-  analysis_date <- lubridate::as_date('2007-01-01', tz = 'UTC')
+  analysis_date <- lubridate::as_date('2007-01-01')
 	result <- rfm_table_customer_2(rfm_data_customer, customer_id, number_of_orders,
 		most_recent_visit, revenue, analysis_date)
 
@@ -97,7 +97,7 @@ test_that("output from rfm_table_customer_2 is as expected", {
 test_that("output from rfm_table_customer_2 is as expected when using custom
           thresholds", {
 
-  analysis_date <- lubridate::as_date('2007-01-01', tz = 'UTC')
+  analysis_date <- lubridate::as_date('2007-01-01')
   result <- rfm_table_customer_2(rfm_data_customer, customer_id, number_of_orders,
                                  most_recent_visit, revenue, analysis_date,
                                  recency_bins = c(115, 181, 297, 482),

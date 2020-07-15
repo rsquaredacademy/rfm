@@ -51,7 +51,8 @@ rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
     rfm_score_table$segment[(
       (rfm_score_table$recency_score %>% dplyr::between(recency_lower[i], recency_upper[i])) &
         (rfm_score_table$frequency_score %>% dplyr::between(frequency_lower[i], frequency_upper[i])) &
-        (rfm_score_table$monetary_score %>% dplyr::between(monetary_lower[i], monetary_upper[i])))] <- segment_names[i]
+        (rfm_score_table$monetary_score %>% dplyr::between(monetary_lower[i], monetary_upper[i])) &
+        !rfm_score_table$segment %in% segment_names)] <- segment_names[i]
   }
 
   rfm_score_table$segment[is.na(rfm_score_table$segment)] <- "Others"
