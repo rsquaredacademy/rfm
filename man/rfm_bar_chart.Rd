@@ -4,10 +4,15 @@
 \alias{rfm_bar_chart}
 \title{RFM bar chart}
 \usage{
-rfm_bar_chart(rfm_table, bar_color = "blue",
-  xaxis_title = "Monetary Score", sec_xaxis_title = "Frequency Score",
-  yaxis_title = " ", sec_yaxis_title = "Recency Score",
-  print_plot = TRUE)
+rfm_bar_chart(
+  rfm_table,
+  bar_color = "blue",
+  xaxis_title = "Monetary Score",
+  sec_xaxis_title = "Frequency Score",
+  yaxis_title = " ",
+  sec_yaxis_title = "Recency Score",
+  print_plot = TRUE
+)
 }
 \arguments{
 \item{rfm_table}{An object of class \code{rfm_table}.}
@@ -33,7 +38,7 @@ Examine the distribution of monetary scores for the different
 }
 \examples{
 # using transaction data
-analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
+analysis_date <- lubridate::as_date('2006-12-31')
 rfm_order <- rfm_table_order(rfm_data_orders, customer_id, order_date,
 revenue, analysis_date)
 

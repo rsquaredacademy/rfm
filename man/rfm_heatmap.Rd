@@ -4,10 +4,17 @@
 \alias{rfm_heatmap}
 \title{RFM heatmap}
 \usage{
-rfm_heatmap(data, plot_title = "RFM Heat Map",
-  plot_title_justify = 0.5, xaxis_title = "Frequency",
-  yaxis_title = "Recency", legend_title = "Mean Monetary Value",
-  brewer_n = 5, brewer_name = "PuBu", print_plot = TRUE)
+rfm_heatmap(
+  data,
+  plot_title = "RFM Heat Map",
+  plot_title_justify = 0.5,
+  xaxis_title = "Frequency",
+  yaxis_title = "Recency",
+  legend_title = "Mean Monetary Value",
+  brewer_n = 5,
+  brewer_name = "PuBu",
+  print_plot = TRUE
+)
 }
 \arguments{
 \item{data}{An object of class \code{rfm_table}.}
@@ -40,7 +47,7 @@ The heat map shows the average monetary value for different
 }
 \examples{
 # using transaction data
-analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
+analysis_date <- lubridate::as_date('2006-12-31')
 rfm_order <- rfm_table_order(rfm_data_orders, customer_id, order_date,
 revenue, analysis_date)
 
@@ -48,7 +55,7 @@ revenue, analysis_date)
 rfm_heatmap(rfm_order)
 
 # using customer data
-analysis_date <- lubridate::as_date('2007-01-01', tz = 'UTC')
+analysis_date <- lubridate::as_date('2007-01-01')
 rfm_customer <- rfm_table_customer(rfm_data_customer, customer_id,
 number_of_orders, recency_days, revenue, analysis_date)
 

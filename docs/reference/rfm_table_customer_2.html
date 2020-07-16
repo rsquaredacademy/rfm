@@ -150,10 +150,18 @@
     <p>Recency, frequency, monetary and RFM score.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rfm_table_customer_2</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>customer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>n_transactions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>latest_visit_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>total_revenue</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>analysis_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>recency_bins</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-  <span class='kw'>frequency_bins</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>monetary_bins</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>rfm_table_customer_2</span>(
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>customer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>n_transactions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>latest_visit_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>total_revenue</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>analysis_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>recency_bins</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='kw'>frequency_bins</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='kw'>monetary_bins</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -212,7 +220,8 @@
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>analysis_date</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/as_date.html'>as_date</a></span>(<span class='st'>'2007-01-01'</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>'UTC'</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `tz` argument is ignored by `as_date()`</span></div><div class='input'><span class='fu'>rfm_table_customer_2</span>(<span class='no'>rfm_data_customer</span>, <span class='no'>customer_id</span>, <span class='no'>number_of_orders</span>,
+    <pre class="examples"><div class='input'><span class='no'>analysis_date</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/as_date.html'>as_date</a></span>(<span class='st'>'2007-01-01'</span>)
+<span class='fu'>rfm_table_customer_2</span>(<span class='no'>rfm_data_customer</span>, <span class='no'>customer_id</span>, <span class='no'>number_of_orders</span>,
 <span class='no'>most_recent_visit</span>, <span class='no'>revenue</span>, <span class='no'>analysis_date</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 39,999 x 8</span><span>
 #&gt;    customer_id recency_days transaction_cou~ amount recency_score
 #&gt;          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>

@@ -74,7 +74,7 @@ rfm uses consistent prefix `rfm_` for easy tab completion. Use
 `rfm_table_order()` to generate the RFM score.
 
 ``` r
-analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
+analysis_date <- lubridate::as_date('2006-12-31')
 rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
 rfm_result
 #> # A tibble: 995 x 9

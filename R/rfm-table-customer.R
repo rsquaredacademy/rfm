@@ -23,7 +23,7 @@
 #' \item{threshold}{tibble with thresholds used for generating RFM scores.}
 #'
 #' @examples
-#' analysis_date <- lubridate::as_date('2007-01-01', tz = 'UTC')
+#' analysis_date <- lubridate::as_date('2007-01-01')
 #' rfm_table_customer(rfm_data_customer, customer_id, number_of_orders,
 #' recency_days, revenue, analysis_date)
 #'

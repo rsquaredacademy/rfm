@@ -150,9 +150,15 @@
     <p>Visualize the distribution of customers across orders.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rfm_order_dist</span>(<span class='no'>rfm_table</span>, <span class='kw'>bar_color</span> <span class='kw'>=</span> <span class='st'>"blue"</span>, <span class='kw'>xaxis_title</span> <span class='kw'>=</span> <span class='st'>"Orders"</span>,
-  <span class='kw'>yaxis_title</span> <span class='kw'>=</span> <span class='st'>"Customers"</span>, <span class='kw'>plot_title</span> <span class='kw'>=</span> <span class='st'>"Customers by Orders"</span>,
-  <span class='kw'>plot_title_justify</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>print_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>rfm_order_dist</span>(
+  <span class='no'>rfm_table</span>,
+  <span class='kw'>bar_color</span> <span class='kw'>=</span> <span class='st'>"blue"</span>,
+  <span class='kw'>xaxis_title</span> <span class='kw'>=</span> <span class='st'>"Orders"</span>,
+  <span class='kw'>yaxis_title</span> <span class='kw'>=</span> <span class='st'>"Customers"</span>,
+  <span class='kw'>plot_title</span> <span class='kw'>=</span> <span class='st'>"Customers by Orders"</span>,
+  <span class='kw'>plot_title_justify</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
+  <span class='kw'>print_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -194,13 +200,15 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># using transaction data</span>
-<span class='no'>analysis_date</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/as_date.html'>as_date</a></span>(<span class='st'>'2006-12-31'</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>'UTC'</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `tz` argument is ignored by `as_date()`</span></div><div class='input'><span class='no'>rfm_order</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rfm_table_order.html'>rfm_table_order</a></span>(<span class='no'>rfm_data_orders</span>, <span class='no'>customer_id</span>, <span class='no'>order_date</span>,
+<span class='no'>analysis_date</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/as_date.html'>as_date</a></span>(<span class='st'>'2006-12-31'</span>)
+<span class='no'>rfm_order</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rfm_table_order.html'>rfm_table_order</a></span>(<span class='no'>rfm_data_orders</span>, <span class='no'>customer_id</span>, <span class='no'>order_date</span>,
 <span class='no'>revenue</span>, <span class='no'>analysis_date</span>)
 
 <span class='co'># order distribution</span>
 <span class='fu'>rfm_order_dist</span>(<span class='no'>rfm_order</span>)</div><div class='img'><img src='rfm_order_dist-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># using customer data</span>
-<span class='no'>analysis_date</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/as_date.html'>as_date</a></span>(<span class='st'>'2007-01-01'</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>'UTC'</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `tz` argument is ignored by `as_date()`</span></div><div class='input'><span class='no'>rfm_customer</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rfm_table_customer.html'>rfm_table_customer</a></span>(<span class='no'>rfm_data_customer</span>, <span class='no'>customer_id</span>,
+<span class='no'>analysis_date</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/as_date.html'>as_date</a></span>(<span class='st'>'2007-01-01'</span>)
+<span class='no'>rfm_customer</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rfm_table_customer.html'>rfm_table_customer</a></span>(<span class='no'>rfm_data_customer</span>, <span class='no'>customer_id</span>,
 <span class='no'>number_of_orders</span>, <span class='no'>recency_days</span>, <span class='no'>revenue</span>, <span class='no'>analysis_date</span>)
 
 <span class='co'># order distribution</span>

@@ -150,10 +150,16 @@
     <p>Create segments based on recency, frequency and monetary scores.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rfm_segment</span>(<span class='no'>data</span>, <span class='kw'>segment_names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>recency_lower</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>recency_upper</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>frequency_lower</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>frequency_upper</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>monetary_lower</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>monetary_upper</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>rfm_segment</span>(
+  <span class='no'>data</span>,
+  <span class='kw'>segment_names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>recency_lower</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>recency_upper</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>frequency_lower</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>frequency_upper</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>monetary_lower</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>monetary_upper</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -194,7 +200,8 @@
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>analysis_date</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/as_date.html'>as_date</a></span>(<span class='st'>'2006-12-31'</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>'UTC'</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `tz` argument is ignored by `as_date()`</span></div><div class='input'><span class='no'>rfm_result</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rfm_table_order.html'>rfm_table_order</a></span>(<span class='no'>rfm_data_orders</span>, <span class='no'>customer_id</span>, <span class='no'>order_date</span>,
+    <pre class="examples"><div class='input'><span class='no'>analysis_date</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/as_date.html'>as_date</a></span>(<span class='st'>'2006-12-31'</span>)
+<span class='no'>rfm_result</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rfm_table_order.html'>rfm_table_order</a></span>(<span class='no'>rfm_data_orders</span>, <span class='no'>customer_id</span>, <span class='no'>order_date</span>,
 <span class='no'>revenue</span>, <span class='no'>analysis_date</span>)
 
 <span class='no'>segment_names</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Champions"</span>, <span class='st'>"Loyal Customers"</span>, <span class='st'>"Potential Loyalist"</span>,

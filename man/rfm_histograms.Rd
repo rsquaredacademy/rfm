@@ -4,11 +4,19 @@
 \alias{rfm_histograms}
 \title{RFM histograms}
 \usage{
-rfm_histograms(rfm_table, hist_bins = 9, hist_color = "blue",
-  plot_title = "RFM Histograms", xaxis_title = " ",
-  yaxis_title = "Count", hist_m_label = "Monetary",
-  hist_r_label = "Recency", hist_f_label = "Frequency",
-  plot_title_justify = 0.5, print_plot = TRUE)
+rfm_histograms(
+  rfm_table,
+  hist_bins = 9,
+  hist_color = "blue",
+  plot_title = "RFM Histograms",
+  xaxis_title = " ",
+  yaxis_title = "Count",
+  hist_m_label = "Monetary",
+  hist_r_label = "Recency",
+  hist_f_label = "Frequency",
+  plot_title_justify = 0.5,
+  print_plot = TRUE
+)
 }
 \arguments{
 \item{rfm_table}{An object of class \code{rfm_table}.}
@@ -42,7 +50,7 @@ Histograms of recency, frequency and monetary value.
 }
 \examples{
 # using transaction data
-analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
+analysis_date <- lubridate::as_date('2006-12-31')
 rfm_order <- rfm_table_order(rfm_data_orders, customer_id, order_date,
 revenue, analysis_date)
 
@@ -50,7 +58,7 @@ revenue, analysis_date)
 rfm_histograms(rfm_order)
 
 # using customer data
-analysis_date <- lubridate::as_date('2007-01-01', tz = 'UTC')
+analysis_date <- lubridate::as_date('2007-01-01')
 rfm_customer <- rfm_table_customer(rfm_data_customer, customer_id,
 number_of_orders, recency_days, revenue, analysis_date)
 
