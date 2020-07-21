@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   rfm-customer-level-data: rfm-customer-level-data.html
   rfm-transaction-level-data: rfm-transaction-level-data.html
-last_built: 2020-07-16T17:06Z
+last_built: 2020-07-21T11:28Z
 urls:
   reference: https://rfm.rsquaredacademy.com/reference
   article: https://rfm.rsquaredacademy.com/articles
