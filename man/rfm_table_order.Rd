@@ -4,9 +4,17 @@
 \alias{rfm_table_order}
 \title{RFM table (transaction data)}
 \usage{
-rfm_table_order(data = NULL, customer_id = NULL, order_date = NULL,
-  revenue = NULL, analysis_date = NULL, recency_bins = 5,
-  frequency_bins = 5, monetary_bins = 5, ...)
+rfm_table_order(
+  data = NULL,
+  customer_id = NULL,
+  order_date = NULL,
+  revenue = NULL,
+  analysis_date = NULL,
+  recency_bins = 5,
+  frequency_bins = 5,
+  monetary_bins = 5,
+  ...
+)
 }
 \arguments{
 \item{data}{A \code{data.frame} or \code{tibble}.}
@@ -41,7 +49,7 @@ rfm_table_order(data = NULL, customer_id = NULL, order_date = NULL,
 Recency, frequency, monetary and RFM score.
 }
 \examples{
-analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
+analysis_date <- lubridate::as_date('2006-12-31')
 rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
 
 # access rfm table

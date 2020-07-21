@@ -164,7 +164,8 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># using transaction data</span>
-<span class='no'>analysis_date</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/as_date.html'>as_date</a></span>(<span class='st'>'2006-12-31'</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>'UTC'</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `tz` argument is ignored by `as_date()`</span></div><div class='input'><span class='no'>rfm_order</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rfm_table_order.html'>rfm_table_order</a></span>(<span class='no'>rfm_data_orders</span>, <span class='no'>customer_id</span>, <span class='no'>order_date</span>,
+<span class='no'>analysis_date</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/as_date.html'>as_date</a></span>(<span class='st'>'2006-12-31'</span>)
+<span class='no'>rfm_order</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rfm_table_order.html'>rfm_table_order</a></span>(<span class='no'>rfm_data_orders</span>, <span class='no'>customer_id</span>, <span class='no'>order_date</span>,
 <span class='no'>revenue</span>, <span class='no'>analysis_date</span>)
 
 <span class='co'># heat map data</span>
@@ -184,7 +185,8 @@
 #&gt; </span><span style='color: #555555;'>10</span><span>               2             5     370.
 #&gt; </span><span style='color: #555555;'># ... with 15 more rows</span><span></div><div class='input'>
 <span class='co'># using customer data</span>
-<span class='no'>analysis_date</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/as_date.html'>as_date</a></span>(<span class='st'>'2007-01-01'</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>'UTC'</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `tz` argument is ignored by `as_date()`</span></div><div class='input'><span class='no'>rfm_customer</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rfm_table_customer.html'>rfm_table_customer</a></span>(<span class='no'>rfm_data_customer</span>, <span class='no'>customer_id</span>,
+<span class='no'>analysis_date</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/as_date.html'>as_date</a></span>(<span class='st'>'2007-01-01'</span>)
+<span class='no'>rfm_customer</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rfm_table_customer.html'>rfm_table_customer</a></span>(<span class='no'>rfm_data_customer</span>, <span class='no'>customer_id</span>,
 <span class='no'>number_of_orders</span>, <span class='no'>recency_days</span>, <span class='no'>revenue</span>, <span class='no'>analysis_date</span>)
 
 <span class='co'># heat map data</span>

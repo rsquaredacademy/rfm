@@ -21,7 +21,7 @@ rfm_plot_median_monetary(rfm_segment_table, print_plot = TRUE)
 Segment wise median recency, frequency & monetary value plot.
 }
 \examples{
-analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
+analysis_date <- lubridate::as_date('2006-12-31')
 rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
 revenue, analysis_date)
 

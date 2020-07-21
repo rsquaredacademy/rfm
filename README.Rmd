@@ -69,7 +69,7 @@ To calculate the RFM score for each customer we need transaction data which shou
 rfm uses consistent prefix `rfm_` for easy tab completion. Use `rfm_table_order()` to generate the RFM score.
 
 ```{r rfm_table_order}
-analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
+analysis_date <- lubridate::as_date('2006-12-31')
 rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
 rfm_result
 ```
@@ -142,6 +142,6 @@ rfm_rf_plot(rfm_result)
 ## Getting Help
 
 If you encounter a bug, please file a minimal reproducible example using 
-[reprex](https://reprex.tidyverse.org/index.html) on github. For questions and 
+[reprex](https://reprex.tidyverse.org/index.html) on github. For questions and
 clarifications, use [StackOverflow](https://stackoverflow.com/).
 

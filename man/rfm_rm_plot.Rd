@@ -6,17 +6,32 @@
 \alias{rfm_rf_plot}
 \title{RFM Scatter plot}
 \usage{
-rfm_rm_plot(rfm_table, point_color = "blue", xaxis_title = "Monetary",
-  yaxis_title = "Recency", plot_title = "Recency vs Monetary",
-  print_plot = TRUE)
+rfm_rm_plot(
+  rfm_table,
+  point_color = "blue",
+  xaxis_title = "Monetary",
+  yaxis_title = "Recency",
+  plot_title = "Recency vs Monetary",
+  print_plot = TRUE
+)
 
-rfm_fm_plot(rfm_table, point_color = "blue", xaxis_title = "Monetary",
-  yaxis_title = "Frequency", plot_title = "Frequency vs Monetary",
-  print_plot = TRUE)
+rfm_fm_plot(
+  rfm_table,
+  point_color = "blue",
+  xaxis_title = "Monetary",
+  yaxis_title = "Frequency",
+  plot_title = "Frequency vs Monetary",
+  print_plot = TRUE
+)
 
-rfm_rf_plot(rfm_table, point_color = "blue", xaxis_title = "Frequency",
-  yaxis_title = "Recency", plot_title = "Recency vs Frequency",
-  print_plot = TRUE)
+rfm_rf_plot(
+  rfm_table,
+  point_color = "blue",
+  xaxis_title = "Frequency",
+  yaxis_title = "Recency",
+  plot_title = "Recency vs Frequency",
+  print_plot = TRUE
+)
 }
 \arguments{
 \item{rfm_table}{An object of class \code{rfm_table}.}
@@ -40,7 +55,7 @@ Examine the relationship between recency, frequency
 }
 \examples{
 # rfm table
-analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
+analysis_date <- lubridate::as_date('2006-12-31')
 rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
 revenue, analysis_date)
 

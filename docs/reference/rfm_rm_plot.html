@@ -152,17 +152,32 @@
   and monetary values.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rfm_rm_plot</span>(<span class='no'>rfm_table</span>, <span class='kw'>point_color</span> <span class='kw'>=</span> <span class='st'>"blue"</span>, <span class='kw'>xaxis_title</span> <span class='kw'>=</span> <span class='st'>"Monetary"</span>,
-  <span class='kw'>yaxis_title</span> <span class='kw'>=</span> <span class='st'>"Recency"</span>, <span class='kw'>plot_title</span> <span class='kw'>=</span> <span class='st'>"Recency vs Monetary"</span>,
-  <span class='kw'>print_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+    <pre class="usage"><span class='fu'>rfm_rm_plot</span>(
+  <span class='no'>rfm_table</span>,
+  <span class='kw'>point_color</span> <span class='kw'>=</span> <span class='st'>"blue"</span>,
+  <span class='kw'>xaxis_title</span> <span class='kw'>=</span> <span class='st'>"Monetary"</span>,
+  <span class='kw'>yaxis_title</span> <span class='kw'>=</span> <span class='st'>"Recency"</span>,
+  <span class='kw'>plot_title</span> <span class='kw'>=</span> <span class='st'>"Recency vs Monetary"</span>,
+  <span class='kw'>print_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)
 
-<span class='fu'>rfm_fm_plot</span>(<span class='no'>rfm_table</span>, <span class='kw'>point_color</span> <span class='kw'>=</span> <span class='st'>"blue"</span>, <span class='kw'>xaxis_title</span> <span class='kw'>=</span> <span class='st'>"Monetary"</span>,
-  <span class='kw'>yaxis_title</span> <span class='kw'>=</span> <span class='st'>"Frequency"</span>, <span class='kw'>plot_title</span> <span class='kw'>=</span> <span class='st'>"Frequency vs Monetary"</span>,
-  <span class='kw'>print_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>rfm_fm_plot</span>(
+  <span class='no'>rfm_table</span>,
+  <span class='kw'>point_color</span> <span class='kw'>=</span> <span class='st'>"blue"</span>,
+  <span class='kw'>xaxis_title</span> <span class='kw'>=</span> <span class='st'>"Monetary"</span>,
+  <span class='kw'>yaxis_title</span> <span class='kw'>=</span> <span class='st'>"Frequency"</span>,
+  <span class='kw'>plot_title</span> <span class='kw'>=</span> <span class='st'>"Frequency vs Monetary"</span>,
+  <span class='kw'>print_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)
 
-<span class='fu'>rfm_rf_plot</span>(<span class='no'>rfm_table</span>, <span class='kw'>point_color</span> <span class='kw'>=</span> <span class='st'>"blue"</span>, <span class='kw'>xaxis_title</span> <span class='kw'>=</span> <span class='st'>"Frequency"</span>,
-  <span class='kw'>yaxis_title</span> <span class='kw'>=</span> <span class='st'>"Recency"</span>, <span class='kw'>plot_title</span> <span class='kw'>=</span> <span class='st'>"Recency vs Frequency"</span>,
-  <span class='kw'>print_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>rfm_rf_plot</span>(
+  <span class='no'>rfm_table</span>,
+  <span class='kw'>point_color</span> <span class='kw'>=</span> <span class='st'>"blue"</span>,
+  <span class='kw'>xaxis_title</span> <span class='kw'>=</span> <span class='st'>"Frequency"</span>,
+  <span class='kw'>yaxis_title</span> <span class='kw'>=</span> <span class='st'>"Recency"</span>,
+  <span class='kw'>plot_title</span> <span class='kw'>=</span> <span class='st'>"Recency vs Frequency"</span>,
+  <span class='kw'>print_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -199,7 +214,8 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># rfm table</span>
-<span class='no'>analysis_date</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/as_date.html'>as_date</a></span>(<span class='st'>'2006-12-31'</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>'UTC'</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `tz` argument is ignored by `as_date()`</span></div><div class='input'><span class='no'>rfm_result</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rfm_table_order.html'>rfm_table_order</a></span>(<span class='no'>rfm_data_orders</span>, <span class='no'>customer_id</span>, <span class='no'>order_date</span>,
+<span class='no'>analysis_date</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/as_date.html'>as_date</a></span>(<span class='st'>'2006-12-31'</span>)
+<span class='no'>rfm_result</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rfm_table_order.html'>rfm_table_order</a></span>(<span class='no'>rfm_data_orders</span>, <span class='no'>customer_id</span>, <span class='no'>order_date</span>,
 <span class='no'>revenue</span>, <span class='no'>analysis_date</span>)
 
 <span class='co'># monetary value vs recency</span>

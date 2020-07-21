@@ -4,10 +4,16 @@
 \alias{rfm_segment}
 \title{Segmentation}
 \usage{
-rfm_segment(data, segment_names = NULL, recency_lower = NULL,
-  recency_upper = NULL, frequency_lower = NULL,
-  frequency_upper = NULL, monetary_lower = NULL,
-  monetary_upper = NULL)
+rfm_segment(
+  data,
+  segment_names = NULL,
+  recency_lower = NULL,
+  recency_upper = NULL,
+  frequency_lower = NULL,
+  frequency_upper = NULL,
+  monetary_lower = NULL,
+  monetary_upper = NULL
+)
 }
 \arguments{
 \item{data}{An object of class \code{rfm_table}.}
@@ -30,7 +36,7 @@ rfm_segment(data, segment_names = NULL, recency_lower = NULL,
 Create segments based on recency, frequency and monetary scores.
 }
 \examples{
-analysis_date <- lubridate::as_date('2006-12-31', tz = 'UTC')
+analysis_date <- lubridate::as_date('2006-12-31')
 rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
 revenue, analysis_date)
 

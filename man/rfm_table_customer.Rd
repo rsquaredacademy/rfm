@@ -4,10 +4,18 @@
 \alias{rfm_table_customer}
 \title{RFM table (customer data)}
 \usage{
-rfm_table_customer(data = NULL, customer_id = NULL,
-  n_transactions = NULL, recency_days = NULL, total_revenue = NULL,
-  analysis_date = NULL, recency_bins = 5, frequency_bins = 5,
-  monetary_bins = 5, ...)
+rfm_table_customer(
+  data = NULL,
+  customer_id = NULL,
+  n_transactions = NULL,
+  recency_days = NULL,
+  total_revenue = NULL,
+  analysis_date = NULL,
+  recency_bins = 5,
+  frequency_bins = 5,
+  monetary_bins = 5,
+  ...
+)
 }
 \arguments{
 \item{data}{A \code{data.frame} or \code{tibble}.}
@@ -44,7 +52,7 @@ rfm_table_customer(data = NULL, customer_id = NULL,
 Recency, frequency, monetary and RFM score.
 }
 \examples{
-analysis_date <- lubridate::as_date('2007-01-01', tz = 'UTC')
+analysis_date <- lubridate::as_date('2007-01-01')
 rfm_table_customer(rfm_data_customer, customer_id, number_of_orders,
 recency_days, revenue, analysis_date)
 

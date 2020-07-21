@@ -4,14 +4,16 @@
 \name{rfm_data_customer}
 \alias{rfm_data_customer}
 \title{RFM customer data}
-\format{A tibble with 39,999 rows and 5 variables:
+\format{
+A tibble with 39,999 rows and 5 variables:
 \describe{
   \item{customer_id}{Customer id.}
   \item{total_amount}{Total amount of all orders.}
   \item{most_recent_visit}{Date of the most recent transaction.}
   \item{number_of_purchases}{Total number of transactions/orders.}
   \item{purchase_interval}{Number of days since last transaction/order.}
-}}
+}
+}
 \usage{
 rfm_data_customer
 }

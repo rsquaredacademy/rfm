@@ -1,4 +1,4 @@
-# rfm 0.2.1.9000
+# rfm 0.2.2
 
 This is a patch release for an urgent bug fix.
 

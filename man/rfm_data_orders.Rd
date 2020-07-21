@@ -4,12 +4,14 @@
 \name{rfm_data_orders}
 \alias{rfm_data_orders}
 \title{RFM transaction data}
-\format{A tibble with 49.6 rows and 3 variables:
+\format{
+A tibble with 49.6 rows and 3 variables:
 \describe{
   \item{order_date}{order date}
   \item{customer_id}{customer id}
   \item{revenue}{transaction amount}
-}}
+}
+}
 \usage{
 rfm_data_orders
 }

@@ -150,9 +150,17 @@
     <p>Recency, frequency, monetary and RFM score.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rfm_table_order</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>customer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>order_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>revenue</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>analysis_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>recency_bins</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-  <span class='kw'>frequency_bins</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>monetary_bins</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>rfm_table_order</span>(
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>customer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>order_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>revenue</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>analysis_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>recency_bins</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='kw'>frequency_bins</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='kw'>monetary_bins</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -207,7 +215,8 @@
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>analysis_date</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/as_date.html'>as_date</a></span>(<span class='st'>'2006-12-31'</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>'UTC'</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `tz` argument is ignored by `as_date()`</span></div><div class='input'><span class='fu'>rfm_table_order</span>(<span class='no'>rfm_data_orders</span>, <span class='no'>customer_id</span>, <span class='no'>order_date</span>, <span class='no'>revenue</span>, <span class='no'>analysis_date</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 995 x 9</span><span>
+    <pre class="examples"><div class='input'><span class='no'>analysis_date</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/as_date.html'>as_date</a></span>(<span class='st'>'2006-12-31'</span>)
+<span class='fu'>rfm_table_order</span>(<span class='no'>rfm_data_orders</span>, <span class='no'>customer_id</span>, <span class='no'>order_date</span>, <span class='no'>revenue</span>, <span class='no'>analysis_date</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 995 x 9</span><span>
 #&gt;    customer_id date_most_recent recency_days transaction_cou~ amount
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>                  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> Abbey O'Re~ 2006-06-09                205                6    472
