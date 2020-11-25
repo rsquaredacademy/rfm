@@ -39,15 +39,6 @@ rfm segmentation, rfm score r, rfm segmentation r, rfm customer segmentation, cu
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-<!-- Global site tag (gtag.js) - Google Analytics -->
-   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-57270671-33"></script>
-   <script>
-     window.dataLayer = window.dataLayer || [];
-     function gtag(){dataLayer.push(arguments);}
-     gtag('js', new Date());
-
-     gtag('config', 'UA-57270671-33');
-   </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
     <div class="container template-home">
@@ -136,7 +127,8 @@ rfm segmentation, rfm score r, rfm segmentation r, rfm customer segmentation, cu
 <blockquote>
 <p>Tools for RFM Analysis</p>
 </blockquote>
-<p><a href="https://cran.r-project.org/package=rfm"><img src="https://www.r-pkg.org/badges/version/rfm" alt="CRAN_Status_Badge"></a> <a href="https://cran.r-project.org/web/checks/check_results_rfm.html"><img src="https://cranchecks.info/badges/summary/rfm" alt="cran checks"></a> <a href="https://travis-ci.org/rsquaredacademy/rfm"><img src="https://travis-ci.org/rsquaredacademy/rfm.svg?branch=master" alt="Travis-CI Build Status"></a> <a href="https://ci.appveyor.com/project/rsquaredacademy/rfm"><img src="https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/rfm?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a> <a href="https://codecov.io/github/rsquaredacademy/rfm?branch=master"><img src="https://img.shields.io/codecov/c/github/rsquaredacademy/rfm/master.svg" alt="Coverage Status"></a> <a href="https://cran.r-project.org/package=rfm"><img src="https://cranlogs.r-pkg.org/badges/grand-total/rfm"></a> <img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg"></p>
+<!-- badges: start -->
+<p><a href="https://cran.r-project.org/package=rfm"><img src="https://www.r-pkg.org/badges/version/rfm" alt="CRAN_Status_Badge"></a> <a href="https://cran.r-project.org/web/checks/check_results_rfm.html"><img src="https://cranchecks.info/badges/summary/rfm" alt="cran checks"></a> <a href="https://github.com/rsquaredacademy/rfm/actions"><img src="https://github.com/rsquaredacademy/rfm/workflows/R-CMD-check/badge.svg" alt="R build status"></a> <a href="https://codecov.io/github/rsquaredacademy/rfm?branch=master"><img src="https://img.shields.io/codecov/c/github/rsquaredacademy/rfm/master.svg" alt="Coverage Status"></a> <a href="https://CRAN.R-project.org/package=vistributions"><img src="https://tinyverse.netlify.com/badge/vistributions" alt="status"></a> <img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg"><a href="https://cran.r-project.org/package=rfm"><img src="https://cranlogs.r-pkg.org/badges/grand-total/rfm"></a> <!-- badges: end --></p>
 <div id="overview" class="section level2">
 <h2 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h2>
@@ -188,7 +180,7 @@ rfm segmentation, rfm score r, rfm segmentation r, rfm customer segmentation, cu
 <h3 class="hasAnchor">
 <a href="#rfm-table" class="anchor"></a>RFM Table</h3>
 <p>rfm uses consistent prefix <code>rfm_</code> for easy tab completion. Use <code><a href="reference/rfm_table_order.html">rfm_table_order()</a></code> to generate the RFM score.</p>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="no">analysis_date</span> <span class="kw">&lt;-</span> <span class="kw pkg">lubridate</span><span class="kw ns">::</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/as_date.html">as_date</a></span>(<span class="st">'2006-12-31'</span>)
+<div class="sourceCode" id="cb2"><pre class="r"><span class="no">analysis_date</span> <span class="kw">&lt;-</span> <span class="kw pkg">lubridate</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/as_date.html">as_date</a></span>(<span class="st">'2006-12-31'</span>)
 <span class="no">rfm_result</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/rfm_table_order.html">rfm_table_order</a></span>(<span class="no">rfm_data_orders</span>, <span class="no">customer_id</span>, <span class="no">order_date</span>, <span class="no">revenue</span>, <span class="no">analysis_date</span>)
 <span class="no">rfm_result</span>
 <span class="co">#&gt; # A tibble: 995 x 9</span>
