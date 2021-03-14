@@ -1,24 +1,27 @@
-#' @importFrom magrittr %>% %<>%
+#' @import magrittr 
+#' @import ggplot2
+#' @import dplyr
+#' @import stats
 bins <- function(data, value, n_bins) {
 
-  my_value   <- rlang::enquo(value)
+  my_value   <- enquo(value)
   length_out <- n_bins + 1
 
   data %>%
-    dplyr::pull(!! my_value) %>%
-    stats::quantile(probs = seq(0, 1, length.out = length_out)) %>%
+    pull(!! my_value) %>%
+    quantile(probs = seq(0, 1, length.out = length_out)) %>%
     unname() %>%
-    magrittr::extract(c(-1, -length_out)) %>%
-    magrittr::add(1)
+    extract(c(-1, -length_out)) %>%
+    add(1)
 
 }
 
 bins_lower <- function(data, value, bins) {
 
-  my_value <- rlang::enquo(value)
+  my_value <- enquo(value)
 
   data %>%
-    dplyr::pull(!! my_value) %>%
+    pull(!! my_value) %>%
     min() %>%
     append(bins)
 
@@ -26,13 +29,13 @@ bins_lower <- function(data, value, bins) {
 
 bins_upper <- function(data, value, bins) {
 
-  my_value <- rlang::enquo(value)
+  my_value <- enquo(value)
 
   data_max <-
     data %>%
-    dplyr::pull(!! my_value) %>%
+    pull(!! my_value) %>%
     max() %>%
-    magrittr::add(1)
+    add(1)
 
   c(bins, data_max)
 }
@@ -40,10 +43,10 @@ bins_upper <- function(data, value, bins) {
 
 check_levels <- function(rfm_heatmap_data, column) {
 
-  my_column <- rlang::enquo(column)
+  my_column <- enquo(column)
 
   rfm_heatmap_data %>%
-    dplyr::pull(!! my_column) %>%
+    pull(!! my_column) %>%
     as.factor() %>%
     levels() %>%
     as.vector() %>%
@@ -58,14 +61,14 @@ modify_rfm <- function(rfm_heatmap_data, n_bins, check_levels) {
   extra_data        <- expand.grid(missing2, seq_len(n_bins), 0)
   names(extra_data) <- names(rfm_heatmap_data)
 
-  dplyr::bind_rows(rfm_heatmap_data, extra_data)
+  bind_rows(rfm_heatmap_data, extra_data)
 
 }
 
-#' @importFrom utils packageVersion menu install.packages
+#' @import utils
 check_suggests <- function(pkg) {
 
-  pkg_flag <- tryCatch(utils::packageVersion(pkg), error = function(e) NA)
+  pkg_flag <- tryCatch(packageVersion(pkg), error = function(e) NA)
 
   if (is.na(pkg_flag)) {
 
@@ -73,8 +76,8 @@ check_suggests <- function(pkg) {
 
     if (interactive()) {
       message(msg, "\nWould you like to install it?")
-      if (utils::menu(c("Yes", "No")) == 1) {
-        utils::install.packages(pkg)
+      if (menu(c("Yes", "No")) == 1) {
+        install.packages(pkg)
       } else {
         stop(msg, call. = FALSE)
       }

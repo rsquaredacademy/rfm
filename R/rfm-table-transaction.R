@@ -65,7 +65,7 @@ rfm_table_order.default <- function(data = NULL, customer_id = NULL, order_date 
       !! cust_id, date_most_recent, recency_days, transaction_count,
       amount
     ) %>%
-    magrittr::set_names(c("customer_id", "date_most_recent", "recency_days", "transaction_count", "amount"))
+    set_names(c("customer_id", "date_most_recent", "recency_days", "transaction_count", "amount"))
 
   result$recency_score   <- NA
   result$frequency_score <- NA

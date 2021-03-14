@@ -60,7 +60,7 @@ rfm_table_customer_2.default <- function(data = NULL, customer_id = NULL, n_tran
       recency_days = (analysis_date - !! recent_visit) / lubridate::ddays()
     ) %>%
     dplyr::select(!! cust_id, recency_days, !! order_count, !! revenues) %>%
-    magrittr::set_names(c("customer_id", "recency_days", "transaction_count", "amount"))
+    set_names(c("customer_id", "recency_days", "transaction_count", "amount"))
 
   result$recency_score   <- NA
   result$frequency_score <- NA

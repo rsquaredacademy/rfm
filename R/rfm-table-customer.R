@@ -57,7 +57,7 @@ rfm_table_customer.default <- function(data = NULL, customer_id = NULL, n_transa
   result <-
     data %>%
     dplyr::select(!! cust_id, !! n_recency, !! order_count, !! revenues) %>%
-    magrittr::set_names(c("customer_id", "recency_days", "transaction_count", "amount"))
+    set_names(c("customer_id", "recency_days", "transaction_count", "amount"))
 
   result$recency_score   <- NA
   result$frequency_score <- NA
