@@ -1,14 +1,14 @@
 #' @importFrom magrittr %>% %<>% use_series set_names extract extract2 add multiply_by
 #' @import ggplot2
 #' @importFrom stats median runif quantile
-#' @importFrom utils available.packages menu update.packages packageVersion
+#' @importFrom utils available.packages menu update.packages packageVersion install.packages
 bins <- function(data, value, n_bins) {
 
   my_value   <- enquo(value)
   length_out <- n_bins + 1
 
   data %>%
-    pull(!! my_value) %>%
+    dplyr::pull(!! my_value) %>%
     quantile(probs = seq(0, 1, length.out = length_out)) %>%
     unname() %>%
     extract(c(-1, -length_out)) %>%
@@ -21,7 +21,7 @@ bins_lower <- function(data, value, bins) {
   my_value <- enquo(value)
 
   data %>%
-    pull(!! my_value) %>%
+    dplyr::pull(!! my_value) %>%
     min() %>%
     append(bins)
 
@@ -33,7 +33,7 @@ bins_upper <- function(data, value, bins) {
 
   data_max <-
     data %>%
-    pull(!! my_value) %>%
+    dplyr::pull(!! my_value) %>%
     max() %>%
     add(1)
 
@@ -46,7 +46,7 @@ check_levels <- function(rfm_heatmap_data, column) {
   my_column <- enquo(column)
 
   rfm_heatmap_data %>%
-    pull(!! my_column) %>%
+    dplyr::pull(!! my_column) %>%
     as.factor() %>%
     levels() %>%
     as.vector() %>%
@@ -61,7 +61,7 @@ modify_rfm <- function(rfm_heatmap_data, n_bins, check_levels) {
   extra_data        <- expand.grid(missing2, seq_len(n_bins), 0)
   names(extra_data) <- names(rfm_heatmap_data)
 
-  bind_rows(rfm_heatmap_data, extra_data)
+  dplyr::bind_rows(rfm_heatmap_data, extra_data)
 
 }
 
