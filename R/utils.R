@@ -1,7 +1,7 @@
-#' @import magrittr 
+#' @importFrom magrittr %>% %<>% use_series set_names extract extract2 add multiply_by
 #' @import ggplot2
-#' @import dplyr
-#' @import stats
+#' @importFrom stats median runif quantile
+#' @importFrom utils available.packages menu update.packages packageVersion
 bins <- function(data, value, n_bins) {
 
   my_value   <- enquo(value)
@@ -65,7 +65,6 @@ modify_rfm <- function(rfm_heatmap_data, n_bins, check_levels) {
 
 }
 
-#' @import utils
 check_suggests <- function(pkg) {
 
   pkg_flag <- tryCatch(packageVersion(pkg), error = function(e) NA)
