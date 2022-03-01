@@ -12,7 +12,7 @@
 #' @param monetary_upper Upper boundary for monetary score.
 #'
 #' @examples
-#' analysis_date <- lubridate::as_date('2006-12-31')
+#' analysis_date <- as.Date('2006-12-31')
 #' rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
 #' revenue, analysis_date)
 #'
@@ -66,6 +66,47 @@ rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
 
 }
 
+#' Segment overview
+#' 
+#' An overview of customer segments.
+#' 
+#' @param rfm_segment_table Output from \code{rfm_segment}.
+#' 
+#' @examples 
+#' analysis_date <- as.Date('2006-12-31')
+#' rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
+#' revenue, analysis_date)
+#'
+#' segment_names <- c("Champions", "Loyal Customers", "Potential Loyalist",
+#'   "New Customers", "Promising", "Need Attention", "About To Sleep",
+#'   "At Risk", "Can't Lose Them", "Lost")
+#'
+#' recency_lower <- c(4, 2, 3, 4, 3, 2, 2, 1, 1, 1)
+#' recency_upper <- c(5, 5, 5, 5, 4, 3, 3, 2, 1, 2)
+#' frequency_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
+#' frequency_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
+#' monetary_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
+#' monetary_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
+#'
+#' segments <- rfm_segment(rfm_result, segment_names, recency_lower,
+#' recency_upper, frequency_lower, frequency_upper, monetary_lower,
+#' monetary_upper)
+#' 
+#' rfm_segment_summary(segments)
+#' 
+#' @export 
+#' 
+rfm_segment_summary <- function(segments) {
+  segments %>% 
+    dplyr::group_by(segment) %>% 
+    dplyr::summarise(
+      customers = dplyr::n(),
+      orders = sum(transaction_count),
+      revenue = sum(amount),
+      aov = revenue / orders
+    )
+}
+
 #' Segmentation plots
 #'
 #' Segment wise median recency, frequency & monetary value plot.
@@ -74,7 +115,7 @@ rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @examples
-#' analysis_date <- lubridate::as_date('2006-12-31')
+#' analysis_date <- as.Date('2006-12-31')
 #' rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
 #' revenue, analysis_date)
 #'
@@ -144,7 +185,6 @@ rfm_plot_median_frequency <- function(rfm_segment_table, print_plot = TRUE) {
     dplyr::group_by(segment) %>%
     dplyr::select(segment, transaction_count) %>%
     dplyr::summarise(avg_frequency = stats::median(transaction_count)) %>%
-    # dplyr::rename(segment = segment, avg_frequency = `median(transaction_count)`) %>%
     dplyr::arrange(avg_frequency)
 
   n_fill <- nrow(data)
