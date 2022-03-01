@@ -70,7 +70,7 @@ rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
 #' 
 #' An overview of customer segments.
 #' 
-#' @param rfm_segment_table Output from \code{rfm_segment}.
+#' @param segments Output from \code{rfm_segment}.
 #' 
 #' @examples 
 #' analysis_date <- as.Date('2006-12-31')

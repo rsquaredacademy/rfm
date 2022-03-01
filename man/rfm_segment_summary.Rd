@@ -7,7 +7,7 @@
 rfm_segment_summary(segments)
 }
 \arguments{
-\item{rfm_segment_table}{Output from \code{rfm_segment}.}
+\item{segments}{Output from \code{rfm_segment}.}
 }
 \description{
 An overview of customer segments.

@@ -57,25 +57,8 @@ test_that('first 10 rows of output from rfm_segment are as expected', {
     expected
   )
 
-  expect_equal(
-    segments %>%
-      filter(segment == "Champions") %>%
-      extract2(2), 
-    158
-  )
-
-  expect_equal(
-    segments %>%
-      filter(segment == "Champions") %>%
-      extract2(3), 
-    1234
-  )
-
-  expect_equal(
-    segments %>%
-      filter(segment == "Champions") %>%
-      extract2(4), 
-    120178
-  )
+  expect_equal(segments[segments$segment == "Champions",][[2]], 158)
+  expect_equal(segments[segments$segment == "Champions",][[3]], 1234)
+  expect_equal(segments[segments$segment == "Champions",][[4]],  120178)
 
 })
