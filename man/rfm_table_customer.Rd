@@ -52,7 +52,7 @@ rfm_table_customer(
 Recency, frequency, monetary and RFM score.
 }
 \examples{
-analysis_date <- lubridate::as_date('2007-01-01')
+analysis_date <- as.Date('2007-01-01')
 rfm_table_customer(rfm_data_customer, customer_id, number_of_orders,
 recency_days, revenue, analysis_date)
 

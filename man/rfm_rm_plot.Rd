@@ -55,7 +55,7 @@ Examine the relationship between recency, frequency
 }
 \examples{
 # rfm table
-analysis_date <- lubridate::as_date('2006-12-31')
+analysis_date <- as.Date('2006-12-31')
 rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
 revenue, analysis_date)
 
