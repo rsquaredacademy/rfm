@@ -1,7 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://rfm.rsquaredacademy.com/404.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/articles/case-study.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/articles/Introduction_to_RFM.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/articles/rfm-customer-level-data.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/articles/rfm-transaction-level-data.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/articles/tests_and_coverage.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/authors.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/CONDUCT.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/google02e424888b5e2def.html</loc>
+  </url>
+  <url>
     <loc>https://rfm.rsquaredacademy.com/index.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/ISSUE_TEMPLATE.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/LICENSE-text.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/news/index.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/reference/index.html</loc>
   </url>
   <url>
     <loc>https://rfm.rsquaredacademy.com/reference/rfm.html</loc>
@@ -11,6 +56,9 @@
   </url>
   <url>
     <loc>https://rfm.rsquaredacademy.com/reference/rfm_bar_chart.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/reference/rfm_data.html</loc>
   </url>
   <url>
     <loc>https://rfm.rsquaredacademy.com/reference/rfm_data_customer.html</loc>
@@ -34,6 +82,12 @@
     <loc>https://rfm.rsquaredacademy.com/reference/rfm_launch_app.html</loc>
   </url>
   <url>
+    <loc>https://rfm.rsquaredacademy.com/reference/rfm_launch_shiny_app.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/reference/rfm_mr_plot.html</loc>
+  </url>
+  <url>
     <loc>https://rfm.rsquaredacademy.com/reference/rfm_order_dist.html</loc>
   </url>
   <url>
@@ -46,6 +100,12 @@
     <loc>https://rfm.rsquaredacademy.com/reference/rfm_segment.html</loc>
   </url>
   <url>
+    <loc>https://rfm.rsquaredacademy.com/reference/rfm_segment_summary.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/reference/rfm_table.html</loc>
+  </url>
+  <url>
     <loc>https://rfm.rsquaredacademy.com/reference/rfm_table_customer.html</loc>
   </url>
   <url>
@@ -55,9 +115,9 @@
     <loc>https://rfm.rsquaredacademy.com/reference/rfm_table_order.html</loc>
   </url>
   <url>
-    <loc>https://rfm.rsquaredacademy.com/articles/rfm-customer-level-data.html</loc>
+    <loc>https://rfm.rsquaredacademy.com/reference/segmentr.html</loc>
   </url>
   <url>
-    <loc>https://rfm.rsquaredacademy.com/articles/rfm-transaction-level-data.html</loc>
+    <loc>https://rfm.rsquaredacademy.com/SUPPORT.html</loc>
   </url>
 </urlset>
