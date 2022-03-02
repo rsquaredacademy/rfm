@@ -71,6 +71,7 @@ rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
 #' An overview of customer segments.
 #' 
 #' @param segments Output from \code{rfm_segment}.
+#' @param x An object of class \code{rfm_segment_summary}.
 #' 
 #' @examples 
 #' analysis_date <- as.Date('2006-12-31')
@@ -97,7 +98,8 @@ rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
 #' @export 
 #' 
 rfm_segment_summary <- function(segments) {
-  segments %>% 
+  out <- 
+    segments %>% 
     dplyr::group_by(segment) %>% 
     dplyr::summarise(
       customers = dplyr::n(),
@@ -105,6 +107,21 @@ rfm_segment_summary <- function(segments) {
       revenue = sum(amount),
       aov = revenue / orders
     )
+
+  result <- list(segment_summary = out)
+  class(result) <- "rfm_segment_summary"
+  return(result)
+}
+
+#' @export
+#' @rdname rfm_segment_summary
+#' 
+plot.rfm_segment_summary <- function(x) {
+  x %>% 
+    use_series(segment_summary) %>%
+    dplyr::select(segment, customers) %>% 
+    ggplot(aes(x = segment, y = customers)) +
+    geom_bar(stat = "identity")
 }
 
 #' Segmentation plots

@@ -2,12 +2,17 @@
 % Please edit documentation in R/rfm-segment.R
 \name{rfm_segment_summary}
 \alias{rfm_segment_summary}
+\alias{plot.rfm_segment_summary}
 \title{Segment overview}
 \usage{
 rfm_segment_summary(segments)
+
+\method{plot}{rfm_segment_summary}(x)
 }
 \arguments{
 \item{segments}{Output from \code{rfm_segment}.}
+
+\item{x}{An object of class \code{rfm_segment_summary}.}
 }
 \description{
 An overview of customer segments.
