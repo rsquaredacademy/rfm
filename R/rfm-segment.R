@@ -66,12 +66,11 @@ rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
 
 }
 
-#' Segment overview
+#' Segment summary
 #' 
 #' An overview of customer segments.
 #' 
 #' @param segments Output from \code{rfm_segment}.
-#' @param x An object of class \code{rfm_segment_summary}.
 #' 
 #' @examples 
 #' analysis_date <- as.Date('2006-12-31')
@@ -98,8 +97,7 @@ rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
 #' @export 
 #' 
 rfm_segment_summary <- function(segments) {
-  out <- 
-    segments %>% 
+  segments %>% 
     dplyr::group_by(segment) %>% 
     dplyr::summarise(
       customers = dplyr::n(),
@@ -107,21 +105,44 @@ rfm_segment_summary <- function(segments) {
       revenue = sum(amount),
       aov = revenue / orders
     )
-
-  result <- list(segment_summary = out)
-  class(result) <- "rfm_segment_summary"
-  return(result)
 }
 
-#' @export
-#' @rdname rfm_segment_summary
+#' Visulaize segment summary
 #' 
-plot.rfm_segment_summary <- function(x) {
-  x %>% 
-    use_series(segment_summary) %>%
-    dplyr::select(segment, customers) %>% 
-    ggplot(aes(x = segment, y = customers)) +
-    geom_bar(stat = "identity")
+#' Generates plots for customers, orders, revenue and average order value for each segment.
+#' 
+#' @param x An object of class \code{rfm_segment_summary}.
+#' @param metric Metrics to be visualized.
+#' @param sort Sort metrics in ascending or descending order.
+#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object. 
+#' 
+#' @export
+#' 
+rfm_plot_segment_summary <- function(x, metric = NULL, sort = FALSE, print_plot = TRUE) {
+
+  if (is.null(metric)) {
+    vars <- colnames(x)
+    n_plots <- length(vars)
+    plots <- list()
+    for (i in 2:n_plots) {
+      j <- i - 1
+      plots[[j]] <- 
+        x %>% 
+          dplyr::select(segment, vars[i]) %>% 
+          ggplot(aes_string(x = "segment", y = vars[i])) +
+          geom_bar(stat = "identity", fill = "blue") +
+          ggtitle(paste(vars[i], "by segment")) +
+          xlab("Segment") +
+          ylab(vars[i])
+    }
+  }
+
+  if (print_plot) {
+    gridExtra::marrangeGrob(plots, nrow = 2, ncol = 2)
+  } else {
+    return(plots)
+  }
+  
 }
 
 #' Segmentation plots
