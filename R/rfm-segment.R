@@ -118,7 +118,7 @@ rfm_segment_summary <- function(segments) {
 #' 
 #' @export
 #' 
-rfm_plot_segment_summary <- function(x, metric = NULL, sort = FALSE, print_plot = TRUE) {
+rfm_plot_segment_summary <- function(x, metric = NULL, sort = FALSE, ascending = FALSE, print_plot = TRUE) {
 
   if (is.null(metric)) {
     vars <- colnames(x)
@@ -126,10 +126,11 @@ rfm_plot_segment_summary <- function(x, metric = NULL, sort = FALSE, print_plot 
     plots <- list()
     for (i in 2:n_plots) {
       j <- i - 1
+      var <- vars[i]
+      data <- dplyr::select(segment, !!sym(var))
       plots[[j]] <- 
-        x %>% 
-          dplyr::select(segment, vars[i]) %>% 
-          ggplot(aes_string(x = "segment", y = vars[i])) +
+        data %>% 
+          ggplot(aes(x = reorder(segment, -!!sym(var), sum), y = !!sym(var))) +
           geom_bar(stat = "identity", fill = "blue") +
           ggtitle(paste(vars[i], "by segment")) +
           xlab("Segment") +
