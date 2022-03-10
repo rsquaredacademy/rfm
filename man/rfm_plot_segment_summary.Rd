@@ -17,7 +17,9 @@ rfm_plot_segment_summary(
 
 \item{metric}{Metrics to be visualized.}
 
-\item{sort}{Sort metrics in ascending or descending order.}
+\item{sort}{logical; if \code{TRUE}, sort metrics.}
+
+\item{ascending}{logical; if \code{TRUE}, sort metrics in ascending order.}
 
 \item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object. 
 

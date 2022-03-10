@@ -113,7 +113,8 @@ rfm_segment_summary <- function(segments) {
 #' 
 #' @param x An object of class \code{rfm_segment_summary}.
 #' @param metric Metrics to be visualized.
-#' @param sort Sort metrics in ascending or descending order.
+#' @param sort logical; if \code{TRUE}, sort metrics.
+#' @param ascending logical; if \code{TRUE}, sort metrics in ascending order.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object. 
 #' 
 #' analysis_date <- as.Date('2006-12-31')
@@ -154,9 +155,9 @@ rfm_plot_segment_summary <- function(x, metric = NULL, sort = FALSE, ascending =
       data <- dplyr::select(x, segment, !!sym(var))
       if (sort) {
         if (ascending) {
-          p <- ggplot(data, aes(x = reorder(segment, !!sym(var), sum), y = !!sym(var)))   
+          p <- ggplot(data, aes(x = stats::reorder(segment, !!sym(var), sum), y = !!sym(var)))   
         } else {
-          p <- ggplot(data, aes(x = reorder(segment, -!!sym(var), sum), y = !!sym(var)))
+          p <- ggplot(data, aes(x = stats::reorder(segment, -!!sym(var), sum), y = !!sym(var)))
         }
       } else {
         p <- ggplot(data, aes(x = segment, y = !!sym(var)))
