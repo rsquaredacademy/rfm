@@ -116,6 +116,30 @@ rfm_segment_summary <- function(segments) {
 #' @param sort Sort metrics in ascending or descending order.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object. 
 #' 
+#' analysis_date <- as.Date('2006-12-31')
+#' rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
+#' revenue, analysis_date)
+#'
+#' segment_names <- c("Champions", "Loyal Customers", "Potential Loyalist",
+#'   "New Customers", "Promising", "Need Attention", "About To Sleep",
+#'   "At Risk", "Can't Lose Them", "Lost")
+#'
+#' recency_lower <- c(4, 2, 3, 4, 3, 2, 2, 1, 1, 1)
+#' recency_upper <- c(5, 5, 5, 5, 4, 3, 3, 2, 1, 2)
+#' frequency_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
+#' frequency_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
+#' monetary_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
+#' monetary_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
+#'
+#' segments <- rfm_segment(rfm_result, segment_names, recency_lower,
+#' recency_upper, frequency_lower, frequency_upper, monetary_lower,
+#' monetary_upper)
+#' 
+#' segment_overview <- rfm_segment_summary(segments)
+#' rfm_plot_segment_summary(segment_overview)
+#' rfm_plot_segment_summary(segment_overview, sort = TRUE, ascending = TRUE)
+#' rfm_plot_segment_summary(segment_overview, sort = TRUE)
+#'
 #' @export
 #' 
 rfm_plot_segment_summary <- function(x, metric = NULL, sort = FALSE, ascending = FALSE, print_plot = TRUE) {
@@ -127,10 +151,18 @@ rfm_plot_segment_summary <- function(x, metric = NULL, sort = FALSE, ascending =
     for (i in 2:n_plots) {
       j <- i - 1
       var <- vars[i]
-      data <- dplyr::select(segment, !!sym(var))
+      data <- dplyr::select(x, segment, !!sym(var))
+      if (sort) {
+        if (ascending) {
+          p <- ggplot(data, aes(x = reorder(segment, !!sym(var), sum), y = !!sym(var)))   
+        } else {
+          p <- ggplot(data, aes(x = reorder(segment, -!!sym(var), sum), y = !!sym(var)))
+        }
+      } else {
+        p <- ggplot(data, aes(x = segment, y = !!sym(var)))
+      }
       plots[[j]] <- 
-        data %>% 
-          ggplot(aes(x = reorder(segment, -!!sym(var), sum), y = !!sym(var))) +
+        p +
           geom_bar(stat = "identity", fill = "blue") +
           ggtitle(paste(vars[i], "by segment")) +
           xlab("Segment") +
@@ -138,8 +170,10 @@ rfm_plot_segment_summary <- function(x, metric = NULL, sort = FALSE, ascending =
     }
   }
 
+  names(plots) <- c("customers", "orders", "revenue", "aov")
+
   if (print_plot) {
-    gridExtra::marrangeGrob(plots, nrow = 2, ncol = 2)
+    gridExtra::marrangeGrob(plots, nrow = 2, ncol = 2, top = "Segments Overview")
   } else {
     return(plots)
   }

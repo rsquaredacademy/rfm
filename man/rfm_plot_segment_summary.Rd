@@ -4,7 +4,13 @@
 \alias{rfm_plot_segment_summary}
 \title{Visulaize segment summary}
 \usage{
-rfm_plot_segment_summary(x, metric = NULL, sort = FALSE, print_plot = TRUE)
+rfm_plot_segment_summary(
+  x,
+  metric = NULL,
+  sort = FALSE,
+  ascending = FALSE,
+  print_plot = TRUE
+)
 }
 \arguments{
 \item{x}{An object of class \code{rfm_segment_summary}.}
@@ -13,7 +19,31 @@ rfm_plot_segment_summary(x, metric = NULL, sort = FALSE, print_plot = TRUE)
 
 \item{sort}{Sort metrics in ascending or descending order.}
 
-\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
+\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object. 
+
+analysis_date <- as.Date('2006-12-31')
+rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
+revenue, analysis_date)
+
+segment_names <- c("Champions", "Loyal Customers", "Potential Loyalist",
+  "New Customers", "Promising", "Need Attention", "About To Sleep",
+  "At Risk", "Can't Lose Them", "Lost")
+
+recency_lower <- c(4, 2, 3, 4, 3, 2, 2, 1, 1, 1)
+recency_upper <- c(5, 5, 5, 5, 4, 3, 3, 2, 1, 2)
+frequency_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
+frequency_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
+monetary_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
+monetary_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
+
+segments <- rfm_segment(rfm_result, segment_names, recency_lower,
+recency_upper, frequency_lower, frequency_upper, monetary_lower,
+monetary_upper)
+
+segment_overview <- rfm_segment_summary(segments)
+rfm_plot_segment_summary(segment_overview)
+rfm_plot_segment_summary(segment_overview, sort = TRUE, ascending = TRUE)
+rfm_plot_segment_summary(segment_overview, sort = TRUE)}
 }
 \description{
 Generates plots for customers, orders, revenue and average order value for each segment.
