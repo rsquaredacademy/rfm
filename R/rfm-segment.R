@@ -181,6 +181,56 @@ rfm_plot_segment_summary <- function(x, metric = NULL, sort = FALSE, ascending =
   
 }
 
+#' Revenue distribution
+#' 
+#' Customer and revenue distribution by segments.
+#' 
+#' @param x An object of class \code{rfm_segment_summary}.
+#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object. 
+#' 
+#' analysis_date <- as.Date('2006-12-31')
+#' rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
+#' revenue, analysis_date)
+#'
+#' segment_names <- c("Champions", "Loyal Customers", "Potential Loyalist",
+#'   "New Customers", "Promising", "Need Attention", "About To Sleep",
+#'   "At Risk", "Can't Lose Them", "Lost")
+#'
+#' recency_lower <- c(4, 2, 3, 4, 3, 2, 2, 1, 1, 1)
+#' recency_upper <- c(5, 5, 5, 5, 4, 3, 3, 2, 1, 2)
+#' frequency_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
+#' frequency_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
+#' monetary_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
+#' monetary_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
+#'
+#' segments <- rfm_segment(rfm_result, segment_names, recency_lower,
+#' recency_upper, frequency_lower, frequency_upper, monetary_lower,
+#' monetary_upper)
+#' 
+#' segment_overview <- rfm_segment_summary(segments)
+#' rfm_plot_revenue_dist(segment_overview)
+#' 
+#' @export 
+#' 
+rfm_plot_revenue_dist <- function(x, print_plot = TRUE) {
+
+  p <- 
+    x %>% 
+    dplyr::mutate(customer_share = customers / sum(customers),
+          revenue_share = revenue / sum(revenue)) %>% 
+    dplyr::select(segment, customer_share, revenue_share) %>%
+    tidyr::pivot_longer(!segment, names_to = "category", values_to = "share") %>% 
+    ggplot(aes(fill=category, y=share, x=segment)) + 
+    geom_bar(position="dodge", stat="identity")
+
+  if (print_plot) {
+    print(p)
+  } else {
+    return(p)
+  }
+  
+}
+
 #' Segmentation plots
 #'
 #' Segment wise median recency, frequency & monetary value plot.
