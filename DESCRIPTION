@@ -24,6 +24,7 @@ Imports:
     magrittr,
     RColorBrewer,
     rlang,
+    scales,
     stats,
     tibble,
     tidyr,
