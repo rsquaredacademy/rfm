@@ -214,21 +214,51 @@ rfm_plot_segment_summary <- function(x, metric = NULL, sort = FALSE, ascending =
 #' 
 rfm_plot_revenue_dist <- function(x, print_plot = TRUE) {
 
+  data <- rfm_prep_revenue_dist(x)
+
   p <- 
-    x %>% 
-    dplyr::mutate(customer_share = customers / sum(customers),
-          revenue_share = revenue / sum(revenue)) %>% 
-    dplyr::select(segment, customer_share, revenue_share) %>%
-    tidyr::pivot_longer(!segment, names_to = "category", values_to = "share") %>% 
-    ggplot(aes(fill=category, y=share, x=segment)) + 
-    geom_bar(position="dodge", stat="identity")
+    ggplot(data, aes(fill=category, y=share, x=segment)) + 
+    geom_bar(position="dodge", stat="identity") 
+
+  p <- 
+    p +  
+    scale_fill_manual(values = c("#3b5bdb", "#91a7ff"),
+                      labels = c("Share of revenue", "Share of customers")) +
+    scale_y_continuous(labels = scales::percent) 
+
+  p <- 
+    p +
+    theme(legend.title = element_blank(),
+          legend.position = "bottom",
+          panel.background = element_rect(fill = NA),
+          axis.ticks = element_line(color = NA),
+          panel.grid.major.y = element_line(colour = "#ced4da")) 
+
+  p <- 
+    p +
+    xlab("") + 
+    ylab("") +
+    ggtitle("Revenue vs Number of Customers")
 
   if (print_plot) {
     print(p)
   } else {
     return(p)
   }
-  
+
+}
+
+rfm_prep_revenue_dist <- function(x) {
+
+  data <- 
+    x %>% 
+    dplyr::mutate(customer_share = customers / sum(customers),
+                  revenue_share = revenue / sum(revenue)) %>% 
+    dplyr::select(segment, customer_share, revenue_share) %>%
+    tidyr::pivot_longer(!segment, names_to = "category", values_to = "share") 
+
+  data$category <- factor(data$category, levels = c("revenue_share", "customer_share"))
+  return(data)
 }
 
 #' Segmentation plots

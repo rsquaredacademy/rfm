@@ -163,4 +163,12 @@ test_that("output from rfm_plot_segment_summary is as expected when sorted in de
   vdiffr::expect_doppelganger("aov by segment descending", p$aov)
 })
 
+test_that('output from rfm_plot_revenue_dist is as expected', {
 
+  skip_on_cran()
+
+  my_segments <- rfm_segment_summary(segments)
+  p <- rfm_plot_revenue_dist(my_segments)
+  vdiffr::expect_doppelganger('rfm plot revenue dist', p)
+
+})
