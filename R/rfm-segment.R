@@ -296,32 +296,35 @@ rfm_prep_revenue_dist <- function(x) {
 #'
 rfm_plot_median_recency <- function(rfm_segment_table, print_plot = TRUE) {
 
-  segment <- NULL
-  avg_recency <- NULL
+  # segment <- NULL
+  # avg_recency <- NULL
 
-  data <-
-    rfm_segment_table %>%
-    dplyr::group_by(segment) %>%
-    dplyr::select(segment, recency_days) %>%
-    dplyr::summarise(avg_recency = stats::median(recency_days)) %>%
-    dplyr::arrange(avg_recency)
+  # data <-
+  #   rfm_segment_table %>%
+  #   dplyr::group_by(segment) %>%
+  #   dplyr::select(segment, recency_days) %>%
+  #   dplyr::summarise(avg_recency = stats::median(recency_days)) %>%
+  #   dplyr::arrange(avg_recency)
 
-  n_fill <- nrow(data)
+  # n_fill <- nrow(data)
 
-  p <-
-    ggplot(data, aes(segment, avg_recency)) +
-    geom_bar(stat = "identity", fill = ggthemes::calc_pal()(n_fill)) +
-    xlab("Segment") + ylab("Median Recency") +
-    ggtitle("Median Recency by Segment") +
-    coord_flip() +
-    theme(
-      plot.title = element_text(hjust = 0.5)
-    )
+  # p <-
+  #   ggplot(data, aes(segment, avg_recency)) +
+  #   geom_bar(stat = "identity", fill = ggthemes::calc_pal()(n_fill)) +
+  #   xlab("Segment") + ylab("Median Recency") +
+  #   ggtitle("Median Recency by Segment") +
+  #   coord_flip() +
+  #   theme(
+  #     plot.title = element_text(hjust = 0.5)
+  #   )
+
+  data <- rfm_prep_median(rfm_segment_table, recency_days)
+  plot <- rfm_plot_median(data)
 
   if (print_plot) {
-    print(p)
+    print(plot)
   } else {
-    return(p)
+    return(plot)
   }
 
 }
@@ -331,32 +334,35 @@ rfm_plot_median_recency <- function(rfm_segment_table, print_plot = TRUE) {
 #'
 rfm_plot_median_frequency <- function(rfm_segment_table, print_plot = TRUE) {
 
-  segment <- NULL
-  avg_frequency <- NULL
+  # segment <- NULL
+  # avg_frequency <- NULL
 
-  data <-
-    rfm_segment_table %>%
-    dplyr::group_by(segment) %>%
-    dplyr::select(segment, transaction_count) %>%
-    dplyr::summarise(avg_frequency = stats::median(transaction_count)) %>%
-    dplyr::arrange(avg_frequency)
+  # data <-
+  #   rfm_segment_table %>%
+  #   dplyr::group_by(segment) %>%
+  #   dplyr::select(segment, transaction_count) %>%
+  #   dplyr::summarise(avg_frequency = stats::median(transaction_count)) %>%
+  #   dplyr::arrange(avg_frequency)
 
-  n_fill <- nrow(data)
+  # n_fill <- nrow(data)
 
-  p <-
-    ggplot(data, aes(segment, avg_frequency)) +
-    geom_bar(stat = "identity", fill = ggthemes::calc_pal()(n_fill)) +
-    xlab("Segment") + ylab("Median Frequency") +
-    ggtitle("Median Frequency by Segment") +
-    coord_flip() +
-    theme(
-      plot.title = element_text(hjust = 0.5)
-    )
+  # p <-
+  #   ggplot(data, aes(segment, avg_frequency)) +
+  #   geom_bar(stat = "identity", fill = ggthemes::calc_pal()(n_fill)) +
+  #   xlab("Segment") + ylab("Median Frequency") +
+  #   ggtitle("Median Frequency by Segment") +
+  #   coord_flip() +
+  #   theme(
+  #     plot.title = element_text(hjust = 0.5)
+  #   )
+
+  data <- rfm_prep_median(rfm_segment_table, transaction_count)
+  plot <- rfm_plot_median(data)
 
   if (print_plot) {
-    print(p)
+    print(plot)
   } else {
-    return(p)
+    return(plot)
   }
 
 }
@@ -367,33 +373,79 @@ rfm_plot_median_frequency <- function(rfm_segment_table, print_plot = TRUE) {
 #'
 rfm_plot_median_monetary <- function(rfm_segment_table, print_plot = TRUE) {
 
-  segment <- NULL
-  avg_monetary <- NULL
+  # segment <- NULL
+  # avg_monetary <- NULL
 
-  data <-
+  # data <-
+  #   rfm_segment_table %>%
+  #   dplyr::group_by(segment) %>%
+  #   dplyr::select(segment, amount) %>%
+  #   dplyr::summarise(avg_monetary = stats::median(amount)) %>%
+  #   # dplyr::rename(segment = segment, avg_monetary = `median(amount)`) %>%
+  #   dplyr::arrange(avg_monetary)
+
+  # n_fill <- nrow(data)
+
+  # p <-
+  #   ggplot(data, aes(segment, avg_monetary)) +
+  #   geom_bar(stat = "identity", fill = ggthemes::calc_pal()(n_fill)) +
+  #   xlab("Segment") + ylab("Median Monetary Value") +
+  #   ggtitle("Median Monetary Value by Segment") +
+  #   coord_flip() +
+  #   theme(
+  #     plot.title = element_text(hjust = 0.5)
+  #   )
+
+  # if (print_plot) {
+  #   print(p)
+  # } else {
+  #   return(p)
+  # }
+
+  data <- rfm_prep_median(rfm_segment_table, amount)
+  plot <- rfm_plot_median(data)
+
+  if (print_plot) {
+    print(plot)
+  } else {
+    return(plot)
+  }
+
+}
+
+rfm_prep_median <- function(rfm_segment_table, metric) {
+  
+  met <- rlang::enquo(metric)
+  
+  result <- 
     rfm_segment_table %>%
     dplyr::group_by(segment) %>%
-    dplyr::select(segment, amount) %>%
-    dplyr::summarise(avg_monetary = stats::median(amount)) %>%
-    # dplyr::rename(segment = segment, avg_monetary = `median(amount)`) %>%
-    dplyr::arrange(avg_monetary)
+    dplyr::select(segment, !!met) %>%
+    dplyr::summarise(mem = stats::median(!!met)) %>%
+    dplyr::arrange(mem)
+  
+  colnames(result) <- c("segment", as_label(met))
+  return(result)
+  
+}
 
+rfm_plot_median <- function(data) {
+  
   n_fill <- nrow(data)
-
-  p <-
-    ggplot(data, aes(segment, avg_monetary)) +
+  cnames <- names(data)
+  y_lab  <- 
+    switch(cnames[2],
+           recency_days = "Median Recency",
+           transaction_count = "Median Frequency",
+           amount = "Median Monetary Value") 
+  
+  ggplot(data, aes_string(x = cnames[1], y = cnames[2])) +
     geom_bar(stat = "identity", fill = ggthemes::calc_pal()(n_fill)) +
-    xlab("Segment") + ylab("Median Monetary Value") +
-    ggtitle("Median Monetary Value by Segment") +
+    xlab("Segment") + 
+    ylab(y_lab) +
+    ggtitle(paste(y_lab, "by Segment")) +
     coord_flip() +
     theme(
       plot.title = element_text(hjust = 0.5)
     )
-
-  if (print_plot) {
-    print(p)
-  } else {
-    return(p)
-  }
-
 }
