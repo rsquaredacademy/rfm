@@ -4,10 +4,12 @@
 \alias{rfm_plot_revenue_dist}
 \title{Revenue distribution}
 \usage{
-rfm_plot_revenue_dist(x, print_plot = TRUE)
+rfm_plot_revenue_dist(x, flip = FALSE, print_plot = TRUE)
 }
 \arguments{
 \item{x}{An object of class \code{rfm_segment_summary}.}
+
+\item{flip}{logical; if \code{TRUE}, creates horizontal bar plot.}
 
 \item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object. 
 

@@ -67,12 +67,12 @@ rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
 }
 
 #' Segment summary
-#' 
+#'
 #' An overview of customer segments.
-#' 
+#'
 #' @param segments Output from \code{rfm_segment}.
-#' 
-#' @examples 
+#'
+#' @examples
 #' analysis_date <- as.Date('2006-12-31')
 #' rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
 #' revenue, analysis_date)
@@ -91,14 +91,14 @@ rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
 #' segments <- rfm_segment(rfm_result, segment_names, recency_lower,
 #' recency_upper, frequency_lower, frequency_upper, monetary_lower,
 #' monetary_upper)
-#' 
+#'
 #' rfm_segment_summary(segments)
-#' 
-#' @export 
-#' 
+#'
+#' @export
+#'
 rfm_segment_summary <- function(segments) {
-  segments %>% 
-    dplyr::group_by(segment) %>% 
+  segments %>%
+    dplyr::group_by(segment) %>%
     dplyr::summarise(
       customers = dplyr::n(),
       orders = sum(transaction_count),
@@ -108,15 +108,16 @@ rfm_segment_summary <- function(segments) {
 }
 
 #' Visulaize segment summary
-#' 
+#'
 #' Generates plots for customers, orders, revenue and average order value for each segment.
-#' 
+#'
 #' @param x An object of class \code{rfm_segment_summary}.
 #' @param metric Metrics to be visualized.
 #' @param sort logical; if \code{TRUE}, sort metrics.
 #' @param ascending logical; if \code{TRUE}, sort metrics in ascending order.
-#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object. 
-#' 
+#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
+#'
+#' @examples
 #' analysis_date <- as.Date('2006-12-31')
 #' rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
 #' revenue, analysis_date)
@@ -135,14 +136,14 @@ rfm_segment_summary <- function(segments) {
 #' segments <- rfm_segment(rfm_result, segment_names, recency_lower,
 #' recency_upper, frequency_lower, frequency_upper, monetary_lower,
 #' monetary_upper)
-#' 
+#'
 #' segment_overview <- rfm_segment_summary(segments)
 #' rfm_plot_segment_summary(segment_overview)
 #' rfm_plot_segment_summary(segment_overview, sort = TRUE, ascending = TRUE)
 #' rfm_plot_segment_summary(segment_overview, sort = TRUE)
 #'
 #' @export
-#' 
+#'
 rfm_plot_segment_summary <- function(x, metric = NULL, sort = FALSE, ascending = FALSE, print_plot = TRUE) {
 
   if (is.null(metric)) {
@@ -155,14 +156,14 @@ rfm_plot_segment_summary <- function(x, metric = NULL, sort = FALSE, ascending =
       data <- dplyr::select(x, segment, !!sym(var))
       if (sort) {
         if (ascending) {
-          p <- ggplot(data, aes(x = stats::reorder(segment, !!sym(var), sum), y = !!sym(var)))   
+          p <- ggplot(data, aes(x = stats::reorder(segment, !!sym(var), sum), y = !!sym(var)))
         } else {
           p <- ggplot(data, aes(x = stats::reorder(segment, -!!sym(var), sum), y = !!sym(var)))
         }
       } else {
         p <- ggplot(data, aes(x = segment, y = !!sym(var)))
       }
-      plots[[j]] <- 
+      plots[[j]] <-
         p +
           geom_bar(stat = "identity", fill = "blue") +
           ggtitle(paste(vars[i], "by segment")) +
@@ -178,16 +179,17 @@ rfm_plot_segment_summary <- function(x, metric = NULL, sort = FALSE, ascending =
   } else {
     return(plots)
   }
-  
+
 }
 
 #' Revenue distribution
-#' 
+#'
 #' Customer and revenue distribution by segments.
-#' 
+#'
 #' @param x An object of class \code{rfm_segment_summary}.
-#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object. 
-#' 
+#' @param flip logical; if \code{TRUE}, creates horizontal bar plot.
+#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
+#'
 #' analysis_date <- as.Date('2006-12-31')
 #' rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
 #' revenue, analysis_date)
@@ -206,37 +208,47 @@ rfm_plot_segment_summary <- function(x, metric = NULL, sort = FALSE, ascending =
 #' segments <- rfm_segment(rfm_result, segment_names, recency_lower,
 #' recency_upper, frequency_lower, frequency_upper, monetary_lower,
 #' monetary_upper)
-#' 
+#'
 #' segment_overview <- rfm_segment_summary(segments)
 #' rfm_plot_revenue_dist(segment_overview)
-#' 
-#' @export 
-#' 
-rfm_plot_revenue_dist <- function(x, print_plot = TRUE) {
+#'
+#' @export
+#'
+rfm_plot_revenue_dist <- function(x, flip = FALSE, print_plot = TRUE) {
 
   data <- rfm_prep_revenue_dist(x)
 
-  p <- 
-    ggplot(data, aes(fill=category, y=share, x=segment)) + 
-    geom_bar(position="dodge", stat="identity") 
+  p <-
+    ggplot(data, aes(fill = category, y = share, x = segment)) +
+    geom_bar(position="dodge", stat="identity")
 
-  p <- 
-    p +  
+  p <-
+    p +
     scale_fill_manual(values = c("#3b5bdb", "#91a7ff"),
                       labels = c("Share of revenue", "Share of customers")) +
-    scale_y_continuous(labels = scales::percent) 
+    scale_y_continuous(labels = scales::percent)
 
-  p <- 
+  p <-
     p +
     theme(legend.title = element_blank(),
           legend.position = "bottom",
           panel.background = element_rect(fill = NA),
-          axis.ticks = element_line(color = NA),
-          panel.grid.major.y = element_line(colour = "#ced4da")) 
+          axis.ticks = element_line(color = NA))
 
-  p <- 
+  if (flip) {
+    p <-
+      p +
+      theme(panel.grid.major.x = element_line(colour = "#ced4da")) +
+      coord_flip()
+  } else {
+    p <-
+      p +
+      theme(panel.grid.major.y = element_line(colour = "#ced4da"))
+  }
+
+  p <-
     p +
-    xlab("") + 
+    xlab("") +
     ylab("") +
     ggtitle("Revenue vs Number of Customers")
 
@@ -250,12 +262,12 @@ rfm_plot_revenue_dist <- function(x, print_plot = TRUE) {
 
 rfm_prep_revenue_dist <- function(x) {
 
-  data <- 
-    x %>% 
+  data <-
+    x %>%
     dplyr::mutate(customer_share = customers / sum(customers),
-                  revenue_share = revenue / sum(revenue)) %>% 
+                  revenue_share = revenue / sum(revenue)) %>%
     dplyr::select(segment, customer_share, revenue_share) %>%
-    tidyr::pivot_longer(!segment, names_to = "category", values_to = "share") 
+    tidyr::pivot_longer(!segment, names_to = "category", values_to = "share")
 
   data$category <- factor(data$category, levels = c("revenue_share", "customer_share"))
   return(data)
@@ -296,28 +308,6 @@ rfm_prep_revenue_dist <- function(x) {
 #'
 rfm_plot_median_recency <- function(rfm_segment_table, print_plot = TRUE) {
 
-  # segment <- NULL
-  # avg_recency <- NULL
-
-  # data <-
-  #   rfm_segment_table %>%
-  #   dplyr::group_by(segment) %>%
-  #   dplyr::select(segment, recency_days) %>%
-  #   dplyr::summarise(avg_recency = stats::median(recency_days)) %>%
-  #   dplyr::arrange(avg_recency)
-
-  # n_fill <- nrow(data)
-
-  # p <-
-  #   ggplot(data, aes(segment, avg_recency)) +
-  #   geom_bar(stat = "identity", fill = ggthemes::calc_pal()(n_fill)) +
-  #   xlab("Segment") + ylab("Median Recency") +
-  #   ggtitle("Median Recency by Segment") +
-  #   coord_flip() +
-  #   theme(
-  #     plot.title = element_text(hjust = 0.5)
-  #   )
-
   data <- rfm_prep_median(rfm_segment_table, recency_days)
   plot <- rfm_plot_median(data)
 
@@ -333,28 +323,6 @@ rfm_plot_median_recency <- function(rfm_segment_table, print_plot = TRUE) {
 #' @export
 #'
 rfm_plot_median_frequency <- function(rfm_segment_table, print_plot = TRUE) {
-
-  # segment <- NULL
-  # avg_frequency <- NULL
-
-  # data <-
-  #   rfm_segment_table %>%
-  #   dplyr::group_by(segment) %>%
-  #   dplyr::select(segment, transaction_count) %>%
-  #   dplyr::summarise(avg_frequency = stats::median(transaction_count)) %>%
-  #   dplyr::arrange(avg_frequency)
-
-  # n_fill <- nrow(data)
-
-  # p <-
-  #   ggplot(data, aes(segment, avg_frequency)) +
-  #   geom_bar(stat = "identity", fill = ggthemes::calc_pal()(n_fill)) +
-  #   xlab("Segment") + ylab("Median Frequency") +
-  #   ggtitle("Median Frequency by Segment") +
-  #   coord_flip() +
-  #   theme(
-  #     plot.title = element_text(hjust = 0.5)
-  #   )
 
   data <- rfm_prep_median(rfm_segment_table, transaction_count)
   plot <- rfm_plot_median(data)
@@ -373,35 +341,6 @@ rfm_plot_median_frequency <- function(rfm_segment_table, print_plot = TRUE) {
 #'
 rfm_plot_median_monetary <- function(rfm_segment_table, print_plot = TRUE) {
 
-  # segment <- NULL
-  # avg_monetary <- NULL
-
-  # data <-
-  #   rfm_segment_table %>%
-  #   dplyr::group_by(segment) %>%
-  #   dplyr::select(segment, amount) %>%
-  #   dplyr::summarise(avg_monetary = stats::median(amount)) %>%
-  #   # dplyr::rename(segment = segment, avg_monetary = `median(amount)`) %>%
-  #   dplyr::arrange(avg_monetary)
-
-  # n_fill <- nrow(data)
-
-  # p <-
-  #   ggplot(data, aes(segment, avg_monetary)) +
-  #   geom_bar(stat = "identity", fill = ggthemes::calc_pal()(n_fill)) +
-  #   xlab("Segment") + ylab("Median Monetary Value") +
-  #   ggtitle("Median Monetary Value by Segment") +
-  #   coord_flip() +
-  #   theme(
-  #     plot.title = element_text(hjust = 0.5)
-  #   )
-
-  # if (print_plot) {
-  #   print(p)
-  # } else {
-  #   return(p)
-  # }
-
   data <- rfm_prep_median(rfm_segment_table, amount)
   plot <- rfm_plot_median(data)
 
@@ -414,34 +353,34 @@ rfm_plot_median_monetary <- function(rfm_segment_table, print_plot = TRUE) {
 }
 
 rfm_prep_median <- function(rfm_segment_table, metric) {
-  
+
   met <- rlang::enquo(metric)
-  
-  result <- 
+
+  result <-
     rfm_segment_table %>%
     dplyr::group_by(segment) %>%
     dplyr::select(segment, !!met) %>%
     dplyr::summarise(mem = stats::median(!!met)) %>%
     dplyr::arrange(mem)
-  
+
   colnames(result) <- c("segment", as_label(met))
   return(result)
-  
+
 }
 
 rfm_plot_median <- function(data) {
-  
+
   n_fill <- nrow(data)
   cnames <- names(data)
-  y_lab  <- 
+  y_lab  <-
     switch(cnames[2],
            recency_days = "Median Recency",
            transaction_count = "Median Frequency",
-           amount = "Median Monetary Value") 
-  
+           amount = "Median Monetary Value")
+
   ggplot(data, aes_string(x = cnames[1], y = cnames[2])) +
     geom_bar(stat = "identity", fill = ggthemes::calc_pal()(n_fill)) +
-    xlab("Segment") + 
+    xlab("Segment") +
     ylab(y_lab) +
     ggtitle(paste(y_lab, "by Segment")) +
     coord_flip() +

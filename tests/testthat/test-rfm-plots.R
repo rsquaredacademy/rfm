@@ -171,4 +171,8 @@ test_that('output from rfm_plot_revenue_dist is as expected', {
   p <- rfm_plot_revenue_dist(my_segments)
   vdiffr::expect_doppelganger('rfm plot revenue dist', p)
 
+  p1 <- rfm_plot_revenue_dist(my_segments, flip = TRUE)
+  vdiffr::expect_doppelganger('rfm plot revenue dist flipped', p1)
+
 })
+
