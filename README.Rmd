@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/rfm)](https://cran.r-project.org/package=rfm) [![cran checks](https://cranchecks.info/badges/summary/rfm)](https://cran.r-project.org/web/checks/check_results_rfm.html) 
 [![R build status](https://github.com/rsquaredacademy/rfm/workflows/R-CMD-check/badge.svg)](https://github.com/rsquaredacademy/rfm/actions)
-[![Coverage Status](https://img.shields.io/codecov/c/github/rsquaredacademy/rfm/master.svg)](https://codecov.io/github/rsquaredacademy/rfm?branch=master) [![status](https://tinyverse.netlify.com/badge/vistributions)](https://CRAN.R-project.org/package=vistributions) ![](https://img.shields.io/badge/lifecycle-maturing-blue.svg) [![](https://cranlogs.r-pkg.org/badges/grand-total/rfm)](https://cran.r-project.org/package=rfm)
+[![Coverage Status](https://img.shields.io/codecov/c/github/rsquaredacademy/rfm/master.svg)](https://codecov.io/github/rsquaredacademy/rfm?branch=master) [![status](https://tinyverse.netlify.com/badge/rfm)](https://CRAN.R-project.org/package=rfm) [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html) [![](https://cranlogs.r-pkg.org/badges/grand-total/rfm)](https://cran.r-project.org/package=rfm)
 <!-- badges: end -->
 
 ## Overview
@@ -72,7 +72,7 @@ To calculate the RFM score for each customer we need transaction data which shou
 rfm uses consistent prefix `rfm_` for easy tab completion. Use `rfm_table_order()` to generate the RFM score.
 
 ```{r rfm_table_order}
-analysis_date <- lubridate::as_date('2006-12-31')
+analysis_date <- as.Date('2006-12-31')
 rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
 rfm_result
 ```

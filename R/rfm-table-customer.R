@@ -23,7 +23,7 @@
 #' \item{threshold}{tibble with thresholds used for generating RFM scores.}
 #'
 #' @examples
-#' analysis_date <- lubridate::as_date('2007-01-01')
+#' analysis_date <- as.Date('2007-01-01')
 #' rfm_table_customer(rfm_data_customer, customer_id, number_of_orders,
 #' recency_days, revenue, analysis_date)
 #'
@@ -57,7 +57,7 @@ rfm_table_customer.default <- function(data = NULL, customer_id = NULL, n_transa
   result <-
     data %>%
     dplyr::select(!! cust_id, !! n_recency, !! order_count, !! revenues) %>%
-    magrittr::set_names(c("customer_id", "recency_days", "transaction_count", "amount"))
+    set_names(c("customer_id", "recency_days", "transaction_count", "amount"))
 
   result$recency_score   <- NA
   result$frequency_score <- NA

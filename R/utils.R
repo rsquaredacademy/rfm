@@ -1,21 +1,24 @@
-#' @importFrom magrittr %>% %<>%
+#' @importFrom magrittr %>% %<>% use_series set_names extract extract2 add multiply_by
+#' @import ggplot2
+#' @importFrom stats median runif quantile
+#' @importFrom utils available.packages menu update.packages packageVersion install.packages
 bins <- function(data, value, n_bins) {
 
-  my_value   <- rlang::enquo(value)
+  my_value   <- enquo(value)
   length_out <- n_bins + 1
 
   data %>%
     dplyr::pull(!! my_value) %>%
-    stats::quantile(probs = seq(0, 1, length.out = length_out)) %>%
+    quantile(probs = seq(0, 1, length.out = length_out)) %>%
     unname() %>%
-    magrittr::extract(c(-1, -length_out)) %>%
-    magrittr::add(1)
+    extract(c(-1, -length_out)) %>%
+    add(1)
 
 }
 
 bins_lower <- function(data, value, bins) {
 
-  my_value <- rlang::enquo(value)
+  my_value <- enquo(value)
 
   data %>%
     dplyr::pull(!! my_value) %>%
@@ -26,13 +29,13 @@ bins_lower <- function(data, value, bins) {
 
 bins_upper <- function(data, value, bins) {
 
-  my_value <- rlang::enquo(value)
+  my_value <- enquo(value)
 
   data_max <-
     data %>%
     dplyr::pull(!! my_value) %>%
     max() %>%
-    magrittr::add(1)
+    add(1)
 
   c(bins, data_max)
 }
@@ -40,7 +43,7 @@ bins_upper <- function(data, value, bins) {
 
 check_levels <- function(rfm_heatmap_data, column) {
 
-  my_column <- rlang::enquo(column)
+  my_column <- enquo(column)
 
   rfm_heatmap_data %>%
     dplyr::pull(!! my_column) %>%
@@ -62,10 +65,9 @@ modify_rfm <- function(rfm_heatmap_data, n_bins, check_levels) {
 
 }
 
-#' @importFrom utils packageVersion menu install.packages
 check_suggests <- function(pkg) {
 
-  pkg_flag <- tryCatch(utils::packageVersion(pkg), error = function(e) NA)
+  pkg_flag <- tryCatch(packageVersion(pkg), error = function(e) NA)
 
   if (is.na(pkg_flag)) {
 
@@ -73,8 +75,8 @@ check_suggests <- function(pkg) {
 
     if (interactive()) {
       message(msg, "\nWould you like to install it?")
-      if (utils::menu(c("Yes", "No")) == 1) {
-        utils::install.packages(pkg)
+      if (menu(c("Yes", "No")) == 1) {
+        install.packages(pkg)
       } else {
         stop(msg, call. = FALSE)
       }

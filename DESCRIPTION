@@ -18,11 +18,12 @@ Depends:
 Imports: 
     dplyr,
     ggplot2,
-    ggthemes,
+    gridExtra,
     lubridate,
     magrittr,
     RColorBrewer,
     rlang,
+    scales,
     stats,
     tibble,
     tidyr,
@@ -39,4 +40,4 @@ Suggests:
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
