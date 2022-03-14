@@ -74,7 +74,9 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
     scale_fill_gradientn(limits = c(llm, ulm),
                          colours = RColorBrewer::brewer.pal(n = brewer_n, name = brewer_name),
                          name = legend_title) +
-    ggtitle(plot_title) + xlab(xaxis_title) + ylab(yaxis_title) +
+    ggtitle(plot_title) +
+    xlab(xaxis_title) +
+    ylab(yaxis_title) +
     theme(plot.title = element_text(hjust = plot_title_justify))
 
   if (print_plot) {
@@ -314,12 +316,8 @@ rfm_rm_plot <- function(rfm_table, point_color = 'blue',
                         plot_title = 'Recency vs Monetary',
                         print_plot = TRUE) {
 
-  p <-
-    rfm_table %>%
-    use_series(rfm) %>%
-    ggplot() +
-    geom_point(aes(x = amount, y = recency_days), color = point_color) +
-    xlab(xaxis_title) + ylab(yaxis_title) + ggtitle(plot_title)
+  p <- rfm_plot_combine(rfm_table, "amount", "recency_days", point_color,
+                        xaxis_title, yaxis_title, plot_title)
 
   if (print_plot) {
     print(p)
@@ -337,12 +335,8 @@ rfm_fm_plot <- function(rfm_table, point_color = 'blue',
                         plot_title = 'Frequency vs Monetary',
                         print_plot = TRUE) {
 
-  p <-
-    rfm_table %>%
-    use_series(rfm) %>%
-    ggplot() +
-    geom_point(aes(x = amount, y = transaction_count), color = point_color) +
-    xlab(xaxis_title) + ylab(yaxis_title) + ggtitle(plot_title)
+  p <- rfm_plot_combine(rfm_table, "amount", "transaction_count", point_color,
+                        xaxis_title, yaxis_title, plot_title)
 
   if (print_plot) {
     print(p)
@@ -360,12 +354,8 @@ rfm_rf_plot <- function(rfm_table, point_color = 'blue',
                         plot_title = 'Recency vs Frequency',
                         print_plot = TRUE) {
 
-  p <-
-    rfm_table %>%
-    use_series(rfm) %>%
-    ggplot() +
-    geom_point(aes(x = transaction_count, y = recency_days), color = point_color) +
-    xlab(xaxis_title) + ylab(yaxis_title) + ggtitle(plot_title)
+  p <- rfm_plot_combine(rfm_table, "transaction_count", "recency_days", point_color,
+                        xaxis_title, yaxis_title, plot_title)
 
   if (print_plot) {
     print(p)
@@ -373,4 +363,21 @@ rfm_rf_plot <- function(rfm_table, point_color = 'blue',
     return(p)
   }
 
+}
+
+rfm_plot_combine <- function(rfm_table, x = "amount", y = "recency_days", 
+                             point_color = "blue", xaxis_title = "Monetary", 
+                             yaxis_title = "Recency", plot_title = "Recency vs Monetary") {
+  
+  plot <- 
+    rfm_table %>%
+    use_series(rfm) %>%
+    ggplot() +
+    geom_point(aes_string(x = x, y = y), color = point_color) +
+    xlab(xaxis_title) +
+    ylab(yaxis_title) +
+    ggtitle(plot_title)
+
+  return(plot)
+  
 }
