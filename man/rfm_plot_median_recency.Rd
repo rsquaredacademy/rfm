@@ -39,6 +39,8 @@ rfm_plot_median_monetary(
 \arguments{
 \item{rfm_segment_table}{Output from \code{rfm_segment}.}
 
+\item{color}{Color of the bars.}
+
 \item{font_size}{Font size for X axis text.}
 
 \item{sort}{logical; if \code{TRUE}, sort metrics.}

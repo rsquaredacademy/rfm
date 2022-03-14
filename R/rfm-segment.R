@@ -305,6 +305,7 @@ rfm_prep_revenue_dist <- function(x) {
 #' Segment wise median recency, frequency & monetary value plot.
 #'
 #' @param rfm_segment_table Output from \code{rfm_segment}.
+#' @param color Color of the bars.
 #' @param sort logical; if \code{TRUE}, sort metrics.
 #' @param ascending logical; if \code{TRUE}, sort metrics in ascending order.
 #' @param flip logical; if \code{TRUE}, creates horizontal bar plot.
@@ -415,15 +416,15 @@ rfm_plot_median <- function(data, color, font_size, sort, ascending, flip) {
   if (sort) {
     if (ascending) {
       if (flip) {
-        p <- ggplot(data, aes(x = reorder(!!as.symbol(cnames[1]), -!!as.symbol(cnames[2]), sum), y = !!as.symbol(cnames[2])))
+        p <- ggplot(data, aes(x = stats::reorder(!!as.symbol(cnames[1]), -!!as.symbol(cnames[2]), sum), y = !!as.symbol(cnames[2])))
       } else {
-        p <- ggplot(data, aes(x = reorder(!!as.symbol(cnames[1]), !!as.symbol(cnames[2]), sum), y = !!as.symbol(cnames[2])))
+        p <- ggplot(data, aes(x = stats::reorder(!!as.symbol(cnames[1]), !!as.symbol(cnames[2]), sum), y = !!as.symbol(cnames[2])))
       }
     } else {
       if (flip) {
-        p <- ggplot(data, aes(x = reorder(!!as.symbol(cnames[1]), !!as.symbol(cnames[2]), sum), y = !!as.symbol(cnames[2])))
+        p <- ggplot(data, aes(x = stats::reorder(!!as.symbol(cnames[1]), !!as.symbol(cnames[2]), sum), y = !!as.symbol(cnames[2])))
       } else {
-        p <- ggplot(data, aes(x = reorder(!!as.symbol(cnames[1]), -!!as.symbol(cnames[2]), sum), y = !!as.symbol(cnames[2])))
+        p <- ggplot(data, aes(x = stats::reorder(!!as.symbol(cnames[1]), -!!as.symbol(cnames[2]), sum), y = !!as.symbol(cnames[2])))
       }
     }
   } else {
