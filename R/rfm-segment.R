@@ -333,10 +333,10 @@ rfm_prep_revenue_dist <- function(x) {
 #'
 #' @export
 #'
-rfm_plot_median_recency <- function(rfm_segment_table, print_plot = TRUE) {
+rfm_plot_median_recency <- function(rfm_segment_table, color = "blue", print_plot = TRUE) {
 
   data <- rfm_prep_median(rfm_segment_table, recency_days)
-  plot <- rfm_plot_median(data)
+  plot <- rfm_plot_median(data, color)
 
   if (print_plot) {
     print(plot)
@@ -349,10 +349,10 @@ rfm_plot_median_recency <- function(rfm_segment_table, print_plot = TRUE) {
 #' @rdname rfm_plot_median_recency
 #' @export
 #'
-rfm_plot_median_frequency <- function(rfm_segment_table, print_plot = TRUE) {
+rfm_plot_median_frequency <- function(rfm_segment_table, color = "blue", print_plot = TRUE) {
 
   data <- rfm_prep_median(rfm_segment_table, transaction_count)
-  plot <- rfm_plot_median(data)
+  plot <- rfm_plot_median(data, color)
 
   if (print_plot) {
     print(plot)
@@ -366,10 +366,10 @@ rfm_plot_median_frequency <- function(rfm_segment_table, print_plot = TRUE) {
 #' @rdname rfm_plot_median_recency
 #' @export
 #'
-rfm_plot_median_monetary <- function(rfm_segment_table, print_plot = TRUE) {
+rfm_plot_median_monetary <- function(rfm_segment_table, color = "blue", print_plot = TRUE) {
 
   data <- rfm_prep_median(rfm_segment_table, amount)
-  plot <- rfm_plot_median(data)
+  plot <- rfm_plot_median(data, color)
 
   if (print_plot) {
     print(plot)
@@ -395,7 +395,7 @@ rfm_prep_median <- function(rfm_segment_table, metric) {
 
 }
 
-rfm_plot_median <- function(data) {
+rfm_plot_median <- function(data, color) {
 
   n_fill <- nrow(data)
   cnames <- names(data)
@@ -406,7 +406,7 @@ rfm_plot_median <- function(data) {
            amount = "Median Monetary Value")
 
   ggplot(data, aes_string(x = cnames[1], y = cnames[2])) +
-    geom_bar(stat = "identity", fill = ggthemes::calc_pal()(n_fill)) +
+    geom_bar(stat = "identity", fill = color) +
     xlab("Segment") +
     ylab(y_lab) +
     ggtitle(paste(y_lab, "by Segment")) +
