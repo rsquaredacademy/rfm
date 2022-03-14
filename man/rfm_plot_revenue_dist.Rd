@@ -11,7 +11,7 @@ rfm_plot_revenue_dist(x, flip = FALSE, print_plot = TRUE)
 
 \item{flip}{logical; if \code{TRUE}, creates horizontal bar plot.}
 
-\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object. 
+\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.
 
 analysis_date <- as.Date('2006-12-31')
 rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,

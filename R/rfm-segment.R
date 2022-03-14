@@ -115,6 +115,7 @@ rfm_segment_summary <- function(segments) {
 #' @param metric Metrics to be visualized.
 #' @param sort logical; if \code{TRUE}, sort metrics.
 #' @param ascending logical; if \code{TRUE}, sort metrics in ascending order.
+#' @param flip logical; if \code{TRUE}, creates horizontal bar plot.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @examples
@@ -141,10 +142,11 @@ rfm_segment_summary <- function(segments) {
 #' rfm_plot_segment_summary(segment_overview)
 #' rfm_plot_segment_summary(segment_overview, sort = TRUE, ascending = TRUE)
 #' rfm_plot_segment_summary(segment_overview, sort = TRUE)
+#' rfm_plot_segment_summary(segment_overview, flip = TRUE)
 #'
 #' @export
 #'
-rfm_plot_segment_summary <- function(x, metric = NULL, sort = FALSE, ascending = FALSE, print_plot = TRUE) {
+rfm_plot_segment_summary <- function(x, metric = NULL, sort = FALSE, ascending = FALSE, flip = FALSE, print_plot = TRUE) {
 
   if (is.null(metric)) {
     vars <- colnames(x)
@@ -156,19 +158,44 @@ rfm_plot_segment_summary <- function(x, metric = NULL, sort = FALSE, ascending =
       data <- dplyr::select(x, segment, !!sym(var))
       if (sort) {
         if (ascending) {
-          p <- ggplot(data, aes(x = stats::reorder(segment, !!sym(var), sum), y = !!sym(var)))
+          if (flip) {
+            p <- ggplot(data, aes(x = stats::reorder(segment, -!!sym(var), sum), y = !!sym(var)))
+          } else {
+            p <- ggplot(data, aes(x = stats::reorder(segment, !!sym(var), sum), y = !!sym(var)))
+          }
         } else {
-          p <- ggplot(data, aes(x = stats::reorder(segment, -!!sym(var), sum), y = !!sym(var)))
+          if (flip) {
+            p <- ggplot(data, aes(x = stats::reorder(segment, !!sym(var), sum), y = !!sym(var)))
+          } else {
+            p <- ggplot(data, aes(x = stats::reorder(segment, -!!sym(var), sum), y = !!sym(var)))
+          }
         }
       } else {
         p <- ggplot(data, aes(x = segment, y = !!sym(var)))
       }
-      plots[[j]] <-
+
+      p <- 
         p +
-          geom_bar(stat = "identity", fill = "blue") +
-          ggtitle(paste(vars[i], "by segment")) +
+        geom_bar(stat = "identity", fill = "blue") +
+        ggtitle(paste(vars[i], "by segment"))
+
+      if (flip) {
+        p <- 
+          p +
+          coord_flip() +
+          xlab(vars[i]) +
+          ylab("Segment") +
+          theme(axis.text.y = element_text(size = 7)) 
+      } else {
+        p <- 
+          p +
           xlab("Segment") +
-          ylab(vars[i])
+          ylab(vars[i]) +
+          theme(axis.text.x = element_text(size = 7))
+      }
+
+      plots[[j]] <- p
+    
     }
   }
 

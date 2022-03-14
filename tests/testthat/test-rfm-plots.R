@@ -100,6 +100,8 @@ segments <- rfm_segment(rfm_result, segment_names, recency_lower,
 recency_upper, frequency_lower, frequency_upper, monetary_lower,
 monetary_upper)
 
+my_segments <- rfm_segment_summary(segments)
+
 test_that('output from rfm_plot_median_recency is as expected', {
 
   skip_on_cran()
@@ -130,8 +132,6 @@ test_that('output from rfm_plot_median_monetary is as expected', {
 test_that("output from rfm_plot_segment_summary is as expected", {
   skip_on_cran()
 
-  my_segments <- rfm_segment_summary(segments)
-  
   p <- rfm_plot_segment_summary(my_segments, print_plot = FALSE)
   vdiffr::expect_doppelganger("customers by segment", p$customers)
   vdiffr::expect_doppelganger("orders by segment", p$orders)
@@ -141,8 +141,6 @@ test_that("output from rfm_plot_segment_summary is as expected", {
 
 test_that("output from rfm_plot_segment_summary is as expected when sorted", {
   skip_on_cran()
-
-  my_segments <- rfm_segment_summary(segments)
   
   p <- rfm_plot_segment_summary(my_segments, sort = TRUE, ascending = TRUE, print_plot = FALSE)
   vdiffr::expect_doppelganger("customers by segment sort", p$customers)
@@ -153,14 +151,42 @@ test_that("output from rfm_plot_segment_summary is as expected when sorted", {
 
 test_that("output from rfm_plot_segment_summary is as expected when sorted in descending order", {
   skip_on_cran()
-
-  my_segments <- rfm_segment_summary(segments)
   
   p <- rfm_plot_segment_summary(my_segments, sort = TRUE, print_plot = FALSE)
   vdiffr::expect_doppelganger("customers by segment descending", p$customers)
   vdiffr::expect_doppelganger("orders by segment descending", p$orders)
   vdiffr::expect_doppelganger("revenue by segment descending", p$revenue)
   vdiffr::expect_doppelganger("aov by segment descending", p$aov)
+})
+
+test_that("output from rfm_plot_segment_summary is as expected when flipped", {
+  skip_on_cran()
+  
+  p <- rfm_plot_segment_summary(my_segments, flip = TRUE, print_plot = FALSE)
+  vdiffr::expect_doppelganger("customers by segment flipped", p$customers)
+  vdiffr::expect_doppelganger("orders by segment flipped", p$orders)
+  vdiffr::expect_doppelganger("revenue by segment flipped", p$revenue)
+  vdiffr::expect_doppelganger("aov by segment flipped", p$aov)
+})
+
+test_that("output from rfm_plot_segment_summary is as expected when flipped & sorted", {
+  skip_on_cran()
+  
+  p <- rfm_plot_segment_summary(my_segments, sort = TRUE, flip = TRUE, print_plot = FALSE)
+  vdiffr::expect_doppelganger("customers by segment flipped sorted", p$customers)
+  vdiffr::expect_doppelganger("orders by segment flipped sorted", p$orders)
+  vdiffr::expect_doppelganger("revenue by segment flipped sorted", p$revenue)
+  vdiffr::expect_doppelganger("aov by segment flipped sorted", p$aov)
+})
+
+test_that("output from rfm_plot_segment_summary is as expected when flipped & sorted in ascending order", {
+  skip_on_cran()
+  
+  p <- rfm_plot_segment_summary(my_segments, sort = TRUE, flip = TRUE, print_plot = FALSE)
+  vdiffr::expect_doppelganger("customers by segment flipped sorted ascending", p$customers)
+  vdiffr::expect_doppelganger("orders by segment flipped sorted ascending", p$orders)
+  vdiffr::expect_doppelganger("revenue by segment flipped sorted ascending", p$revenue)
+  vdiffr::expect_doppelganger("aov by segment flipped sorted ascending", p$aov)
 })
 
 test_that('output from rfm_plot_revenue_dist is as expected', {

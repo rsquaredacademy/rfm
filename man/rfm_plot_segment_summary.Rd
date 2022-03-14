@@ -9,6 +9,7 @@ rfm_plot_segment_summary(
   metric = NULL,
   sort = FALSE,
   ascending = FALSE,
+  flip = FALSE,
   print_plot = TRUE
 )
 }
@@ -21,8 +22,14 @@ rfm_plot_segment_summary(
 
 \item{ascending}{logical; if \code{TRUE}, sort metrics in ascending order.}
 
-\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object. 
+\item{flip}{logical; if \code{TRUE}, creates horizontal bar plot.}
 
+\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
+}
+\description{
+Generates plots for customers, orders, revenue and average order value for each segment.
+}
+\examples{
 analysis_date <- as.Date('2006-12-31')
 rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
 revenue, analysis_date)
@@ -45,8 +52,7 @@ monetary_upper)
 segment_overview <- rfm_segment_summary(segments)
 rfm_plot_segment_summary(segment_overview)
 rfm_plot_segment_summary(segment_overview, sort = TRUE, ascending = TRUE)
-rfm_plot_segment_summary(segment_overview, sort = TRUE)}
-}
-\description{
-Generates plots for customers, orders, revenue and average order value for each segment.
+rfm_plot_segment_summary(segment_overview, sort = TRUE)
+rfm_plot_segment_summary(segment_overview, flip = TRUE)
+
 }
