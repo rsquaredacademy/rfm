@@ -6,14 +6,46 @@
 \alias{rfm_plot_median_monetary}
 \title{Segmentation plots}
 \usage{
-rfm_plot_median_recency(rfm_segment_table, print_plot = TRUE)
+rfm_plot_median_recency(
+  rfm_segment_table,
+  color = "blue",
+  font_size = 6,
+  sort = FALSE,
+  ascending = FALSE,
+  flip = FALSE,
+  print_plot = TRUE
+)
 
-rfm_plot_median_frequency(rfm_segment_table, print_plot = TRUE)
+rfm_plot_median_frequency(
+  rfm_segment_table,
+  color = "blue",
+  font_size = 6,
+  sort = FALSE,
+  ascending = FALSE,
+  flip = FALSE,
+  print_plot = TRUE
+)
 
-rfm_plot_median_monetary(rfm_segment_table, print_plot = TRUE)
+rfm_plot_median_monetary(
+  rfm_segment_table,
+  color = "blue",
+  font_size = 6,
+  sort = FALSE,
+  ascending = FALSE,
+  flip = FALSE,
+  print_plot = TRUE
+)
 }
 \arguments{
 \item{rfm_segment_table}{Output from \code{rfm_segment}.}
+
+\item{font_size}{Font size for X axis text.}
+
+\item{sort}{logical; if \code{TRUE}, sort metrics.}
+
+\item{ascending}{logical; if \code{TRUE}, sort metrics in ascending order.}
+
+\item{flip}{logical; if \code{TRUE}, creates horizontal bar plot.}
 
 \item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
 }
@@ -41,6 +73,9 @@ recency_upper, frequency_lower, frequency_upper, monetary_lower,
 monetary_upper)
 
 rfm_plot_median_recency(segments)
+rfm_plot_median_recency(segments, sort = TRUE, ascending = TRUE)
+rfm_plot_median_recency(segments, sort = TRUE)
+rfm_plot_median_recency(segments, flip = TRUE)
 rfm_plot_median_frequency(segments)
 rfm_plot_median_monetary(segments)
 

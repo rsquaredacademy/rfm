@@ -105,9 +105,12 @@ my_segments <- rfm_segment_summary(segments)
 test_that('output from rfm_plot_median_recency is as expected', {
 
   skip_on_cran()
-
-  p <- rfm_plot_median_recency(segments)
-  vdiffr::expect_doppelganger('rfm median recency', p)
+  vdiffr::expect_doppelganger('rfm median recency', rfm_plot_median_recency(segments))
+  vdiffr::expect_doppelganger('rfm median recency sort ascending', rfm_plot_median_recency(segments, sort = TRUE, ascending = TRUE))
+  vdiffr::expect_doppelganger('rfm median recency sort', rfm_plot_median_recency(segments, sort = TRUE))
+  vdiffr::expect_doppelganger('rfm median recency flip', rfm_plot_median_recency(segments, flip = TRUE))
+  vdiffr::expect_doppelganger('rfm median recency sort ascending flip', rfm_plot_median_recency(segments, sort = TRUE, ascending = TRUE, flip = TRUE))
+  vdiffr::expect_doppelganger('rfm median recency sort flip', rfm_plot_median_recency(segments, sort = TRUE, flip = TRUE))
 
 })
 
@@ -115,8 +118,12 @@ test_that('output from rfm_plot_median_frequency is as expected', {
 
   skip_on_cran()
 
-  p <- rfm_plot_median_frequency(segments)
-  vdiffr::expect_doppelganger('rfm median frequency', p)
+  vdiffr::expect_doppelganger('rfm median frequency', rfm_plot_median_frequency(segments))
+  vdiffr::expect_doppelganger('rfm median frequency sort ascending', rfm_plot_median_frequency(segments, sort = TRUE, ascending = TRUE))
+  vdiffr::expect_doppelganger('rfm median frequency sort', rfm_plot_median_frequency(segments, sort = TRUE))
+  vdiffr::expect_doppelganger('rfm median frequency flip', rfm_plot_median_frequency(segments, flip = TRUE))
+  vdiffr::expect_doppelganger('rfm median frequency sort ascending flip', rfm_plot_median_frequency(segments, sort = TRUE, ascending = TRUE, flip = TRUE))
+  vdiffr::expect_doppelganger('rfm median frequency sort flip', rfm_plot_median_frequency(segments, sort = TRUE, flip = TRUE))
 
 })
 
@@ -124,8 +131,12 @@ test_that('output from rfm_plot_median_monetary is as expected', {
 
   skip_on_cran()
 
-  p <- rfm_plot_median_monetary(segments)
-  vdiffr::expect_doppelganger('rfm median monetary', p)
+  vdiffr::expect_doppelganger('rfm median monetary', rfm_plot_median_monetary(segments))
+  vdiffr::expect_doppelganger('rfm median monetary sort ascending', rfm_plot_median_monetary(segments, sort = TRUE, ascending = TRUE))
+  vdiffr::expect_doppelganger('rfm median monetary sort', rfm_plot_median_monetary(segments, sort = TRUE))
+  vdiffr::expect_doppelganger('rfm median monetary flip', rfm_plot_median_monetary(segments, flip = TRUE))
+  vdiffr::expect_doppelganger('rfm median monetary sort ascending flip', rfm_plot_median_monetary(segments, sort = TRUE, ascending = TRUE, flip = TRUE))
+  vdiffr::expect_doppelganger('rfm median monetary sort flip', rfm_plot_median_monetary(segments, sort = TRUE, flip = TRUE))
 
 })
 

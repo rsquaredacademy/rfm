@@ -174,20 +174,20 @@ rfm_plot_segment_summary <- function(x, metric = NULL, sort = FALSE, ascending =
         p <- ggplot(data, aes(x = segment, y = !!sym(var)))
       }
 
-      p <- 
+      p <-
         p +
         geom_bar(stat = "identity", fill = "blue") +
         ggtitle(paste(vars[i], "by segment"))
 
       if (flip) {
-        p <- 
+        p <-
           p +
           coord_flip() +
           xlab(vars[i]) +
           ylab("Segment") +
-          theme(axis.text.y = element_text(size = 7)) 
+          theme(axis.text.y = element_text(size = 7))
       } else {
-        p <- 
+        p <-
           p +
           xlab("Segment") +
           ylab(vars[i]) +
@@ -195,7 +195,7 @@ rfm_plot_segment_summary <- function(x, metric = NULL, sort = FALSE, ascending =
       }
 
       plots[[j]] <- p
-    
+
     }
   }
 
@@ -305,6 +305,10 @@ rfm_prep_revenue_dist <- function(x) {
 #' Segment wise median recency, frequency & monetary value plot.
 #'
 #' @param rfm_segment_table Output from \code{rfm_segment}.
+#' @param sort logical; if \code{TRUE}, sort metrics.
+#' @param ascending logical; if \code{TRUE}, sort metrics in ascending order.
+#' @param flip logical; if \code{TRUE}, creates horizontal bar plot.
+#' @param font_size Font size for X axis text.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @examples
@@ -328,15 +332,18 @@ rfm_prep_revenue_dist <- function(x) {
 #' monetary_upper)
 #'
 #' rfm_plot_median_recency(segments)
+#' rfm_plot_median_recency(segments, sort = TRUE, ascending = TRUE)
+#' rfm_plot_median_recency(segments, sort = TRUE)
+#' rfm_plot_median_recency(segments, flip = TRUE)
 #' rfm_plot_median_frequency(segments)
 #' rfm_plot_median_monetary(segments)
 #'
 #' @export
 #'
-rfm_plot_median_recency <- function(rfm_segment_table, color = "blue", print_plot = TRUE) {
+rfm_plot_median_recency <- function(rfm_segment_table, color = "blue", font_size = 6, sort = FALSE, ascending = FALSE, flip = FALSE, print_plot = TRUE) {
 
   data <- rfm_prep_median(rfm_segment_table, recency_days)
-  plot <- rfm_plot_median(data, color)
+  plot <- rfm_plot_median(data, color, font_size, sort, ascending, flip)
 
   if (print_plot) {
     print(plot)
@@ -349,10 +356,10 @@ rfm_plot_median_recency <- function(rfm_segment_table, color = "blue", print_plo
 #' @rdname rfm_plot_median_recency
 #' @export
 #'
-rfm_plot_median_frequency <- function(rfm_segment_table, color = "blue", print_plot = TRUE) {
+rfm_plot_median_frequency <- function(rfm_segment_table, color = "blue", font_size = 6, sort = FALSE, ascending = FALSE, flip = FALSE, print_plot = TRUE) {
 
   data <- rfm_prep_median(rfm_segment_table, transaction_count)
-  plot <- rfm_plot_median(data, color)
+  plot <- rfm_plot_median(data, color, font_size, sort, ascending, flip)
 
   if (print_plot) {
     print(plot)
@@ -366,10 +373,10 @@ rfm_plot_median_frequency <- function(rfm_segment_table, color = "blue", print_p
 #' @rdname rfm_plot_median_recency
 #' @export
 #'
-rfm_plot_median_monetary <- function(rfm_segment_table, color = "blue", print_plot = TRUE) {
+rfm_plot_median_monetary <- function(rfm_segment_table, color = "blue", font_size = 6, sort = FALSE, ascending = FALSE, flip = FALSE, print_plot = TRUE) {
 
   data <- rfm_prep_median(rfm_segment_table, amount)
-  plot <- rfm_plot_median(data, color)
+  plot <- rfm_plot_median(data, color, font_size, sort, ascending, flip)
 
   if (print_plot) {
     print(plot)
@@ -395,7 +402,7 @@ rfm_prep_median <- function(rfm_segment_table, metric) {
 
 }
 
-rfm_plot_median <- function(data, color) {
+rfm_plot_median <- function(data, color, font_size, sort, ascending, flip) {
 
   n_fill <- nrow(data)
   cnames <- names(data)
@@ -405,13 +412,46 @@ rfm_plot_median <- function(data, color) {
            transaction_count = "Median Frequency",
            amount = "Median Monetary Value")
 
-  ggplot(data, aes_string(x = cnames[1], y = cnames[2])) +
+  if (sort) {
+    if (ascending) {
+      if (flip) {
+        p <- ggplot(data, aes(x = reorder(!!as.symbol(cnames[1]), -!!as.symbol(cnames[2]), sum), y = !!as.symbol(cnames[2])))
+      } else {
+        p <- ggplot(data, aes(x = reorder(!!as.symbol(cnames[1]), !!as.symbol(cnames[2]), sum), y = !!as.symbol(cnames[2])))
+      }
+    } else {
+      if (flip) {
+        p <- ggplot(data, aes(x = reorder(!!as.symbol(cnames[1]), !!as.symbol(cnames[2]), sum), y = !!as.symbol(cnames[2])))
+      } else {
+        p <- ggplot(data, aes(x = reorder(!!as.symbol(cnames[1]), -!!as.symbol(cnames[2]), sum), y = !!as.symbol(cnames[2])))
+      }
+    }
+  } else {
+    p <- ggplot(data, aes_string(x = cnames[1], y = cnames[2]))
+  }
+
+
+  p <-
+    p +
     geom_bar(stat = "identity", fill = color) +
-    xlab("Segment") +
-    ylab(y_lab) +
     ggtitle(paste(y_lab, "by Segment")) +
-    coord_flip() +
-    theme(
-      plot.title = element_text(hjust = 0.5)
-    )
+    theme(plot.title = element_text(hjust = 0.5))
+
+  if (flip) {
+    p <-
+      p +
+      coord_flip() +
+      xlab(y_lab) +
+      ylab("Segment") +
+      theme(axis.text.y = element_text(size = font_size))
+  } else {
+    p <-
+      p +
+      xlab("Segment") +
+      ylab(y_lab) +
+      theme(axis.text.x = element_text(size = font_size))
+  }
+
+  return(p)
+
 }
