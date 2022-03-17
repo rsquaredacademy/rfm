@@ -64,10 +64,8 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
     use_series(frequency_score) %>%
     max()
 
-  guide_breaks <-
-    seq(llm, ulm, length.out = bins) %>%
-    round()
-
+  guide_breaks <- round(seq(llm, ulm, length.out = bins))
+    
   p <-
     ggplot(data = mapdata) +
     geom_tile(aes(x = frequency_score, y = recency_score, fill = monetary)) +
@@ -136,7 +134,9 @@ rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
     rfm_hist_data(rfm_table) %>%
     ggplot(aes(score)) +
     geom_histogram(bins = hist_bins, fill = hist_color) +
-    ylab(yaxis_title) + ggtitle(plot_title) + xlab(xaxis_title) +
+    ylab(yaxis_title) + 
+    xlab(xaxis_title) +
+    ggtitle(plot_title) + 
     facet_grid(. ~ rfm, scales = "free_x",
       labeller = labeller(
         rfm = c(amount = hist_m_label, recency_days = hist_r_label,
@@ -191,14 +191,12 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
     geom_bar(aes(x = monetary_score), fill = bar_color) +
     facet_grid(recency_score ~ frequency_score) +
     scale_y_continuous(sec.axis = sec_axis(~ ., name = sec_yaxis_title)) +
-    xlab(xaxis_title) + ylab(" ") + ggtitle(sec_xaxis_title) +
-    theme(
-      plot.title = element_text(
-        face = "plain", size = 11, hjust = 0.5
-      ),
-      axis.text.y = element_blank(),
-      axis.ticks.y = element_blank()
-    )
+    xlab(xaxis_title) + 
+    ylab(" ") + 
+    ggtitle(sec_xaxis_title) +
+    theme(plot.title = element_text(face = "plain", size = 11, hjust = 0.5),
+          axis.text.y = element_blank(),
+          axis.ticks.y = element_blank())
 
   if (print_plot) {
     print(p)
@@ -264,11 +262,11 @@ rfm_order_dist <- function(rfm_table, bar_color = 'blue',
     data %>%
     ggplot(aes(x = transaction_count, y = n)) +
     geom_bar(stat = "identity", fill = bar_color) +
-    xlab(xaxis_title) + ylab(yaxis_title) + ylim(0, ylim_max) +
+    xlab(xaxis_title) + 
+    ylab(yaxis_title) + 
+    ylim(0, ylim_max) +
     ggtitle(plot_title) +
-    geom_text(
-      aes(label = n, y = n + 3), position = position_dodge(0.9), vjust = 0
-    ) +
+    geom_text(aes(label = n, y = n + 3), position = position_dodge(0.9), vjust = 0) +
     theme(plot.title = element_text(hjust = 0.5))
 
   if (print_plot) {
