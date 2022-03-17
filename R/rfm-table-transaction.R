@@ -60,6 +60,21 @@ rfm_table_order.default <- function(data = NULL, customer_id = NULL, order_date 
     dplyr::select(!! cust_id, recency_days, transaction_count, amount) %>%
     set_names(c("customer_id", "recency_days", "transaction_count", "amount"))
 
+  out <- rfm_prep_bins(result, recency_bins, frequency_bins, monetary_bins, analysis_date)
+
+  class(out) <- c("rfm_table_order", "tibble", "data.frame")
+  return(out)
+
+}
+
+#' @export
+#'
+print.rfm_table_order <- function(x, ...) {
+  print(x$rfm)
+}
+
+rfm_prep_bins <- function(result, recency_bins, frequency_bins, monetary_bins, analysis_date) {
+
   result$recency_score   <- NA
   result$frequency_score <- NA
   result$monetary_score  <- NA
@@ -140,28 +155,7 @@ rfm_table_order.default <- function(data = NULL, customer_id = NULL, order_date 
                               monetary_lower  = lower_monetary,
                               monetary_upper  = upper_monetary)
 
-  out <- list(
-    rfm            = result,
-    analysis_date  = analysis_date,
-    frequency_bins = frequency_bins,
-    recency_bins   = recency_bins,
-    monetary_bins  = monetary_bins,
-    threshold      = threshold
-  )
-
-  class(out) <- c("rfm_table_order", "tibble", "data.frame")
-  return(out)
+  list(rfm = result, analysis_date = analysis_date, frequency_bins = frequency_bins,
+       recency_bins = recency_bins, monetary_bins = monetary_bins, threshold = threshold)
 
 }
-
-
-
-#' @export
-#'
-print.rfm_table_order <- function(x, ...) {
-  print(x$rfm)
-}
-
-
-
-
