@@ -56,7 +56,7 @@ rfm_table_customer_2.default <- function(data = NULL, customer_id = NULL, n_tran
 
   result <-
     data %>%
-    dplyr::mutate(recency_days = (analysis_date - !! recent_visit) / lubridate::ddays()) %>%
+    dplyr::mutate(recency_days = as.numeric(analysis_date - !! recent_visit, units = "days")) %>%
     dplyr::select(!! cust_id, recency_days, !! order_count, !! revenues) %>%
     set_names(c("customer_id", "recency_days", "transaction_count", "amount"))
 
