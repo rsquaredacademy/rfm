@@ -24,7 +24,6 @@ Imports:
     rlang,
     scales,
     stats,
-    tibble,
     utils,
     xplorerr
 Suggests: 

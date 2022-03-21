@@ -39,7 +39,6 @@ devtools::install_github("rsquaredacademy/rfm")
 
 ```{r, echo=FALSE, message=FALSE}
 library(rfm)
-options(tibble.width = Inf)
 ```
 
 ## Articles

@@ -19,7 +19,7 @@
 #' \item{frequency_bins}{Number of bins used for frequency score.}
 #' \item{recency_bins}{Number of bins used for recency score.}
 #' \item{monetary_bins}{Number of bins used for monetary score.}
-#' \item{threshold}{tibble with thresholds used for generating RFM scores.}
+#' \item{threshold}{thresholds used for generating RFM scores.}
 #'
 #' @examples
 #' analysis_date <- as.Date('2006-12-31')
@@ -148,12 +148,12 @@ rfm_prep_bins <- function(result, recency_bins, frequency_bins, monetary_bins, a
 
   result$transaction_count <- as.numeric(result$transaction_count)
 
-  threshold <- tibble::tibble(recency_lower   = lower_recency,
-                              recency_upper   = upper_recency,
-                              frequency_lower = lower_frequency,
-                              frequency_upper = upper_frequency,
-                              monetary_lower  = lower_monetary,
-                              monetary_upper  = upper_monetary)
+  threshold <- data.frame(recency_lower   = lower_recency,
+                          recency_upper   = upper_recency,
+                          frequency_lower = lower_frequency,
+                          frequency_upper = upper_frequency,
+                          monetary_lower  = lower_monetary,
+                          monetary_upper  = upper_monetary)
 
   list(rfm = result, analysis_date = analysis_date, frequency_bins = frequency_bins,
        recency_bins = recency_bins, monetary_bins = monetary_bins, threshold = threshold)

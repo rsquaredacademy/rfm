@@ -81,9 +81,9 @@ rfm_heatmap_data <- function(rfm_table) {
 rfm_hist_data <- function(rfm_table) {
 
   cnames <- c("recency_days", "transaction_count", "amount")
-  out    <- rfm_table$rfm[, cnames]
-  rfm    <- rep(cnames, each = nrow(out))
-  score  <- c(out$recency_days, out$transaction_count, out$amount)
+  data   <- rfm_table$rfm[, cnames]
+  rfm    <- rep(cnames, each = nrow(data))
+  score  <- c(data$recency_days, data$transaction_count, data$amount)
   data.frame(rfm, score)
   
 }
