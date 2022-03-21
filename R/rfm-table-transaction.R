@@ -56,7 +56,7 @@ rfm_table_order.default <- function(data = NULL, customer_id = NULL, order_date 
     dplyr::group_by(!! cust_id) %>%
     dplyr::summarise(date_most_recent = max(!! odate), amount = sum(!! revenues),
                      transaction_count = dplyr::n()) %>%
-    dplyr::mutate(recency_days = (analysis_date - date_most_recent) / lubridate::ddays()) %>%
+    dplyr::mutate(recency_days = as.numeric(analysis_date - date_most_recent, units = "days")) %>%
     dplyr::select(!! cust_id, recency_days, transaction_count, amount) %>%
     set_names(c("customer_id", "recency_days", "transaction_count", "amount"))
 

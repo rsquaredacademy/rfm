@@ -19,7 +19,6 @@ Imports:
     dplyr,
     ggplot2,
     gridExtra,
-    lubridate,
     magrittr,
     RColorBrewer,
     rlang,
