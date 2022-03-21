@@ -217,6 +217,7 @@ rfm_plot_segment_summary <- function(x, metric = NULL, sort = FALSE, ascending =
 #' @param flip logical; if \code{TRUE}, creates horizontal bar plot.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
+#' @examples
 #' analysis_date <- as.Date('2006-12-31')
 #' rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
 #' revenue, analysis_date)
@@ -293,11 +294,21 @@ rfm_prep_revenue_dist <- function(x) {
     x %>%
     dplyr::mutate(customer_share = customers / sum(customers),
                   revenue_share = revenue / sum(revenue)) %>%
-    dplyr::select(segment, customer_share, revenue_share) %>%
-    tidyr::pivot_longer(!segment, names_to = "category", values_to = "share")
+    dplyr::select(segment, customer_share, revenue_share) 
 
-  data$category <- factor(data$category, levels = c("revenue_share", "customer_share"))
-  return(data)
+  n_row    <- nrow(data)
+  segment  <- rep(data$segment, each = 2)
+  category <- rep(c("customer_share", "revenue_share"), times = n_row)
+
+  share <- c()
+  for (i in seq_len(n_row)) {
+    y <- as.numeric(data[i, c(2, 3)])
+    share <- c(share, y)
+  }
+
+  result <- data.frame(segment, category, share)
+  result$category <- factor(result$category, levels = c("revenue_share", "customer_share"))
+  return(result)
 }
 
 #' Segmentation plots

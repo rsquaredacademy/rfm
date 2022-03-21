@@ -80,11 +80,12 @@ rfm_heatmap_data <- function(rfm_table) {
 #'
 rfm_hist_data <- function(rfm_table) {
 
-  rfm_table %>%
-    magrittr::use_series(rfm) %>%
-    dplyr::select(recency_days, transaction_count, amount) %>%
-    tidyr::gather(rfm, score)
-
+  cnames <- c("recency_days", "transaction_count", "amount")
+  out    <- rfm_table$rfm[, cnames]
+  rfm    <- rep(cnames, each = nrow(out))
+  score  <- c(out$recency_days, out$transaction_count, out$amount)
+  data.frame(rfm, score)
+  
 }
 
 #' Bar chart data
