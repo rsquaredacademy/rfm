@@ -16,6 +16,7 @@ BugReports: https://github.com/rsquaredacademy/rfm/issues
 Depends: 
     R (>= 3.2)
 Imports: 
+    data.table,
     dplyr,
     ggplot2,
     gridExtra,

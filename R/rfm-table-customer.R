@@ -49,16 +49,15 @@ rfm_table_customer.default <- function(data = NULL, customer_id = NULL, n_transa
                                        recency_days = NULL, total_revenue = NULL, analysis_date = NULL, recency_bins = 5,
                                        frequency_bins = 5, monetary_bins = 5, ...) {
 
-  cust_id     <- rlang::enquo(customer_id)
-  order_count <- rlang::enquo(n_transactions)
-  n_recency   <- rlang::enquo(recency_days)
-  revenues    <- rlang::enquo(total_revenue)
+  cust_id     <- deparse(substitute(customer_id))
+  order_count <- deparse(substitute(n_transactions))
+  n_recency   <- deparse(substitute(recency_days))
+  revenues    <- deparse(substitute(total_revenue))
 
-  result <-
-    data %>%
-    dplyr::select(!! cust_id, !! n_recency, !! order_count, !! revenues) %>%
-    set_names(c("customer_id", "recency_days", "transaction_count", "amount"))
-
+  dm <- data.table(data)
+  result <- dm[, .(get(cust_id), get(n_recency), get(order_count), get(revenues))]
+  setDF(result)
+  colnames(result) <- c("customer_id", "recency_days", "transaction_count", "amount")
   out <- rfm_prep_bins(result, recency_bins, frequency_bins, monetary_bins, analysis_date)
 
   class(out) <- c("rfm_table_customer", "tibble", "data.frame")

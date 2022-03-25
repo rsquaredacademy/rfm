@@ -49,16 +49,16 @@ rfm_table_customer_2.default <- function(data = NULL, customer_id = NULL, n_tran
                                        latest_visit_date = NULL, total_revenue = NULL, analysis_date = NULL,
                                        recency_bins = 5, frequency_bins = 5, monetary_bins = 5, ...) {
 
-  cust_id      <- rlang::enquo(customer_id)
-  order_count  <- rlang::enquo(n_transactions)
-  recent_visit <- rlang::enquo(latest_visit_date)
-  revenues     <- rlang::enquo(total_revenue)
+  cust_id      <- deparse(substitute(customer_id))
+  order_count  <- deparse(substitute(n_transactions))
+  recent_visit <- deparse(substitute(latest_visit_date))
+  reven        <- deparse(substitute(total_revenue))
 
-  result <-
-    data %>%
-    dplyr::mutate(recency_days = as.numeric(analysis_date - !! recent_visit, units = "days")) %>%
-    dplyr::select(!! cust_id, recency_days, !! order_count, !! revenues) %>%
-    set_names(c("customer_id", "recency_days", "transaction_count", "amount"))
+  dm <- data.table(data)
+  dm[, ':='(recency_days = as.numeric(analysis_date - get(recent_visit), units = "days"))]
+  result <- dm[, .(get(cust_id), recency_days, get(order_count), get(reven))]
+  setDF(result)
+  colnames(result) <- c("customer_id", "recency_days", "transaction_count", "amount")
 
   out <- rfm_prep_bins(result, recency_bins, frequency_bins, monetary_bins, analysis_date)
 

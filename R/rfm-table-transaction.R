@@ -46,21 +46,12 @@ rfm_table_order.default <- function(data = NULL, customer_id = NULL, order_date 
                               revenue = NULL, analysis_date = NULL, recency_bins = 5,
                               frequency_bins = 5, monetary_bins = 5, ...) {
 
-  cust_id  <- rlang::enquo(customer_id)
-  odate    <- rlang::enquo(order_date)
-  revenues <- rlang::enquo(revenue)
+  cust_id <- deparse(substitute(customer_id))
+  odate <- deparse(substitute(order_date))
+  reven <- deparse(substitute(revenue))                                  
 
-  result <-
-    data %>%
-    dplyr::select(!! cust_id, !! odate, !! revenues) %>%
-    dplyr::group_by(!! cust_id) %>%
-    dplyr::summarise(date_most_recent = max(!! odate), amount = sum(!! revenues),
-                     transaction_count = dplyr::n()) %>%
-    dplyr::mutate(recency_days = as.numeric(analysis_date - date_most_recent, units = "days")) %>%
-    dplyr::select(!! cust_id, recency_days, transaction_count, amount) %>%
-    set_names(c("customer_id", "recency_days", "transaction_count", "amount"))
-
-  out <- rfm_prep_bins(result, recency_bins, frequency_bins, monetary_bins, analysis_date)
+  result <- rfm_prep_table_data(data, cust_id, odate, reven, analysis_date)
+  out    <- rfm_prep_bins(result, recency_bins, frequency_bins, monetary_bins, analysis_date)
 
   class(out) <- c("rfm_table_order", "tibble", "data.frame")
   return(out)
@@ -71,6 +62,24 @@ rfm_table_order.default <- function(data = NULL, customer_id = NULL, order_date 
 #'
 print.rfm_table_order <- function(x, ...) {
   print(x$rfm)
+}
+
+rfm_prep_table_data <- function(data, customer_id, order_date, revenue, analysis_date) {
+
+  dm <- data.table(data)
+  dm <- dm[, .(customer_id, order_date, revenue)]
+  by_cust <- 
+    dm[, .(date_most_recent = max(order_date),
+         amount = sum(revenue),
+         transaction_count = .N), 
+     by = customer_id]
+  
+  by_cust[, ':='(recency_days = as.numeric(analysis_date - date_most_recent, units = "days"))]
+  
+  result <- by_cust[, .(customer_id, recency_days, transaction_count, amount)]
+  setDF(result)
+  colnames(result) <- c("customer_id", "recency_days", "transaction_count", "amount")
+  return(result)
 }
 
 rfm_prep_bins <- function(result, recency_bins, frequency_bins, monetary_bins, analysis_date) {
@@ -143,8 +152,7 @@ rfm_prep_bins <- function(result, recency_bins, frequency_bins, monetary_bins, a
       result$amount < upper_monetary[i]] <- i
   }
 
-  result %<>%
-    dplyr::mutate(rfm_score = recency_score * 100 + frequency_score * 10 + monetary_score) 
+  result$rfm_score <- result$recency_score * 100 + result$frequency_score * 10 + result$monetary_score
 
   result$transaction_count <- as.numeric(result$transaction_count)
 

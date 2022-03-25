@@ -1,14 +1,14 @@
 #' @importFrom magrittr %>% %<>% use_series set_names extract extract2 add multiply_by
 #' @import ggplot2
+#' @import data.table
 #' @importFrom stats median runif quantile
 #' @importFrom utils available.packages menu update.packages packageVersion install.packages
 bins <- function(data, value, n_bins) {
 
-  my_value   <- enquo(value)
+  my_value   <- deparse(substitute(value))
   length_out <- n_bins + 1
 
-  data %>%
-    dplyr::pull(!! my_value) %>%
+  data[[my_value]] %>%
     quantile(probs = seq(0, 1, length.out = length_out)) %>%
     unname() %>%
     extract(c(-1, -length_out)) %>%
@@ -18,10 +18,9 @@ bins <- function(data, value, n_bins) {
 
 bins_lower <- function(data, value, bins) {
 
-  my_value <- enquo(value)
+  my_value   <- deparse(substitute(value))
 
-  data %>%
-    dplyr::pull(!! my_value) %>%
+  data[[my_value]] %>%
     min() %>%
     append(bins)
 
@@ -29,11 +28,10 @@ bins_lower <- function(data, value, bins) {
 
 bins_upper <- function(data, value, bins) {
 
-  my_value <- enquo(value)
+  my_value   <- deparse(substitute(value))
 
   data_max <-
-    data %>%
-    dplyr::pull(!! my_value) %>%
+    data[[my_value]] %>%
     max() %>%
     add(1)
 
