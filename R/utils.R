@@ -28,7 +28,7 @@ bins_lower <- function(data, value, bins) {
 
 bins_upper <- function(data, value, bins) {
 
-  my_value   <- deparse(substitute(value))
+  my_value <- deparse(substitute(value))
 
   data_max <-
     data[[my_value]] %>%
@@ -41,10 +41,9 @@ bins_upper <- function(data, value, bins) {
 
 check_levels <- function(rfm_heatmap_data, column) {
 
-  my_column <- enquo(column)
+  my_column <- deparse(substitute(column))
 
-  rfm_heatmap_data %>%
-    dplyr::pull(!! my_column) %>%
+  rfm_heatmap_data[[my_column]] %>%
     as.factor() %>%
     levels() %>%
     as.vector() %>%
@@ -59,7 +58,8 @@ modify_rfm <- function(rfm_heatmap_data, n_bins, check_levels) {
   extra_data        <- expand.grid(missing2, seq_len(n_bins), 0)
   names(extra_data) <- names(rfm_heatmap_data)
 
-  dplyr::bind_rows(rfm_heatmap_data, extra_data)
+  # dplyr::bind_rows(rfm_heatmap_data, extra_data)
+  rbind(rfm_heatmap_data, extra_data)
 
 }
 

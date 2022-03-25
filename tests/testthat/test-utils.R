@@ -45,7 +45,7 @@ test_that('output from check_levels is as expected', {
   actual <-
     rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date) %>%
     rfm_heatmap_data() %>%
-    check_levels(column = 2)
+    check_levels(column = recency_score)
 
   expected <- c(1, 2, 3, 4, 5)
   expect_equivalent(actual, expected)

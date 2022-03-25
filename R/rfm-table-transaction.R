@@ -47,8 +47,8 @@ rfm_table_order.default <- function(data = NULL, customer_id = NULL, order_date 
                               frequency_bins = 5, monetary_bins = 5, ...) {
 
   cust_id <- deparse(substitute(customer_id))
-  odate <- deparse(substitute(order_date))
-  reven <- deparse(substitute(revenue))                                  
+  odate   <- deparse(substitute(order_date))
+  reven   <- deparse(substitute(revenue))                                  
 
   result <- rfm_prep_table_data(data, cust_id, odate, reven, analysis_date)
   out    <- rfm_prep_bins(result, recency_bins, frequency_bins, monetary_bins, analysis_date)
