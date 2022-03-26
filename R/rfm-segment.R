@@ -40,28 +40,27 @@ rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
   customer_id <- NULL
   segment <- NULL
 
-  rfm_score_table <-
-    data %>%
-    use_series(rfm) %>%
-    dplyr::mutate(segment = 1)
+  rfm_score_table <- data$rfm
+  rfm_score_table$segment <- 1
+    # data %>%
+    # use_series(rfm) %>%
+    # dplyr::mutate(segment = 1)
 
   n_segments <- length(segment_names)
 
   for (i in seq_len(n_segments)) {
     rfm_score_table$segment[(
-      (rfm_score_table$recency_score %>% dplyr::between(recency_lower[i], recency_upper[i])) &
-        (rfm_score_table$frequency_score %>% dplyr::between(frequency_lower[i], frequency_upper[i])) &
-        (rfm_score_table$monetary_score %>% dplyr::between(monetary_lower[i], monetary_upper[i])) &
+      (rfm_score_table$recency_score %>% between(recency_lower[i], recency_upper[i])) &
+        (rfm_score_table$frequency_score %>% between(frequency_lower[i], frequency_upper[i])) &
+        (rfm_score_table$monetary_score %>% between(monetary_lower[i], monetary_upper[i])) &
         !rfm_score_table$segment %in% segment_names)] <- segment_names[i]
   }
 
   rfm_score_table$segment[is.na(rfm_score_table$segment)] <- "Others"
   rfm_score_table$segment[rfm_score_table$segment == 1]   <- "Others"
 
-  rfm_score_table %>%
-    dplyr::select(customer_id, segment, rfm_score, transaction_count, recency_days,
-           amount, recency_score, frequency_score,
-           monetary_score)
+  rfm_score_table[c("customer_id", "segment", "rfm_score", "transaction_count", "recency_days",
+                    "amount", "recency_score", "frequency_score", "monetary_score")]
 
 
 }
@@ -97,14 +96,18 @@ rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
 #' @export
 #'
 rfm_segment_summary <- function(segments) {
-  segments %>%
-    dplyr::group_by(segment) %>%
-    dplyr::summarise(
-      customers = dplyr::n(),
-      orders = sum(transaction_count),
-      revenue = sum(amount),
-      aov = revenue / orders
-    )
+
+  dm <- data.table(segments)
+  by_seg <-
+  dm[, .(customers = .N,
+          orders = sum(transaction_count),
+          revenue = sum(amount)),
+      by = segment]
+
+  setDF(by_seg)
+  by_seg$aov <- by_seg$revenue / by_seg$orders
+  return(by_seg)
+
 }
 
 #' Visulaize segment summary
@@ -155,23 +158,23 @@ rfm_plot_segment_summary <- function(x, metric = NULL, sort = FALSE, ascending =
     for (i in 2:n_plots) {
       j <- i - 1
       var <- vars[i]
-      data <- dplyr::select(x, segment, !!sym(var))
+      data <- x[c("segment", var)]
       if (sort) {
         if (ascending) {
           if (flip) {
-            p <- ggplot(data, aes(x = stats::reorder(segment, -!!sym(var), sum), y = !!sym(var)))
+            p <- ggplot(data, aes_string(x = paste0("reorder(segment, -", var, ", sum)"), y = var))
           } else {
-            p <- ggplot(data, aes(x = stats::reorder(segment, !!sym(var), sum), y = !!sym(var)))
+            p <- ggplot(data, aes_string(x = paste0("reorder(segment, ", var, ", sum)"), y = var))
           }
         } else {
           if (flip) {
-            p <- ggplot(data, aes(x = stats::reorder(segment, !!sym(var), sum), y = !!sym(var)))
+            p <- ggplot(data, aes_string(x = paste0("reorder(segment, ", var, ", sum)"), y = var))
           } else {
-            p <- ggplot(data, aes(x = stats::reorder(segment, -!!sym(var), sum), y = !!sym(var)))
+            p <- ggplot(data, aes_string(x = paste0("reorder(segment, -", var, ", sum)"), y = var))
           }
         }
       } else {
-        p <- ggplot(data, aes(x = segment, y = !!sym(var)))
+        p <- ggplot(data, aes_string(x = "segment", y = var))
       }
 
       p <-
@@ -290,11 +293,9 @@ rfm_plot_revenue_dist <- function(x, flip = FALSE, print_plot = TRUE) {
 
 rfm_prep_revenue_dist <- function(x) {
 
-  data <-
-    x %>%
-    dplyr::mutate(customer_share = customers / sum(customers),
-                  revenue_share = revenue / sum(revenue)) %>%
-    dplyr::select(segment, customer_share, revenue_share) 
+  x$customer_share <- x$customers / sum(x$customers)
+  x$revenue_share <- x$revenue / sum(x$revenue)
+  data <- x[c("segment", "customer_share", "revenue_share")]
 
   n_row    <- nrow(data)
   segment  <- rep(data$segment, each = 2)
@@ -400,16 +401,14 @@ rfm_plot_median_monetary <- function(rfm_segment_table, color = "blue", font_siz
 
 rfm_prep_median <- function(rfm_segment_table, metric) {
 
-  met <- rlang::enquo(metric)
+  met <- deparse(substitute(metric))
 
-  result <-
-    rfm_segment_table %>%
-    dplyr::group_by(segment) %>%
-    dplyr::select(segment, !!met) %>%
-    dplyr::summarise(mem = stats::median(!!met)) %>%
-    dplyr::arrange(mem)
-
-  colnames(result) <- c("segment", as_label(met))
+  d <- data.table(rfm_segment_table)
+  dm   <- d[, .(segment, met = get(met))]
+  result <- dm[, .(mem = median(met)), by = segment]
+  setDF(result)
+  result <- result[order(result$mem), ]
+  colnames(result) <- c("segment", met)
   return(result)
 
 }
@@ -427,15 +426,15 @@ rfm_plot_median <- function(data, color, font_size, sort, ascending, flip) {
   if (sort) {
     if (ascending) {
       if (flip) {
-        p <- ggplot(data, aes(x = stats::reorder(!!as.symbol(cnames[1]), -!!as.symbol(cnames[2]), sum), y = !!as.symbol(cnames[2])))
+        p <- ggplot(data, aes_string(x = paste0("reorder(", cnames[1], ", -", cnames[2], ", sum)"), y = cnames[2]))
       } else {
-        p <- ggplot(data, aes(x = stats::reorder(!!as.symbol(cnames[1]), !!as.symbol(cnames[2]), sum), y = !!as.symbol(cnames[2])))
+        p <- ggplot(data, aes_string(x = paste0("reorder(", cnames[1], ", ", cnames[2], ", sum)"), y = cnames[2]))
       }
     } else {
       if (flip) {
-        p <- ggplot(data, aes(x = stats::reorder(!!as.symbol(cnames[1]), !!as.symbol(cnames[2]), sum), y = !!as.symbol(cnames[2])))
+        p <- ggplot(data, aes_string(x = paste0("reorder(", cnames[1], ", ", cnames[2], ", sum)"), y = cnames[2]))
       } else {
-        p <- ggplot(data, aes(x = stats::reorder(!!as.symbol(cnames[1]), -!!as.symbol(cnames[2]), sum), y = !!as.symbol(cnames[2])))
+        p <- ggplot(data, aes_string(x = paste0("reorder(", cnames[1], ", -", cnames[2], ", sum)"), y = cnames[2]))
       }
     }
   } else {

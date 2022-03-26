@@ -1,7 +1,7 @@
 #' @importFrom magrittr %>% %<>% use_series set_names extract extract2 add multiply_by
 #' @import ggplot2
 #' @import data.table
-#' @importFrom stats median runif quantile
+#' @importFrom stats median runif quantile reorder
 #' @importFrom utils available.packages menu update.packages packageVersion install.packages
 bins <- function(data, value, n_bins) {
 
