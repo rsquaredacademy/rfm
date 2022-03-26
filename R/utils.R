@@ -57,8 +57,6 @@ modify_rfm <- function(rfm_heatmap_data, n_bins, check_levels) {
   missing2          <- seq_len(n_bins)[missing]
   extra_data        <- expand.grid(missing2, seq_len(n_bins), 0)
   names(extra_data) <- names(rfm_heatmap_data)
-
-  # dplyr::bind_rows(rfm_heatmap_data, extra_data)
   rbind(rfm_heatmap_data, extra_data)
 
 }

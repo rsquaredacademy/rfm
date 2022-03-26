@@ -25,12 +25,20 @@
 #'
 rfm_heatmap_data <- function(rfm_table) {
 
+  # result <-
+  #   rfm_table %>%
+  #   magrittr::use_series(rfm) %>%
+  #   dplyr::group_by(frequency_score, recency_score) %>%
+  #   dplyr::select(frequency_score, recency_score, amount) %>%
+  #   dplyr::summarise(monetary = mean(amount))
+
+  d <- data.table(rfm_table$rfm)
+  d <- d[, .(frequency_score, recency_score, amount)]
   result <-
-    rfm_table %>%
-    magrittr::use_series(rfm) %>%
-    dplyr::group_by(frequency_score, recency_score) %>%
-    dplyr::select(frequency_score, recency_score, amount) %>%
-    dplyr::summarise(monetary = mean(amount))
+    d[,
+      .(monetary = mean(amount)),
+      keyby = .(frequency_score, recency_score)]
+  setDF(result)
 
   l_frequency      <- check_levels(result, frequency_score)
   l_recency        <- check_levels(result, recency_score)
@@ -85,7 +93,7 @@ rfm_hist_data <- function(rfm_table) {
   rfm    <- rep(cnames, each = nrow(data))
   score  <- c(data$recency_days, data$transaction_count, data$amount)
   data.frame(rfm, score)
-  
+
 }
 
 #' Bar chart data

@@ -17,12 +17,10 @@ Depends:
     R (>= 3.2)
 Imports: 
     data.table,
-    dplyr,
     ggplot2,
     gridExtra,
     magrittr,
     RColorBrewer,
-    rlang,
     scales,
     stats,
     utils,
