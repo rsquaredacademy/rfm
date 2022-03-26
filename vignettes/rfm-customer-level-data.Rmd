@@ -89,7 +89,7 @@ rfm_result <- rfm_table_customer(rfm_data_customer, customer_id, number_of_order
   recency_days, revenue, analysis_date)
 rfm_result %>%
   use_series(rfm) %>%
-  slice(1:10) %>%
+  `[`(1:10, ) %>%
   kable() %>%
   kable_styling()
 ```
