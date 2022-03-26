@@ -87,9 +87,7 @@ rfm_result
 analysis_date <- as.Date('2007-01-01')
 rfm_result <- rfm_table_customer(rfm_data_customer, customer_id, number_of_orders,
   recency_days, revenue, analysis_date)
-rfm_result %>%
-  use_series(rfm) %>%
-  `[`(1:10, ) %>%
+rfm_result$rfm[1:10, ] %>%
   kable() %>%
   kable_styling()
 ```

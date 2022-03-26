@@ -13,6 +13,7 @@ vignette: >
 
 ```{r, echo=FALSE, message=FALSE}
 library(rfm)
+library(data.table)
 library(knitr)
 library(kableExtra)
 library(magrittr)
@@ -84,9 +85,7 @@ rfm_result
 ```{r rfm_table_order2, eval=TRUE, echo=FALSE}
 analysis_date <- as.Date("2006-12-31")
 rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
-rfm_result %>%
-  use_series(rfm) %>%
-  `[`(1:10, ) %>%
+rfm_result$rfm[1:10, ] %>%
   kable() %>
   kable_styling()
 ```
@@ -252,11 +251,16 @@ segments %>%
 
 Now that we have defined and segmented our customers, let us examine the distribution of customers across the segments. Ideally, we should have very few or no customer in segments such as `At Risk` or `Needs Attention`. 
 
-```{r rfm_customers}
-segments %>%
-  count(segment) %>%
-  arrange(desc(n)) %>%
-  rename(Segment = segment, Count = n)
+```{r rfm_customers, echo=FALSE}
+result <-
+  segments %>% 
+  data.table() %>% 
+  .[, .(Count = .N), by = segment] %>% 
+  .[order(-Count)] %>% 
+  setnames(old = "segment", new = "Segment") %>% 
+  setDF()
+
+result
 ```
 
 We can also examine the median recency, frequency and monetary value across segments to ensure that the
