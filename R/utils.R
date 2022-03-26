@@ -1,4 +1,4 @@
-#' @importFrom magrittr %>% %<>% use_series set_names extract extract2 add multiply_by
+#' @import magrittr 
 #' @import ggplot2
 #' @import data.table
 #' @importFrom stats median runif quantile reorder

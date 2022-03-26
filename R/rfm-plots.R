@@ -253,7 +253,7 @@ rfm_order_dist <- function(rfm_table, bar_color = 'blue',
 
   ylim_max <-
     data %>%
-    magrittr::use_series(n) %>% 
+    use_series(n) %>% 
     max() %>%
     multiply_by(1.1) %>%
     ceiling(.)

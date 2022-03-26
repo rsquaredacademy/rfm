@@ -25,13 +25,6 @@
 #'
 rfm_heatmap_data <- function(rfm_table) {
 
-  # result <-
-  #   rfm_table %>%
-  #   magrittr::use_series(rfm) %>%
-  #   dplyr::group_by(frequency_score, recency_score) %>%
-  #   dplyr::select(frequency_score, recency_score, amount) %>%
-  #   dplyr::summarise(monetary = mean(amount))
-
   d <- data.table(rfm_table$rfm)
   d <- d[, .(frequency_score, recency_score, amount)]
   result <-
@@ -44,8 +37,8 @@ rfm_heatmap_data <- function(rfm_table) {
   l_recency        <- check_levels(result, recency_score)
   levels_frequency <- check_levels(result, frequency_score) %>% length()
   levels_recency   <- check_levels(result, recency_score) %>% length()
-  f_frequency      <- magrittr::use_series(rfm_table, frequency_bins)
-  r_recency        <- magrittr::use_series(rfm_table, recency_bins)
+  f_frequency      <- use_series(rfm_table, frequency_bins)
+  r_recency        <- use_series(rfm_table, recency_bins)
 
   if (levels_frequency != f_frequency) {
     result %<>%
@@ -125,11 +118,11 @@ rfm_barchart_data <- function(rfm_table) {
 
   rlevels <-
     rfm_table %>%
-    magrittr::use_series(recency_bins) %>%
+    use_series(recency_bins) %>%
     seq_len(.) %>%
     rev()
 
-  data <- magrittr::use_series(rfm_table, rfm)
+  data <- use_series(rfm_table, rfm)
   data$recency_score <- factor(data$recency_score, levels = rlevels)
 
   return(data)
