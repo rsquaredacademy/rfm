@@ -13,6 +13,7 @@ vignette: >
 
 ```{r, echo=FALSE, message=FALSE}
 library(rfm)
+library(data.table)
 library(knitr)
 library(kableExtra)
 library(magrittr)
