@@ -54,12 +54,14 @@ rfm_table_customer_2.default <- function(data = NULL, customer_id = NULL, n_tran
   recent_visit <- deparse(substitute(latest_visit_date))
   reven        <- deparse(substitute(total_revenue))
 
-  dm <- data.table(data)
-  dm[, ':='(recency_days = as.numeric(analysis_date - get(recent_visit), units = "days"))]
-  result <- dm[, .(get(cust_id), recency_days, get(order_count), get(reven))]
-  setDF(result)
+  result <- 
+    data %>% 
+    data.table() %>% 
+    .[, ':='(recency_days = as.numeric(analysis_date - get(recent_visit), units = "days"))] %>% 
+    .[, .(get(cust_id), recency_days, get(order_count), get(reven))] %>% 
+    setDF()
+  
   colnames(result) <- c("customer_id", "recency_days", "transaction_count", "amount")
-
   out <- rfm_prep_bins(result, recency_bins, frequency_bins, monetary_bins, analysis_date)
 
   class(out) <- c("rfm_table_customer_2", "tibble", "data.frame")

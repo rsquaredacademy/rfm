@@ -42,9 +42,6 @@ rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
 
   rfm_score_table <- data$rfm
   rfm_score_table$segment <- 1
-    # data %>%
-    # use_series(rfm) %>%
-    # dplyr::mutate(segment = 1)
 
   n_segments <- length(segment_names)
 
@@ -97,16 +94,17 @@ rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
 #'
 rfm_segment_summary <- function(segments) {
 
-  dm <- data.table(segments)
-  by_seg <-
-  dm[, .(customers = .N,
+  result <- 
+    segments %>% 
+    data.table() %>% 
+    .[, .(customers = .N,
           orders = sum(transaction_count),
           revenue = sum(amount)),
-      by = segment]
+      by = segment] %>% 
+    setDF()
 
-  setDF(by_seg)
-  by_seg$aov <- by_seg$revenue / by_seg$orders
-  return(by_seg)
+  result$aov <- result$revenue / result$orders
+  return(result)
 
 }
 
@@ -403,12 +401,15 @@ rfm_prep_median <- function(rfm_segment_table, metric) {
 
   met <- deparse(substitute(metric))
 
-  d <- data.table(rfm_segment_table)
-  dm   <- d[, .(segment, met = get(met))]
-  result <- dm[, .(mem = median(met)), by = segment]
-  setDF(result)
-  result <- result[order(result$mem), ]
-  colnames(result) <- c("segment", met)
+  result <- 
+    rfm_segment_table %>% 
+    data.table() %>% 
+    .[, .(segment, met = get(met))] %>% 
+    .[, .(mem = median(met)), by = segment] %>% 
+    .[order(mem)] %>% 
+    setnames(old = "mem", new = met) %>%
+    setDF()
+
   return(result)
 
 }

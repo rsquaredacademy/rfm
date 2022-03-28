@@ -54,9 +54,12 @@ rfm_table_customer.default <- function(data = NULL, customer_id = NULL, n_transa
   n_recency   <- deparse(substitute(recency_days))
   revenues    <- deparse(substitute(total_revenue))
 
-  dm <- data.table(data)
-  result <- dm[, .(get(cust_id), get(n_recency), get(order_count), get(revenues))]
-  setDF(result)
+  result <- 
+    data %>% 
+    data.table() %>% 
+    .[, .(get(cust_id), get(n_recency), get(order_count), get(revenues))] %>% 
+    setDF()
+    
   colnames(result) <- c("customer_id", "recency_days", "transaction_count", "amount")
   out <- rfm_prep_bins(result, recency_bins, frequency_bins, monetary_bins, analysis_date)
 

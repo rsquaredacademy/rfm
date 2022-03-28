@@ -25,13 +25,14 @@
 #'
 rfm_heatmap_data <- function(rfm_table) {
 
-  d <- data.table(rfm_table$rfm)
-  d <- d[, .(frequency_score, recency_score, amount)]
-  result <-
-    d[,
-      .(monetary = mean(amount)),
-      keyby = .(frequency_score, recency_score)]
-  setDF(result)
+  result <- 
+    rfm_table %>% 
+    use_series(rfm) %>% 
+    data.table() %>% 
+    .[, .(frequency_score, recency_score, amount)] %>% 
+    .[, .(monetary = mean(amount)), 
+      keyby = .(frequency_score, recency_score)] %>% 
+    setDF()
 
   l_frequency      <- check_levels(result, frequency_score)
   l_recency        <- check_levels(result, recency_score)

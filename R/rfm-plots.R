@@ -246,10 +246,12 @@ rfm_order_dist <- function(rfm_table, bar_color = 'blue',
                            plot_title = 'Customers by Orders',
                            plot_title_justify = 0.5, print_plot = TRUE) {
 
-
-  d <- data.table(rfm_table$rfm)
-  data <- d[, .(n = .N), by = transaction_count]
-  setDF(data)
+  data <- 
+    rfm_table %>% 
+    use_series(rfm) %>% 
+    data.table() %>% 
+    .[, .(n = .N), by = transaction_count] %>% 
+    setDF()
 
   ylim_max <-
     data %>%

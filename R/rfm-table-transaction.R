@@ -66,19 +66,17 @@ print.rfm_table_order <- function(x, ...) {
 
 rfm_prep_table_data <- function(data, customer_id, order_date, revenue, analysis_date) {
 
-  dm <- data.table(data)
-  dm <- dm[, .(customer_id, order_date, revenue)]
-  by_cust <- 
-    dm[, .(date_most_recent = max(order_date),
-         amount = sum(revenue),
-         transaction_count = .N), 
-     by = customer_id]
-  
-  by_cust[, ':='(recency_days = as.numeric(analysis_date - date_most_recent, units = "days"))]
-  
-  result <- by_cust[, .(customer_id, recency_days, transaction_count, amount)]
-  setDF(result)
-  colnames(result) <- c("customer_id", "recency_days", "transaction_count", "amount")
+  result <- 
+    data %>% 
+    data.table() %>% 
+    .[, .(date_most_recent = max(order_date),
+          amount = sum(revenue),
+          transaction_count = .N), 
+      by = customer_id] %>% 
+    .[, ':='(recency_days = as.numeric(analysis_date - date_most_recent, units = "days"))] %>% 
+    .[, .(customer_id, recency_days, transaction_count, amount)] %>% 
+    setDF()
+
   return(result)
 }
 
