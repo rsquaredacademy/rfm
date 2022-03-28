@@ -29,7 +29,7 @@ test_that('output from rfm_heatmap_data is as expected', {
   actual <-
     rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date) %>%
     rfm_heatmap_data() %>%
-    dplyr::pull(monetary) %>%
+    magrittr::use_series(monetary) %>%
     sum() %>%
     round()
 
@@ -45,7 +45,7 @@ test_that('output from check_levels is as expected', {
   actual <-
     rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date) %>%
     rfm_heatmap_data() %>%
-    check_levels(column = 2)
+    check_levels(column = recency_score)
 
   expected <- c(1, 2, 3, 4, 5)
   expect_equivalent(actual, expected)
@@ -64,7 +64,7 @@ test_that('output from modify_rfm is as expected', {
 
   actual <-
     modify_rfm(heat, 5, clevel) %>%
-    dplyr::pull(monetary) %>%
+    magrittr::use_series(monetary) %>%
     sum() %>%
     round()
 

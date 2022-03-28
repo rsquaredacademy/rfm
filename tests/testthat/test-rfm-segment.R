@@ -26,7 +26,7 @@ test_that('first 10 rows of output from rfm_segment are as expected', {
   monetary_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
   monetary_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
 
-  actual <- rfm_segment(
+  segment <- rfm_segment(
     rfm_result,
     segment_names,
     recency_lower,
@@ -37,8 +37,11 @@ test_that('first 10 rows of output from rfm_segment are as expected', {
     monetary_upper
   )
 
-  segments <- rfm_segment_summary(actual)
+  segments <- rfm_segment_summary(segment)
 
+  result <- segment[order(segment$customer_id), c("customer_id", "segment")]
+  actual <- result[1:10, ]
+  row.names(actual) <- NULL
   expected <- structure(list(customer_id = c(
     "Abbey O'Reilly DVM", "Add Senger",
     "Aden Lesch Sr.", "Admiral Senger", "Agness O'Keefe", "Aileen Barton",
@@ -50,13 +53,9 @@ test_that('first 10 rows of output from rfm_segment are as expected', {
   )), row.names = c(
     NA,
     -10L
-  ), class = c("tbl_df", "tbl", "data.frame"))
+  ), class = c("data.frame"))
 
-  expect_equal(
-    actual[1:10, c("customer_id", "segment")],
-    expected
-  )
-
+  expect_equal(actual, expected)
   expect_equal(segments[segments$segment == "Champions",][[2]], 158)
   expect_equal(segments[segments$segment == "Champions",][[3]], 1234)
   expect_equal(segments[segments$segment == "Champions",][[4]],  120178)

@@ -46,7 +46,7 @@ rfm_table_customer_2(
 \item{frequency_bins}{Number of bins used for frequency score.}
 \item{recency_bins}{Number of bins used for recency score.}
 \item{monetary_bins}{Number of bins used for monetary score.}
-\item{threshold}{tibble with thresholds used for generating RFM scores.}
+\item{threshold}{thresholds used for generating RFM scores.}
 }
 \description{
 Recency, frequency, monetary and RFM score.

@@ -25,19 +25,21 @@
 #'
 rfm_heatmap_data <- function(rfm_table) {
 
-  result <-
-    rfm_table %>%
-    magrittr::use_series(rfm) %>%
-    dplyr::group_by(frequency_score, recency_score) %>%
-    dplyr::select(frequency_score, recency_score, amount) %>%
-    dplyr::summarise(monetary = mean(amount))
+  result <- 
+    rfm_table %>% 
+    use_series(rfm) %>% 
+    data.table() %>% 
+    .[, .(frequency_score, recency_score, amount)] %>% 
+    .[, .(monetary = mean(amount)), 
+      keyby = .(frequency_score, recency_score)] %>% 
+    setDF()
 
   l_frequency      <- check_levels(result, frequency_score)
   l_recency        <- check_levels(result, recency_score)
   levels_frequency <- check_levels(result, frequency_score) %>% length()
   levels_recency   <- check_levels(result, recency_score) %>% length()
-  f_frequency      <- magrittr::use_series(rfm_table, frequency_bins)
-  r_recency        <- magrittr::use_series(rfm_table, recency_bins)
+  f_frequency      <- use_series(rfm_table, frequency_bins)
+  r_recency        <- use_series(rfm_table, recency_bins)
 
   if (levels_frequency != f_frequency) {
     result %<>%
@@ -80,10 +82,11 @@ rfm_heatmap_data <- function(rfm_table) {
 #'
 rfm_hist_data <- function(rfm_table) {
 
-  rfm_table %>%
-    magrittr::use_series(rfm) %>%
-    dplyr::select(recency_days, transaction_count, amount) %>%
-    tidyr::gather(rfm, score)
+  cnames <- c("recency_days", "transaction_count", "amount")
+  data   <- rfm_table$rfm[, cnames]
+  rfm    <- rep(cnames, each = nrow(data))
+  score  <- c(data$recency_days, data$transaction_count, data$amount)
+  data.frame(rfm, score)
 
 }
 
@@ -116,11 +119,11 @@ rfm_barchart_data <- function(rfm_table) {
 
   rlevels <-
     rfm_table %>%
-    magrittr::use_series(recency_bins) %>%
+    use_series(recency_bins) %>%
     seq_len(.) %>%
     rev()
 
-  data <- magrittr::use_series(rfm_table, rfm)
+  data <- use_series(rfm_table, rfm)
   data$recency_score <- factor(data$recency_score, levels = rlevels)
 
   return(data)

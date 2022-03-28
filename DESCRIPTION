@@ -16,17 +16,13 @@ BugReports: https://github.com/rsquaredacademy/rfm/issues
 Depends: 
     R (>= 3.2)
 Imports: 
-    dplyr,
+    data.table,
     ggplot2,
     gridExtra,
-    lubridate,
     magrittr,
     RColorBrewer,
-    rlang,
     scales,
     stats,
-    tibble,
-    tidyr,
     utils,
     xplorerr
 Suggests: 
