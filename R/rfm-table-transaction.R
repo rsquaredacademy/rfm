@@ -37,12 +37,6 @@
 #' @export
 #'
 rfm_table_order <- function(data = NULL, customer_id = NULL, order_date = NULL,
-                      revenue = NULL, analysis_date = NULL, recency_bins = 5,
-                      frequency_bins = 5, monetary_bins = 5, ...) UseMethod("rfm_table_order")
-
-#' @export
-#'
-rfm_table_order.default <- function(data = NULL, customer_id = NULL, order_date = NULL,
                               revenue = NULL, analysis_date = NULL, recency_bins = 5,
                               frequency_bins = 5, monetary_bins = 5, ...) {
 
@@ -53,15 +47,8 @@ rfm_table_order.default <- function(data = NULL, customer_id = NULL, order_date 
   result <- rfm_prep_table_data(data, cust_id, odate, reven, analysis_date)
   out    <- rfm_prep_bins(result, recency_bins, frequency_bins, monetary_bins, analysis_date)
 
-  class(out) <- c("rfm_table_order", "tibble", "data.frame")
   return(out)
 
-}
-
-#' @export
-#'
-print.rfm_table_order <- function(x, ...) {
-  print(x$rfm)
 }
 
 rfm_prep_table_data <- function(data, customer_id, order_date, revenue, analysis_date) {
