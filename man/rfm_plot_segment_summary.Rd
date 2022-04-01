@@ -51,6 +51,7 @@ monetary_upper)
 
 segment_overview <- rfm_segment_summary(segments)
 rfm_plot_segment_summary(segment_overview)
+rfm_plot_segment_summary(segment_overview, metric = c("customers", "orders"))
 rfm_plot_segment_summary(segment_overview, sort = TRUE, ascending = TRUE)
 rfm_plot_segment_summary(segment_overview, sort = TRUE)
 rfm_plot_segment_summary(segment_overview, flip = TRUE)
