@@ -85,17 +85,51 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">rfm_plot_median_recency</span><span class="op">(</span><span class="va">rfm_segment_table</span>, print_plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">rfm_plot_median_recency</span><span class="op">(</span>
+  <span class="va">rfm_segment_table</span>,
+  color <span class="op">=</span> <span class="st">"blue"</span>,
+  font_size <span class="op">=</span> <span class="fl">6</span>,
+  sort <span class="op">=</span> <span class="cn">FALSE</span>,
+  ascending <span class="op">=</span> <span class="cn">FALSE</span>,
+  flip <span class="op">=</span> <span class="cn">FALSE</span>,
+  print_plot <span class="op">=</span> <span class="cn">TRUE</span>
+<span class="op">)</span>
 
-<span class="fu">rfm_plot_median_frequency</span><span class="op">(</span><span class="va">rfm_segment_table</span>, print_plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="fu">rfm_plot_median_frequency</span><span class="op">(</span>
+  <span class="va">rfm_segment_table</span>,
+  color <span class="op">=</span> <span class="st">"blue"</span>,
+  font_size <span class="op">=</span> <span class="fl">6</span>,
+  sort <span class="op">=</span> <span class="cn">FALSE</span>,
+  ascending <span class="op">=</span> <span class="cn">FALSE</span>,
+  flip <span class="op">=</span> <span class="cn">FALSE</span>,
+  print_plot <span class="op">=</span> <span class="cn">TRUE</span>
+<span class="op">)</span>
 
-<span class="fu">rfm_plot_median_monetary</span><span class="op">(</span><span class="va">rfm_segment_table</span>, print_plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<span class="fu">rfm_plot_median_monetary</span><span class="op">(</span>
+  <span class="va">rfm_segment_table</span>,
+  color <span class="op">=</span> <span class="st">"blue"</span>,
+  font_size <span class="op">=</span> <span class="fl">6</span>,
+  sort <span class="op">=</span> <span class="cn">FALSE</span>,
+  ascending <span class="op">=</span> <span class="cn">FALSE</span>,
+  flip <span class="op">=</span> <span class="cn">FALSE</span>,
+  print_plot <span class="op">=</span> <span class="cn">TRUE</span>
+<span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>rfm_segment_table</dt>
 <dd><p>Output from <code>rfm_segment</code>.</p></dd>
+<dt>color</dt>
+<dd><p>Color of the bars.</p></dd>
+<dt>font_size</dt>
+<dd><p>Font size for X axis text.</p></dd>
+<dt>sort</dt>
+<dd><p>logical; if <code>TRUE</code>, sort metrics.</p></dd>
+<dt>ascending</dt>
+<dd><p>logical; if <code>TRUE</code>, sort metrics in ascending order.</p></dd>
+<dt>flip</dt>
+<dd><p>logical; if <code>TRUE</code>, creates horizontal bar plot.</p></dd>
 <dt>print_plot</dt>
 <dd><p>logical; if <code>TRUE</code>, prints the plot else returns a plot object.</p></dd>
 </dl></div>
@@ -123,10 +157,16 @@
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">rfm_plot_median_recency</span><span class="op">(</span><span class="va">segments</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="rfm_plot_median_recency-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="fu">rfm_plot_median_frequency</span><span class="op">(</span><span class="va">segments</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">rfm_plot_median_recency</span><span class="op">(</span><span class="va">segments</span>, sort <span class="op">=</span> <span class="cn">TRUE</span>, ascending <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="rfm_plot_median_recency-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="fu">rfm_plot_median_monetary</span><span class="op">(</span><span class="va">segments</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">rfm_plot_median_recency</span><span class="op">(</span><span class="va">segments</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="rfm_plot_median_recency-3.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span class="fu">rfm_plot_median_recency</span><span class="op">(</span><span class="va">segments</span>, flip <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-plt img"><img src="rfm_plot_median_recency-4.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span class="fu">rfm_plot_median_frequency</span><span class="op">(</span><span class="va">segments</span><span class="op">)</span></span>
+<span class="r-plt img"><img src="rfm_plot_median_recency-5.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span class="fu">rfm_plot_median_monetary</span><span class="op">(</span><span class="va">segments</span><span class="op">)</span></span>
+<span class="r-plt img"><img src="rfm_plot_median_recency-6.png" alt="" width="700" height="433"></span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>
@@ -138,11 +178,13 @@
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by <a href="https://www.aravindhebbali.com" class="external-link">Aravind Hebbali</a>.</p>
+  <p></p><p>Developed by <a href="https://www.aravindhebbali.com" class="external-link">Aravind
+Hebbali</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
       </footer></div>

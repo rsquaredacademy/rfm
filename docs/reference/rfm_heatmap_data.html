@@ -103,21 +103,32 @@
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># heat map data</span></span>
 <span class="r-in"><span class="fu">rfm_heatmap_data</span><span class="op">(</span><span class="va">rfm_order</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 25 x 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   frequency_score [5]</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    frequency_score recency_score monetary</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>               1             1     208.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>               1             2     247.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>               1             3     246.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>               1             4     213.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>               1             5     262.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>               2             1     380.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>               2             2     408.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>               2             3     355.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>               2             4     375.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>               2             5     370.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ... with 15 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                1             1 208.3982</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                1             2 246.9815</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                1             3 246.3000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                1             4 213.4194</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                1             5 262.1667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                2             1 380.5000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7                2             2 407.5385</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8                2             3 355.0833</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9                2             4 375.1667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10               2             5 370.0278</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11               3             1 530.2400</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12               3             2 516.6486</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13               3             3 446.6087</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14               3             4 451.8788</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15               3             5 467.0000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16               4             1 575.4091</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17               4             2 599.4706</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18               4             3 603.7857</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19               4             4 617.0714</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20               4             5 564.5085</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21               5             1 746.6667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22               5             2 873.1053</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23               5             3 846.9048</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24               5             4 866.4324</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25               5             5 862.4000</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># using customer data</span></span>
 <span class="r-in"><span class="va">analysis_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2007-01-01'</span><span class="op">)</span></span>
@@ -126,21 +137,32 @@
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># heat map data</span></span>
 <span class="r-in"><span class="fu">rfm_heatmap_data</span><span class="op">(</span><span class="va">rfm_customer</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 25 x 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   frequency_score [5]</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    frequency_score recency_score monetary</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>               1             1     537.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>               1             2     571.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>               1             3     580.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>               1             4     584.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>               1             5     593.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>               2             1     812.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>               2             2     814.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>               2             3     811.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>               2             4     822.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>               2             5     813.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ... with 15 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    frequency_score recency_score  monetary</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                1             1  536.8644</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                1             2  570.5215</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                1             3  579.9108</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                1             4  584.2790</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                1             5  593.4045</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                2             1  811.7163</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7                2             2  813.6919</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8                2             3  810.9384</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9                2             4  821.7216</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10               2             5  812.9264</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11               3             1  953.3083</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12               3             2  961.4024</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13               3             3  949.6547</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14               3             4  946.6957</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15               3             5  945.6492</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16               4             1 1091.6442</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17               4             2 1087.0097</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18               4             3 1090.6269</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19               4             4 1099.8690</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20               4             5 1096.4770</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21               5             1 1333.6814</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22               5             2 1368.3935</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23               5             3 1390.5560</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24               5             4 1385.8354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25               5             5 1395.0101</span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>
@@ -152,11 +174,13 @@
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by <a href="https://www.aravindhebbali.com" class="external-link">Aravind Hebbali</a>.</p>
+  <p></p><p>Developed by <a href="https://www.aravindhebbali.com" class="external-link">Aravind
+Hebbali</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
       </footer></div>

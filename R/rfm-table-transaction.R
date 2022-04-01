@@ -37,12 +37,6 @@
 #' @export
 #'
 rfm_table_order <- function(data = NULL, customer_id = NULL, order_date = NULL,
-                      revenue = NULL, analysis_date = NULL, recency_bins = 5,
-                      frequency_bins = 5, monetary_bins = 5, ...) UseMethod("rfm_table_order")
-
-#' @export
-#'
-rfm_table_order.default <- function(data = NULL, customer_id = NULL, order_date = NULL,
                               revenue = NULL, analysis_date = NULL, recency_bins = 5,
                               frequency_bins = 5, monetary_bins = 5, ...) {
 
@@ -53,15 +47,8 @@ rfm_table_order.default <- function(data = NULL, customer_id = NULL, order_date 
   result <- rfm_prep_table_data(data, cust_id, odate, reven, analysis_date)
   out    <- rfm_prep_bins(result, recency_bins, frequency_bins, monetary_bins, analysis_date)
 
-  class(out) <- c("rfm_table_order", "tibble", "data.frame")
   return(out)
 
-}
-
-#' @export
-#'
-print.rfm_table_order <- function(x, ...) {
-  print(x$rfm)
 }
 
 rfm_prep_table_data <- function(data, customer_id, order_date, revenue, analysis_date) {
@@ -88,15 +75,12 @@ rfm_prep_bins <- function(result, recency_bins, frequency_bins, monetary_bins, a
 
   if (length(recency_bins) == 1) {
     rscore <- rev(seq_len(recency_bins))
-  } else {
-    rscore <- rev(seq_len((length(recency_bins) + 1)))
-  }
-
-  if (length(recency_bins) == 1) {
     bins_recency <- bins(result, recency_days, recency_bins)
   } else {
+    rscore <- rev(seq_len((length(recency_bins) + 1)))
     bins_recency <- recency_bins
   }
+
   lower_recency <- bins_lower(result, recency_days, bins_recency)
   upper_recency <- bins_upper(result, recency_days, bins_recency)
 
@@ -110,15 +94,12 @@ rfm_prep_bins <- function(result, recency_bins, frequency_bins, monetary_bins, a
 
   if (length(frequency_bins) == 1) {
     fscore <- rev(seq_len(frequency_bins))
-  } else {
-    fscore <- rev(seq_len((length(frequency_bins) + 1)))
-  }
-
-  if (length(frequency_bins) == 1) {
     bins_frequency <- bins(result, transaction_count, frequency_bins)
   } else {
+    fscore <- rev(seq_len((length(frequency_bins) + 1)))
     bins_frequency <- frequency_bins
   }
+
   lower_frequency <- bins_lower(result, transaction_count, bins_frequency)
   upper_frequency <- bins_upper(result, transaction_count, bins_frequency)
 
@@ -131,15 +112,13 @@ rfm_prep_bins <- function(result, recency_bins, frequency_bins, monetary_bins, a
 
   if (length(monetary_bins) == 1) {
     mscore <- rev(seq_len(monetary_bins))
-  } else {
-    mscore <- rev(seq_len((length(monetary_bins) + 1)))
-  }
-
-  if (length(monetary_bins) == 1) {
     bins_monetary <- bins(result, amount, monetary_bins)
   } else {
+    mscore <- rev(seq_len((length(monetary_bins) + 1)))
     bins_monetary <- monetary_bins
   }
+
+
   lower_monetary <- bins_lower(result, amount, bins_monetary)
   upper_monetary <- bins_upper(result, amount, bins_monetary)
 
