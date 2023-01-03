@@ -94,13 +94,13 @@ rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
 #'
 rfm_segment_summary <- function(segments) {
 
-  result <- 
-    segments %>% 
-    data.table() %>% 
+  result <-
+    segments %>%
+    data.table() %>%
     .[, .(customers = .N,
           orders = sum(transaction_count),
           revenue = sum(amount)),
-      by = segment] %>% 
+      by = segment] %>%
     setDF()
 
   result$aov <- result$revenue / result$orders
@@ -141,6 +141,7 @@ rfm_segment_summary <- function(segments) {
 #'
 #' segment_overview <- rfm_segment_summary(segments)
 #' rfm_plot_segment_summary(segment_overview)
+#' rfm_plot_segment_summary(segment_overview, metric = c("customers", "orders"))
 #' rfm_plot_segment_summary(segment_overview, sort = TRUE, ascending = TRUE)
 #' rfm_plot_segment_summary(segment_overview, sort = TRUE)
 #' rfm_plot_segment_summary(segment_overview, flip = TRUE)
@@ -150,60 +151,74 @@ rfm_segment_summary <- function(segments) {
 rfm_plot_segment_summary <- function(x, metric = NULL, sort = FALSE, ascending = FALSE, flip = FALSE, print_plot = TRUE) {
 
   if (is.null(metric)) {
-    vars <- colnames(x)
-    n_plots <- length(vars)
-    plots <- list()
-    for (i in 2:n_plots) {
-      j <- i - 1
-      var <- vars[i]
-      data <- x[c("segment", var)]
-      if (sort) {
-        if (ascending) {
-          if (flip) {
-            p <- ggplot(data, aes_string(x = paste0("reorder(segment, -", var, ", sum)"), y = var))
-          } else {
-            p <- ggplot(data, aes_string(x = paste0("reorder(segment, ", var, ", sum)"), y = var))
-          }
-        } else {
-          if (flip) {
-            p <- ggplot(data, aes_string(x = paste0("reorder(segment, ", var, ", sum)"), y = var))
-          } else {
-            p <- ggplot(data, aes_string(x = paste0("reorder(segment, -", var, ", sum)"), y = var))
-          }
-        }
-      } else {
-        p <- ggplot(data, aes_string(x = "segment", y = var))
-      }
-
-      p <-
-        p +
-        geom_bar(stat = "identity", fill = "blue") +
-        ggtitle(paste(vars[i], "by segment"))
-
-      if (flip) {
-        p <-
-          p +
-          coord_flip() +
-          xlab(vars[i]) +
-          ylab("Segment") +
-          theme(axis.text.y = element_text(size = 7))
-      } else {
-        p <-
-          p +
-          xlab("Segment") +
-          ylab(vars[i]) +
-          theme(axis.text.x = element_text(size = 7))
-      }
-
-      plots[[j]] <- p
-
-    }
+    x <- x
+  } else {
+    x <- x[c("segment", metric)]
   }
 
-  names(plots) <- c("customers", "orders", "revenue", "aov")
+  vars <- colnames(x)
+  n_plots <- length(vars)
+  plots <- list()
+  for (i in 2:n_plots) {
+    j <- i - 1
+    var <- vars[i]
+    data <- x[c("segment", var)]
+    if (sort) {
+      if (ascending) {
+        if (flip) {
+          p <- ggplot(data, aes_string(x = paste0("reorder(segment, -", var, ", sum)"), y = var))
+        } else {
+          p <- ggplot(data, aes_string(x = paste0("reorder(segment, ", var, ", sum)"), y = var))
+        }
+      } else {
+        if (flip) {
+          p <- ggplot(data, aes_string(x = paste0("reorder(segment, ", var, ", sum)"), y = var))
+        } else {
+          p <- ggplot(data, aes_string(x = paste0("reorder(segment, -", var, ", sum)"), y = var))
+        }
+      }
+    } else {
+      p <- ggplot(data, aes_string(x = "segment", y = var))
+    }
 
+    p <-
+      p +
+      geom_bar(stat = "identity", fill = "blue") +
+      ggtitle(paste(vars[i], "by segment"))
+
+    if (flip) {
+      p <-
+        p +
+        coord_flip() +
+        xlab(vars[i]) +
+        ylab("Segment") +
+        theme(axis.text.y = element_text(size = 7))
+    } else {
+      p <-
+        p +
+        xlab("Segment") +
+        ylab(vars[i]) +
+        theme(axis.text.x = element_text(size = 7))
+    }
+
+    plots[[j]] <- p
+
+  }
+
+  if (is.null(metric)) {
+    names(plots) <- c("customers", "orders", "revenue", "aov")
+  } else {
+    names(plots) <- metric
+  }
+  
   if (print_plot) {
-    gridExtra::marrangeGrob(plots, nrow = 2, ncol = 2, top = "Segments Overview")
+    if (length(plots) == 1) {
+      print(plots)
+    } else if (length(plots) == 2) {
+      gridExtra::marrangeGrob(plots, nrow = 1, ncol = 2, top = "Segments Overview")
+    } else {
+      gridExtra::marrangeGrob(plots, nrow = 2, ncol = 2, top = "Segments Overview")
+    }
   } else {
     return(plots)
   }
@@ -401,12 +416,12 @@ rfm_prep_median <- function(rfm_segment_table, metric) {
 
   met <- deparse(substitute(metric))
 
-  result <- 
-    rfm_segment_table %>% 
-    data.table() %>% 
-    .[, .(segment, met = get(met))] %>% 
-    .[, .(mem = median(met)), by = segment] %>% 
-    .[order(mem)] %>% 
+  result <-
+    rfm_segment_table %>%
+    data.table() %>%
+    .[, .(segment, met = get(met))] %>%
+    .[, .(mem = median(met)), by = segment] %>%
+    .[order(mem)] %>%
     setnames(old = "mem", new = met) %>%
     setDF()
 

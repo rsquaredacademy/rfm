@@ -292,5 +292,5 @@ rfm_plot_median_monetary(segments)
 - Data Mining: Concepts and Techniques , Second Edition , Jiawei Han
 University of Illinois at Urbana-Champaign Micheline Kamber.
 - https://joaocorreia.io/blog/rfm-analysis-increase-sales-by-segmenting-your-customers.html
-- http://www.sciencedirect.com/science/article/pii/S1877050910003868
+- https://www.sciencedirect.com/science/article/pii/S1877050910003868
 

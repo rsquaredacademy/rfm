@@ -150,6 +150,18 @@ test_that("output from rfm_plot_segment_summary is as expected", {
   vdiffr::expect_doppelganger("aov by segment", p$aov)
 })
 
+test_that("output from rfm_plot_segment_summary is as expected when metrics are selected", {
+  skip_on_cran()
+
+  p1 <- rfm_plot_segment_summary(my_segments, "customers", print_plot = FALSE)
+  vdiffr::expect_doppelganger("customers by segment metric", p1$customers)
+
+  p2 <- rfm_plot_segment_summary(my_segments, c("customers", "orders"), print_plot = FALSE)
+  vdiffr::expect_doppelganger("customers by segment metric", p2$customers)
+  vdiffr::expect_doppelganger("orders by segment metric", p2$orders)
+  
+})
+
 test_that("output from rfm_plot_segment_summary is as expected when sorted", {
   skip_on_cran()
   
