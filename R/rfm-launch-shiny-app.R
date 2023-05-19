@@ -8,20 +8,31 @@
 #'
 rfm_launch_app <- function() {
 
-	message("`rfm_launch_app()` has been soft-deprecated and will be removed in the next release. In future, to launch the app, run the below code:\n 
-	- install.packages('xplorerr')\n - xplorerr::app_rfm_analysis()\n")
+	pkg_deps <- c('haven', 'readr', 'readxl', 'jsonlite',
+              'shinyBS', 'shinycssloaders', 'shinythemes',
+              'stringr', 'DT')
 
-	check_suggests('haven')
-	check_suggests('jsonlite')
-	check_suggests('readr')
-	check_suggests('readxl')
-	check_suggests('shinyBS')
-	check_suggests('shinycssloaders')
-	check_suggests('shinythemes')
-	check_suggests('stringr')
-	check_suggests('DT')
+	is_installed <- sapply(pkg_deps, try_pkg)
+	to_install <- pkg_deps[is.na(is_installed)]
 
-	xplorerr::app_rfm_analysis()
+	if (length(to_install) > 0) {
+		if (interactive()) {
+			message('The following package(s) must be installed:', '\n')
+			for (i in seq_len(length(to_install))) {
+				cat(paste('-', to_install[i], '\n'))
+			}
+			message('\n', 'Would you like to install?')
+			if (menu(c("Yes", "No")) == 1) {
+				install.packages(to_install)
+				xplorerr::app_rfm_analysis()
+			} else {
+				stop('Sorry! The app cannot be launched without installing the required packages.', call. = FALSE)
+			}
+		}
+	} else {
+		xplorerr::app_rfm_analysis()
+	}
+
 
 }
  
