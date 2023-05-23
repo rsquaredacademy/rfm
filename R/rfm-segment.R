@@ -210,7 +210,7 @@ rfm_plot_segment_summary <- function(x, metric = NULL, sort = FALSE, ascending =
   } else {
     names(plots) <- metric
   }
-  
+
   if (print_plot) {
     if (length(plots) == 1) {
       print(plots)
@@ -481,4 +481,50 @@ rfm_plot_median <- function(data, color, font_size, sort, ascending, flip) {
 
   return(p)
 
+}
+
+#' RFM Segmentation Plot
+#' 
+#' Generates tree map to visualize segments.
+#' 
+#' @param table An object of class \code{rfm_segment_summary}.
+#' 
+#' @examples
+#' analysis_date <- as.Date('2006-12-31')
+#' rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
+#' revenue, analysis_date)
+#'
+#' segment_names <- c("Champions", "Loyal Customers", "Potential Loyalist",
+#'   "New Customers", "Promising", "Need Attention", "About To Sleep",
+#'   "At Risk", "Can't Lose Them", "Lost")
+#'
+#' recency_lower <- c(4, 2, 3, 4, 3, 2, 2, 1, 1, 1)
+#' recency_upper <- c(5, 5, 5, 5, 4, 3, 3, 2, 1, 2)
+#' frequency_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
+#' frequency_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
+#' monetary_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
+#' monetary_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
+#'
+#' segments <- rfm_segment(rfm_result, segment_names, recency_lower,
+#' recency_upper, frequency_lower, frequency_upper, monetary_lower,
+#' monetary_upper)
+#'
+#' segment_overview <- rfm_segment_summary(segments)
+#' rfm_plot_segment(segment_overview)
+#' 
+#' @export 
+#' 
+rfm_plot_segment <- function(table) {
+
+  table$prop <- round((table$customers / sum(table$customers)) * 100, 2)
+  ggplot(table,
+         aes(area = customers,
+             fill = segment,
+             label = paste(toupper(segment),
+                           paste0(customers, " (", prop, "%)"),
+                           sep = '\n'))) +
+    geom_treemap() +
+    geom_treemap_text(size = 8, place = 'centre') +
+    theme(legend.position = "none")
+    
 }
