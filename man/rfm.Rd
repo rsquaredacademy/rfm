@@ -7,3 +7,4 @@
 \description{
 Tools for customer segmentation analysis
 }
+\keyword{internal}

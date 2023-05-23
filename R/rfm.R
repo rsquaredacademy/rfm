@@ -3,6 +3,7 @@
 #' Tools for customer segmentation analysis
 #'
 #' @docType package
+#' @keywords internal
 #' @name rfm
 NULL
 

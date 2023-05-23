@@ -1,10 +1,10 @@
-pandoc: 2.17.1.1
-pkgdown: 2.0.2
+pandoc: 2.19.2
+pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   rfm-customer-level-data: rfm-customer-level-data.html
   rfm-transaction-level-data: rfm-transaction-level-data.html
-last_built: 2022-03-31T12:26Z
+last_built: 2023-05-23T13:00Z
 urls:
   reference: https://rfm.rsquaredacademy.com/reference
   article: https://rfm.rsquaredacademy.com/articles
