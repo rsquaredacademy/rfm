@@ -595,7 +595,7 @@ rfm_plot_median <- function(data, color, font_size, sort, ascending, flip) {
 #' rfm_plot_segment(segment_overview, metric = "orders")
 #' 
 #' # treemap of revenue
-#' rfm_plot_segment(segment_overview, meric = "revenue")
+#' rfm_plot_segment(segment_overview, metric = "revenue")
 #'
 #' @import treemapify
 #' @export

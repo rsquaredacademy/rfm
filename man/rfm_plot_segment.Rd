@@ -58,6 +58,6 @@ rfm_plot_segment(segment_overview)
 rfm_plot_segment(segment_overview, metric = "orders")
 
 # treemap of revenue
-rfm_plot_segment(segment_overview, meric = "revenue")
+rfm_plot_segment(segment_overview, metric = "revenue")
 
 }
