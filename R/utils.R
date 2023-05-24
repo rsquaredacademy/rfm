@@ -64,3 +64,9 @@ modify_rfm <- function(rfm_heatmap_data, n_bins, check_levels) {
 try_pkg <- function(pkg) {
   tryCatch(packageVersion(pkg), error = function(e) NA)
 }
+
+to_title_case <- function(x) {
+    s <- strsplit(x, " ")[[1]]
+    paste(toupper(substring(s, 1, 1)), substring(s, 2),
+          sep = "", collapse = " ")
+}
