@@ -106,14 +106,19 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">analysis_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2006-12-31'</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># analysis date</span></span>
+<span class="r-in"><span class="va">analysis_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2006-12-31'</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># generate rfm score</span></span>
 <span class="r-in"><span class="va">rfm_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="rfm_table_order.html">rfm_table_order</a></span><span class="op">(</span><span class="va">rfm_data_orders</span>, <span class="va">customer_id</span>, <span class="va">order_date</span>,</span>
 <span class="r-in"><span class="va">revenue</span>, <span class="va">analysis_date</span><span class="op">)</span></span>
 <span class="r-in"></span>
+<span class="r-in"><span class="co"># segment names</span></span>
 <span class="r-in"><span class="va">segment_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Champions"</span>, <span class="st">"Loyal Customers"</span>, <span class="st">"Potential Loyalist"</span>,</span>
 <span class="r-in">  <span class="st">"New Customers"</span>, <span class="st">"Promising"</span>, <span class="st">"Need Attention"</span>, <span class="st">"About To Sleep"</span>,</span>
 <span class="r-in">  <span class="st">"At Risk"</span>, <span class="st">"Can't Lose Them"</span>, <span class="st">"Lost"</span><span class="op">)</span></span>
 <span class="r-in"></span>
+<span class="r-in"><span class="co"># segment intervals</span></span>
 <span class="r-in"><span class="va">recency_lower</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">recency_upper</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">frequency_lower</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span></span>
@@ -121,19 +126,32 @@
 <span class="r-in"><span class="va">monetary_lower</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">monetary_upper</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">2</span><span class="op">)</span></span>
 <span class="r-in"></span>
+<span class="r-in"><span class="co"># generate segments</span></span>
 <span class="r-in"><span class="va">segments</span> <span class="op">&lt;-</span> <span class="fu"><a href="rfm_segment.html">rfm_segment</a></span><span class="op">(</span><span class="va">rfm_result</span>, <span class="va">segment_names</span>, <span class="va">recency_lower</span>,</span>
 <span class="r-in"><span class="va">recency_upper</span>, <span class="va">frequency_lower</span>, <span class="va">frequency_upper</span>, <span class="va">monetary_lower</span>,</span>
 <span class="r-in"><span class="va">monetary_upper</span><span class="op">)</span></span>
 <span class="r-in"></span>
+<span class="r-in"><span class="co"># segment summary</span></span>
 <span class="r-in"><span class="va">segment_overview</span> <span class="op">&lt;-</span> <span class="fu"><a href="rfm_segment_summary.html">rfm_segment_summary</a></span><span class="op">(</span><span class="va">segments</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># plot segment summary</span></span>
+<span class="r-in"><span class="co"># summarize metrics for all segments</span></span>
 <span class="r-in"><span class="fu">rfm_plot_segment_summary</span><span class="op">(</span><span class="va">segment_overview</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="rfm_plot_segment_summary-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># select metrics to be visualized</span></span>
 <span class="r-in"><span class="fu">rfm_plot_segment_summary</span><span class="op">(</span><span class="va">segment_overview</span>, metric <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"customers"</span>, <span class="st">"orders"</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="rfm_plot_segment_summary-2.png" alt="" width="700" height="433"></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># sort the metrics by ascending order</span></span>
 <span class="r-in"><span class="fu">rfm_plot_segment_summary</span><span class="op">(</span><span class="va">segment_overview</span>, sort <span class="op">=</span> <span class="cn">TRUE</span>, ascending <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="rfm_plot_segment_summary-3.png" alt="" width="700" height="433"></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># default sorting is in descending order</span></span>
 <span class="r-in"><span class="fu">rfm_plot_segment_summary</span><span class="op">(</span><span class="va">segment_overview</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="rfm_plot_segment_summary-4.png" alt="" width="700" height="433"></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># horizontal bars</span></span>
 <span class="r-in"><span class="fu">rfm_plot_segment_summary</span><span class="op">(</span><span class="va">segment_overview</span>, flip <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="rfm_plot_segment_summary-5.png" alt="" width="700" height="433"></span>
 <span class="r-in"></span>
