@@ -225,3 +225,11 @@ test_that('output from rfm_plot_revenue_dist is as expected', {
 
 })
 
+test_that('output from rfm_plot_segment is as expected', {
+
+  skip_on_cran()
+
+  my_segments <- rfm_segment_summary(segments)
+  p <- rfm_plot_segment(my_segments)
+  vdiffr::expect_doppelganger('rfm plot segment', p)
+})
