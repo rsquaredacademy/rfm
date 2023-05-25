@@ -7,40 +7,35 @@
 \title{RFM Scatter plot}
 \usage{
 rfm_rm_plot(
-  rfm_table,
-  point_color = "blue",
-  xaxis_title = "Monetary",
-  yaxis_title = "Recency",
-  plot_title = "Recency vs Monetary",
+  segments,
+  xaxis_label = NULL,
+  yaxis_label = NULL,
+  plot_title = NULL,
   print_plot = TRUE
 )
 
 rfm_fm_plot(
-  rfm_table,
-  point_color = "blue",
-  xaxis_title = "Monetary",
-  yaxis_title = "Frequency",
-  plot_title = "Frequency vs Monetary",
+  segments,
+  xaxis_label = NULL,
+  yaxis_label = NULL,
+  plot_title = NULL,
   print_plot = TRUE
 )
 
 rfm_rf_plot(
-  rfm_table,
-  point_color = "blue",
-  xaxis_title = "Frequency",
-  yaxis_title = "Recency",
-  plot_title = "Recency vs Frequency",
+  segments,
+  xaxis_label = NULL,
+  yaxis_label = NULL,
+  plot_title = NULL,
   print_plot = TRUE
 )
 }
 \arguments{
-\item{rfm_table}{An object of class \code{rfm_table}.}
+\item{segments}{Output from \code{rfm_segment}.}
 
-\item{point_color}{Color of the scatter points.}
+\item{xaxis_label}{X axis label.}
 
-\item{xaxis_title}{X axis title.}
-
-\item{yaxis_title}{Y axis title.}
+\item{yaxis_label}{Y axis label.}
 
 \item{plot_title}{Title of the plot.}
 
@@ -53,19 +48,12 @@ Scatter plot.
 Examine the relationship between recency, frequency
   and monetary values.
 }
-\examples{
-# rfm table
-analysis_date <- as.Date('2006-12-31')
-rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
-revenue, analysis_date)
+\section{Deprecated Functions}{
 
-# monetary value vs recency
-rfm_rm_plot(rfm_result)
-
-# frequency vs monetary value
-rfm_fm_plot(rfm_result)
-
-# frequency vs recency
-rfm_rf_plot(rfm_result)
-
+\code{rfm_rm_plot()}, \code{rfm_fm_plot()} and \code{rfm_rf_plot()} have
+been deprecated and will be made defunct. These functions have been provided
+for compatibility with older versions only, and will be made defunct at the
+next release.
+Instead use the replacement function \code{rfm_plot_segment_scatter()()}.
 }
+

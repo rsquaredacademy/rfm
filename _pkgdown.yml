@@ -1,4 +1,6 @@
 url: https://rfm.rsquaredacademy.com
+template:
+  bootstrap: 5
 
 authors:
   Aravind Hebbali:
@@ -6,27 +8,23 @@ authors:
 
 templates:
   params:
-    bootswatch: cosmo
-    ganalytics: UA-57270671-33
-    docsearch:
-      api_key:
-      index_name: rfm
+    bootswatch: cerulean
 
 navbar:
-  title: "rfm"
+  title: 'rfm'
   type: inverse
   left:
-    - text: "Home"
+    - text: 'Home'
       href: index.html
-    - text: "Guides"
+    - text: 'Guides'
       menu:
-        - text: "RFM - Customer Level Data"
+        - text: 'RFM - Customer Level Data'
           href: articles/rfm-customer-level-data.html
-        - text: "RFM - Transaction Level Data"
+        - text: 'RFM - Transaction Level Data'
           href: articles/rfm-transaction-level-data.html
-    - text: "Reference"
+    - text: 'Reference'
       href: reference/index.html
-    - text: "News"
+    - text: 'News'
       menu:
         - text: Blog
           href: https://blog.rsquaredacademy.com/customer-segmentation-using-rfm-analysis/
@@ -42,12 +40,21 @@ navbar:
 
 home:
   links:
-    - text: Learn more
+    - text: Our R packages
+      href: https://pkgs.rsquaredacademy.com
+    - text: Read our blog
+      href: https://blog.rsquaredacademy.com
+    - text: Our ebooks
+      href: https://ebooks.rsquaredacademy.com
+    - text: Online courses
       href: https://www.rsquaredacademy.com
-    - text: Shiny app
-      href: https://www.rsquaredcomputing.com/shiny/rfm/
 
 reference:
+  - title: Shiny App
+
+    contents:
+      - rfm_launch_app
+
   - title: RFM Table
 
     contents:
@@ -60,17 +67,19 @@ reference:
     contents:
       - rfm_segment
       - rfm_segment_summary
+      - rfm_plot_segment
       - rfm_plot_segment_summary
+      - rfm_plot_segment_scatter
       - rfm_plot_revenue_dist
       - rfm_plot_median_recency
 
   - title: Plots
 
     contents:
-      - rfm_heatmap
-      - rfm_bar_chart
-      - rfm_histograms
-      - rfm_order_dist
+      - rfm_plot_heatmap
+      - rfm_plot_bar_chart
+      - rfm_plot_histograms
+      - rfm_plot_order_dist
       - rfm_fm_plot
       - rfm_rf_plot
       - rfm_rm_plot

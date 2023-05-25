@@ -18,6 +18,13 @@
 #' @param brewer_name Palette name; check the documentation of
 #'   \code{brewer.pal}.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
+#' 
+#' @section Deprecated Functions:
+#' \code{rfm_heatmap()} has been deprecated and will be made defunct. It has 
+#' been provided for compatibility with older versions only, and will be made 
+#' defunct at the next release.
+#' 
+#' Instead use the replacement function \code{rfm_plot_heatmap()()}.
 #'
 #' @examples
 #' # using transaction data
@@ -26,7 +33,7 @@
 #' revenue, analysis_date)
 #'
 #' # heat map
-#' rfm_heatmap(rfm_order)
+#' rfm_plot_heatmap(rfm_order)
 #'
 #' # using customer data
 #' analysis_date <- as.Date('2007-01-01')
@@ -34,11 +41,11 @@
 #' number_of_orders, recency_days, revenue, analysis_date)
 #'
 #' # heat map
-#' rfm_heatmap(rfm_customer)
+#' rfm_plot_heatmap(rfm_customer)
 #'
 #' @export
 #'
-rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
+rfm_plot_heatmap <- function(data, plot_title = "RFM Heat Map",
                         plot_title_justify = 0.5, xaxis_title = "Frequency",
                         yaxis_title = "Recency",
                         legend_title = "Mean Monetary Value",
@@ -65,7 +72,7 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
     max()
 
   guide_breaks <- round(seq(llm, ulm, length.out = bins))
-    
+
   p <-
     ggplot(data = mapdata) +
     geom_tile(aes(x = frequency_score, y = recency_score, fill = monetary)) +
@@ -83,6 +90,25 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
     return(p)
   }
 
+}
+
+#' @export
+#' @rdname rfm_plot_heatmap
+#' @usage NULL
+#'
+rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
+                        plot_title_justify = 0.5, xaxis_title = "Frequency",
+                        yaxis_title = "Recency",
+                        legend_title = "Mean Monetary Value",
+                        brewer_n = 5, brewer_name = "PuBu",
+                        print_plot = TRUE) {
+  .Deprecated("rfm_plot_heatmap()")
+  rfm_plot_heatmap(data, plot_title = "RFM Heat Map",
+                        plot_title_justify = 0.5, xaxis_title = "Frequency",
+                        yaxis_title = "Recency",
+                        legend_title = "Mean Monetary Value",
+                        brewer_n = 5, brewer_name = "PuBu",
+                        print_plot = TRUE)
 }
 
 
@@ -104,6 +130,13 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @return Histograms
+#' 
+#' @section Deprecated Functions:
+#' \code{rfm_histograms()} has been deprecated and will be made defunct. It has 
+#' been provided for compatibility with older versions only, and will be made 
+#' defunct at the next release.
+#' 
+#' Instead use the replacement function \code{rfm_plot_histograms()()}.
 #'
 #' @examples
 #' # using transaction data
@@ -112,7 +145,7 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
 #' revenue, analysis_date)
 #'
 #' # histogram
-#' rfm_histograms(rfm_order)
+#' rfm_plot_histograms(rfm_order)
 #'
 #' # using customer data
 #' analysis_date <- as.Date('2007-01-01')
@@ -120,11 +153,11 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
 #' number_of_orders, recency_days, revenue, analysis_date)
 #'
 #' # histogram
-#' rfm_histograms(rfm_customer)
+#' rfm_plot_histograms(rfm_customer)
 #'
 #' @export
 #'
-rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
+rfm_plot_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
                            plot_title = 'RFM Histograms', xaxis_title = ' ',
                            yaxis_title = 'Count', hist_m_label = 'Monetary',
                            hist_r_label = 'Recency', hist_f_label = 'Frequency',
@@ -135,8 +168,8 @@ rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
     ggplot(aes(score)) +
     geom_histogram(bins = hist_bins, fill = hist_color) +
     xlab(xaxis_title) +
-    ylab(yaxis_title) + 
-    ggtitle(plot_title) + 
+    ylab(yaxis_title) +
+    ggtitle(plot_title) +
     facet_grid(. ~ rfm, scales = "free_x",
       labeller = labeller(
         rfm = c(amount = hist_m_label, recency_days = hist_r_label,
@@ -149,6 +182,23 @@ rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
     return(p)
   }
 
+}
+
+#' @export
+#' @rdname rfm_plot_histograms
+#' @usage NULL
+#'
+rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
+                           plot_title = 'RFM Histograms', xaxis_title = ' ',
+                           yaxis_title = 'Count', hist_m_label = 'Monetary',
+                           hist_r_label = 'Recency', hist_f_label = 'Frequency',
+                           plot_title_justify = 0.5, print_plot = TRUE) {
+  .Deprecated("rfm_plot_histograms()")
+  rfm_plot_histograms(rfm_table, hist_bins = 9, hist_color = 'blue',
+                           plot_title = 'RFM Histograms', xaxis_title = ' ',
+                           yaxis_title = 'Count', hist_m_label = 'Monetary',
+                           hist_r_label = 'Recency', hist_f_label = 'Frequency',
+                           plot_title_justify = 0.5, print_plot = TRUE)
 }
 
 
@@ -166,6 +216,13 @@ rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @return Bar chart.
+#' 
+#' @section Deprecated Functions:
+#' \code{rfm_bar_chart()} has been deprecated and will be made defunct. It has 
+#' been provided for compatibility with older versions only, and will be made 
+#' defunct at the next release.
+#' 
+#' Instead use the replacement function \code{rfm_plot_bar_chart()()}.
 #'
 #' @examples
 #' # using transaction data
@@ -174,11 +231,11 @@ rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
 #' revenue, analysis_date)
 #'
 #' # bar chart
-#' rfm_bar_chart(rfm_order)
+#' rfm_plot_bar_chart(rfm_order)
 #'
 #' @export
 #'
-rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
+rfm_plot_bar_chart <- function(rfm_table, bar_color = 'blue',
                           xaxis_title = 'Monetary Score',
                           sec_xaxis_title = 'Frequency Score',
                           yaxis_title = ' ',
@@ -189,8 +246,8 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
     rfm_barchart_data(rfm_table) %>%
     ggplot() +
     geom_bar(aes(x = monetary_score), fill = bar_color) +
-    xlab(xaxis_title) + 
-    ylab(" ") + 
+    xlab(xaxis_title) +
+    ylab(" ") +
     ggtitle(sec_xaxis_title) +
     scale_y_continuous(sec.axis = sec_axis(~ ., name = sec_yaxis_title)) +
     facet_grid(recency_score ~ frequency_score) +
@@ -204,6 +261,25 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
     return(p)
   }
 
+}
+
+#' @export
+#' @rdname rfm_plot_bar_chart
+#' @usage NULL
+#'
+rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
+                          xaxis_title = 'Monetary Score',
+                          sec_xaxis_title = 'Frequency Score',
+                          yaxis_title = ' ',
+                          sec_yaxis_title = 'Recency Score',
+                          print_plot = TRUE) {
+  .Deprecated("rfm_plot_bar_chart()")
+  rfm_plot_bar_chart(rfm_table, bar_color = 'blue',
+                          xaxis_title = 'Monetary Score',
+                          sec_xaxis_title = 'Frequency Score',
+                          yaxis_title = ' ',
+                          sec_yaxis_title = 'Recency Score',
+                          print_plot = TRUE)
 }
 
 
@@ -221,6 +297,13 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @return Bar chart.
+#' 
+#' @section Deprecated Functions:
+#' \code{rfm_order_dist()} has been deprecated and will be made defunct. It has 
+#' been provided for compatibility with older versions only, and will be made 
+#' defunct at the next release.
+#' 
+#' Instead use the replacement function \code{rfm_plot_order_dist()()}.
 #'
 #' @examples
 #' # using transaction data
@@ -229,7 +312,7 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #' revenue, analysis_date)
 #'
 #' # order distribution
-#' rfm_order_dist(rfm_order)
+#' rfm_plot_order_dist(rfm_order)
 #'
 #' # using customer data
 #' analysis_date <- as.Date('2007-01-01')
@@ -237,25 +320,25 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #' number_of_orders, recency_days, revenue, analysis_date)
 #'
 #' # order distribution
-#' rfm_order_dist(rfm_customer)
+#' rfm_plot_order_dist(rfm_customer)
 #'
 #' @export
 #'
-rfm_order_dist <- function(rfm_table, bar_color = 'blue',
+rfm_plot_order_dist <- function(rfm_table, bar_color = 'blue',
                            xaxis_title = 'Orders', yaxis_title = 'Customers',
                            plot_title = 'Customers by Orders',
                            plot_title_justify = 0.5, print_plot = TRUE) {
 
-  data <- 
-    rfm_table %>% 
-    use_series(rfm) %>% 
-    data.table() %>% 
-    .[, .(n = .N), by = transaction_count] %>% 
+  data <-
+    rfm_table %>%
+    use_series(rfm) %>%
+    data.table() %>%
+    .[, .(n = .N), by = transaction_count] %>%
     setDF()
 
   ylim_max <-
     data %>%
-    use_series(n) %>% 
+    use_series(n) %>%
     max() %>%
     multiply_by(1.1) %>%
     ceiling(.)
@@ -264,8 +347,8 @@ rfm_order_dist <- function(rfm_table, bar_color = 'blue',
     data %>%
     ggplot(aes(x = transaction_count, y = n)) +
     geom_bar(stat = "identity", fill = bar_color) +
-    xlab(xaxis_title) + 
-    ylab(yaxis_title) + 
+    xlab(xaxis_title) +
+    ylab(yaxis_title) +
     ylim(0, ylim_max) +
     ggtitle(plot_title) +
     geom_text(aes(label = n, y = n + 3), position = position_dodge(0.9), vjust = 0) +
@@ -279,105 +362,93 @@ rfm_order_dist <- function(rfm_table, bar_color = 'blue',
 
 }
 
+#' @export
+#' @rdname rfm_plot_order_dist
+#' @usage NULL
+#'
+rfm_order_dist <- function(rfm_table, bar_color = 'blue',
+                           xaxis_title = 'Orders', yaxis_title = 'Customers',
+                           plot_title = 'Customers by Orders',
+                           plot_title_justify = 0.5, print_plot = TRUE) {
+  .Deprecated("rfm_plot_order_dist()")
+  rfm_plot_order_dist(rfm_table, bar_color = 'blue',
+                           xaxis_title = 'Orders', yaxis_title = 'Customers',
+                           plot_title = 'Customers by Orders',
+                           plot_title_justify = 0.5, print_plot = TRUE)
+}
+
 
 #' RFM Scatter plot
 #'
 #' @description Examine the relationship between recency, frequency
 #'   and monetary values.
 #'
-#' @param rfm_table An object of class \code{rfm_table}.
-#' @param point_color Color of the scatter points.
-#' @param xaxis_title X axis title.
-#' @param yaxis_title Y axis title.
+#' @param segments Output from \code{rfm_segment}.
+#' @param xaxis_label X axis label.
+#' @param yaxis_label Y axis label.
 #' @param plot_title Title of the plot.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @return Scatter plot.
 #'
-#' @examples
-#' # rfm table
-#' analysis_date <- as.Date('2006-12-31')
-#' rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
-#' revenue, analysis_date)
-#'
-#' # monetary value vs recency
-#' rfm_rm_plot(rfm_result)
-#'
-#' # frequency vs monetary value
-#' rfm_fm_plot(rfm_result)
-#'
-#' # frequency vs recency
-#' rfm_rf_plot(rfm_result)
+#' @section Deprecated Functions:
+#' \code{rfm_rm_plot()}, \code{rfm_fm_plot()} and \code{rfm_rf_plot()} have
+#' been deprecated and will be made defunct. These functions have been provided
+#' for compatibility with older versions only, and will be made defunct at the
+#' next release.
+#' Instead use the replacement function \code{rfm_plot_segment_scatter()()}.
 #'
 #' @export
 #'
-rfm_rm_plot <- function(rfm_table, point_color = 'blue',
-                        xaxis_title = 'Monetary', yaxis_title = 'Recency',
-                        plot_title = 'Recency vs Monetary',
+rfm_rm_plot <- function(segments, xaxis_label = NULL,
+                        yaxis_label = NULL, plot_title = NULL,
                         print_plot = TRUE) {
 
-  p <- rfm_plot_combine(rfm_table, "amount", "recency_days", point_color,
-                        xaxis_title, yaxis_title, plot_title)
-
-  if (print_plot) {
-    print(p)
-  } else {
-    return(p)
-  }
+  .Deprecated("rfm_plot_scatter")
+  rfm_plot_segment_scatter(segments, "monetary", "recency", xaxis_label,
+                   yaxis_label, plot_title, print_plot)
 
 }
 
 #' @rdname rfm_rm_plot
 #' @export
 #'
-rfm_fm_plot <- function(rfm_table, point_color = 'blue',
-                        xaxis_title = 'Monetary', yaxis_title = 'Frequency',
-                        plot_title = 'Frequency vs Monetary',
+rfm_fm_plot <- function(segments, xaxis_label = NULL,
+                        yaxis_label = NULL, plot_title = NULL,
                         print_plot = TRUE) {
 
-  p <- rfm_plot_combine(rfm_table, "amount", "transaction_count", point_color,
-                        xaxis_title, yaxis_title, plot_title)
-
-  if (print_plot) {
-    print(p)
-  } else {
-    return(p)
-  }
+  .Deprecated("rfm_plot_scatter")
+  rfm_plot_segment_scatter(segments, "monetary", "frequency", xaxis_label,
+                   yaxis_label, plot_title, print_plot)
 
 }
 
 #' @rdname rfm_rm_plot
 #' @export
 #'
-rfm_rf_plot <- function(rfm_table, point_color = 'blue',
-                        xaxis_title = 'Frequency', yaxis_title = 'Recency',
-                        plot_title = 'Recency vs Frequency',
+rfm_rf_plot <- function(segments, xaxis_label = NULL,
+                        yaxis_label = NULL, plot_title = NULL,
                         print_plot = TRUE) {
 
-  p <- rfm_plot_combine(rfm_table, "transaction_count", "recency_days", point_color,
-                        xaxis_title, yaxis_title, plot_title)
-
-  if (print_plot) {
-    print(p)
-  } else {
-    return(p)
-  }
+  .Deprecated("rfm_plot_scatter")
+  rfm_plot_segment_scatter(segments, "frequency", "recency", xaxis_label,
+                   yaxis_label, plot_title, print_plot)
 
 }
 
-rfm_plot_combine <- function(rfm_table, x = "amount", y = "recency_days", 
-                             point_color = "blue", xaxis_title = "Monetary", 
-                             yaxis_title = "Recency", plot_title = "Recency vs Monetary") {
-  
-  plot <- 
+rfm_plot_combine <- function(rfm_table, x = "amount", y = "recency_days",
+                             xaxis_title = "Monetary", yaxis_title = "Recency",
+                             plot_title = "Recency vs Monetary", legend_title = "Segment") {
+
+  plot <-
     rfm_table %>%
-    use_series(rfm) %>%
     ggplot() +
-    geom_point(aes_string(x = x, y = y), color = point_color) +
+    geom_point(aes(x = .data[[x]], y = .data[[y]], color = factor(segment))) +
     xlab(xaxis_title) +
     ylab(yaxis_title) +
-    ggtitle(plot_title)
+    ggtitle(plot_title) +
+    labs(color = legend_title)
 
   return(plot)
-  
 }
+
