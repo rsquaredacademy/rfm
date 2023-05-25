@@ -107,7 +107,7 @@ rfm_result$rfm[1:10, ] %>%
 The heat map shows the average monetary value for different categories of recency and frequency scores. Higher scores of frequency and recency are characterized by higher average monetary value as indicated by the darker areas in the heatmap. 
 
 ```{r heatmap, fig.align='center', fig.width=8, fig.height=6}
-rfm_heatmap(rfm_result)
+rfm_plot_heatmap(rfm_result)
 ```
 
 ## Bar Chart
@@ -115,7 +115,7 @@ rfm_heatmap(rfm_result)
 Use `rfm_bar_chart()` to generate the distribution of monetary scores for the different combinations of frequency and recency scores.
 
 ```{r barchart, fig.align='center', fig.width=8, fig.height=6}
-rfm_bar_chart(rfm_result)
+rfm_plot_bar_chart(rfm_result)
 ```
 
 ## Histogram
@@ -128,7 +128,7 @@ Use `rfm_histograms()` to examine the relative distribution of
 
 
 ```{r rfmhist, fig.align='center', fig.width=8, fig.height=6}
-rfm_histograms(rfm_result)
+rfm_plot_histograms(rfm_result)
 ```
 
 ## Customers by Orders
@@ -136,41 +136,7 @@ rfm_histograms(rfm_result)
 Visualize the distribution of customers across orders.
 
 ```{r rfmorders, fig.align='center', fig.width=8, fig.height=6}
-rfm_order_dist(rfm_result)
-```
-
-## Scatter Plots
-
-The best customers are those who:
-
-- bought most recently
-- most often 
-- and spend the most
-
-Now let us examine the relationship between the above.
-
-#### Recency vs Monetary Value
-
-Customers who visited more recently generated more revenue compared to those who visited in the distant past. The customers who visited in the recent past are more likely to return compared to those who visited long time ago as most of those would be lost customers. As such, higher revenue would be associated with most recent visits.
-
-```{r mr, fig.align='center', fig.width=7, fig.height=7}
-rfm_rm_plot(rfm_result)
-```
-
-#### Frequency vs Monetary Value
-
-As the frequency of visits increases, the revenue generated also increases. Customers who visit more frquently are your champion customers, loyal customers or potential loyalists and they drive higher revenue.
-
-```{r fm, fig.align='center', fig.width=7, fig.height=7}
-rfm_fm_plot(rfm_result)
-```
-
-#### Recency vs Frequency 
-
-Customers with low frequency visited in the distant past while those with high frequency have visited in the recent past. Again, the customers who visited in the recent past are more likely to return compared to those who visited long time ago. As such, higher frequency would be associated with the most recent visits.
-
-```{r fr, fig.align='center', fig.width=7, fig.height=7}
-rfm_rf_plot(rfm_result)
+rfm_plot_order_dist(rfm_result)
 ```
 
 ## Segments
@@ -261,6 +227,40 @@ result <-
   setDF()
 
 result
+```
+
+## Scatter Plots
+
+The best customers are those who:
+
+- bought most recently
+- most often 
+- and spend the most
+
+Now let us examine the relationship between the above.
+
+#### Recency vs Monetary Value
+
+Customers who visited more recently generated more revenue compared to those who visited in the distant past. The customers who visited in the recent past are more likely to return compared to those who visited long time ago as most of those would be lost customers. As such, higher revenue would be associated with most recent visits.
+
+```{r mr, fig.align='center', fig.width=7, fig.height=7}
+rfm_plot_segment_scatter(segments, "monetary", "recency")
+```
+
+#### Frequency vs Monetary Value
+
+As the frequency of visits increases, the revenue generated also increases. Customers who visit more frquently are your champion customers, loyal customers or potential loyalists and they drive higher revenue.
+
+```{r fm, fig.align='center', fig.width=7, fig.height=7}
+rfm_plot_segment_scatter(segments, "monetary", "frequency")
+```
+
+#### Recency vs Frequency 
+
+Customers with low frequency visited in the distant past while those with high frequency have visited in the recent past. Again, the customers who visited in the recent past are more likely to return compared to those who visited long time ago. As such, higher frequency would be associated with the most recent visits.
+
+```{r fr, fig.align='center', fig.width=7, fig.height=7}
+rfm_plot_segment_scatter(segments, "frequency", "recency")
 ```
 
 We can also examine the median recency, frequency and monetary value across segments to ensure that the
