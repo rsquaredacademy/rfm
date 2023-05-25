@@ -20,17 +20,17 @@
 #' revenue, analysis_date)
 #'
 #' # segment names
-#' segment_names <- c("Champions", "Loyal Customers", "Potential Loyalist",
-#'   "New Customers", "Promising", "Need Attention", "About To Sleep",
-#'   "At Risk", "Can't Lose Them", "Lost")
+#' segment_names <- c("Champions", "Potential Loyalist", "Loyal Customers", 
+#'                    "Promising", "New Customers", "Can't Lose Them", 
+#'                    "At Risk", "Need Attention", "About To Sleep", "Lost")
 #'
 #' # segment intervals
-#' recency_lower <- c(4, 2, 3, 4, 3, 2, 2, 1, 1, 1)
-#' recency_upper <- c(5, 5, 5, 5, 4, 3, 3, 2, 1, 2)
-#' frequency_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
-#' frequency_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
-#' monetary_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
-#' monetary_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
+#' recency_lower <-   c(5, 3, 2, 3, 4, 1, 1, 1, 2, 1)
+#' recency_upper <-   c(5, 5, 4, 4, 5, 2, 2, 3, 3, 1)
+#' frequency_lower <- c(5, 3, 2, 1, 1, 3, 2, 3, 1, 1)
+#' frequency_upper <- c(5, 5, 4, 3, 3, 4, 5, 5, 3, 5)
+#' monetary_lower <-  c(5, 2, 2, 3, 1, 4, 4, 3, 1, 1)
+#' monetary_upper <-  c(5, 5, 4, 5, 5, 5, 5, 5, 4, 5)
 #'
 #' # generate segments
 #' rfm_segment(rfm_result, segment_names, recency_lower, recency_upper,
@@ -83,17 +83,17 @@ rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
 #' revenue, analysis_date)
 #'
 #' # segment names
-#' segment_names <- c("Champions", "Loyal Customers", "Potential Loyalist",
-#'   "New Customers", "Promising", "Need Attention", "About To Sleep",
-#'   "At Risk", "Can't Lose Them", "Lost")
+#' segment_names <- c("Champions", "Potential Loyalist", "Loyal Customers", 
+#'                    "Promising", "New Customers", "Can't Lose Them", 
+#'                    "At Risk", "Need Attention", "About To Sleep", "Lost")
 #'
 #' # segment intervals
-#' recency_lower <- c(4, 2, 3, 4, 3, 2, 2, 1, 1, 1)
-#' recency_upper <- c(5, 5, 5, 5, 4, 3, 3, 2, 1, 2)
-#' frequency_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
-#' frequency_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
-#' monetary_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
-#' monetary_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
+#' recency_lower <-   c(5, 3, 2, 3, 4, 1, 1, 1, 2, 1)
+#' recency_upper <-   c(5, 5, 4, 4, 5, 2, 2, 3, 3, 1)
+#' frequency_lower <- c(5, 3, 2, 1, 1, 3, 2, 3, 1, 1)
+#' frequency_upper <- c(5, 5, 4, 3, 3, 4, 5, 5, 3, 5)
+#' monetary_lower <-  c(5, 2, 2, 3, 1, 4, 4, 3, 1, 1)
+#' monetary_upper <-  c(5, 5, 4, 5, 5, 5, 5, 5, 4, 5)
 #'
 #' # generate segments
 #' segments <- rfm_segment(rfm_result, segment_names, recency_lower,
@@ -141,17 +141,17 @@ rfm_segment_summary <- function(segments) {
 #' revenue, analysis_date)
 #'
 #' # segment names
-#' segment_names <- c("Champions", "Loyal Customers", "Potential Loyalist",
-#'   "New Customers", "Promising", "Need Attention", "About To Sleep",
-#'   "At Risk", "Can't Lose Them", "Lost")
+#' segment_names <- c("Champions", "Potential Loyalist", "Loyal Customers", 
+#'                    "Promising", "New Customers", "Can't Lose Them", 
+#'                    "At Risk", "Need Attention", "About To Sleep", "Lost")
 #'
 #' # segment intervals
-#' recency_lower <- c(4, 2, 3, 4, 3, 2, 2, 1, 1, 1)
-#' recency_upper <- c(5, 5, 5, 5, 4, 3, 3, 2, 1, 2)
-#' frequency_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
-#' frequency_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
-#' monetary_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
-#' monetary_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
+#' recency_lower <-   c(5, 3, 2, 3, 4, 1, 1, 1, 2, 1)
+#' recency_upper <-   c(5, 5, 4, 4, 5, 2, 2, 3, 3, 1)
+#' frequency_lower <- c(5, 3, 2, 1, 1, 3, 2, 3, 1, 1)
+#' frequency_upper <- c(5, 5, 4, 3, 3, 4, 5, 5, 3, 5)
+#' monetary_lower <-  c(5, 2, 2, 3, 1, 4, 4, 3, 1, 1)
+#' monetary_upper <-  c(5, 5, 4, 5, 5, 5, 5, 5, 4, 5)
 #'
 #' # generate segments
 #' segments <- rfm_segment(rfm_result, segment_names, recency_lower,
@@ -197,18 +197,14 @@ rfm_plot_segment_summary <- function(x, metric = NULL, sort = FALSE, ascending =
     if (sort) {
       if (ascending) {
         if (flip) {
-          # p <- ggplot(data, aes_string(x = paste0("reorder(segment, -", var, ", sum)"), y = var))
           p <- ggplot(data, aes(x = reorder(segment, -.data[[var]], sum), y = .data[[var]]))
         } else {
-          # p <- ggplot(data, aes_string(x = paste0("reorder(segment, ", var, ", sum)"), y = var))
           p <- ggplot(data, aes(x = reorder(segment, .data[[var]], sum), y = .data[[var]]))
         }
       } else {
         if (flip) {
-          # p <- ggplot(data, aes_string(x = paste0("reorder(segment, ", var, ", sum)"), y = var))
           p <- ggplot(data, aes(x = reorder(segment, .data[[var]], sum), y = .data[[var]]))
         } else {
-          # p <- ggplot(data, aes_string(x = paste0("reorder(segment, -", var, ", sum)"), y = var))
           p <- ggplot(data, aes(x = reorder(segment, -.data[[var]], sum), y = .data[[var]]))
         }
       }
@@ -277,17 +273,17 @@ rfm_plot_segment_summary <- function(x, metric = NULL, sort = FALSE, ascending =
 #' revenue, analysis_date)
 #'
 #' # segment names
-#' segment_names <- c("Champions", "Loyal Customers", "Potential Loyalist",
-#'   "New Customers", "Promising", "Need Attention", "About To Sleep",
-#'   "At Risk", "Can't Lose Them", "Lost")
+#' segment_names <- c("Champions", "Potential Loyalist", "Loyal Customers", 
+#'                    "Promising", "New Customers", "Can't Lose Them", 
+#'                    "At Risk", "Need Attention", "About To Sleep", "Lost")
 #'
 #' # segment intervals
-#' recency_lower <- c(4, 2, 3, 4, 3, 2, 2, 1, 1, 1)
-#' recency_upper <- c(5, 5, 5, 5, 4, 3, 3, 2, 1, 2)
-#' frequency_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
-#' frequency_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
-#' monetary_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
-#' monetary_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
+#' recency_lower <-   c(5, 3, 2, 3, 4, 1, 1, 1, 2, 1)
+#' recency_upper <-   c(5, 5, 4, 4, 5, 2, 2, 3, 3, 1)
+#' frequency_lower <- c(5, 3, 2, 1, 1, 3, 2, 3, 1, 1)
+#' frequency_upper <- c(5, 5, 4, 3, 3, 4, 5, 5, 3, 5)
+#' monetary_lower <-  c(5, 2, 2, 3, 1, 4, 4, 3, 1, 1)
+#' monetary_upper <-  c(5, 5, 4, 5, 5, 5, 5, 5, 4, 5)
 #'
 #' # generate segments
 #' segments <- rfm_segment(rfm_result, segment_names, recency_lower,
@@ -390,17 +386,17 @@ rfm_prep_revenue_dist <- function(x) {
 #' revenue, analysis_date)
 #'
 #' # segment names
-#' segment_names <- c("Champions", "Loyal Customers", "Potential Loyalist",
-#'   "New Customers", "Promising", "Need Attention", "About To Sleep",
-#'   "At Risk", "Can't Lose Them", "Lost")
+#' segment_names <- c("Champions", "Potential Loyalist", "Loyal Customers", 
+#'                    "Promising", "New Customers", "Can't Lose Them", 
+#'                    "At Risk", "Need Attention", "About To Sleep", "Lost")
 #'
 #' # segment intervals
-#' recency_lower <- c(4, 2, 3, 4, 3, 2, 2, 1, 1, 1)
-#' recency_upper <- c(5, 5, 5, 5, 4, 3, 3, 2, 1, 2)
-#' frequency_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
-#' frequency_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
-#' monetary_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
-#' monetary_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
+#' recency_lower <-   c(5, 3, 2, 3, 4, 1, 1, 1, 2, 1)
+#' recency_upper <-   c(5, 5, 4, 4, 5, 2, 2, 3, 3, 1)
+#' frequency_lower <- c(5, 3, 2, 1, 1, 3, 2, 3, 1, 1)
+#' frequency_upper <- c(5, 5, 4, 3, 3, 4, 5, 5, 3, 5)
+#' monetary_lower <-  c(5, 2, 2, 3, 1, 4, 4, 3, 1, 1)
+#' monetary_upper <-  c(5, 5, 4, 5, 5, 5, 5, 5, 4, 5)
 #'
 #' # generate segments
 #' segments <- rfm_segment(rfm_result, segment_names, recency_lower,
@@ -567,17 +563,17 @@ rfm_plot_median <- function(data, color, font_size, sort, ascending, flip) {
 #' revenue, analysis_date)
 #'
 #' # segment names
-#' segment_names <- c("Champions", "Loyal Customers", "Potential Loyalist",
-#'   "New Customers", "Promising", "Need Attention", "About To Sleep",
-#'   "At Risk", "Can't Lose Them", "Lost")
+#' segment_names <- c("Champions", "Potential Loyalist", "Loyal Customers", 
+#'                    "Promising", "New Customers", "Can't Lose Them", 
+#'                    "At Risk", "Need Attention", "About To Sleep", "Lost")
 #'
 #' # segment intervals
-#' recency_lower <- c(4, 2, 3, 4, 3, 2, 2, 1, 1, 1)
-#' recency_upper <- c(5, 5, 5, 5, 4, 3, 3, 2, 1, 2)
-#' frequency_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
-#' frequency_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
-#' monetary_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
-#' monetary_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
+#' recency_lower <-   c(5, 3, 2, 3, 4, 1, 1, 1, 2, 1)
+#' recency_upper <-   c(5, 5, 4, 4, 5, 2, 2, 3, 3, 1)
+#' frequency_lower <- c(5, 3, 2, 1, 1, 3, 2, 3, 1, 1)
+#' frequency_upper <- c(5, 5, 4, 3, 3, 4, 5, 5, 3, 5)
+#' monetary_lower <-  c(5, 2, 2, 3, 1, 4, 4, 3, 1, 1)
+#' monetary_upper <-  c(5, 5, 4, 5, 5, 5, 5, 5, 4, 5)
 #'
 #' # generate segments
 #' segments <- rfm_segment(rfm_result, segment_names, recency_lower,
@@ -646,17 +642,17 @@ rfm_plot_segment <- function(table, metric = "customers", print_plot = TRUE) {
 #' revenue, analysis_date)
 #'
 #' # segment names
-#' segment_names <- c("Champions", "Loyal Customers", "Potential Loyalist",
-#'   "New Customers", "Promising", "Need Attention", "About To Sleep",
-#'   "At Risk", "Can't Lose Them", "Lost")
+#' segment_names <- c("Champions", "Potential Loyalist", "Loyal Customers", 
+#'                    "Promising", "New Customers", "Can't Lose Them", 
+#'                    "At Risk", "Need Attention", "About To Sleep", "Lost")
 #'
 #' # segment intervals
-#' recency_lower <- c(4, 2, 3, 4, 3, 2, 2, 1, 1, 1)
-#' recency_upper <- c(5, 5, 5, 5, 4, 3, 3, 2, 1, 2)
-#' frequency_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
-#' frequency_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
-#' monetary_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
-#' monetary_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
+#' recency_lower <-   c(5, 3, 2, 3, 4, 1, 1, 1, 2, 1)
+#' recency_upper <-   c(5, 5, 4, 4, 5, 2, 2, 3, 3, 1)
+#' frequency_lower <- c(5, 3, 2, 1, 1, 3, 2, 3, 1, 1)
+#' frequency_upper <- c(5, 5, 4, 3, 3, 4, 5, 5, 3, 5)
+#' monetary_lower <-  c(5, 2, 2, 3, 1, 4, 4, 3, 1, 1)
+#' monetary_upper <-  c(5, 5, 4, 5, 5, 5, 5, 5, 4, 5)
 #'
 #' # generate segments
 #' segments <- rfm_segment(rfm_result, segment_names, recency_lower,
