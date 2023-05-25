@@ -285,112 +285,21 @@ rfm_order_dist <- function(rfm_table, bar_color = 'blue',
 #' @description Examine the relationship between recency, frequency
 #'   and monetary values.
 #'
-#' @param rfm_table An object of class \code{rfm_table}.
-#' @param point_color Color of the scatter points.
-#' @param xaxis_title X axis title.
-#' @param yaxis_title Y axis title.
+#' @param segments Output from \code{rfm_segment}.
+#' @param xaxis_label X axis label.
+#' @param yaxis_label Y axis label.
 #' @param plot_title Title of the plot.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @return Scatter plot.
 #'
-#' @examples
-#' # rfm table
-#' analysis_date <- as.Date('2006-12-31')
-#' rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
-#' revenue, analysis_date)
+#' @section Deprecated Functions:
+#' \code{rfm_rm_plot()}, \code{rfm_fm_plot()} and \code{rfm_rf_plot()} have
+#' been deprecated and will be made defunct. These functions have been provided
+#' for compatibility with older versions only, and will be made defunct at the
+#' next release.
+#' Instead use the replacement function \code{rfm_plot_segment_scatter()()}.
 #'
-#' # monetary value vs recency
-#' rfm_rm_plot(rfm_result)
-#'
-#' # frequency vs monetary value
-#' rfm_fm_plot(rfm_result)
-#'
-#' # frequency vs recency
-#' rfm_rf_plot(rfm_result)
-#'
-#' @export
-#'
-rfm_rm_plot <- function(rfm_table, point_color = 'blue',
-                        xaxis_title = 'Monetary', yaxis_title = 'Recency',
-                        plot_title = 'Recency vs Monetary',
-                        print_plot = TRUE) {
-
-  p <- rfm_plot_combine(rfm_table, "amount", "recency_days", point_color,
-                        xaxis_title, yaxis_title, plot_title)
-
-  if (print_plot) {
-    print(p)
-  } else {
-    return(p)
-  }
-
-}
-
-#' @rdname rfm_rm_plot
-#' @export
-#'
-rfm_fm_plot <- function(rfm_table, point_color = 'blue',
-                        xaxis_title = 'Monetary', yaxis_title = 'Frequency',
-                        plot_title = 'Frequency vs Monetary',
-                        print_plot = TRUE) {
-
-  p <- rfm_plot_combine(rfm_table, "amount", "transaction_count", point_color,
-                        xaxis_title, yaxis_title, plot_title)
-
-  if (print_plot) {
-    print(p)
-  } else {
-    return(p)
-  }
-
-}
-
-#' @rdname rfm_rm_plot
-#' @export
-#'
-rfm_rf_plot <- function(rfm_table, point_color = 'blue',
-                        xaxis_title = 'Frequency', yaxis_title = 'Recency',
-                        plot_title = 'Recency vs Frequency',
-                        print_plot = TRUE) {
-
-  p <- rfm_plot_combine(rfm_table, "transaction_count", "recency_days", 
-                        xaxis_title, yaxis_title, plot_title)
-
-  if (print_plot) {
-    print(p)
-  } else {
-    return(p)
-  }
-
-}
-
-rfm_plot_combine <- function(rfm_table, x = "amount", y = "recency_days",
-                             xaxis_title = "Monetary", yaxis_title = "Recency", 
-                             plot_title = "Recency vs Monetary") {
-
-  plot <-
-    rfm_table %>%
-    ggplot() +
-    geom_point(aes(x = .data[[x]], y = .data[[y]], color = factor(segment))) +
-    xlab(xaxis_title) +
-    ylab(yaxis_title) +
-    ggtitle(plot_title) + 
-    labs(color = "Segment")
-
-  return(plot)
-}
-
-#' Scatter Plots
-#' 
-#' @description Generate scatter plots of recency, frequency and monetary value.
-#' 
-#' @param segments Output from \code{rfm_segment}.
-#' @param x Metric to be represented on X axis.
-#' @param y Metric to be represented on Y axis.
-#' 
-#' @return Scatter plot.
-#' 
 #' @examples
 #' # analysis date
 #' analysis_date <- as.Date('2006-12-31')
@@ -416,37 +325,67 @@ rfm_plot_combine <- function(rfm_table, x = "amount", y = "recency_days",
 #' segments <- rfm_segment(rfm_result, segment_names, recency_lower,
 #' recency_upper, frequency_lower, frequency_upper, monetary_lower,
 #' monetary_upper)
-#' 
-#' # generate plots
-#' rfm_plot_scatter(segments, "monetary", "recency")
-#' rfm_plot_scatter(segments, "monetary", "frequency")
-#' rfm_plot_scatter(segments, "frequency", "recency")
-#' 
-#' @export 
-rfm_plot_scatter <- function(segments, x = "monetary", y = "recency", print_plot = TRUE) {
+#'
+#' # monetary value vs recency
+#' rfm_rm_plot(segments)
+#'
+#' # frequency vs monetary value
+#' rfm_fm_plot(segments)
+#'
+#' # frequency vs recency
+#' rfm_rf_plot(segments)
+#'
+#' @export
+#'
+rfm_rm_plot <- function(segments, xaxis_label = NULL,
+                        yaxis_label = NULL, plot_title = NULL,
+                        print_plot = TRUE) {
 
-  x_data <- switch(x,
-    "recency" = "recency_days",
-    "frequency" = "transaction_count",
-    "monetary" = "amount"
-  )
-
-  y_data <- switch(y,
-    "recency" = "recency_days",
-    "frequency" = "transaction_count",
-    "monetary" = "amount"
-  )
-
-  x_label <- to_title_case(x)
-  y_label <- to_title_case(y)
-  plot_title <- paste(y_label, "vs", x_label)
-
-  p <- rfm_plot_combine(segments, x_data, y_data, x_label, y_label, plot_title)
-
-  if (print_plot) {
-    print(p)
-  } else {
-    return(p)
-  }
+  .Deprecated("rfm_plot_scatter")
+  rfm_plot_segment_scatter(segments, "monetary", "recency", xaxis_label,
+                   yaxis_label, plot_title, print_plot)
 
 }
+
+#' @rdname rfm_rm_plot
+#' @export
+#'
+rfm_fm_plot <- function(segments, xaxis_label = NULL,
+                        yaxis_label = NULL, plot_title = NULL,
+                        print_plot = TRUE) {
+
+  .Deprecated("rfm_plot_scatter")
+  rfm_plot_segment_scatter(segments, "monetary", "frequency", xaxis_label,
+                   yaxis_label, plot_title, print_plot)
+
+}
+
+#' @rdname rfm_rm_plot
+#' @export
+#'
+rfm_rf_plot <- function(segments, xaxis_label = NULL,
+                        yaxis_label = NULL, plot_title = NULL,
+                        print_plot = TRUE) {
+
+  .Deprecated("rfm_plot_scatter")
+  rfm_plot_segment_scatter(segments, "frequency", "recency", xaxis_label,
+                   yaxis_label, plot_title, print_plot)
+
+}
+
+rfm_plot_combine <- function(rfm_table, x = "amount", y = "recency_days",
+                             xaxis_title = "Monetary", yaxis_title = "Recency",
+                             plot_title = "Recency vs Monetary", legend_title = "Segment") {
+
+  plot <-
+    rfm_table %>%
+    ggplot() +
+    geom_point(aes(x = .data[[x]], y = .data[[y]], color = factor(segment))) +
+    xlab(xaxis_title) +
+    ylab(yaxis_title) +
+    ggtitle(plot_title) +
+    labs(color = legend_title)
+
+  return(plot)
+}
+

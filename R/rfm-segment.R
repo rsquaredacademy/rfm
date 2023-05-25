@@ -620,3 +620,101 @@ rfm_plot_segment <- function(table, metric = "customers", print_plot = TRUE) {
   }
 
 }
+
+#' Segment Scatter Plots
+#'
+#' @description Generate scatter plots to examine the relationship between
+#' recency, frequency and monetary value.
+#'
+#' @param segments Output from \code{rfm_segment}.
+#' @param x Metric to be represented on X axis.
+#' @param y Metric to be represented on Y axis.
+#' @param xaxis_label X axis label.
+#' @param yaxis_label Y axis label.
+#' @param plot_title Title of the plot.
+#' @param legend_title Title of the plot legend.
+#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
+#'
+#' @return Scatter plot.
+#'
+#' @examples
+#' # analysis date
+#' analysis_date <- as.Date('2006-12-31')
+#'
+#' # generate rfm score
+#' rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
+#' revenue, analysis_date)
+#'
+#' # segment names
+#' segment_names <- c("Champions", "Loyal Customers", "Potential Loyalist",
+#'   "New Customers", "Promising", "Need Attention", "About To Sleep",
+#'   "At Risk", "Can't Lose Them", "Lost")
+#'
+#' # segment intervals
+#' recency_lower <- c(4, 2, 3, 4, 3, 2, 2, 1, 1, 1)
+#' recency_upper <- c(5, 5, 5, 5, 4, 3, 3, 2, 1, 2)
+#' frequency_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
+#' frequency_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
+#' monetary_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
+#' monetary_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
+#'
+#' # generate segments
+#' segments <- rfm_segment(rfm_result, segment_names, recency_lower,
+#' recency_upper, frequency_lower, frequency_upper, monetary_lower,
+#' monetary_upper)
+#'
+#' # generate plots
+#' rfm_plot_segment_scatter(segments, "monetary", "recency")
+#' rfm_plot_segment_scatter(segments, "monetary", "frequency")
+#' rfm_plot_segment_scatter(segments, "frequency", "recency")
+#'
+#' @export
+rfm_plot_segment_scatter <- function(segments, x = "monetary", y = "recency",
+                             xaxis_label = NULL, yaxis_label = NULL,
+                             plot_title = NULL, legend_title = NULL, print_plot = TRUE) {
+
+  x_data <- switch(x,
+    "recency" = "recency_days",
+    "frequency" = "transaction_count",
+    "monetary" = "amount"
+  )
+
+  y_data <- switch(y,
+    "recency" = "recency_days",
+    "frequency" = "transaction_count",
+    "monetary" = "amount"
+  )
+
+  if (is.null(xaxis_label)) {
+    x_label <- to_title_case(x)
+    if (grepl("Monetary", x_label)) {
+      x_label <- paste(x_label, "Value")
+    }
+  } else {
+    x_label <- xaxis_label
+  }
+
+  if (is.null(yaxis_label)) {
+    y_label <- to_title_case(y)
+    if (grepl("Monetary", y_label)) {
+      y_label <- paste(y_label, "Value")
+    }
+  } else {
+    y_label <- yaxis_label
+  }
+
+  if (is.null(plot_title)) {
+    plot_title <- paste(y_label, "vs", x_label)
+  } else {
+    plot_title <- plot_title
+  }
+
+  p <- rfm_plot_combine(segments, x_data, y_data, x_label, y_label, plot_title, legend_title)
+
+  if (print_plot) {
+    print(p)
+  } else {
+    return(p)
+  }
+
+}

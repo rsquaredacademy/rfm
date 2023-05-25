@@ -69,6 +69,7 @@ reference:
       - rfm_segment_summary
       - rfm_plot_segment
       - rfm_plot_segment_summary
+      - rfm_plot_segment_scatter
       - rfm_plot_revenue_dist
       - rfm_plot_median_recency
 

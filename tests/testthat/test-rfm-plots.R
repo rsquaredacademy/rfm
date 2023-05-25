@@ -11,40 +11,6 @@ test_that('output from rfm_bar_chart is as expected', {
 
 })
 
-test_that('output from rfm_rf_plot is as expected', {
-
-  skip_on_cran()
-
-  analysis_date <- as.Date('2006-12-31')
-  rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
-  p <- rfm_rf_plot(rfm_result)
-  vdiffr::expect_doppelganger('rfm rfplot', p)
-
-})
-
-test_that('output from rfm_rm_plot is as expected', {
-
-  skip_on_cran()
-
-  analysis_date <- as.Date('2006-12-31')
-  rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
-  p <- rfm_rm_plot(rfm_result)
-  vdiffr::expect_doppelganger('rfm rmplot', p)
-
-})
-
-test_that('output from rfm_fm_plot is as expected', {
-
-  skip_on_cran()
-
-  analysis_date <- as.Date('2006-12-31')
-  rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
-  p <- rfm_fm_plot(rfm_result)
-  vdiffr::expect_doppelganger('rfm fmplot', p)
-
-})
-
-
 test_that('output from rfm_heatmap is as expected', {
 
   skip_on_cran()
@@ -216,7 +182,6 @@ test_that('output from rfm_plot_revenue_dist is as expected', {
 
   skip_on_cran()
 
-  # my_segments <- rfm_segment_summary(segments)
   p <- rfm_plot_revenue_dist(my_segments)
   vdiffr::expect_doppelganger('rfm plot revenue dist', p)
 
@@ -229,15 +194,15 @@ test_that('output from rfm_plot_segment is as expected', {
 
   skip_on_cran()
 
-  # my_segments <- rfm_segment_summary(segments)
   p <- rfm_plot_segment(my_segments)
   vdiffr::expect_doppelganger('rfm plot segment', p)
 })
 
-test_that('output from rfm_plot_scatter is as expected', {
+test_that('output from rfm_plot_segment_scatter is as expected', {
 
   skip_on_cran()
 
-  p <- rfm_plot_scatter(segments, "monetary", "recency")
-  vdiffr::expect_doppelganger('rfm plot scatter', p)
+  p <- rfm_plot_segment_scatter(segments, "monetary", "recency")
+  vdiffr::expect_doppelganger('rfm plot segment scatter', p)
 })
+

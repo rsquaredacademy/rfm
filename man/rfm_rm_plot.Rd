@@ -7,40 +7,35 @@
 \title{RFM Scatter plot}
 \usage{
 rfm_rm_plot(
-  rfm_table,
-  point_color = "blue",
-  xaxis_title = "Monetary",
-  yaxis_title = "Recency",
-  plot_title = "Recency vs Monetary",
+  segments,
+  xaxis_label = NULL,
+  yaxis_label = NULL,
+  plot_title = NULL,
   print_plot = TRUE
 )
 
 rfm_fm_plot(
-  rfm_table,
-  point_color = "blue",
-  xaxis_title = "Monetary",
-  yaxis_title = "Frequency",
-  plot_title = "Frequency vs Monetary",
+  segments,
+  xaxis_label = NULL,
+  yaxis_label = NULL,
+  plot_title = NULL,
   print_plot = TRUE
 )
 
 rfm_rf_plot(
-  rfm_table,
-  point_color = "blue",
-  xaxis_title = "Frequency",
-  yaxis_title = "Recency",
-  plot_title = "Recency vs Frequency",
+  segments,
+  xaxis_label = NULL,
+  yaxis_label = NULL,
+  plot_title = NULL,
   print_plot = TRUE
 )
 }
 \arguments{
-\item{rfm_table}{An object of class \code{rfm_table}.}
+\item{segments}{Output from \code{rfm_segment}.}
 
-\item{point_color}{Color of the scatter points.}
+\item{xaxis_label}{X axis label.}
 
-\item{xaxis_title}{X axis title.}
-
-\item{yaxis_title}{Y axis title.}
+\item{yaxis_label}{Y axis label.}
 
 \item{plot_title}{Title of the plot.}
 
@@ -53,19 +48,48 @@ Scatter plot.
 Examine the relationship between recency, frequency
   and monetary values.
 }
+\section{Deprecated Functions}{
+
+\code{rfm_rm_plot()}, \code{rfm_fm_plot()} and \code{rfm_rf_plot()} have
+been deprecated and will be made defunct. These functions have been provided
+for compatibility with older versions only, and will be made defunct at the
+next release.
+Instead use the replacement function \code{rfm_plot_segment_scatter()()}.
+}
+
 \examples{
-# rfm table
+# analysis date
 analysis_date <- as.Date('2006-12-31')
+
+# generate rfm score
 rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
 revenue, analysis_date)
 
+# segment names
+segment_names <- c("Champions", "Loyal Customers", "Potential Loyalist",
+  "New Customers", "Promising", "Need Attention", "About To Sleep",
+  "At Risk", "Can't Lose Them", "Lost")
+
+# segment intervals
+recency_lower <- c(4, 2, 3, 4, 3, 2, 2, 1, 1, 1)
+recency_upper <- c(5, 5, 5, 5, 4, 3, 3, 2, 1, 2)
+frequency_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
+frequency_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
+monetary_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
+monetary_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
+
+# generate segments
+segments <- rfm_segment(rfm_result, segment_names, recency_lower,
+recency_upper, frequency_lower, frequency_upper, monetary_lower,
+monetary_upper)
+
 # monetary value vs recency
-rfm_rm_plot(rfm_result)
+rfm_rm_plot(segments)
 
 # frequency vs monetary value
-rfm_fm_plot(rfm_result)
+rfm_fm_plot(segments)
 
 # frequency vs recency
-rfm_rf_plot(rfm_result)
+rfm_rf_plot(segments)
 
 }
