@@ -188,7 +188,11 @@ rfm_plot_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
 #' @rdname rfm_plot_histograms
 #' @usage NULL
 #'
-rfm_histograms <- function(rfm_table) {
+rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
+                           plot_title = 'RFM Histograms', xaxis_title = ' ',
+                           yaxis_title = 'Count', hist_m_label = 'Monetary',
+                           hist_r_label = 'Recency', hist_f_label = 'Frequency',
+                           plot_title_justify = 0.5, print_plot = TRUE) {
   .Deprecated("rfm_plot_histograms()")
   rfm_plot_histograms(rfm_table, hist_bins = 9, hist_color = 'blue',
                            plot_title = 'RFM Histograms', xaxis_title = ' ',
@@ -212,6 +216,13 @@ rfm_histograms <- function(rfm_table) {
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @return Bar chart.
+#' 
+#' @section Deprecated Functions:
+#' \code{rfm_bar_chart()} has been deprecated and will be made defunct. It has 
+#' been provided for compatibility with older versions only, and will be made 
+#' defunct at the next release.
+#' 
+#' Instead use the replacement function \code{rfm_plot_bar_chart()()}.
 #'
 #' @examples
 #' # using transaction data
@@ -220,11 +231,11 @@ rfm_histograms <- function(rfm_table) {
 #' revenue, analysis_date)
 #'
 #' # bar chart
-#' rfm_bar_chart(rfm_order)
+#' rfm_plot_bar_chart(rfm_order)
 #'
 #' @export
 #'
-rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
+rfm_plot_bar_chart <- function(rfm_table, bar_color = 'blue',
                           xaxis_title = 'Monetary Score',
                           sec_xaxis_title = 'Frequency Score',
                           yaxis_title = ' ',
@@ -250,6 +261,25 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
     return(p)
   }
 
+}
+
+#' @export
+#' @rdname rfm_plot_bar_chart
+#' @usage NULL
+#'
+rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
+                          xaxis_title = 'Monetary Score',
+                          sec_xaxis_title = 'Frequency Score',
+                          yaxis_title = ' ',
+                          sec_yaxis_title = 'Recency Score',
+                          print_plot = TRUE) {
+  .Deprecated("rfm_plot_bar_chart()")
+  rfm_plot_bar_chart(rfm_table, bar_color = 'blue',
+                          xaxis_title = 'Monetary Score',
+                          sec_xaxis_title = 'Frequency Score',
+                          yaxis_title = ' ',
+                          sec_yaxis_title = 'Recency Score',
+                          print_plot = TRUE)
 }
 
 
