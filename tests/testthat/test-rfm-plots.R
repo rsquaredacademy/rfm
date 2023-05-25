@@ -23,14 +23,14 @@ test_that('output from rfm_plot_heatmap is as expected', {
 
 })
 
-test_that('output from rfm_histograms is as expected', {
+test_that('output from rfm_plot_histograms is as expected', {
 
   skip_on_cran()
 
   analysis_date <- as.Date('2006-12-31')
   rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
     revenue, analysis_date)
-  p <- rfm_histograms(rfm_result)
+  p <- rfm_plot_histograms(rfm_result)
   vdiffr::expect_doppelganger('rfm histograms', p)
 
 })

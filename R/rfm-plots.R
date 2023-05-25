@@ -18,6 +18,13 @@
 #' @param brewer_name Palette name; check the documentation of
 #'   \code{brewer.pal}.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
+#' 
+#' @section Deprecated Functions:
+#' \code{rfm_heatmap()} has been deprecated and will be made defunct. It has 
+#' been provided for compatibility with older versions only, and will be made 
+#' defunct at the next release.
+#' 
+#' Instead use the replacement function \code{rfm_plot_heatmap()()}.
 #'
 #' @examples
 #' # using transaction data
@@ -89,7 +96,12 @@ rfm_plot_heatmap <- function(data, plot_title = "RFM Heat Map",
 #' @rdname rfm_plot_heatmap
 #' @usage NULL
 #'
-rfm_heatmap <- function(data) {
+rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
+                        plot_title_justify = 0.5, xaxis_title = "Frequency",
+                        yaxis_title = "Recency",
+                        legend_title = "Mean Monetary Value",
+                        brewer_n = 5, brewer_name = "PuBu",
+                        print_plot = TRUE) {
   .Deprecated("rfm_plot_heatmap()")
   rfm_plot_heatmap(data, plot_title = "RFM Heat Map",
                         plot_title_justify = 0.5, xaxis_title = "Frequency",
@@ -118,6 +130,13 @@ rfm_heatmap <- function(data) {
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @return Histograms
+#' 
+#' @section Deprecated Functions:
+#' \code{rfm_histograms()} has been deprecated and will be made defunct. It has 
+#' been provided for compatibility with older versions only, and will be made 
+#' defunct at the next release.
+#' 
+#' Instead use the replacement function \code{rfm_plot_histograms()()}.
 #'
 #' @examples
 #' # using transaction data
@@ -126,7 +145,7 @@ rfm_heatmap <- function(data) {
 #' revenue, analysis_date)
 #'
 #' # histogram
-#' rfm_histograms(rfm_order)
+#' rfm_plot_histograms(rfm_order)
 #'
 #' # using customer data
 #' analysis_date <- as.Date('2007-01-01')
@@ -134,11 +153,11 @@ rfm_heatmap <- function(data) {
 #' number_of_orders, recency_days, revenue, analysis_date)
 #'
 #' # histogram
-#' rfm_histograms(rfm_customer)
+#' rfm_plot_histograms(rfm_customer)
 #'
 #' @export
 #'
-rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
+rfm_plot_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
                            plot_title = 'RFM Histograms', xaxis_title = ' ',
                            yaxis_title = 'Count', hist_m_label = 'Monetary',
                            hist_r_label = 'Recency', hist_f_label = 'Frequency',
@@ -163,6 +182,19 @@ rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
     return(p)
   }
 
+}
+
+#' @export
+#' @rdname rfm_plot_histograms
+#' @usage NULL
+#'
+rfm_histograms <- function(rfm_table) {
+  .Deprecated("rfm_plot_histograms()")
+  rfm_plot_histograms(rfm_table, hist_bins = 9, hist_color = 'blue',
+                           plot_title = 'RFM Histograms', xaxis_title = ' ',
+                           yaxis_title = 'Count', hist_m_label = 'Monetary',
+                           hist_r_label = 'Recency', hist_f_label = 'Frequency',
+                           plot_title_justify = 0.5, print_plot = TRUE)
 }
 
 

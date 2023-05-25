@@ -46,6 +46,15 @@ The heat map shows the average monetary value for different
   recency are characterized by higher average monetary value as indicated by
   the darker areas in the heatmap.
 }
+\section{Deprecated Functions}{
+
+\code{rfm_heatmap()} has been deprecated and will be made defunct. It has 
+been provided for compatibility with older versions only, and will be made 
+defunct at the next release.
+
+Instead use the replacement function \code{rfm_plot_heatmap()()}.
+}
+
 \examples{
 # using transaction data
 analysis_date <- as.Date('2006-12-31')
