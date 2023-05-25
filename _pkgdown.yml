@@ -79,7 +79,7 @@ reference:
       - rfm_plot_heatmap
       - rfm_plot_bar_chart
       - rfm_plot_histograms
-      - rfm_order_dist
+      - rfm_plot_order_dist
       - rfm_fm_plot
       - rfm_rf_plot
       - rfm_rm_plot

@@ -297,6 +297,13 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @return Bar chart.
+#' 
+#' @section Deprecated Functions:
+#' \code{rfm_order_dist()} has been deprecated and will be made defunct. It has 
+#' been provided for compatibility with older versions only, and will be made 
+#' defunct at the next release.
+#' 
+#' Instead use the replacement function \code{rfm_plot_order_dist()()}.
 #'
 #' @examples
 #' # using transaction data
@@ -305,7 +312,7 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #' revenue, analysis_date)
 #'
 #' # order distribution
-#' rfm_order_dist(rfm_order)
+#' rfm_plot_order_dist(rfm_order)
 #'
 #' # using customer data
 #' analysis_date <- as.Date('2007-01-01')
@@ -313,11 +320,11 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #' number_of_orders, recency_days, revenue, analysis_date)
 #'
 #' # order distribution
-#' rfm_order_dist(rfm_customer)
+#' rfm_plot_order_dist(rfm_customer)
 #'
 #' @export
 #'
-rfm_order_dist <- function(rfm_table, bar_color = 'blue',
+rfm_plot_order_dist <- function(rfm_table, bar_color = 'blue',
                            xaxis_title = 'Orders', yaxis_title = 'Customers',
                            plot_title = 'Customers by Orders',
                            plot_title_justify = 0.5, print_plot = TRUE) {
@@ -353,6 +360,21 @@ rfm_order_dist <- function(rfm_table, bar_color = 'blue',
     return(p)
   }
 
+}
+
+#' @export
+#' @rdname rfm_plot_order_dist
+#' @usage NULL
+#'
+rfm_order_dist <- function(rfm_table, bar_color = 'blue',
+                           xaxis_title = 'Orders', yaxis_title = 'Customers',
+                           plot_title = 'Customers by Orders',
+                           plot_title_justify = 0.5, print_plot = TRUE) {
+  .Deprecated("rfm_plot_order_dist()")
+  rfm_plot_order_dist(rfm_table, bar_color = 'blue',
+                           xaxis_title = 'Orders', yaxis_title = 'Customers',
+                           plot_title = 'Customers by Orders',
+                           plot_title_justify = 0.5, print_plot = TRUE)
 }
 
 
