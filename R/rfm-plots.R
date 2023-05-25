@@ -26,7 +26,7 @@
 #' revenue, analysis_date)
 #'
 #' # heat map
-#' rfm_heatmap(rfm_order)
+#' rfm_plot_heatmap(rfm_order)
 #'
 #' # using customer data
 #' analysis_date <- as.Date('2007-01-01')
@@ -34,11 +34,11 @@
 #' number_of_orders, recency_days, revenue, analysis_date)
 #'
 #' # heat map
-#' rfm_heatmap(rfm_customer)
+#' rfm_plot_heatmap(rfm_customer)
 #'
 #' @export
 #'
-rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
+rfm_plot_heatmap <- function(data, plot_title = "RFM Heat Map",
                         plot_title_justify = 0.5, xaxis_title = "Frequency",
                         yaxis_title = "Recency",
                         legend_title = "Mean Monetary Value",
@@ -83,6 +83,20 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
     return(p)
   }
 
+}
+
+#' @export
+#' @rdname rfm_plot_heatmap
+#' @usage NULL
+#'
+rfm_heatmap <- function(data) {
+  .Deprecated("rfm_plot_heatmap()")
+  rfm_plot_heatmap(data, plot_title = "RFM Heat Map",
+                        plot_title_justify = 0.5, xaxis_title = "Frequency",
+                        yaxis_title = "Recency",
+                        legend_title = "Mean Monetary Value",
+                        brewer_n = 5, brewer_name = "PuBu",
+                        print_plot = TRUE)
 }
 
 

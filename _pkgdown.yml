@@ -76,7 +76,7 @@ reference:
   - title: Plots
 
     contents:
-      - rfm_heatmap
+      - rfm_plot_heatmap
       - rfm_bar_chart
       - rfm_histograms
       - rfm_order_dist
