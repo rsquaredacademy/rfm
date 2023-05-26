@@ -21,8 +21,8 @@ rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
 revenue, analysis_date)
 
 # segment names
-segment_names <- c("Champions", "Potential Loyalist", "Loyal Customers", 
-                   "Promising", "New Customers", "Can't Lose Them", 
+segment_names <- c("Champions", "Potential Loyalist", "Loyal Customers",
+                   "Promising", "New Customers", "Can't Lose Them",
                    "At Risk", "Need Attention", "About To Sleep", "Lost")
 
 # segment intervals

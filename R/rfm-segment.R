@@ -20,8 +20,8 @@
 #' revenue, analysis_date)
 #'
 #' # segment names
-#' segment_names <- c("Champions", "Potential Loyalist", "Loyal Customers", 
-#'                    "Promising", "New Customers", "Can't Lose Them", 
+#' segment_names <- c("Champions", "Potential Loyalist", "Loyal Customers",
+#'                    "Promising", "New Customers", "Can't Lose Them",
 #'                    "At Risk", "Need Attention", "About To Sleep", "Lost")
 #'
 #' # segment intervals
@@ -83,8 +83,8 @@ rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
 #' revenue, analysis_date)
 #'
 #' # segment names
-#' segment_names <- c("Champions", "Potential Loyalist", "Loyal Customers", 
-#'                    "Promising", "New Customers", "Can't Lose Them", 
+#' segment_names <- c("Champions", "Potential Loyalist", "Loyal Customers",
+#'                    "Promising", "New Customers", "Can't Lose Them",
 #'                    "At Risk", "Need Attention", "About To Sleep", "Lost")
 #'
 #' # segment intervals
@@ -135,14 +135,14 @@ rfm_segment_summary <- function(segments) {
 #' @examples
 #' # analysis date
 #' analysis_date <- as.Date('2006-12-31')
-#' 
+#'
 #' # generate rfm score
 #' rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
 #' revenue, analysis_date)
 #'
 #' # segment names
-#' segment_names <- c("Champions", "Potential Loyalist", "Loyal Customers", 
-#'                    "Promising", "New Customers", "Can't Lose Them", 
+#' segment_names <- c("Champions", "Potential Loyalist", "Loyal Customers",
+#'                    "Promising", "New Customers", "Can't Lose Them",
 #'                    "At Risk", "Need Attention", "About To Sleep", "Lost")
 #'
 #' # segment intervals
@@ -160,20 +160,20 @@ rfm_segment_summary <- function(segments) {
 #'
 #' # segment summary
 #' segment_overview <- rfm_segment_summary(segments)
-#' 
+#'
 #' # plot segment summary
 #' # summarize metrics for all segments
 #' rfm_plot_segment_summary(segment_overview)
-#' 
+#'
 #' # select metrics to be visualized
 #' rfm_plot_segment_summary(segment_overview, metric = c("customers", "orders"))
-#' 
+#'
 #' # sort the metrics by ascending order
 #' rfm_plot_segment_summary(segment_overview, sort = TRUE, ascending = TRUE)
-#' 
+#'
 #' # default sorting is in descending order
 #' rfm_plot_segment_summary(segment_overview, sort = TRUE)
-#' 
+#'
 #' # horizontal bars
 #' rfm_plot_segment_summary(segment_overview, flip = TRUE)
 #'
@@ -267,14 +267,14 @@ rfm_plot_segment_summary <- function(x, metric = NULL, sort = FALSE, ascending =
 #' @examples
 #' # analysis date
 #' analysis_date <- as.Date('2006-12-31')
-#' 
+#'
 #' # generate rfm score
 #' rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
 #' revenue, analysis_date)
 #'
 #' # segment names
-#' segment_names <- c("Champions", "Potential Loyalist", "Loyal Customers", 
-#'                    "Promising", "New Customers", "Can't Lose Them", 
+#' segment_names <- c("Champions", "Potential Loyalist", "Loyal Customers",
+#'                    "Promising", "New Customers", "Can't Lose Them",
 #'                    "At Risk", "Need Attention", "About To Sleep", "Lost")
 #'
 #' # segment intervals
@@ -292,7 +292,7 @@ rfm_plot_segment_summary <- function(x, metric = NULL, sort = FALSE, ascending =
 #'
 #' # segment summary
 #' segment_overview <- rfm_segment_summary(segments)
-#' 
+#'
 #' # visualize revenue distribution
 #' rfm_plot_revenue_dist(segment_overview)
 #'
@@ -327,7 +327,9 @@ rfm_plot_revenue_dist <- function(x, flip = FALSE, print_plot = TRUE) {
   } else {
     p <-
       p +
-      theme(panel.grid.major.y = element_line(colour = "#ced4da"))
+      theme(panel.grid.major.y = element_line(colour = "#ced4da"),
+            axis.text.x = element_text(angle = angle, vjust = 1,
+                                       hjust=1, size = size))
   }
 
   p <-
@@ -380,14 +382,14 @@ rfm_prep_revenue_dist <- function(x) {
 #' @examples
 #' # analysis date
 #' analysis_date <- as.Date('2006-12-31')
-#' 
+#'
 #' # generate rfm score
 #' rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
 #' revenue, analysis_date)
 #'
 #' # segment names
-#' segment_names <- c("Champions", "Potential Loyalist", "Loyal Customers", 
-#'                    "Promising", "New Customers", "Can't Lose Them", 
+#' segment_names <- c("Champions", "Potential Loyalist", "Loyal Customers",
+#'                    "Promising", "New Customers", "Can't Lose Them",
 #'                    "At Risk", "Need Attention", "About To Sleep", "Lost")
 #'
 #' # segment intervals
@@ -406,19 +408,19 @@ rfm_prep_revenue_dist <- function(x) {
 #' # plots
 #' # visualize median recency
 #' rfm_plot_median_recency(segments)
-#' 
+#'
 #' # sort in ascending order
 #' rfm_plot_median_recency(segments, sort = TRUE, ascending = TRUE)
-#' 
+#'
 #' # default sorting is in descending order
 #' rfm_plot_median_recency(segments, sort = TRUE)
-#' 
+#'
 #' # horizontal bars
 #' rfm_plot_median_recency(segments, flip = TRUE)
-#' 
+#'
 #' # median frequency
 #' rfm_plot_median_frequency(segments)
-#' 
+#'
 #' # median monetary value
 #' rfm_plot_median_monetary(segments)
 #'
@@ -553,7 +555,7 @@ rfm_plot_median <- function(data, color, font_size, sort, ascending, flip) {
 #' \item \code{"revenue"}
 #' }
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
-#' 
+#'
 #' @examples
 #' # analysis date
 #' analysis_date <- as.Date('2006-12-31')
@@ -563,8 +565,8 @@ rfm_plot_median <- function(data, color, font_size, sort, ascending, flip) {
 #' revenue, analysis_date)
 #'
 #' # segment names
-#' segment_names <- c("Champions", "Potential Loyalist", "Loyal Customers", 
-#'                    "Promising", "New Customers", "Can't Lose Them", 
+#' segment_names <- c("Champions", "Potential Loyalist", "Loyal Customers",
+#'                    "Promising", "New Customers", "Can't Lose Them",
 #'                    "At Risk", "Need Attention", "About To Sleep", "Lost")
 #'
 #' # segment intervals
@@ -586,10 +588,10 @@ rfm_plot_median <- function(data, color, font_size, sort, ascending, flip) {
 #' # treemaps
 #' # default metric is customers
 #' rfm_plot_segment(segment_overview)
-#' 
+#'
 #' # treemap of orders
 #' rfm_plot_segment(segment_overview, metric = "orders")
-#' 
+#'
 #' # treemap of revenue
 #' rfm_plot_segment(segment_overview, metric = "revenue")
 #'
@@ -642,8 +644,8 @@ rfm_plot_segment <- function(table, metric = "customers", print_plot = TRUE) {
 #' revenue, analysis_date)
 #'
 #' # segment names
-#' segment_names <- c("Champions", "Potential Loyalist", "Loyal Customers", 
-#'                    "Promising", "New Customers", "Can't Lose Them", 
+#' segment_names <- c("Champions", "Potential Loyalist", "Loyal Customers",
+#'                    "Promising", "New Customers", "Can't Lose Them",
 #'                    "At Risk", "Need Attention", "About To Sleep", "Lost")
 #'
 #' # segment intervals
