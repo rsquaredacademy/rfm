@@ -127,6 +127,8 @@ rfm_segment_summary <- function(segments) {
 #'
 #' @param x An object of class \code{rfm_segment_summary}.
 #' @param metric Metrics to be visualized.
+#' @param angle Angle at which X axis tick labels should be displayed.
+#' @param size Size of X axis tick labels.
 #' @param sort logical; if \code{TRUE}, sort metrics.
 #' @param ascending logical; if \code{TRUE}, sort metrics in ascending order.
 #' @param flip logical; if \code{TRUE}, creates horizontal bar plot.
@@ -179,7 +181,10 @@ rfm_segment_summary <- function(segments) {
 #'
 #' @export
 #'
-rfm_plot_segment_summary <- function(x, metric = NULL, sort = FALSE, ascending = FALSE, flip = FALSE, print_plot = TRUE) {
+rfm_plot_segment_summary <- function(x, metric = NULL,
+                                     angle = 90, size = 5,
+                                     sort = FALSE, ascending = FALSE,
+                                     flip = FALSE, print_plot = TRUE) {
 
   if (is.null(metric)) {
     x <- x
@@ -229,7 +234,8 @@ rfm_plot_segment_summary <- function(x, metric = NULL, sort = FALSE, ascending =
         p +
         xlab("Segment") +
         ylab(vars[i]) +
-        theme(axis.text.x = element_text(size = 7))
+        theme(axis.text.x = element_text(angle = angle, vjust = 1,
+                                         hjust=1, size = size))
     }
 
     plots[[j]] <- p

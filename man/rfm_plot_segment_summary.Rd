@@ -7,6 +7,8 @@
 rfm_plot_segment_summary(
   x,
   metric = NULL,
+  angle = 90,
+  size = 5,
   sort = FALSE,
   ascending = FALSE,
   flip = FALSE,
@@ -17,6 +19,10 @@ rfm_plot_segment_summary(
 \item{x}{An object of class \code{rfm_segment_summary}.}
 
 \item{metric}{Metrics to be visualized.}
+
+\item{angle}{Angle at which X axis tick labels should be displayed.}
+
+\item{size}{Size of X axis tick labels.}
 
 \item{sort}{logical; if \code{TRUE}, sort metrics.}
 
