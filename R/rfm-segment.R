@@ -262,6 +262,11 @@ rfm_plot_segment_summary <- function(x, metric = NULL, sort = FALSE, ascending =
 #'
 #' @param x An object of class \code{rfm_segment_summary}.
 #' @param flip logical; if \code{TRUE}, creates horizontal bar plot.
+#' @param angle Angle at which X axis tick labels should be displayed.
+#' @param size Size of X axis tick labels.
+#' @param colors Bar colors.
+#' @param labels Legend labels.
+#' @param plot_title Title of the plot.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @examples
@@ -298,7 +303,11 @@ rfm_plot_segment_summary <- function(x, metric = NULL, sort = FALSE, ascending =
 #'
 #' @export
 #'
-rfm_plot_revenue_dist <- function(x, flip = FALSE, print_plot = TRUE) {
+rfm_plot_revenue_dist <- function(x, flip = FALSE, angle = 90, size = 8,
+                                  colors = c("#3b5bdb", "#91a7ff"),
+                                  labels = c("Revenue", "Customers"),
+                                  plot_title = "Revenue & Customer Distribution",
+                                  print_plot = TRUE) {
 
   data <- rfm_prep_revenue_dist(x)
 
@@ -308,8 +317,8 @@ rfm_plot_revenue_dist <- function(x, flip = FALSE, print_plot = TRUE) {
 
   p <-
     p +
-    scale_fill_manual(values = c("#3b5bdb", "#91a7ff"),
-                      labels = c("Share of revenue", "Share of customers")) +
+    scale_fill_manual(values = c(colors[1], colors[2]),
+                      labels = c(labels[1], labels[2])) +
     scale_y_continuous(labels = scales::percent)
 
   p <-
@@ -336,7 +345,7 @@ rfm_plot_revenue_dist <- function(x, flip = FALSE, print_plot = TRUE) {
     p +
     xlab("") +
     ylab("") +
-    ggtitle("Revenue vs Number of Customers")
+    ggtitle(plot_title)
 
   if (print_plot) {
     print(p)

@@ -85,13 +85,13 @@
 <text x='276.13' y='516.90' text-anchor='middle' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='17.61px' lengthAdjust='spacingAndGlyphs'>10%</text>
 <text x='434.32' y='516.90' text-anchor='middle' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='17.61px' lengthAdjust='spacingAndGlyphs'>20%</text>
 <text x='592.51' y='516.90' text-anchor='middle' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='17.61px' lengthAdjust='spacingAndGlyphs'>30%</text>
-<rect x='296.39' y='542.28' width='211.27' height='28.24' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<rect x='307.35' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #F2F2F2;' />
-<rect x='308.06' y='548.47' width='15.86' height='15.86' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #3B5BDB;' />
-<rect x='403.11' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #F2F2F2;' />
-<rect x='403.82' y='548.47' width='15.86' height='15.86' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #91A7FF;' />
-<text x='330.11' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='67.52px' lengthAdjust='spacingAndGlyphs'>Share of revenue</text>
-<text x='425.87' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='76.32px' lengthAdjust='spacingAndGlyphs'>Share of customers</text>
-<text x='89.54' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='202.53px' lengthAdjust='spacingAndGlyphs'>Revenue vs Number of Customers</text>
+<rect x='329.42' y='542.28' width='145.23' height='28.24' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<rect x='340.37' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #F2F2F2;' />
+<rect x='341.08' y='548.47' width='15.86' height='15.86' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #3B5BDB;' />
+<rect x='403.85' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #F2F2F2;' />
+<rect x='404.56' y='548.47' width='15.86' height='15.86' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #91A7FF;' />
+<text x='363.13' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='35.23px' lengthAdjust='spacingAndGlyphs'>Revenue</text>
+<text x='426.61' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='42.56px' lengthAdjust='spacingAndGlyphs'>Customers</text>
+<text x='89.54' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='195.92px' lengthAdjust='spacingAndGlyphs'>Revenue &amp; Customer Distribution</text>
 </g>
 </svg>
