@@ -48,8 +48,8 @@ The heat map shows the average monetary value for different
 }
 \section{Deprecated Functions}{
 
-\code{rfm_heatmap()} has been deprecated and will be made defunct. It has 
-been provided for compatibility with older versions only, and will be made 
+\code{rfm_heatmap()} has been deprecated and will be made defunct. It has
+been provided for compatibility with older versions only, and will be made
 defunct at the next release.
 
 Instead use the replacement function \code{rfm_plot_heatmap()()}.

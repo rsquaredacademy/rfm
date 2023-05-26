@@ -51,8 +51,8 @@ Histograms of recency, frequency and monetary value.
 }
 \section{Deprecated Functions}{
 
-\code{rfm_histograms()} has been deprecated and will be made defunct. It has 
-been provided for compatibility with older versions only, and will be made 
+\code{rfm_histograms()} has been deprecated and will be made defunct. It has
+been provided for compatibility with older versions only, and will be made
 defunct at the next release.
 
 Instead use the replacement function \code{rfm_plot_histograms()()}.
