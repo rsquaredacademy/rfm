@@ -8,6 +8,7 @@
 rfm_plot_order_dist(
   rfm_table,
   bar_color = "blue",
+  animate = FALSE,
   xaxis_title = "Orders",
   yaxis_title = "Customers",
   count_size = 3,
@@ -20,6 +21,9 @@ rfm_plot_order_dist(
 \item{rfm_table}{An object of class \code{rfm_table}.}
 
 \item{bar_color}{Color of the bars.}
+
+\item{animate}{Logical; if \code{TRUE}, animates the bars.
+Defaults to \code{FALSE}.}
 
 \item{xaxis_title}{X axis title.}
 

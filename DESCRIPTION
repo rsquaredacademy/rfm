@@ -17,7 +17,9 @@ Depends:
     R (>= 3.2)
 Imports: 
     data.table,
+    gganimate,
     ggplot2,
+    gifski,
     gridExtra,
     magrittr,
     RColorBrewer,

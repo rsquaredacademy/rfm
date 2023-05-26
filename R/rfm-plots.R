@@ -289,6 +289,8 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #'
 #' @param rfm_table An object of class \code{rfm_table}.
 #' @param bar_color Color of the bars.
+#' @param animate Logical; if \code{TRUE}, animates the bars.
+#'   Defaults to \code{FALSE}.
 #' @param xaxis_title X axis title.
 #' @param yaxis_title Y axis title.
 #' @param count_size Size of count displayed on top of the bars.
@@ -323,9 +325,12 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #' # order distribution
 #' rfm_plot_order_dist(rfm_customer)
 #'
+#' @import gganimate gifski
+#'
 #' @export
 #'
 rfm_plot_order_dist <- function(rfm_table, bar_color = 'blue',
+                                animate = FALSE,
                                 xaxis_title = 'Orders',
                                 yaxis_title = 'Customers',
                                 count_size = 3,
@@ -347,6 +352,25 @@ rfm_plot_order_dist <- function(rfm_table, bar_color = 'blue',
     multiply_by(1.1) %>%
     ceiling(.)
 
+  if (animate) {
+    print_plot <- FALSE
+    n_groups <- length(data$n)
+
+    gap <- data$n / 9
+    start <- rep(0, n_groups)
+    value <- start
+    for (i in seq_len(9)) {
+      n <- start + gap
+      value <- c(value, n)
+      start <- n
+    }
+
+
+    data <- data.frame(transaction_count = rep(data$transaction_count, 10),
+                       n = round(value),
+                       frame = rep(letters[1:10], each = n_groups))
+  }
+
   p <-
     data %>%
     ggplot(aes(x = transaction_count, y = n)) +
@@ -355,11 +379,24 @@ rfm_plot_order_dist <- function(rfm_table, bar_color = 'blue',
     ylab(yaxis_title) +
     ylim(0, ylim_max) +
     ggtitle(plot_title) +
-    geom_text(aes(label = n, y = n + 3),
+    geom_text(aes(label = sprintf("%1.0f", n), y = n + 3),
               position = position_dodge(0.9),
               vjust = 0,
               size = count_size) +
     theme(plot.title = element_text(hjust = 0.5))
+
+  if (animate) {
+    p <-
+      p +
+      transition_states(
+        frame,
+        transition_length = 10,
+        state_length = 1,
+        wrap = FALSE
+      ) +
+      ease_aes('linear')
+    animate(p, fps=8, renderer = gifski_renderer(loop = FALSE))
+  }
 
   if (print_plot) {
     print(p)
