@@ -18,12 +18,12 @@
 #' @param brewer_name Palette name; check the documentation of
 #'   \code{brewer.pal}.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
-#' 
+#'
 #' @section Deprecated Functions:
-#' \code{rfm_heatmap()} has been deprecated and will be made defunct. It has 
-#' been provided for compatibility with older versions only, and will be made 
+#' \code{rfm_heatmap()} has been deprecated and will be made defunct. It has
+#' been provided for compatibility with older versions only, and will be made
 #' defunct at the next release.
-#' 
+#'
 #' Instead use the replacement function \code{rfm_plot_heatmap()()}.
 #'
 #' @examples
@@ -130,12 +130,12 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @return Histograms
-#' 
+#'
 #' @section Deprecated Functions:
-#' \code{rfm_histograms()} has been deprecated and will be made defunct. It has 
-#' been provided for compatibility with older versions only, and will be made 
+#' \code{rfm_histograms()} has been deprecated and will be made defunct. It has
+#' been provided for compatibility with older versions only, and will be made
 #' defunct at the next release.
-#' 
+#'
 #' Instead use the replacement function \code{rfm_plot_histograms()()}.
 #'
 #' @examples
@@ -216,12 +216,12 @@ rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @return Bar chart.
-#' 
+#'
 #' @section Deprecated Functions:
-#' \code{rfm_bar_chart()} has been deprecated and will be made defunct. It has 
-#' been provided for compatibility with older versions only, and will be made 
+#' \code{rfm_bar_chart()} has been deprecated and will be made defunct. It has
+#' been provided for compatibility with older versions only, and will be made
 #' defunct at the next release.
-#' 
+#'
 #' Instead use the replacement function \code{rfm_plot_bar_chart()()}.
 #'
 #' @examples
@@ -291,18 +291,19 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #' @param bar_color Color of the bars.
 #' @param xaxis_title X axis title.
 #' @param yaxis_title Y axis title.
+#' @param count_size Size of count displayed on top of the bars.
 #' @param plot_title Title of the plot.
 #' @param plot_title_justify Horizontal justification of the plot title;
 #'   0 for left justified and 1 for right justified.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @return Bar chart.
-#' 
+#'
 #' @section Deprecated Functions:
-#' \code{rfm_order_dist()} has been deprecated and will be made defunct. It has 
-#' been provided for compatibility with older versions only, and will be made 
+#' \code{rfm_order_dist()} has been deprecated and will be made defunct. It has
+#' been provided for compatibility with older versions only, and will be made
 #' defunct at the next release.
-#' 
+#'
 #' Instead use the replacement function \code{rfm_plot_order_dist()()}.
 #'
 #' @examples
@@ -325,9 +326,12 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #' @export
 #'
 rfm_plot_order_dist <- function(rfm_table, bar_color = 'blue',
-                           xaxis_title = 'Orders', yaxis_title = 'Customers',
-                           plot_title = 'Customers by Orders',
-                           plot_title_justify = 0.5, print_plot = TRUE) {
+                                xaxis_title = 'Orders',
+                                yaxis_title = 'Customers',
+                                count_size = 3,
+                                plot_title = 'Customers by Orders',
+                                plot_title_justify = 0.5,
+                                print_plot = TRUE) {
 
   data <-
     rfm_table %>%
@@ -351,7 +355,10 @@ rfm_plot_order_dist <- function(rfm_table, bar_color = 'blue',
     ylab(yaxis_title) +
     ylim(0, ylim_max) +
     ggtitle(plot_title) +
-    geom_text(aes(label = n, y = n + 3), position = position_dodge(0.9), vjust = 0) +
+    geom_text(aes(label = n, y = n + 3),
+              position = position_dodge(0.9),
+              vjust = 0,
+              size = count_size) +
     theme(plot.title = element_text(hjust = 0.5))
 
   if (print_plot) {

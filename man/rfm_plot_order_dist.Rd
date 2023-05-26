@@ -10,6 +10,7 @@ rfm_plot_order_dist(
   bar_color = "blue",
   xaxis_title = "Orders",
   yaxis_title = "Customers",
+  count_size = 3,
   plot_title = "Customers by Orders",
   plot_title_justify = 0.5,
   print_plot = TRUE
@@ -23,6 +24,8 @@ rfm_plot_order_dist(
 \item{xaxis_title}{X axis title.}
 
 \item{yaxis_title}{Y axis title.}
+
+\item{count_size}{Size of count displayed on top of the bars.}
 
 \item{plot_title}{Title of the plot.}
 
@@ -39,8 +42,8 @@ Visualize the distribution of customers across orders.
 }
 \section{Deprecated Functions}{
 
-\code{rfm_order_dist()} has been deprecated and will be made defunct. It has 
-been provided for compatibility with older versions only, and will be made 
+\code{rfm_order_dist()} has been deprecated and will be made defunct. It has
+been provided for compatibility with older versions only, and will be made
 defunct at the next release.
 
 Instead use the replacement function \code{rfm_plot_order_dist()()}.
