@@ -22,7 +22,7 @@ rfm_plot_heatmap(
 \item{data}{An object of class \code{rfm_table}.}
 
 \item{package}{Visualization engine. Choose between \code{ggplot2}
-and \code{plotly}}
+and \code{plotly}.}
 
 \item{brewer_n}{Indicates the number of colors in the palette; RColorBrewer
 is used for the color palette of the heatmap; check the documentation of

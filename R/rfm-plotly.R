@@ -27,3 +27,31 @@ rfm_plotly_heatmap <- function(mapdata, plot_title, xaxis_label, yaxis_label, br
     fig %>%
       config(displayModeBar = FALSE)
 }
+
+rfm_plotly_order_dist <- function(data, bar_color = NULL,
+                                  plot_title = NULL,
+                                  xaxis_label = NULL,
+                                  yaxis_label = NULL) {
+
+  text <- paste0("Orders: ", data$transaction_count, " \nCustomers: ", data$n)
+
+  fig <- plot_ly(data,
+                 x = ~transaction_count,
+                 y = ~n,
+                 type = "bar",
+                 hoverinfo = "text",
+                 hovertext = text,
+                 marker = list(
+                   color = bar_color
+                 ))
+
+  fig <-
+    fig %>%
+    layout(title = plot_title,
+           xaxis = list(title = xaxis_label),
+           yaxis = list(title = yaxis_label))
+
+  fig %>%
+    config(displayModeBar = FALSE)
+
+}

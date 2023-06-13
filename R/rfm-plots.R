@@ -7,7 +7,7 @@
 #'
 #' @param data An object of class \code{rfm_table}.
 #' @param package Visualization engine. Choose between \code{ggplot2}
-#'   and \code{plotly}
+#'   and \code{plotly}.
 #' @param brewer_n Indicates the number of colors in the palette; RColorBrewer
 #'   is used for the color palette of the heatmap; check the documentation of
 #'   \code{brewer.pal}.
@@ -284,6 +284,8 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #' Visualize the distribution of customers across orders.
 #'
 #' @param rfm_table An object of class \code{rfm_table}.
+#' @param package Visualization engine. Choose between \code{ggplot2}
+#'   and \code{plotly}.
 #' @param flip logical; if \code{TRUE}, creates horizontal bar plot.
 #' @param animate Logical; if \code{TRUE}, animates the bars.
 #'   Defaults to \code{FALSE}.
@@ -324,7 +326,8 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #'
 #' @export
 #'
-rfm_plot_order_dist <- function(rfm_table, flip = FALSE, animate = FALSE,
+rfm_plot_order_dist <- function(rfm_table, package = c("ggplot2", "plotly"),
+                                flip = FALSE, animate = FALSE,
                                 bar_color = NULL, plot_title = NULL,
                                 xaxis_label = NULL, yaxis_label = NULL,
                                 count_size = 3, print_plot = TRUE) {
@@ -348,22 +351,32 @@ rfm_plot_order_dist <- function(rfm_table, flip = FALSE, animate = FALSE,
   data <- rfm_order_dist_data(rfm_table)
   ylim_max <- rfm_order_dist_ylim(data)
 
-  if (animate) {
-    print_plot <- FALSE
-    data <- data_animate_order_dist(data)
-  }
+  lib <- match.arg(package)
 
-  p <- rfm_gg_order_dist(data, flip, bar_color, plot_title, xaxis_label, yaxis_label, ylim_max, count_size)
+  if (lib == "ggplot2") {
+    if (animate) {
+      print_plot <- FALSE
+      data <- data_animate_order_dist(data)
+    }
 
-  if (animate) {
-    p <- rfm_animate_order_dist(p)
-    animate(p, fps=8, renderer = gifski_renderer(loop = FALSE))
-  }
+    p <- rfm_gg_order_dist(data, flip, bar_color, plot_title, xaxis_label, yaxis_label, ylim_max, count_size)
 
-  if (print_plot) {
-    print(p)
+    if (animate) {
+      p <- rfm_animate_order_dist(p)
+      animate(p, fps=8, renderer = gifski_renderer(loop = FALSE))
+    }
+
+    if (print_plot) {
+      print(p)
+    } else {
+      return(p)
+    }
   } else {
-    return(p)
+    rfm_plotly_order_dist(data, bar_color = bar_color,
+                          plot_title = plot_title,
+                          xaxis_label = xaxis_label,
+                          yaxis_label = yaxis_label)
+
   }
 
 }
@@ -377,10 +390,10 @@ rfm_order_dist <- function(rfm_table, bar_color = 'blue',
                            plot_title = 'Customers by Orders',
                            print_plot = TRUE) {
   .Deprecated("rfm_plot_order_dist()")
-  rfm_plot_order_dist(rfm_table, bar_color = 'blue',
-                           xaxis_label = 'Orders', yaxis_label = 'Customers',
-                           plot_title = 'Customers by Orders',
-                           print_plot = TRUE)
+  rfm_plot_order_dist(rfm_table, bar_color = bar_color,
+                           xaxis_label = xaxis_title, yaxis_label = yaxis_title,
+                           plot_title = plot_title,
+                           print_plot = print_plot)
 }
 
 

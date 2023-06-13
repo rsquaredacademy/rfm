@@ -7,6 +7,7 @@
 \usage{
 rfm_plot_order_dist(
   rfm_table,
+  package = c("ggplot2", "plotly"),
   flip = FALSE,
   animate = FALSE,
   bar_color = NULL,
@@ -19,6 +20,9 @@ rfm_plot_order_dist(
 }
 \arguments{
 \item{rfm_table}{An object of class \code{rfm_table}.}
+
+\item{package}{Visualization engine. Choose between \code{ggplot2}
+and \code{plotly}.}
 
 \item{flip}{logical; if \code{TRUE}, creates horizontal bar plot.}
 
