@@ -287,12 +287,10 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #' @param bar_color Color of the bars.
 #' @param animate Logical; if \code{TRUE}, animates the bars.
 #'   Defaults to \code{FALSE}.
-#' @param xaxis_title X axis title.
-#' @param yaxis_title Y axis title.
+#' @param xaxis_label X axis title.
+#' @param yaxis_label Y axis title.
 #' @param count_size Size of count displayed on top of the bars.
 #' @param plot_title Title of the plot.
-#' @param plot_title_justify Horizontal justification of the plot title;
-#'   0 for left justified and 1 for right justified.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @return Bar chart.
@@ -302,7 +300,7 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #' been provided for compatibility with older versions only, and will be made
 #' defunct at the next release.
 #'
-#' Instead use the replacement function \code{rfm_plot_order_dist()()}.
+#' Instead use the replacement function \code{rfm_plot_order_dist()}.
 #'
 #' @examples
 #' # using transaction data
@@ -325,72 +323,42 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #'
 #' @export
 #'
-rfm_plot_order_dist <- function(rfm_table, bar_color = 'blue',
+rfm_plot_order_dist <- function(rfm_table, bar_color = NULL,
                                 animate = FALSE,
-                                xaxis_title = 'Orders',
-                                yaxis_title = 'Customers',
+                                xaxis_label = NULL,
+                                yaxis_label = NULL,
                                 count_size = 3,
-                                plot_title = 'Customers by Orders',
-                                plot_title_justify = 0.5,
+                                plot_title = NULL,
                                 print_plot = TRUE) {
 
-  data <-
-    rfm_table %>%
-    use_series(rfm) %>%
-    data.table() %>%
-    .[, .(n = .N), by = transaction_count] %>%
-    setDF()
+  if (is.null(plot_title)) {
+    plot_title <- "Customer Distribution by Orders"
+  }
 
-  ylim_max <-
-    data %>%
-    use_series(n) %>%
-    max() %>%
-    multiply_by(1.1) %>%
-    ceiling(.)
+  if (is.null(xaxis_label)) {
+    xaxis_label <- "Orders"
+  }
+
+  if (is.null(yaxis_label)) {
+    yaxis_label <- "Customers"
+  }
+
+  if (is.null(bar_color)) {
+    bar_color <- "blue"
+  }
+
+  data <- rfm_order_dist_data(rfm_table)
+  ylim_max <- rfm_order_dist_ylim(data)
 
   if (animate) {
     print_plot <- FALSE
-    n_groups <- length(data$n)
-
-    gap <- data$n / 9
-    start <- rep(0, n_groups)
-    value <- start
-    for (i in seq_len(9)) {
-      n <- start + gap
-      value <- c(value, n)
-      start <- n
-    }
-
-
-    data <- data.frame(transaction_count = rep(data$transaction_count, 10),
-                       n = round(value),
-                       frame = rep(letters[1:10], each = n_groups))
+    data <- data_animate_order_dist(data)
   }
 
-  p <-
-    data %>%
-    ggplot(aes(x = transaction_count, y = n)) +
-    geom_bar(stat = "identity", fill = bar_color) +
-    xlab(xaxis_title) +
-    ylab(yaxis_title) +
-    ylim(0, ylim_max) +
-    ggtitle(plot_title) +
-    geom_text(aes(label = sprintf("%1.0f", n), y = n + 3),
-              position = position_dodge(0.9),
-              vjust = 0,
-              size = count_size) +
-    theme(plot.title = element_text(hjust = 0.5))
+  p <- rfm_gg_order_dist(data, bar_color, plot_title, xaxis_label, yaxis_label, ylim_max, count_size)
 
   if (animate) {
-    p <-
-      p +
-      transition_states(
-        frame,
-        transition_length = 10,
-        state_length = 1,
-        wrap = FALSE
-      ) +
-      ease_aes('linear')
+    p <- rfm_animate_order_dist(p)
     animate(p, fps=8, renderer = gifski_renderer(loop = FALSE))
   }
 
@@ -409,12 +377,12 @@ rfm_plot_order_dist <- function(rfm_table, bar_color = 'blue',
 rfm_order_dist <- function(rfm_table, bar_color = 'blue',
                            xaxis_title = 'Orders', yaxis_title = 'Customers',
                            plot_title = 'Customers by Orders',
-                           plot_title_justify = 0.5, print_plot = TRUE) {
+                           print_plot = TRUE) {
   .Deprecated("rfm_plot_order_dist()")
   rfm_plot_order_dist(rfm_table, bar_color = 'blue',
-                           xaxis_title = 'Orders', yaxis_title = 'Customers',
+                           xaxis_label = 'Orders', yaxis_label = 'Customers',
                            plot_title = 'Customers by Orders',
-                           plot_title_justify = 0.5, print_plot = TRUE)
+                           print_plot = TRUE)
 }
 
 

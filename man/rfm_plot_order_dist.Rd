@@ -7,13 +7,12 @@
 \usage{
 rfm_plot_order_dist(
   rfm_table,
-  bar_color = "blue",
+  bar_color = NULL,
   animate = FALSE,
-  xaxis_title = "Orders",
-  yaxis_title = "Customers",
+  xaxis_label = NULL,
+  yaxis_label = NULL,
   count_size = 3,
-  plot_title = "Customers by Orders",
-  plot_title_justify = 0.5,
+  plot_title = NULL,
   print_plot = TRUE
 )
 }
@@ -25,16 +24,13 @@ rfm_plot_order_dist(
 \item{animate}{Logical; if \code{TRUE}, animates the bars.
 Defaults to \code{FALSE}.}
 
-\item{xaxis_title}{X axis title.}
+\item{xaxis_label}{X axis title.}
 
-\item{yaxis_title}{Y axis title.}
+\item{yaxis_label}{Y axis title.}
 
 \item{count_size}{Size of count displayed on top of the bars.}
 
 \item{plot_title}{Title of the plot.}
-
-\item{plot_title_justify}{Horizontal justification of the plot title;
-0 for left justified and 1 for right justified.}
 
 \item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
 }
@@ -50,7 +46,7 @@ Visualize the distribution of customers across orders.
 been provided for compatibility with older versions only, and will be made
 defunct at the next release.
 
-Instead use the replacement function \code{rfm_plot_order_dist()()}.
+Instead use the replacement function \code{rfm_plot_order_dist()}.
 }
 
 \examples{

@@ -129,3 +129,19 @@ rfm_barchart_data <- function(rfm_table) {
   return(data)
 
 }
+
+rfm_order_dist_data <- function(rfm_table) {
+  rfm_table %>%
+    use_series(rfm) %>%
+    data.table() %>%
+    .[, .(n = .N), by = transaction_count] %>%
+    setDF()
+}
+
+rfm_order_dist_ylim <- function(data) {
+  data %>%
+    use_series(n) %>%
+    max() %>%
+    multiply_by(1.1) %>%
+    ceiling(.)
+}

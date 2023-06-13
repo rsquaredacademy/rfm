@@ -71,8 +71,8 @@
   <span class="va">rfm_table</span>,
   bar_color <span class="op">=</span> <span class="st">"blue"</span>,
   animate <span class="op">=</span> <span class="cn">FALSE</span>,
-  xaxis_title <span class="op">=</span> <span class="st">"Orders"</span>,
-  yaxis_title <span class="op">=</span> <span class="st">"Customers"</span>,
+  xaxis_label <span class="op">=</span> <span class="st">"Orders"</span>,
+  yaxis_label <span class="op">=</span> <span class="st">"Customers"</span>,
   count_size <span class="op">=</span> <span class="fl">3</span>,
   plot_title <span class="op">=</span> <span class="st">"Customers by Orders"</span>,
   plot_title_justify <span class="op">=</span> <span class="fl">0.5</span>,
@@ -95,11 +95,11 @@
 Defaults to <code>FALSE</code>.</p></dd>
 
 
-<dt>xaxis_title</dt>
+<dt>xaxis_label</dt>
 <dd><p>X axis title.</p></dd>
 
 
-<dt>yaxis_title</dt>
+<dt>yaxis_label</dt>
 <dd><p>Y axis title.</p></dd>
 
 
@@ -146,6 +146,11 @@ defunct at the next release.</p>
 <span class="r-in"><span class="co"># order distribution</span></span>
 <span class="r-in"><span class="fu">rfm_plot_order_dist</span><span class="op">(</span><span class="va">rfm_order</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="rfm_plot_order_dist-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># animate</span></span>
+<span class="r-in"><span class="fu">rfm_plot_order_dist</span><span class="op">(</span><span class="va">rfm_order</span>, animate <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># using customer data</span></span>
 <span class="r-in"><span class="va">analysis_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2007-01-01'</span><span class="op">)</span></span>
