@@ -7,30 +7,33 @@
 \usage{
 rfm_plot_order_dist(
   rfm_table,
-  bar_color = NULL,
+  flip = FALSE,
   animate = FALSE,
+  bar_color = NULL,
+  plot_title = NULL,
   xaxis_label = NULL,
   yaxis_label = NULL,
   count_size = 3,
-  plot_title = NULL,
   print_plot = TRUE
 )
 }
 \arguments{
 \item{rfm_table}{An object of class \code{rfm_table}.}
 
-\item{bar_color}{Color of the bars.}
+\item{flip}{logical; if \code{TRUE}, creates horizontal bar plot.}
 
 \item{animate}{Logical; if \code{TRUE}, animates the bars.
 Defaults to \code{FALSE}.}
+
+\item{bar_color}{Color of the bars.}
+
+\item{plot_title}{Title of the plot.}
 
 \item{xaxis_label}{X axis title.}
 
 \item{yaxis_label}{Y axis title.}
 
 \item{count_size}{Size of count displayed on top of the bars.}
-
-\item{plot_title}{Title of the plot.}
 
 \item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
 }

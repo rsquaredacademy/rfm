@@ -284,13 +284,14 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #' Visualize the distribution of customers across orders.
 #'
 #' @param rfm_table An object of class \code{rfm_table}.
-#' @param bar_color Color of the bars.
+#' @param flip logical; if \code{TRUE}, creates horizontal bar plot.
 #' @param animate Logical; if \code{TRUE}, animates the bars.
 #'   Defaults to \code{FALSE}.
+#' @param bar_color Color of the bars.
+#' @param plot_title Title of the plot.
 #' @param xaxis_label X axis title.
 #' @param yaxis_label Y axis title.
 #' @param count_size Size of count displayed on top of the bars.
-#' @param plot_title Title of the plot.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @return Bar chart.
@@ -323,13 +324,10 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #'
 #' @export
 #'
-rfm_plot_order_dist <- function(rfm_table, bar_color = NULL,
-                                animate = FALSE,
-                                xaxis_label = NULL,
-                                yaxis_label = NULL,
-                                count_size = 3,
-                                plot_title = NULL,
-                                print_plot = TRUE) {
+rfm_plot_order_dist <- function(rfm_table, flip = FALSE, animate = FALSE,
+                                bar_color = NULL, plot_title = NULL,
+                                xaxis_label = NULL, yaxis_label = NULL,
+                                count_size = 3, print_plot = TRUE) {
 
   if (is.null(plot_title)) {
     plot_title <- "Customer Distribution by Orders"
@@ -355,7 +353,7 @@ rfm_plot_order_dist <- function(rfm_table, bar_color = NULL,
     data <- data_animate_order_dist(data)
   }
 
-  p <- rfm_gg_order_dist(data, bar_color, plot_title, xaxis_label, yaxis_label, ylim_max, count_size)
+  p <- rfm_gg_order_dist(data, flip, bar_color, plot_title, xaxis_label, yaxis_label, ylim_max, count_size)
 
   if (animate) {
     p <- rfm_animate_order_dist(p)
