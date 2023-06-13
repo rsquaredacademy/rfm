@@ -65,6 +65,12 @@ revenue, analysis_date)
 # order distribution
 rfm_plot_order_dist(rfm_order)
 
+# horizontal bars
+rfm_plot_order_dist(rfm_order, flip = TRUE)
+
+# plotly
+rfm_plot_order_dist(rfm_order, package = "plotly")
+
 # using customer data
 analysis_date <- as.Date('2007-01-01')
 rfm_customer <- rfm_table_customer(rfm_data_customer, customer_id,

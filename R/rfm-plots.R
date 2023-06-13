@@ -314,6 +314,12 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #' # order distribution
 #' rfm_plot_order_dist(rfm_order)
 #'
+#' # horizontal bars
+#' rfm_plot_order_dist(rfm_order, flip = TRUE)
+#'
+#' # plotly
+#' rfm_plot_order_dist(rfm_order, package = "plotly")
+#'
 #' # using customer data
 #' analysis_date <- as.Date('2007-01-01')
 #' rfm_customer <- rfm_table_customer(rfm_data_customer, customer_id,
@@ -372,7 +378,7 @@ rfm_plot_order_dist <- function(rfm_table, package = c("ggplot2", "plotly"),
       return(p)
     }
   } else {
-    rfm_plotly_order_dist(data, bar_color = bar_color,
+    rfm_plotly_order_dist(data, flip = flip, bar_color = bar_color,
                           plot_title = plot_title,
                           xaxis_label = xaxis_label,
                           yaxis_label = yaxis_label)
