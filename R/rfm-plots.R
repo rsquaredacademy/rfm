@@ -100,8 +100,8 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
                         print_plot = TRUE) {
   .Deprecated("rfm_plot_heatmap()")
   rfm_plot_heatmap(data, plot_title = "RFM Heat Map",
-                        plot_title_justify = 0.5, xaxis_title = "Frequency",
-                        yaxis_title = "Recency",
+                        plot_title_justify = 0.5, xaxis_label = "Frequency",
+                        yaxis_label = "Recency",
                         legend_title = "Mean Monetary Value",
                         brewer_n = 5, brewer_name = "PuBu",
                         print_plot = TRUE)
