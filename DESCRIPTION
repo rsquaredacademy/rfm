@@ -22,6 +22,7 @@ Imports:
     gifski,
     gridExtra,
     magrittr,
+    plotly,
     RColorBrewer,
     scales,
     stats,

@@ -6,25 +6,28 @@
 #'   the darker areas in the heatmap.
 #'
 #' @param data An object of class \code{rfm_table}.
-#' @param plot_title Title of the plot.
-#' @param plot_title_justify Horizontal justification of the plot title;
-#'   0 for left justified and 1 for right justified.
-#' @param xaxis_title X axis title.
-#' @param yaxis_title Y axis title.
-#' @param legend_title Legend title.
+#' @param package Visualization engine. Choose between \code{ggplot2}
+#'   and \code{plotly}
 #' @param brewer_n Indicates the number of colors in the palette; RColorBrewer
 #'   is used for the color palette of the heatmap; check the documentation of
 #'   \code{brewer.pal}.
 #' @param brewer_name Palette name; check the documentation of
 #'   \code{brewer.pal}.
-#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
+#' @param xaxis_label X axis label.
+#' @param yaxis_label Y axis label.
+#' @param plot_title Title of the plot.
+#' @param legend_title Legend title.
+#' @param plot_title_justify Horizontal justification of the plot title;
+#'   0 for left justified and 1 for right justified.
+#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a
+#'   plot object.
 #'
 #' @section Deprecated Functions:
 #' \code{rfm_heatmap()} has been deprecated and will be made defunct. It has
 #' been provided for compatibility with older versions only, and will be made
 #' defunct at the next release.
 #'
-#' Instead use the replacement function \code{rfm_plot_heatmap()()}.
+#' Instead use the replacement function \code{rfm_plot_heatmap()}.
 #'
 #' @examples
 #' # using transaction data
@@ -33,7 +36,11 @@
 #' revenue, analysis_date)
 #'
 #' # heat map
+#' # ggplot2
 #' rfm_plot_heatmap(rfm_order)
+#'
+#' # plotly
+#' rfm_plot_heatmap(rfm_order, "plotly")
 #'
 #' # using customer data
 #' analysis_date <- as.Date('2007-01-01')
@@ -45,49 +52,38 @@
 #'
 #' @export
 #'
-rfm_plot_heatmap <- function(data, plot_title = "RFM Heat Map",
-                        plot_title_justify = 0.5, xaxis_title = "Frequency",
-                        yaxis_title = "Recency",
-                        legend_title = "Mean Monetary Value",
-                        brewer_n = 5, brewer_name = "PuBu",
-                        print_plot = TRUE) {
+rfm_plot_heatmap <- function(data, package = c("ggplot2", "plotly"),
+                             brewer_n = 5, brewer_name = "PuBu",
+                             xaxis_label = NULL, yaxis_label = NULL,
+                             plot_title = NULL, legend_title = NULL,
+                             plot_title_justify = 0.5, print_plot = TRUE) {
 
   mapdata <- rfm_heatmap_data(rfm_table = data)
 
-  ulm <-
-    mapdata %>%
-    extract2("monetary") %>%
-    max() %>%
-    ceiling(.)
+  if (is.null(legend_title)) {
+    legend_title <- "Mean Monetary Value"
+  }
 
-  llm <-
-    mapdata %>%
-    extract2("monetary") %>%
-    min() %>%
-    floor(.)
+  if (is.null(plot_title)) {
+    plot_title <- "RFM Heat Map"
+  }
 
-  bins <-
-    mapdata %>%
-    use_series(frequency_score) %>%
-    max()
+  if (is.null(xaxis_label)) {
+    xaxis_label <- "Frequency Score"
+  }
 
-  guide_breaks <- round(seq(llm, ulm, length.out = bins))
+  if (is.null(yaxis_label)) {
+    yaxis_label <- "Recency Score"
+  }
 
-  p <-
-    ggplot(data = mapdata) +
-    geom_tile(aes(x = frequency_score, y = recency_score, fill = monetary)) +
-    ggtitle(plot_title) +
-    xlab(xaxis_title) +
-    ylab(yaxis_title) +
-    scale_fill_gradientn(limits = c(llm, ulm),
-                         colours = RColorBrewer::brewer.pal(n = brewer_n, name = brewer_name),
-                         name = legend_title) +
-    theme(plot.title = element_text(hjust = plot_title_justify))
+  lib <- match.arg(package)
 
-  if (print_plot) {
-    print(p)
+  if (lib == "ggplot2") {
+    rfm_gg_heatmap(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n,
+                   brewer_name, legend_title, plot_title_justify, print_plot)
   } else {
-    return(p)
+    rfm_plotly_heatmap(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n,
+                       brewer_name, legend_title)
   }
 
 }

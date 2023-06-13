@@ -7,29 +7,22 @@
 \usage{
 rfm_plot_heatmap(
   data,
-  plot_title = "RFM Heat Map",
-  plot_title_justify = 0.5,
-  xaxis_title = "Frequency",
-  yaxis_title = "Recency",
-  legend_title = "Mean Monetary Value",
+  package = c("ggplot2", "plotly"),
   brewer_n = 5,
   brewer_name = "PuBu",
+  xaxis_label = NULL,
+  yaxis_label = NULL,
+  plot_title = NULL,
+  legend_title = NULL,
+  plot_title_justify = 0.5,
   print_plot = TRUE
 )
 }
 \arguments{
 \item{data}{An object of class \code{rfm_table}.}
 
-\item{plot_title}{Title of the plot.}
-
-\item{plot_title_justify}{Horizontal justification of the plot title;
-0 for left justified and 1 for right justified.}
-
-\item{xaxis_title}{X axis title.}
-
-\item{yaxis_title}{Y axis title.}
-
-\item{legend_title}{Legend title.}
+\item{package}{Visualization engine. Choose between \code{ggplot2}
+and \code{plotly}}
 
 \item{brewer_n}{Indicates the number of colors in the palette; RColorBrewer
 is used for the color palette of the heatmap; check the documentation of
@@ -38,7 +31,19 @@ is used for the color palette of the heatmap; check the documentation of
 \item{brewer_name}{Palette name; check the documentation of
 \code{brewer.pal}.}
 
-\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
+\item{xaxis_label}{X axis label.}
+
+\item{yaxis_label}{Y axis label.}
+
+\item{plot_title}{Title of the plot.}
+
+\item{legend_title}{Legend title.}
+
+\item{plot_title_justify}{Horizontal justification of the plot title;
+0 for left justified and 1 for right justified.}
+
+\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a
+plot object.}
 }
 \description{
 The heat map shows the average monetary value for different
@@ -52,7 +57,7 @@ The heat map shows the average monetary value for different
 been provided for compatibility with older versions only, and will be made
 defunct at the next release.
 
-Instead use the replacement function \code{rfm_plot_heatmap()()}.
+Instead use the replacement function \code{rfm_plot_heatmap()}.
 }
 
 \examples{
@@ -62,7 +67,11 @@ rfm_order <- rfm_table_order(rfm_data_orders, customer_id, order_date,
 revenue, analysis_date)
 
 # heat map
+# ggplot2
 rfm_plot_heatmap(rfm_order)
+
+# plotly
+rfm_plot_heatmap(rfm_order, "plotly")
 
 # using customer data
 analysis_date <- as.Date('2007-01-01')
