@@ -14,7 +14,6 @@ rfm_plot_heatmap(
   yaxis_label = NULL,
   plot_title = NULL,
   legend_title = NULL,
-  plot_title_justify = 0.5,
   print_plot = TRUE
 )
 }
@@ -38,9 +37,6 @@ is used for the color palette of the heatmap; check the documentation of
 \item{plot_title}{Title of the plot.}
 
 \item{legend_title}{Legend title.}
-
-\item{plot_title_justify}{Horizontal justification of the plot title;
-0 for left justified and 1 for right justified.}
 
 \item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a
 plot object.}

@@ -1,4 +1,4 @@
-rfm_gg_heatmap <- function(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n, brewer_name, legend_title, plot_title_justify, print_plot) {
+rfm_gg_heatmap <- function(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n, brewer_name, legend_title, print_plot) {
 
   ulm <- ceiling(max(mapdata[["monetary"]]))
   llm <- floor(min(mapdata[["monetary"]]))
@@ -15,8 +15,7 @@ rfm_gg_heatmap <- function(mapdata, plot_title, xaxis_label, yaxis_label, brewer
     ylab(yaxis_label) +
     scale_fill_gradientn(limits = c(llm, ulm),
                          colours = RColorBrewer::brewer.pal(n = brewer_n, name = brewer_name),
-                         name = legend_title) +
-    theme(plot.title = element_text(hjust = plot_title_justify))
+                         name = legend_title) 
 
   if (print_plot) {
     print(p)

@@ -17,8 +17,6 @@
 #' @param yaxis_label Y axis label.
 #' @param plot_title Title of the plot.
 #' @param legend_title Legend title.
-#' @param plot_title_justify Horizontal justification of the plot title;
-#'   0 for left justified and 1 for right justified.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a
 #'   plot object.
 #'
@@ -56,7 +54,7 @@ rfm_plot_heatmap <- function(data, package = c("ggplot2", "plotly"),
                              brewer_n = 5, brewer_name = "PuBu",
                              xaxis_label = NULL, yaxis_label = NULL,
                              plot_title = NULL, legend_title = NULL,
-                             plot_title_justify = 0.5, print_plot = TRUE) {
+                             print_plot = TRUE) {
 
   mapdata <- rfm_heatmap_data(rfm_table = data)
 
@@ -80,7 +78,7 @@ rfm_plot_heatmap <- function(data, package = c("ggplot2", "plotly"),
 
   if (lib == "ggplot2") {
     rfm_gg_heatmap(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n,
-                   brewer_name, legend_title, plot_title_justify, print_plot)
+                   brewer_name, legend_title, print_plot)
   } else {
     rfm_plotly_heatmap(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n,
                        brewer_name, legend_title)
@@ -93,18 +91,18 @@ rfm_plot_heatmap <- function(data, package = c("ggplot2", "plotly"),
 #' @usage NULL
 #'
 rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
-                        plot_title_justify = 0.5, xaxis_title = "Frequency",
+                        xaxis_title = "Frequency",
                         yaxis_title = "Recency",
                         legend_title = "Mean Monetary Value",
                         brewer_n = 5, brewer_name = "PuBu",
                         print_plot = TRUE) {
   .Deprecated("rfm_plot_heatmap()")
-  rfm_plot_heatmap(data, plot_title = "RFM Heat Map",
-                        plot_title_justify = 0.5, xaxis_label = "Frequency",
-                        yaxis_label = "Recency",
-                        legend_title = "Mean Monetary Value",
-                        brewer_n = 5, brewer_name = "PuBu",
-                        print_plot = TRUE)
+  rfm_plot_heatmap(data, plot_title = plot_title,
+                        xaxis_label = xaxis_title,
+                        yaxis_label = yaxis_title,
+                        legend_title = legend_title,
+                        brewer_n = brewer_n, brewer_name = brewer_name,
+                        print_plot = print_plot)
 }
 
 
