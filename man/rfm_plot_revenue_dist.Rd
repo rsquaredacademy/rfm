@@ -14,6 +14,7 @@ rfm_plot_revenue_dist(
   plot_title = "Revenue & Customer Distribution",
   xaxis_label = NULL,
   yaxis_label = NULL,
+  package = c("ggplot2", "plotly"),
   print_plot = TRUE
 )
 }
@@ -35,6 +36,9 @@ rfm_plot_revenue_dist(
 \item{xaxis_label}{X axis label.}
 
 \item{yaxis_label}{Y axis label.}
+
+\item{package}{Visualization engine. Choose between \code{ggplot2}
+and \code{plotly}.}
 
 \item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
 }
@@ -70,7 +74,14 @@ monetary_upper)
 # segment summary
 segment_overview <- rfm_segment_summary(segments)
 
-# visualize revenue distribution
+# revenue distribution
+# ggplot2
 rfm_plot_revenue_dist(segment_overview)
+
+# flip
+rfm_plot_revenue_dist(segment_overview, flip = TRUE)
+
+# plotly
+rfm_plot_revenue_dist(segment_overview, package = "plotly")
 
 }

@@ -1,4 +1,4 @@
-#' @importFrom plotly plot_ly layout config
+#' @importFrom plotly plot_ly layout config add_trace
 rfm_plotly_heatmap <- function(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n, brewer_name, legend_title) {
 
   text <- paste0("Frequency Score: ", mapdata$frequency_score,
@@ -166,6 +166,83 @@ rfm_plotly_segment_summary <- function(data, metric, flip, sort, ascending, bar_
                yaxis = list(title = yaxis_label))
     }
   }
+
+  fig %>%
+    config(displayModeBar = FALSE)
+
+}
+
+
+rfm_plotly_revenue_dist <- function(x, flip = FALSE, colors = c("#3b5bdb", "#91a7ff"),
+                                    labels = c("Revenue", "Customers"),
+                                    plot_title = "Revenue & Customer Distribution",
+                                    xaxis_label = NULL, yaxis_label = NULL) {
+
+  x$customer_share <- round((x$customers / sum(x$customers)) * 100, 2)
+  x$revenue_share <- round((x$revenue / sum(x$revenue)) * 100, 2)
+  data <- x[c("segment", "customer_share", "revenue_share")]
+
+  customer_text <- paste0("Segment: ", data$segment,
+                          "\nCustomer Share: ", data$customer_share, "%")
+
+  revenue_text <- paste0("Segment: ", data$segment,
+                         "\nRevenue Share: ", data$revenue_share, "%")
+
+  if (is.null(xaxis_label)) {
+    xaxis_label <- ""
+  }
+
+  if (is.null(yaxis_label)) {
+    yaxis_label <- ""
+  }
+
+  if (flip) {
+    fig <-
+    plot_ly(data,
+            x = ~revenue_share,
+            y = ~segment,
+            type = 'bar',
+            orientation = "h",
+            name = labels[1],
+            hoverinfo = "text",
+            hovertext = revenue_text,
+            marker = list(color = colors[1])) %>%
+    add_trace(x = ~customer_share,
+              name = labels[2],
+              hoverinfo = "text",
+              hovertext = customer_text,
+              marker = list(color = colors[2])) %>%
+    layout(title = plot_title,
+           xaxis = list(title = xaxis_label, ticksuffix = "%"),
+           yaxis = list(title = yaxis_label),
+           legend = list(x = 100, y = 0.5))
+  } else {
+    fig <-
+    plot_ly(data,
+            x = ~segment,
+            y = ~revenue_share,
+            type = 'bar',
+            name = labels[1],
+            hoverinfo = "text",
+            hovertext = revenue_text,
+            marker = list(color = colors[1])) %>%
+    add_trace(y = ~customer_share,
+              name = labels[2],
+              hoverinfo = "text",
+              hovertext = customer_text,
+              marker = list(color = colors[2])) %>%
+    layout(title = plot_title,
+           xaxis = list(title = xaxis_label),
+           yaxis = list(title = yaxis_label, ticksuffix = "%"),
+           legend = list(x = 100, y = 0.5))
+  }
+  
+  fig <-
+    fig %>%
+    layout(title = plot_title,
+           xaxis = list(title = xaxis_label),
+           yaxis = list(title = yaxis_label, ticksuffix = "%"),
+           legend = list(x = 100, y = 0.5))
 
   fig %>%
     config(displayModeBar = FALSE)

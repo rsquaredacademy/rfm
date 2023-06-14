@@ -251,6 +251,8 @@ rfm_plot_segment_summary <- function(x, metric = NULL, package = c("ggplot2", "p
 #' @param plot_title Title of the plot.
 #' @param xaxis_label X axis label.
 #' @param yaxis_label Y axis label.
+#' @param package Visualization engine. Choose between \code{ggplot2}
+#'   and \code{plotly}.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @examples
@@ -282,8 +284,15 @@ rfm_plot_segment_summary <- function(x, metric = NULL, package = c("ggplot2", "p
 #' # segment summary
 #' segment_overview <- rfm_segment_summary(segments)
 #'
-#' # visualize revenue distribution
+#' # revenue distribution
+#' # ggplot2
 #' rfm_plot_revenue_dist(segment_overview)
+#'
+#' # flip
+#' rfm_plot_revenue_dist(segment_overview, flip = TRUE)
+#'
+#' # plotly
+#' rfm_plot_revenue_dist(segment_overview, package = "plotly")
 #'
 #' @export
 #'
@@ -292,11 +301,18 @@ rfm_plot_revenue_dist <- function(x, flip = FALSE, angle = 90, size = 8,
                                   labels = c("Revenue", "Customers"),
                                   plot_title = "Revenue & Customer Distribution",
                                   xaxis_label = NULL, yaxis_label = NULL,
+                                  package = c("ggplot2", "plotly"),
                                   print_plot = TRUE) {
 
   data <- rfm_prep_revenue_dist(x)
 
-  rfm_gg_revenue_dist(data, colors, labels, flip, angle, size, plot_title, xaxis_label, yaxis_label, print_plot)
+  lib <- match.arg(package)
+
+  if (lib == "ggplot2") {
+    rfm_gg_revenue_dist(data, colors, labels, flip, angle, size, plot_title, xaxis_label, yaxis_label, print_plot)
+  } else {
+    rfm_plotly_revenue_dist(x, flip, colors, labels, plot_title, xaxis_label, yaxis_label)
+  }
 
 }
 
