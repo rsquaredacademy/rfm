@@ -316,27 +316,6 @@ rfm_plot_revenue_dist <- function(x, flip = FALSE, angle = 90, size = 8,
 
 }
 
-rfm_prep_revenue_dist <- function(x) {
-
-  x$customer_share <- x$customers / sum(x$customers)
-  x$revenue_share <- x$revenue / sum(x$revenue)
-  data <- x[c("segment", "customer_share", "revenue_share")]
-
-  n_row    <- nrow(data)
-  segment  <- rep(data$segment, each = 2)
-  category <- rep(c("customer_share", "revenue_share"), times = n_row)
-
-  share <- c()
-  for (i in seq_len(n_row)) {
-    y <- as.numeric(data[i, c(2, 3)])
-    share <- c(share, y)
-  }
-
-  result <- data.frame(segment, category, share)
-  result$category <- factor(result$category, levels = c("revenue_share", "customer_share"))
-  return(result)
-}
-
 #' Segmentation plots
 #'
 #' Segment wise median recency, frequency & monetary value plot.
@@ -439,23 +418,6 @@ rfm_plot_median_monetary <- function(rfm_segment_table, color = "blue", font_siz
   } else {
     return(plot)
   }
-
-}
-
-rfm_prep_median <- function(rfm_segment_table, metric) {
-
-  met <- deparse(substitute(metric))
-
-  result <-
-    rfm_segment_table %>%
-    data.table() %>%
-    .[, .(segment, met = get(met))] %>%
-    .[, .(mem = median(met)), by = segment] %>%
-    .[order(mem)] %>%
-    setnames(old = "mem", new = met) %>%
-    setDF()
-
-  return(result)
 
 }
 
