@@ -8,10 +8,11 @@ rfm_plot_segment_scatter(
   segments,
   x = "monetary",
   y = "recency",
-  xaxis_label = NULL,
-  yaxis_label = NULL,
   plot_title = NULL,
   legend_title = NULL,
+  xaxis_label = NULL,
+  yaxis_label = NULL,
+  package = c("ggplot2", "plotly"),
   print_plot = TRUE
 )
 }
@@ -22,15 +23,19 @@ rfm_plot_segment_scatter(
 
 \item{y}{Metric to be represented on Y axis.}
 
-\item{xaxis_label}{X axis label.}
-
-\item{yaxis_label}{Y axis label.}
-
 \item{plot_title}{Title of the plot.}
 
 \item{legend_title}{Title of the plot legend.}
 
-\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
+\item{xaxis_label}{X axis label.}
+
+\item{yaxis_label}{Y axis label.}
+
+\item{package}{Visualization engine. Choose between \code{ggplot2}
+and \code{plotly}.}
+
+\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a
+plot object.}
 }
 \value{
 Scatter plot.
@@ -65,9 +70,11 @@ segments <- rfm_segment(rfm_result, segment_names, recency_lower,
 recency_upper, frequency_lower, frequency_upper, monetary_lower,
 monetary_upper)
 
-# generate plots
+# visualize
+# ggplot2
 rfm_plot_segment_scatter(segments, "monetary", "recency")
-rfm_plot_segment_scatter(segments, "monetary", "frequency")
-rfm_plot_segment_scatter(segments, "frequency", "recency")
+
+# plotly
+rfm_plot_segment_scatter(segments, "monetary", "recency", package = "plotly")
 
 }

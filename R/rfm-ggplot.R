@@ -261,3 +261,15 @@ rfm_gg_segment <- function(table, metric, print_plot) {
     return(plot)
   }
 }
+
+rfm_gg_segment_scatter <- function(segments, x_data, y_data, plot_title,
+                        legend_title, xaxis_label, yaxis_label, print_plot) {
+  p <- rfm_plot_combine(segments, x_data, y_data, xaxis_label, yaxis_label, plot_title,
+                        legend_title)
+
+  if (print_plot) {
+    print(p)
+  } else {
+    return(p)
+  }
+}

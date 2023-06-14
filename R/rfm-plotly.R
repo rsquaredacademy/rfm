@@ -272,3 +272,41 @@ rfm_plotly_segment <- function(table, metric = "customers") {
   fig %>%
     config(displayModeBar = FALSE)
 }
+
+rfm_plotly_segment_scatter <- function(segments, x_data = NULL, y_data = NULL,
+                                       plot_title = NULL, legend_title = NULL,
+                                       xaxis_label = NULL, yaxis_label = NULL) {
+
+  if (is.null(legend_title)) {
+    legend_title <- paste0('<b> ', legend_title , ' </b>')
+  } else {
+    legend_title <- legend_title
+  }
+
+  text <- paste0("Amount: ", segments[[x_data]], "\nRecency: ",
+                 segments[[y_data]], "\nSegment: ", segments$segment)
+
+
+
+  fig <- plot_ly(segments,
+                 x = ~get(x_data),
+                 y = ~get(y_data),
+                 type = "scatter",
+                 mode = "markers",
+                 color = ~factor(segment),
+                 colors = "Paired",
+                 hoverinfo = "text",
+                 hovertext = text)
+
+
+  fig <-
+    fig %>%
+    layout(title = plot_title,
+           xaxis = list(title = xaxis_label),
+           yaxis = list(title = yaxis_label),
+           legend = list(title = list(text = legend_title)))
+
+  fig %>%
+    config(displayModeBar = FALSE)
+
+}

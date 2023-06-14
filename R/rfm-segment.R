@@ -511,11 +511,14 @@ rfm_plot_segment <- function(table, metric = "customers", package = c("ggplot2",
 #' @param segments Output from \code{rfm_segment}.
 #' @param x Metric to be represented on X axis.
 #' @param y Metric to be represented on Y axis.
-#' @param xaxis_label X axis label.
-#' @param yaxis_label Y axis label.
 #' @param plot_title Title of the plot.
 #' @param legend_title Title of the plot legend.
-#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
+#' @param xaxis_label X axis label.
+#' @param yaxis_label Y axis label.
+#' @param package Visualization engine. Choose between \code{ggplot2}
+#'   and \code{plotly}.
+#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a
+#'   plot object.
 #'
 #' @return Scatter plot.
 #'
@@ -545,60 +548,59 @@ rfm_plot_segment <- function(table, metric = "customers", package = c("ggplot2",
 #' recency_upper, frequency_lower, frequency_upper, monetary_lower,
 #' monetary_upper)
 #'
-#' # generate plots
+#' # visualize
+#' # ggplot2
 #' rfm_plot_segment_scatter(segments, "monetary", "recency")
-#' rfm_plot_segment_scatter(segments, "monetary", "frequency")
-#' rfm_plot_segment_scatter(segments, "frequency", "recency")
+#'
+#' # plotly
+#' rfm_plot_segment_scatter(segments, "monetary", "recency", package = "plotly")
 #'
 #' @export
 rfm_plot_segment_scatter <- function(segments, x = "monetary", y = "recency",
-                             xaxis_label = NULL, yaxis_label = NULL,
-                             plot_title = NULL, legend_title = NULL,
-                             print_plot = TRUE) {
+                                     plot_title = NULL, legend_title = NULL,
+                                     xaxis_label = NULL, yaxis_label = NULL,
+                                     package = c("ggplot2", "plotly"),
+                                     print_plot = TRUE) {
 
   x_data <- switch(x,
-    "recency" = "recency_days",
-    "frequency" = "transaction_count",
-    "monetary" = "amount"
+                   "recency" = "recency_days",
+                   "frequency" = "transaction_count",
+                   "monetary" = "amount"
   )
 
   y_data <- switch(y,
-    "recency" = "recency_days",
-    "frequency" = "transaction_count",
-    "monetary" = "amount"
+                   "recency" = "recency_days",
+                   "frequency" = "transaction_count",
+                   "monetary" = "amount"
   )
 
   if (is.null(xaxis_label)) {
-    x_label <- to_title_case(x)
-    if (grepl("Monetary", x_label)) {
-      x_label <- paste(x_label, "Value")
+    xaxis_label <- to_title_case(x)
+    if (grepl("Monetary", xaxis_label)) {
+      xaxis_label <- paste(xaxis_label, "Value")
     }
-  } else {
-    x_label <- xaxis_label
   }
 
   if (is.null(yaxis_label)) {
-    y_label <- to_title_case(y)
-    if (grepl("Monetary", y_label)) {
-      y_label <- paste(y_label, "Value")
+    yaxis_label <- to_title_case(y)
+    if (grepl("Monetary", yaxis_label)) {
+      yaxis_label <- paste(yaxis_label, "Value")
     }
-  } else {
-    y_label <- yaxis_label
   }
 
   if (is.null(plot_title)) {
-    plot_title <- paste(y_label, "vs", x_label)
-  } else {
-    plot_title <- plot_title
+    plot_title <- paste(yaxis_label, "vs", xaxis_label)
   }
 
-  p <- rfm_plot_combine(segments, x_data, y_data, x_label, y_label, plot_title,
-                        legend_title)
+  lib <- match.arg(package)
 
-  if (print_plot) {
-    print(p)
+  if (lib == "ggplot2") {
+    rfm_gg_segment_scatter(segments, x_data, y_data, plot_title,
+                         legend_title, xaxis_label, yaxis_label, print_plot)
   } else {
-    return(p)
+    rfm_plotly_segment_scatter(segments, x_data, y_data,
+                               plot_title, legend_title,
+                               xaxis_label, yaxis_label)
   }
 
 }
