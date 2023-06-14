@@ -135,6 +135,8 @@ rfm_segment_summary <- function(segments) {
 #' \item \code{"revenue"}
 #' \item \code{"aov"}
 #' }
+#' @param package Visualization engine. Choose between \code{ggplot2}
+#'   and \code{plotly}.
 #' @param bar_color Color of the bars.
 #' @param angle Angle at which X axis tick labels should be displayed.
 #' @param size Size of X axis tick labels.
@@ -194,7 +196,7 @@ rfm_segment_summary <- function(segments) {
 #'
 #' @export
 #'
-rfm_plot_segment_summary <- function(x, metric = NULL, bar_color = NULL,
+rfm_plot_segment_summary <- function(x, metric = NULL, package = c("ggplot2", "plotly"), bar_color = NULL,
                                      angle = 90, size = 5,
                                      sort = FALSE, ascending = FALSE,
                                      flip = FALSE, plot_title = NULL,
@@ -222,59 +224,10 @@ rfm_plot_segment_summary <- function(x, metric = NULL, bar_color = NULL,
   }
 
   data <- x[c("segment", metric)]
+  lib <- match.arg(package)
 
-
-
-  if (sort) {
-    if (ascending) {
-      if (flip) {
-        p <- ggplot(data,
-                    aes(x = reorder(segment, -.data[[metric]], sum),
-                        y = .data[[metric]]))
-      } else {
-        p <- ggplot(data,
-                    aes(x = reorder(segment, .data[[metric]], sum),
-                        y = .data[[metric]]))
-      }
-    } else {
-      if (flip) {
-        p <- ggplot(data,
-                    aes(x = reorder(segment, .data[[metric]], sum),
-                        y = .data[[metric]]))
-      } else {
-        p <- ggplot(data,
-                    aes(x = reorder(segment, -.data[[metric]], sum),
-                        y = .data[[metric]]))
-      }
-    }
-  } else {
-    p <- ggplot(data, aes(x = segment, y = .data[[metric]]))
-  }
-
-  p <-
-    p +
-    geom_bar(stat = "identity", fill = bar_color) +
-    ggtitle(plot_title) +
-    xlab(xaxis_label) +
-    ylab(yaxis_label)
-
-  if (flip) {
-    p <-
-      p +
-      coord_flip() +
-      theme(axis.text.y = element_text(size = 7))
-  } else {
-    p <-
-      p +
-      theme(axis.text.x = element_text(angle = angle, vjust = 1,
-                                       hjust=1, size = size))
-  }
-
-
-  if (print_plot) {
-      print(p)
-  } else {
-    return(p)
+  if (lib == "ggplot2") {
+    rfm_gg_plot_segment_summary(data, metric, sort, ascending, flip, bar_color, plot_title, xaxis_label, yaxis_label, angle, size, print_plot)
   }
 
 }

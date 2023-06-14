@@ -7,6 +7,7 @@
 rfm_plot_segment_summary(
   x,
   metric = NULL,
+  package = c("ggplot2", "plotly"),
   bar_color = NULL,
   angle = 90,
   size = 5,
@@ -30,6 +31,9 @@ rfm_plot_segment_summary(
 \item \code{"revenue"}
 \item \code{"aov"}
 }}
+
+\item{package}{Visualization engine. Choose between \code{ggplot2}
+and \code{plotly}.}
 
 \item{bar_color}{Color of the bars.}
 
@@ -86,7 +90,7 @@ monetary_upper)
 segment_overview <- rfm_segment_summary(segments)
 
 # plot segment summary
-# summarize metrics for all segments
+# summarize metric for all segments
 rfm_plot_segment_summary(segment_overview)
 
 # select metric to be visualized
