@@ -228,15 +228,23 @@ rfm_plot_segment_summary <- function(x, metric = NULL, bar_color = NULL,
   if (sort) {
     if (ascending) {
       if (flip) {
-        p <- ggplot(data, aes(x = reorder(segment, -.data[[metric]], sum), y = .data[[metric]]))
+        p <- ggplot(data,
+                    aes(x = reorder(segment, -.data[[metric]], sum),
+                        y = .data[[metric]]))
       } else {
-        p <- ggplot(data, aes(x = reorder(segment, .data[[metric]], sum), y = .data[[metric]]))
+        p <- ggplot(data,
+                    aes(x = reorder(segment, .data[[metric]], sum),
+                        y = .data[[metric]]))
       }
     } else {
       if (flip) {
-        p <- ggplot(data, aes(x = reorder(segment, .data[[metric]], sum), y = .data[[metric]]))
+        p <- ggplot(data,
+                    aes(x = reorder(segment, .data[[metric]], sum),
+                        y = .data[[metric]]))
       } else {
-        p <- ggplot(data, aes(x = reorder(segment, -.data[[metric]], sum), y = .data[[metric]]))
+        p <- ggplot(data,
+                    aes(x = reorder(segment, -.data[[metric]], sum),
+                        y = .data[[metric]]))
       }
     }
   } else {
@@ -246,20 +254,18 @@ rfm_plot_segment_summary <- function(x, metric = NULL, bar_color = NULL,
   p <-
     p +
     geom_bar(stat = "identity", fill = bar_color) +
-    ggtitle(plot_title)
+    ggtitle(plot_title) +
+    xlab(xaxis_label) +
+    ylab(yaxis_label)
 
   if (flip) {
     p <-
       p +
       coord_flip() +
-      xlab(yaxis_label) +
-      ylab(xaxis_label) +
       theme(axis.text.y = element_text(size = 7))
   } else {
     p <-
       p +
-      xlab(xaxis_label) +
-      ylab(yaxis_label) +
       theme(axis.text.x = element_text(angle = angle, vjust = 1,
                                        hjust=1, size = size))
   }
