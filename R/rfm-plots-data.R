@@ -55,41 +55,6 @@ rfm_heatmap_data <- function(rfm_table) {
 
 }
 
-#' Histogram data
-#'
-#' Data for generating histograms.
-#'
-#' @param rfm_table An object of class \code{rfm_table}.
-#'
-#' @examples
-#' # using transaction data
-#' analysis_date <- as.Date('2006-12-31')
-#' rfm_order <- rfm_table_order(rfm_data_orders, customer_id, order_date,
-#' revenue, analysis_date)
-#'
-#' # histogram data
-#' rfm_hist_data(rfm_order)
-#'
-#' # using customer data
-#' analysis_date <- as.Date('2007-01-01')
-#' rfm_customer <- rfm_table_customer(rfm_data_customer, customer_id,
-#' number_of_orders, recency_days, revenue, analysis_date)
-#'
-#' # histogram data
-#' rfm_hist_data(rfm_customer)
-#'
-#' @export
-#'
-rfm_hist_data <- function(rfm_table) {
-
-  cnames <- c("recency_days", "transaction_count", "amount")
-  data   <- rfm_table$rfm[, cnames]
-  rfm    <- rep(cnames, each = nrow(data))
-  score  <- c(data$recency_days, data$transaction_count, data$amount)
-  data.frame(rfm, score)
-
-}
-
 #' Bar chart data
 #'
 #' Data for generating bar charts.
