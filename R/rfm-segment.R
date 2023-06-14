@@ -421,60 +421,6 @@ rfm_plot_median_monetary <- function(rfm_segment_table, color = "blue", font_siz
 
 }
 
-rfm_plot_median <- function(data, color, font_size, sort, ascending, flip) {
-
-  n_fill <- nrow(data)
-  cnames <- names(data)
-  y_lab  <-
-    switch(cnames[2],
-           recency_days = "Median Recency",
-           transaction_count = "Median Frequency",
-           amount = "Median Monetary Value")
-
-  if (sort) {
-    if (ascending) {
-      if (flip) {
-        p <- ggplot(data, aes(x = reorder(.data[[cnames[1]]], -.data[[cnames[2]]], sum), y = .data[[cnames[2]]]))
-      } else {
-        p <- ggplot(data, aes(x = reorder(.data[[cnames[1]]], .data[[cnames[2]]], sum), y = .data[[cnames[2]]]))
-      }
-    } else {
-      if (flip) {
-        p <- ggplot(data, aes(x = reorder(.data[[cnames[1]]], .data[[cnames[2]]], sum), y = .data[[cnames[2]]]))
-      } else {
-        p <- ggplot(data, aes(x = reorder(.data[[cnames[1]]], -.data[[cnames[2]]], sum), y = .data[[cnames[2]]]))
-      }
-    }
-  } else {
-    p <- ggplot(data, aes(x = .data[[cnames[1]]], y = .data[[cnames[2]]]))
-  }
-
-
-  p <-
-    p +
-    geom_bar(stat = "identity", fill = color) +
-    ggtitle(paste(y_lab, "by Segment")) +
-    theme(plot.title = element_text(hjust = 0.5))
-
-  if (flip) {
-    p <-
-      p +
-      coord_flip() +
-      xlab(y_lab) +
-      ylab("Segment") +
-      theme(axis.text.y = element_text(size = font_size))
-  } else {
-    p <-
-      p +
-      xlab("Segment") +
-      ylab(y_lab) +
-      theme(axis.text.x = element_text(size = font_size))
-  }
-
-  return(p)
-
-}
-
 #' RFM Segmentation Plot
 #'
 #' Generates tree map to visualize segments.
