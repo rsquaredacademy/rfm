@@ -180,7 +180,11 @@ rfm_segment_summary <- function(segments) {
 #'
 #' # plot segment summary
 #' # summarize metric for all segments
+#' # ggplot2
 #' rfm_plot_segment_summary(segment_overview)
+#'
+#' # plotly
+#' rfm_plot_segment_summary(segment_overview, package = "plotly")
 #'
 #' # select metric to be visualized
 #' rfm_plot_segment_summary(segment_overview, metric = "orders")
@@ -228,6 +232,8 @@ rfm_plot_segment_summary <- function(x, metric = NULL, package = c("ggplot2", "p
 
   if (lib == "ggplot2") {
     rfm_gg_plot_segment_summary(data, metric, sort, ascending, flip, bar_color, plot_title, xaxis_label, yaxis_label, angle, size, print_plot)
+  } else {
+    rfm_plotly_segment_summary(data, metric, flip, sort, ascending, bar_color, plot_title, xaxis_label, yaxis_label)
   }
 
 }

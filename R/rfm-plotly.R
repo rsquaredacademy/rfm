@@ -96,3 +96,78 @@ rfm_plotly_hist <- function(data, hist_color = NULL, plot_title = NULL,
     config(displayModeBar = FALSE)
 
 }
+
+rfm_plotly_segment_summary <- function(data, metric, flip, sort, ascending, bar_color, plot_title, xaxis_label, yaxis_label) {
+
+  text <- paste0("Segment: ", data[["segment"]],
+                 "\n", to_title_case(metric), ": ", data[[metric]])
+
+  if (flip) {
+    fig <- plot_ly(data,
+                   y = ~segment,
+                   x = ~get(metric),
+                   type = "bar",
+                   hoverinfo = "text",
+                   hovertext = text,
+                   orientation = 'h',
+                   marker = list(
+                     color = bar_color
+                   ))
+
+    if (sort) {
+      if (ascending) {
+        fig <- fig %>%
+          layout(title = plot_title,
+                 xaxis = list(title = yaxis_label),
+                 yaxis = list(title = xaxis_label,
+                              categoryorder = "total descending"))
+      } else {
+        fig <- fig %>%
+          layout(title = plot_title,
+                 xaxis = list(title = yaxis_label),
+                 yaxis = list(title = xaxis_label,
+                              categoryorder = "total ascending"))
+      }
+    } else {
+      fig <- fig %>%
+        layout(title = plot_title,
+               xaxis = list(title = yaxis_label),
+               yaxis = list(title = xaxis_label))
+    }
+
+  } else {
+    fig <- plot_ly(data,
+                   x = ~segment,
+                   y = ~get(metric),
+                   type = "bar",
+                   hoverinfo = "text",
+                   hovertext = text,
+                   marker = list(
+                     color = bar_color
+                   ))
+    if (sort) {
+      if (ascending) {
+        fig <- fig %>%
+          layout(title = plot_title,
+                 xaxis = list(title = xaxis_label,
+                              categoryorder = "total ascending"),
+                 yaxis = list(title = yaxis_label))
+      } else {
+        fig <- fig %>%
+          layout(title = plot_title,
+                 xaxis = list(title = xaxis_label,
+                              categoryorder = "total descending"),
+                 yaxis = list(title = yaxis_label))
+      }
+    } else {
+      fig <- fig %>%
+        layout(title = plot_title,
+               xaxis = list(title = xaxis_label),
+               yaxis = list(title = yaxis_label))
+    }
+  }
+
+  fig %>%
+    config(displayModeBar = FALSE)
+
+}

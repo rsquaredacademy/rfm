@@ -91,7 +91,11 @@ segment_overview <- rfm_segment_summary(segments)
 
 # plot segment summary
 # summarize metric for all segments
+# ggplot2
 rfm_plot_segment_summary(segment_overview)
+
+# plotly
+rfm_plot_segment_summary(segment_overview, package = "plotly")
 
 # select metric to be visualized
 rfm_plot_segment_summary(segment_overview, metric = "orders")
