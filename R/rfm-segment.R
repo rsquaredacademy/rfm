@@ -249,6 +249,8 @@ rfm_plot_segment_summary <- function(x, metric = NULL, package = c("ggplot2", "p
 #' @param colors Bar colors.
 #' @param labels Legend labels.
 #' @param plot_title Title of the plot.
+#' @param xaxis_label X axis label.
+#' @param yaxis_label Y axis label.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @examples
@@ -289,51 +291,12 @@ rfm_plot_revenue_dist <- function(x, flip = FALSE, angle = 90, size = 8,
                                   colors = c("#3b5bdb", "#91a7ff"),
                                   labels = c("Revenue", "Customers"),
                                   plot_title = "Revenue & Customer Distribution",
+                                  xaxis_label = NULL, yaxis_label = NULL,
                                   print_plot = TRUE) {
 
   data <- rfm_prep_revenue_dist(x)
 
-  p <-
-    ggplot(data, aes(fill = category, y = share, x = segment)) +
-    geom_bar(position="dodge", stat="identity")
-
-  p <-
-    p +
-    scale_fill_manual(values = c(colors[1], colors[2]),
-                      labels = c(labels[1], labels[2])) +
-    scale_y_continuous(labels = scales::percent)
-
-  p <-
-    p +
-    theme(legend.title = element_blank(),
-          legend.position = "bottom",
-          panel.background = element_rect(fill = NA),
-          axis.ticks = element_line(color = NA))
-
-  if (flip) {
-    p <-
-      p +
-      theme(panel.grid.major.x = element_line(colour = "#ced4da")) +
-      coord_flip()
-  } else {
-    p <-
-      p +
-      theme(panel.grid.major.y = element_line(colour = "#ced4da"),
-            axis.text.x = element_text(angle = angle, vjust = 1,
-                                       hjust=1, size = size))
-  }
-
-  p <-
-    p +
-    xlab("") +
-    ylab("") +
-    ggtitle(plot_title)
-
-  if (print_plot) {
-    print(p)
-  } else {
-    return(p)
-  }
+  rfm_gg_revenue_dist(data, colors, labels, flip, angle, size, plot_title, xaxis_label, yaxis_label, print_plot)
 
 }
 

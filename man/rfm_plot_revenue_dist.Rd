@@ -12,6 +12,8 @@ rfm_plot_revenue_dist(
   colors = c("#3b5bdb", "#91a7ff"),
   labels = c("Revenue", "Customers"),
   plot_title = "Revenue & Customer Distribution",
+  xaxis_label = NULL,
+  yaxis_label = NULL,
   print_plot = TRUE
 )
 }
@@ -29,6 +31,10 @@ rfm_plot_revenue_dist(
 \item{labels}{Legend labels.}
 
 \item{plot_title}{Title of the plot.}
+
+\item{xaxis_label}{X axis label.}
+
+\item{yaxis_label}{Y axis label.}
 
 \item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
 }

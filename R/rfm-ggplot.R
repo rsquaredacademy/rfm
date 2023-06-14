@@ -126,3 +126,49 @@ rfm_gg_plot_segment_summary <- function(data, metric, sort, ascending, flip, bar
     return(p)
   }
 }
+
+rfm_gg_revenue_dist <- function(data, colors, labels, flip, angle, size, plot_title, xaxis_label, yaxis_label, print_plot) {
+
+  p <-
+    ggplot(data, aes(fill = category, y = share, x = segment)) +
+    geom_bar(position="dodge", stat="identity")
+
+  p <-
+    p +
+    scale_fill_manual(values = c(colors[1], colors[2]),
+                      labels = c(labels[1], labels[2])) +
+    scale_y_continuous(labels = scales::percent)
+
+  p <-
+    p +
+    theme(legend.title = element_blank(),
+          legend.position = "bottom",
+          panel.background = element_rect(fill = NA),
+          axis.ticks = element_line(color = NA))
+
+  if (flip) {
+    p <-
+      p +
+      theme(panel.grid.major.x = element_line(colour = "#ced4da")) +
+      coord_flip()
+  } else {
+    p <-
+      p +
+      theme(panel.grid.major.y = element_line(colour = "#ced4da"),
+            axis.text.x = element_text(angle = angle, vjust = 1,
+                                       hjust=1, size = size))
+  }
+
+  p <-
+    p +
+    xlab(xaxis_label) +
+    ylab(yaxis_label) +
+    ggtitle(plot_title)
+
+  if (print_plot) {
+    print(p)
+  } else {
+    return(p)
+  }
+
+}
