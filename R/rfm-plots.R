@@ -227,10 +227,10 @@ rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
 #'
 #' @param rfm_table An object of class \code{rfm_table}.
 #' @param bar_color Color of the bars.
-#' @param xaxis_title X axis title.
-#' @param yaxis_title Y axis title.
-#' @param sec_xaxis_title Secondary x axis title.
-#' @param sec_yaxis_title Secondary y axis title.
+#' @param xaxis_label X axis label.
+#' @param yaxis_label Y axis label.
+#' @param sec_xaxis_label Secondary x axis label.
+#' @param sec_yaxis_label Secondary y axis label.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @return Bar chart.
@@ -240,7 +240,7 @@ rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
 #' been provided for compatibility with older versions only, and will be made
 #' defunct at the next release.
 #'
-#' Instead use the replacement function \code{rfm_plot_bar_chart()()}.
+#' Instead use the replacement function \code{rfm_plot_bar_chart()}.
 #'
 #' @examples
 #' # using transaction data
@@ -253,21 +253,39 @@ rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
 #'
 #' @export
 #'
-rfm_plot_bar_chart <- function(rfm_table, bar_color = 'blue',
-                          xaxis_title = 'Monetary Score',
-                          sec_xaxis_title = 'Frequency Score',
-                          yaxis_title = ' ',
-                          sec_yaxis_title = 'Recency Score',
-                          print_plot = TRUE) {
+rfm_plot_bar_chart <- function(rfm_table, bar_color = NULL,
+                               xaxis_label = NULL, sec_xaxis_label = NULL,
+                               yaxis_label = NULL, sec_yaxis_label = NULL,
+                               print_plot = TRUE) {
+
+  if (is.null(bar_color)) {
+    bar_color <- "blue"
+  }
+
+  if (is.null(xaxis_label)) {
+    xaxis_label <- "Monetary Score"
+  }
+
+  if (is.null(yaxis_label)) {
+    yaxis_label <- " "
+  }
+
+  if (is.null(sec_xaxis_label)) {
+    sec_xaxis_label <- "Frequency Score"
+  }
+
+  if (is.null(sec_yaxis_label)) {
+    sec_yaxis_label <- "Recency Score"
+  }
 
   p <-
     rfm_barchart_data(rfm_table) %>%
     ggplot() +
     geom_bar(aes(x = monetary_score), fill = bar_color) +
-    xlab(xaxis_title) +
-    ylab(" ") +
-    ggtitle(sec_xaxis_title) +
-    scale_y_continuous(sec.axis = sec_axis(~ ., name = sec_yaxis_title)) +
+    xlab(xaxis_label) +
+    ylab(yaxis_label) +
+    ggtitle(sec_xaxis_label) +
+    scale_y_continuous(sec.axis = sec_axis(~ ., name = sec_yaxis_label)) +
     facet_grid(recency_score ~ frequency_score) +
     theme(plot.title = element_text(face = "plain", size = 11, hjust = 0.5),
           axis.text.y = element_blank(),
@@ -292,12 +310,12 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
                           sec_yaxis_title = 'Recency Score',
                           print_plot = TRUE) {
   .Deprecated("rfm_plot_bar_chart()")
-  rfm_plot_bar_chart(rfm_table, bar_color = 'blue',
-                          xaxis_title = 'Monetary Score',
-                          sec_xaxis_title = 'Frequency Score',
-                          yaxis_title = ' ',
-                          sec_yaxis_title = 'Recency Score',
-                          print_plot = TRUE)
+  rfm_plot_bar_chart(rfm_table, bar_color = bar_color,
+                          xaxis_label = xaxis_title,
+                          sec_xaxis_label = sec_xaxis_title,
+                          yaxis_label = yaxis_title,
+                          sec_yaxis_label = sec_yaxis_title,
+                          print_plot = print_plot)
 }
 
 
