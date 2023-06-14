@@ -123,16 +123,29 @@ rfm_segment_summary <- function(segments) {
 
 #' Visulaize segment summary
 #'
-#' Generates plots for customers, orders, revenue and average order value for each segment.
+#' Generates plots for customers, orders, revenue and average order value for
+#'   each segment.
 #'
 #' @param x An object of class \code{rfm_segment_summary}.
-#' @param metric Metrics to be visualized.
+#' @param metric Metric to be visualized. Defaults to \code{"customers"}. Valid
+#'  values are:
+#' \itemize{
+#' \item \code{"customers"}
+#' \item \code{"orders"}
+#' \item \code{"revenue"}
+#' \item \code{"aov"}
+#' }
+#' @param bar_color Color of the bars.
 #' @param angle Angle at which X axis tick labels should be displayed.
 #' @param size Size of X axis tick labels.
 #' @param sort logical; if \code{TRUE}, sort metrics.
 #' @param ascending logical; if \code{TRUE}, sort metrics in ascending order.
 #' @param flip logical; if \code{TRUE}, creates horizontal bar plot.
-#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
+#' @param plot_title Title of the plot.
+#' @param xaxis_label X axis label.
+#' @param yaxis_label Y axis label.
+#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a
+#'   plot object.
 #'
 #' @examples
 #' # analysis date
@@ -164,100 +177,98 @@ rfm_segment_summary <- function(segments) {
 #' segment_overview <- rfm_segment_summary(segments)
 #'
 #' # plot segment summary
-#' # summarize metrics for all segments
+#' # summarize metric for all segments
 #' rfm_plot_segment_summary(segment_overview)
 #'
-#' # select metrics to be visualized
-#' rfm_plot_segment_summary(segment_overview, metric = c("customers", "orders"))
+#' # select metric to be visualized
+#' rfm_plot_segment_summary(segment_overview, metric = "orders")
 #'
-#' # sort the metrics by ascending order
-#' rfm_plot_segment_summary(segment_overview, sort = TRUE, ascending = TRUE)
+#' # sort the metric in ascending order
+#' rfm_plot_segment_summary(segment_overview, metric = "orders", sort = TRUE, ascending = TRUE)
 #'
 #' # default sorting is in descending order
-#' rfm_plot_segment_summary(segment_overview, sort = TRUE)
+#' rfm_plot_segment_summary(segment_overview, metric = "orders", sort = TRUE)
 #'
 #' # horizontal bars
-#' rfm_plot_segment_summary(segment_overview, flip = TRUE)
+#' rfm_plot_segment_summary(segment_overview, metric = "orders", flip = TRUE)
 #'
 #' @export
 #'
-rfm_plot_segment_summary <- function(x, metric = NULL,
+rfm_plot_segment_summary <- function(x, metric = NULL, bar_color = NULL,
                                      angle = 90, size = 5,
                                      sort = FALSE, ascending = FALSE,
-                                     flip = FALSE, print_plot = TRUE) {
+                                     flip = FALSE, plot_title = NULL,
+                                     xaxis_label = NULL, yaxis_label = NULL,
+                                     print_plot = TRUE) {
 
   if (is.null(metric)) {
-    x <- x
-  } else {
-    x <- x[c("segment", metric)]
+    metric <- "customers"
   }
 
-  vars <- colnames(x)
-  n_plots <- length(vars)
-  plots <- list()
-  for (i in 2:n_plots) {
-    j <- i - 1
-    var <- vars[i]
-    data <- x[c("segment", var)]
-    if (sort) {
-      if (ascending) {
-        if (flip) {
-          p <- ggplot(data, aes(x = reorder(segment, -.data[[var]], sum), y = .data[[var]]))
-        } else {
-          p <- ggplot(data, aes(x = reorder(segment, .data[[var]], sum), y = .data[[var]]))
-        }
+  if (is.null(bar_color)) {
+    bar_color <- "blue"
+  }
+
+  if (is.null(plot_title)) {
+    plot_title <- paste(to_title_case(metric), " Distribution by Segment")
+  }
+
+  if (is.null(xaxis_label)) {
+    xaxis_label <- "Segment"
+  }
+
+  if (is.null(yaxis_label)) {
+    yaxis_label <- to_title_case(metric)
+  }
+
+  data <- x[c("segment", metric)]
+
+
+
+  if (sort) {
+    if (ascending) {
+      if (flip) {
+        p <- ggplot(data, aes(x = reorder(segment, -.data[[metric]], sum), y = .data[[metric]]))
       } else {
-        if (flip) {
-          p <- ggplot(data, aes(x = reorder(segment, .data[[var]], sum), y = .data[[var]]))
-        } else {
-          p <- ggplot(data, aes(x = reorder(segment, -.data[[var]], sum), y = .data[[var]]))
-        }
+        p <- ggplot(data, aes(x = reorder(segment, .data[[metric]], sum), y = .data[[metric]]))
       }
     } else {
-      p <- ggplot(data, aes(x = segment, y = .data[[var]]))
+      if (flip) {
+        p <- ggplot(data, aes(x = reorder(segment, .data[[metric]], sum), y = .data[[metric]]))
+      } else {
+        p <- ggplot(data, aes(x = reorder(segment, -.data[[metric]], sum), y = .data[[metric]]))
+      }
     }
+  } else {
+    p <- ggplot(data, aes(x = segment, y = .data[[metric]]))
+  }
 
+  p <-
+    p +
+    geom_bar(stat = "identity", fill = bar_color) +
+    ggtitle(plot_title)
+
+  if (flip) {
     p <-
       p +
-      geom_bar(stat = "identity", fill = "blue") +
-      ggtitle(paste(vars[i], "by segment"))
-
-    if (flip) {
-      p <-
-        p +
-        coord_flip() +
-        xlab(vars[i]) +
-        ylab("Segment") +
-        theme(axis.text.y = element_text(size = 7))
-    } else {
-      p <-
-        p +
-        xlab("Segment") +
-        ylab(vars[i]) +
-        theme(axis.text.x = element_text(angle = angle, vjust = 1,
-                                         hjust=1, size = size))
-    }
-
-    plots[[j]] <- p
-
-  }
-
-  if (is.null(metric)) {
-    names(plots) <- c("customers", "orders", "revenue", "aov")
+      coord_flip() +
+      xlab(yaxis_label) +
+      ylab(xaxis_label) +
+      theme(axis.text.y = element_text(size = 7))
   } else {
-    names(plots) <- metric
+    p <-
+      p +
+      xlab(xaxis_label) +
+      ylab(yaxis_label) +
+      theme(axis.text.x = element_text(angle = angle, vjust = 1,
+                                       hjust=1, size = size))
   }
+
 
   if (print_plot) {
-    if (length(plots) == 1) {
-      print(plots)
-    } else if (length(plots) == 2) {
-      gridExtra::marrangeGrob(plots, nrow = 1, ncol = 2, top = "Segments Overview")
-    } else {
-      gridExtra::marrangeGrob(plots, nrow = 2, ncol = 2, top = "Segments Overview")
-    }
+      print(p)
   } else {
-    return(plots)
+    return(p)
   }
 
 }

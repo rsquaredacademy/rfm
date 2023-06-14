@@ -43,14 +43,14 @@
 <polyline points='501.47,515.19 501.47,22.78 ' style='stroke-width: 1.07; stroke: #FFFFFF; stroke-linecap: butt;' />
 <polyline points='583.41,515.19 583.41,22.78 ' style='stroke-width: 1.07; stroke: #FFFFFF; stroke-linecap: butt;' />
 <polyline points='665.35,515.19 665.35,22.78 ' style='stroke-width: 1.07; stroke: #FFFFFF; stroke-linecap: butt;' />
-<rect x='382.65' y='45.17' width='73.75' height='447.64' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #0000FF;' />
-<rect x='136.82' y='378.02' width='73.75' height='114.79' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #0000FF;' />
-<rect x='218.76' y='169.39' width='73.75' height='323.42' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #0000FF;' />
-<rect x='464.59' y='455.07' width='73.75' height='37.74' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #0000FF;' />
+<rect x='628.48' y='45.17' width='73.75' height='447.64' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #0000FF;' />
+<rect x='382.65' y='378.02' width='73.75' height='114.79' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #0000FF;' />
+<rect x='546.54' y='169.39' width='73.75' height='323.42' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #0000FF;' />
+<rect x='136.82' y='455.07' width='73.75' height='37.74' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #0000FF;' />
 <rect x='300.71' y='428.86' width='73.75' height='63.95' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #0000FF;' />
-<rect x='628.48' y='282.88' width='73.75' height='209.93' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #0000FF;' />
+<rect x='464.59' y='282.88' width='73.75' height='209.93' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #0000FF;' />
 <rect x='54.87' y='459.53' width='73.75' height='33.29' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #0000FF;' />
-<rect x='546.54' y='437.77' width='73.75' height='55.04' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #0000FF;' />
+<rect x='218.76' y='437.77' width='73.75' height='55.04' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #0000FF;' />
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <text x='37.65' y='495.84' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='4.89px' lengthAdjust='spacingAndGlyphs'>0</text>
@@ -70,13 +70,13 @@
 <polyline points='583.41,517.93 583.41,515.19 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='665.35,517.93 665.35,515.19 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <text transform='translate(95.19,520.12) rotate(-90)' text-anchor='end' style='font-size: 5.00px; fill: #4D4D4D; font-family: sans;' textLength='34.47px' lengthAdjust='spacingAndGlyphs'>About To Sleep</text>
-<text transform='translate(177.13,520.12) rotate(-90)' text-anchor='end' style='font-size: 5.00px; fill: #4D4D4D; font-family: sans;' textLength='15.84px' lengthAdjust='spacingAndGlyphs'>At Risk</text>
-<text transform='translate(259.08,520.12) rotate(-90)' text-anchor='end' style='font-size: 5.00px; fill: #4D4D4D; font-family: sans;' textLength='25.30px' lengthAdjust='spacingAndGlyphs'>Champions</text>
+<text transform='translate(177.13,520.12) rotate(-90)' text-anchor='end' style='font-size: 5.00px; fill: #4D4D4D; font-family: sans;' textLength='33.08px' lengthAdjust='spacingAndGlyphs'>Need Attention</text>
+<text transform='translate(259.08,520.12) rotate(-90)' text-anchor='end' style='font-size: 5.00px; fill: #4D4D4D; font-family: sans;' textLength='15.01px' lengthAdjust='spacingAndGlyphs'>Others</text>
 <text transform='translate(341.02,520.12) rotate(-90)' text-anchor='end' style='font-size: 5.00px; fill: #4D4D4D; font-family: sans;' textLength='9.45px' lengthAdjust='spacingAndGlyphs'>Lost</text>
-<text transform='translate(422.96,520.12) rotate(-90)' text-anchor='end' style='font-size: 5.00px; fill: #4D4D4D; font-family: sans;' textLength='37.52px' lengthAdjust='spacingAndGlyphs'>Loyal Customers</text>
-<text transform='translate(504.91,520.12) rotate(-90)' text-anchor='end' style='font-size: 5.00px; fill: #4D4D4D; font-family: sans;' textLength='33.08px' lengthAdjust='spacingAndGlyphs'>Need Attention</text>
-<text transform='translate(586.85,520.12) rotate(-90)' text-anchor='end' style='font-size: 5.00px; fill: #4D4D4D; font-family: sans;' textLength='15.01px' lengthAdjust='spacingAndGlyphs'>Others</text>
-<text transform='translate(668.80,520.12) rotate(-90)' text-anchor='end' style='font-size: 5.00px; fill: #4D4D4D; font-family: sans;' textLength='37.80px' lengthAdjust='spacingAndGlyphs'>Potential Loyalist</text>
+<text transform='translate(422.96,520.12) rotate(-90)' text-anchor='end' style='font-size: 5.00px; fill: #4D4D4D; font-family: sans;' textLength='15.84px' lengthAdjust='spacingAndGlyphs'>At Risk</text>
+<text transform='translate(504.91,520.12) rotate(-90)' text-anchor='end' style='font-size: 5.00px; fill: #4D4D4D; font-family: sans;' textLength='37.80px' lengthAdjust='spacingAndGlyphs'>Potential Loyalist</text>
+<text transform='translate(586.85,520.12) rotate(-90)' text-anchor='end' style='font-size: 5.00px; fill: #4D4D4D; font-family: sans;' textLength='25.30px' lengthAdjust='spacingAndGlyphs'>Champions</text>
+<text transform='translate(668.80,520.12) rotate(-90)' text-anchor='end' style='font-size: 5.00px; fill: #4D4D4D; font-family: sans;' textLength='37.52px' lengthAdjust='spacingAndGlyphs'>Loyal Customers</text>
 <text x='378.55' y='568.24' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='44.04px' lengthAdjust='spacingAndGlyphs'>Segment</text>
 <text transform='translate(13.05,268.99) rotate(-90)' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='33.63px' lengthAdjust='spacingAndGlyphs'>Orders</text>
 <text x='42.58' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='187.84px' lengthAdjust='spacingAndGlyphs'>Orders  Distribution by Segment</text>

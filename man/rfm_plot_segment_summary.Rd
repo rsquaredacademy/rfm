@@ -7,18 +7,31 @@
 rfm_plot_segment_summary(
   x,
   metric = NULL,
+  bar_color = NULL,
   angle = 90,
   size = 5,
   sort = FALSE,
   ascending = FALSE,
   flip = FALSE,
+  plot_title = NULL,
+  xaxis_label = NULL,
+  yaxis_label = NULL,
   print_plot = TRUE
 )
 }
 \arguments{
 \item{x}{An object of class \code{rfm_segment_summary}.}
 
-\item{metric}{Metrics to be visualized.}
+\item{metric}{Metric to be visualized. Defaults to \code{"customers"}. Valid
+ values are:
+\itemize{
+\item \code{"customers"}
+\item \code{"orders"}
+\item \code{"revenue"}
+\item \code{"aov"}
+}}
+
+\item{bar_color}{Color of the bars.}
 
 \item{angle}{Angle at which X axis tick labels should be displayed.}
 
@@ -30,10 +43,18 @@ rfm_plot_segment_summary(
 
 \item{flip}{logical; if \code{TRUE}, creates horizontal bar plot.}
 
-\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
+\item{plot_title}{Title of the plot.}
+
+\item{xaxis_label}{X axis label.}
+
+\item{yaxis_label}{Y axis label.}
+
+\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a
+plot object.}
 }
 \description{
-Generates plots for customers, orders, revenue and average order value for each segment.
+Generates plots for customers, orders, revenue and average order value for
+  each segment.
 }
 \examples{
 # analysis date
@@ -68,16 +89,16 @@ segment_overview <- rfm_segment_summary(segments)
 # summarize metrics for all segments
 rfm_plot_segment_summary(segment_overview)
 
-# select metrics to be visualized
-rfm_plot_segment_summary(segment_overview, metric = c("customers", "orders"))
+# select metric to be visualized
+rfm_plot_segment_summary(segment_overview, metric = "orders")
 
-# sort the metrics by ascending order
-rfm_plot_segment_summary(segment_overview, sort = TRUE, ascending = TRUE)
+# sort the metric in ascending order
+rfm_plot_segment_summary(segment_overview, metric = "orders", sort = TRUE, ascending = TRUE)
 
 # default sorting is in descending order
-rfm_plot_segment_summary(segment_overview, sort = TRUE)
+rfm_plot_segment_summary(segment_overview, metric = "orders", sort = TRUE)
 
 # horizontal bars
-rfm_plot_segment_summary(segment_overview, flip = TRUE)
+rfm_plot_segment_summary(segment_overview, metric = "orders", flip = TRUE)
 
 }
