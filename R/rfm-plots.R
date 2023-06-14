@@ -111,17 +111,22 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
 #' Histograms of recency, frequency and monetary value.
 #'
 #' @param rfm_table An object of class \code{rfm_table}.
+#' @param package Visualization engine. Choose between \code{ggplot2}
+#'   and \code{plotly}.
+#' @param metric Metric to be visualized. Defaults to \code{"recency"}. Valid
+#'  values are:
+#' \itemize{
+#' \item \code{"recency"}
+#' \item \code{"frequency"}
+#' \item \code{"monetary"}
+#' }
 #' @param hist_bins Number of bins of the histograms.
 #' @param hist_color Color of the histogram.
 #' @param plot_title Title of the plot.
-#' @param xaxis_title X axis title.
-#' @param yaxis_title Y axis title.
-#' @param hist_m_label Label of the monetary value histogram.
-#' @param hist_r_label Label of the recency histogram.
-#' @param hist_f_label Label of the frequency histogram.
-#' @param plot_title_justify Horizontal justification of the plot title;
-#'   0 for left justified and 1 for right justified.
-#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
+#' @param xaxis_label X axis label.
+#' @param yaxis_label Y axis label.
+#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a
+#' plot object.
 #'
 #' @return Histograms
 #'
@@ -130,7 +135,7 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
 #' been provided for compatibility with older versions only, and will be made
 #' defunct at the next release.
 #'
-#' Instead use the replacement function \code{rfm_plot_histograms()()}.
+#' Instead use the replacement function \code{rfm_plot_histogram()}.
 #'
 #' @examples
 #' # using transaction data
@@ -139,7 +144,11 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
 #' revenue, analysis_date)
 #'
 #' # histogram
-#' rfm_plot_histograms(rfm_order)
+#' # ggplot2
+#' rfm_plot_histogram(rfm_order, metric = "frequency")
+#'
+#' # plotly
+#' rfm_plot_histogram(rfm_order, metric = "frequency", package = "plotly")
 #'
 #' # using customer data
 #' analysis_date <- as.Date('2007-01-01')
@@ -147,52 +156,67 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
 #' number_of_orders, recency_days, revenue, analysis_date)
 #'
 #' # histogram
-#' rfm_plot_histograms(rfm_customer)
+#' rfm_plot_histogram(rfm_customer)
 #'
 #' @export
 #'
-rfm_plot_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
-                           plot_title = 'RFM Histograms', xaxis_title = ' ',
-                           yaxis_title = 'Count', hist_m_label = 'Monetary',
-                           hist_r_label = 'Recency', hist_f_label = 'Frequency',
-                           plot_title_justify = 0.5, print_plot = TRUE) {
+rfm_plot_histogram <- function(rfm_table, metric = "recency",
+                                package = c("ggplot2", "plotly"),
+                                hist_bins = 9, hist_color = NULL,
+                                plot_title = NULL, xaxis_label = NULL,
+                                yaxis_label = NULL, print_plot = TRUE) {
 
-  p <-
-    rfm_hist_data(rfm_table) %>%
-    ggplot(aes(score)) +
-    geom_histogram(bins = hist_bins, fill = hist_color) +
-    xlab(xaxis_title) +
-    ylab(yaxis_title) +
-    ggtitle(plot_title) +
-    facet_grid(. ~ rfm, scales = "free_x",
-      labeller = labeller(
-        rfm = c(amount = hist_m_label, recency_days = hist_r_label,
-                transaction_count = hist_f_label))) +
-    theme(plot.title = element_text(hjust = plot_title_justify))
+  if (is.null(xaxis_label)) {
+    xaxis_label <- to_title_case(metric)
+    if (grepl("Monetary", xaxis_label)) {
+      xaxis_label <- paste(xaxis_label, "Value")
+    }
+  }
 
-  if (print_plot) {
-    print(p)
+  if (is.null(plot_title)) {
+    plot_title <- paste(xaxis_label, " Distribution")
+  }
+
+  if (is.null(yaxis_label)) {
+    yaxis_label <- "Count"
+  }
+
+  if (is.null(hist_color)) {
+    hist_color <- "blue"
+  }
+
+  ycol <- switch(metric,
+                   "recency"   = "recency_days",
+                   "frequency" = "transaction_count",
+                   "monetary"  = "amount"
+  )
+
+  data <- rfm_table$rfm[, ycol, drop = FALSE]
+  names(data) <- c("score")
+
+  lib <- match.arg(package)
+
+  if (lib == "ggplot2") {
+    rfm_gg_hist(data, hist_bins, hist_color, plot_title, xaxis_label, yaxis_label, print_plot)
   } else {
-    return(p)
+    rfm_plotly_hist(data, hist_color, plot_title, xaxis_label, yaxis_label)
   }
 
 }
 
 #' @export
-#' @rdname rfm_plot_histograms
+#' @rdname rfm_plot_histogram
 #' @usage NULL
 #'
 rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
                            plot_title = 'RFM Histograms', xaxis_title = ' ',
-                           yaxis_title = 'Count', hist_m_label = 'Monetary',
-                           hist_r_label = 'Recency', hist_f_label = 'Frequency',
-                           plot_title_justify = 0.5, print_plot = TRUE) {
+                           yaxis_title = 'Count', print_plot = TRUE) {
   .Deprecated("rfm_plot_histograms()")
-  rfm_plot_histograms(rfm_table, hist_bins = 9, hist_color = 'blue',
-                           plot_title = 'RFM Histograms', xaxis_title = ' ',
-                           yaxis_title = 'Count', hist_m_label = 'Monetary',
-                           hist_r_label = 'Recency', hist_f_label = 'Frequency',
-                           plot_title_justify = 0.5, print_plot = TRUE)
+  rfm_plot_histogram(rfm_table, metric = "recency",
+                     package = c("ggplot2", "plotly"),
+                     hist_bins = hist_bins, hist_color = hist_color,
+                     plot_title = plot_title, xaxis_label = xaxis_title,
+                     yaxis_label = xaxis_title, print_plot = print_plot)
 }
 
 

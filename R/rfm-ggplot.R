@@ -53,3 +53,21 @@ rfm_gg_order_dist <- function(data, flip, bar_color, plot_title, xaxis_label, ya
 
   return(p)
 }
+
+rfm_gg_hist <- function(data, hist_bins, hist_color, plot_title, xaxis_label, yaxis_label, print_plot) {
+
+  p <-
+    data %>%
+    ggplot(aes(score)) +
+    geom_histogram(bins = hist_bins, fill = hist_color, color = I("white")) +
+    xlab(xaxis_label) +
+    ylab(yaxis_label) +
+    ggtitle(plot_title) 
+
+  if (print_plot) {
+    print(p)
+  } else {
+    return(p)
+  }
+
+}

@@ -68,3 +68,31 @@ rfm_plotly_order_dist <- function(data, flip = FALSE, bar_color = NULL,
     config(displayModeBar = FALSE)
 
 }
+
+rfm_plotly_hist <- function(data, hist_color = NULL, plot_title = NULL,
+                            xaxis_label = NULL, yaxis_label = NULL) {
+
+  fig <- plot_ly(data,
+                 x = ~score,
+                 type = "histogram",
+                 histnorm = "count",
+                 autobinx = TRUE,
+                 marker = list(
+                   color = hist_color,
+                   line = list(
+                     color = "white",
+                     width = 1.5
+                   )
+                 ))
+
+
+  fig <-
+    fig %>%
+    layout(title = plot_title,
+           xaxis = list(title = xaxis_label),
+           yaxis = list(title = yaxis_label))
+
+  fig %>%
+    config(displayModeBar = FALSE)
+
+}
