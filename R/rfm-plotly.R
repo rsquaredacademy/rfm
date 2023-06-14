@@ -1,5 +1,6 @@
 #' @importFrom plotly plot_ly layout config add_trace
-rfm_plotly_heatmap <- function(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n, brewer_name, legend_title) {
+rfm_plotly_heatmap <- function(mapdata, plot_title, xaxis_label, yaxis_label,
+                               brewer_n, brewer_name, legend_title) {
 
   text <- paste0("Frequency Score: ", mapdata$frequency_score,
                  "\nRecency Score: ", mapdata$recency_score,
@@ -97,7 +98,9 @@ rfm_plotly_hist <- function(data, hist_color = NULL, plot_title = NULL,
 
 }
 
-rfm_plotly_segment_summary <- function(data, metric, flip, sort, ascending, bar_color, plot_title, xaxis_label, yaxis_label) {
+rfm_plotly_segment_summary <- function(data, metric, flip, sort, ascending,
+                                       bar_color, plot_title, xaxis_label,
+                                       yaxis_label) {
 
   text <- paste0("Segment: ", data[["segment"]],
                  "\n", to_title_case(metric), ": ", data[[metric]])
@@ -173,7 +176,8 @@ rfm_plotly_segment_summary <- function(data, metric, flip, sort, ascending, bar_
 }
 
 
-rfm_plotly_revenue_dist <- function(x, flip = FALSE, colors = c("#3b5bdb", "#91a7ff"),
+rfm_plotly_revenue_dist <- function(x, flip = FALSE,
+                                    colors = c("#3b5bdb", "#91a7ff"),
                                     labels = c("Revenue", "Customers"),
                                     plot_title = "Revenue & Customer Distribution",
                                     xaxis_label = NULL, yaxis_label = NULL) {
@@ -236,7 +240,7 @@ rfm_plotly_revenue_dist <- function(x, flip = FALSE, colors = c("#3b5bdb", "#91a
            yaxis = list(title = yaxis_label, ticksuffix = "%"),
            legend = list(x = 100, y = 0.5))
   }
-  
+
   fig <-
     fig %>%
     layout(title = plot_title,
@@ -247,4 +251,24 @@ rfm_plotly_revenue_dist <- function(x, flip = FALSE, colors = c("#3b5bdb", "#91a
   fig %>%
     config(displayModeBar = FALSE)
 
+}
+
+
+rfm_plotly_segment <- function(table, metric = "customers") {
+
+  text <- paste0("Segment:", toupper(table$segment), "\n",
+                 rfm:::to_title_case(metric), ": ", table[[metric]],
+                 " (", table$prop, "%)")
+
+  fig <- plot_ly(
+    type = "treemap",
+    labels = table$segment,
+    parents = rep("", nrow(table)),
+    values = table[[metric]],
+    hoverinfo = "text",
+    hovertext = text
+  )
+
+  fig %>%
+    config(displayModeBar = FALSE)
 }

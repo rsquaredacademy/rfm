@@ -309,9 +309,11 @@ rfm_plot_revenue_dist <- function(x, flip = FALSE, angle = 90, size = 8,
   lib <- match.arg(package)
 
   if (lib == "ggplot2") {
-    rfm_gg_revenue_dist(data, colors, labels, flip, angle, size, plot_title, xaxis_label, yaxis_label, print_plot)
+    rfm_gg_revenue_dist(data, colors, labels, flip, angle, size, plot_title,
+                        xaxis_label, yaxis_label, print_plot)
   } else {
-    rfm_plotly_revenue_dist(x, flip, colors, labels, plot_title, xaxis_label, yaxis_label)
+    rfm_plotly_revenue_dist(x, flip, colors, labels, plot_title, xaxis_label,
+                            yaxis_label)
   }
 
 }
@@ -375,7 +377,10 @@ rfm_plot_revenue_dist <- function(x, flip = FALSE, angle = 90, size = 8,
 #'
 #' @export
 #'
-rfm_plot_median_recency <- function(rfm_segment_table, color = "blue", font_size = 6, sort = FALSE, ascending = FALSE, flip = FALSE, print_plot = TRUE) {
+rfm_plot_median_recency <- function(rfm_segment_table, color = "blue",
+                                    font_size = 6, sort = FALSE,
+                                    ascending = FALSE, flip = FALSE,
+                                    print_plot = TRUE) {
 
   data <- rfm_prep_median(rfm_segment_table, recency_days)
   plot <- rfm_plot_median(data, color, font_size, sort, ascending, flip)
@@ -391,7 +396,10 @@ rfm_plot_median_recency <- function(rfm_segment_table, color = "blue", font_size
 #' @rdname rfm_plot_median_recency
 #' @export
 #'
-rfm_plot_median_frequency <- function(rfm_segment_table, color = "blue", font_size = 6, sort = FALSE, ascending = FALSE, flip = FALSE, print_plot = TRUE) {
+rfm_plot_median_frequency <- function(rfm_segment_table, color = "blue",
+                                      font_size = 6, sort = FALSE,
+                                      ascending = FALSE, flip = FALSE,
+                                      print_plot = TRUE) {
 
   data <- rfm_prep_median(rfm_segment_table, transaction_count)
   plot <- rfm_plot_median(data, color, font_size, sort, ascending, flip)
@@ -408,7 +416,10 @@ rfm_plot_median_frequency <- function(rfm_segment_table, color = "blue", font_si
 #' @rdname rfm_plot_median_recency
 #' @export
 #'
-rfm_plot_median_monetary <- function(rfm_segment_table, color = "blue", font_size = 6, sort = FALSE, ascending = FALSE, flip = FALSE, print_plot = TRUE) {
+rfm_plot_median_monetary <- function(rfm_segment_table, color = "blue",
+                                     font_size = 6, sort = FALSE,
+                                     ascending = FALSE, flip = FALSE,
+                                     print_plot = TRUE) {
 
   data <- rfm_prep_median(rfm_segment_table, amount)
   plot <- rfm_plot_median(data, color, font_size, sort, ascending, flip)
@@ -429,9 +440,12 @@ rfm_plot_median_monetary <- function(rfm_segment_table, color = "blue", font_siz
 #' @param metric Metric to be visualized. Defaults to \code{"customers"}. Valid
 #' values are:
 #' \itemize{
+#' \item \code{"customers"}
 #' \item \code{"orders"}
 #' \item \code{"revenue"}
 #' }
+#' @param package Visualization engine. Choose between \code{ggplot2}
+#'   and \code{plotly}.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @examples
@@ -470,29 +484,21 @@ rfm_plot_median_monetary <- function(rfm_segment_table, color = "blue", font_siz
 #' # treemap of orders
 #' rfm_plot_segment(segment_overview, metric = "orders")
 #'
-#' # treemap of revenue
-#' rfm_plot_segment(segment_overview, metric = "revenue")
+#' # plotly
+#' rfm_plot_segment(segment_overview, metric = "revenue", package = "plotly")
 #'
 #' @import treemapify
 #' @export
 #'
-rfm_plot_segment <- function(table, metric = "customers", print_plot = TRUE) {
+rfm_plot_segment <- function(table, metric = "customers", package = c("ggplot2", "plotly"), print_plot = TRUE) {
 
+  lib <- match.arg(package)
   table$prop <- round((table[[metric]] / sum(table[[metric]])) * 100, 2)
-  plot <- ggplot(table,
-          aes(area = .data[[metric]],
-             fill = segment,
-             label = paste(toupper(segment),
-                           paste0(.data[[metric]], " (", prop, "%)"),
-                           sep = '\n'))) +
-    geom_treemap() +
-    geom_treemap_text(size = 8, place = 'centre') +
-    theme(legend.position = "none")
 
-    if (print_plot) {
-    print(plot)
+  if (lib == "ggplot2") {
+    rfm_gg_segment(table, metric, print_plot)
   } else {
-    return(plot)
+    rfm_plotly_segment(table, metric)
   }
 
 }
@@ -547,7 +553,8 @@ rfm_plot_segment <- function(table, metric = "customers", print_plot = TRUE) {
 #' @export
 rfm_plot_segment_scatter <- function(segments, x = "monetary", y = "recency",
                              xaxis_label = NULL, yaxis_label = NULL,
-                             plot_title = NULL, legend_title = NULL, print_plot = TRUE) {
+                             plot_title = NULL, legend_title = NULL,
+                             print_plot = TRUE) {
 
   x_data <- switch(x,
     "recency" = "recency_days",
@@ -585,7 +592,8 @@ rfm_plot_segment_scatter <- function(segments, x = "monetary", y = "recency",
     plot_title <- plot_title
   }
 
-  p <- rfm_plot_combine(segments, x_data, y_data, x_label, y_label, plot_title, legend_title)
+  p <- rfm_plot_combine(segments, x_data, y_data, x_label, y_label, plot_title,
+                        legend_title)
 
   if (print_plot) {
     print(p)

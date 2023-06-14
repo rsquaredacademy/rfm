@@ -4,7 +4,12 @@
 \alias{rfm_plot_segment}
 \title{RFM Segmentation Plot}
 \usage{
-rfm_plot_segment(table, metric = "customers", print_plot = TRUE)
+rfm_plot_segment(
+  table,
+  metric = "customers",
+  package = c("ggplot2", "plotly"),
+  print_plot = TRUE
+)
 }
 \arguments{
 \item{table}{An object of class \code{rfm_segment_summary}.}
@@ -12,9 +17,13 @@ rfm_plot_segment(table, metric = "customers", print_plot = TRUE)
 \item{metric}{Metric to be visualized. Defaults to \code{"customers"}. Valid
 values are:
 \itemize{
+\item \code{"customers"}
 \item \code{"orders"}
 \item \code{"revenue"}
 }}
+
+\item{package}{Visualization engine. Choose between \code{ggplot2}
+and \code{plotly}.}
 
 \item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
 }
@@ -57,7 +66,7 @@ rfm_plot_segment(segment_overview)
 # treemap of orders
 rfm_plot_segment(segment_overview, metric = "orders")
 
-# treemap of revenue
-rfm_plot_segment(segment_overview, metric = "revenue")
+# plotly
+rfm_plot_segment(segment_overview, metric = "revenue", package = "plotly")
 
 }

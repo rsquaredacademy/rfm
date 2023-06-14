@@ -1,4 +1,5 @@
-rfm_gg_heatmap <- function(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n, brewer_name, legend_title, print_plot) {
+rfm_gg_heatmap <- function(mapdata, plot_title, xaxis_label, yaxis_label,
+                           brewer_n, brewer_name, legend_title, print_plot) {
 
   ulm <- ceiling(max(mapdata[["monetary"]]))
   llm <- floor(min(mapdata[["monetary"]]))
@@ -14,8 +15,9 @@ rfm_gg_heatmap <- function(mapdata, plot_title, xaxis_label, yaxis_label, brewer
     xlab(xaxis_label) +
     ylab(yaxis_label) +
     scale_fill_gradientn(limits = c(llm, ulm),
-                         colours = RColorBrewer::brewer.pal(n = brewer_n, name = brewer_name),
-                         name = legend_title) 
+                         colours = RColorBrewer::brewer.pal(n = brewer_n,
+                                                            name = brewer_name),
+                         name = legend_title)
 
   if (print_plot) {
     print(p)
@@ -24,7 +26,8 @@ rfm_gg_heatmap <- function(mapdata, plot_title, xaxis_label, yaxis_label, brewer
   }
 }
 
-rfm_gg_order_dist <- function(data, flip, bar_color, plot_title, xaxis_label, yaxis_label, ylim_max, count_size) {
+rfm_gg_order_dist <- function(data, flip, bar_color, plot_title, xaxis_label,
+                              yaxis_label, ylim_max, count_size) {
 
   p <-
     data %>%
@@ -33,7 +36,7 @@ rfm_gg_order_dist <- function(data, flip, bar_color, plot_title, xaxis_label, ya
     ggtitle(plot_title) +
     xlab(xaxis_label) +
       ylab(yaxis_label) +
-      ylim(0, ylim_max) 
+      ylim(0, ylim_max)
 
   if (flip) {
     p <-
@@ -54,7 +57,8 @@ rfm_gg_order_dist <- function(data, flip, bar_color, plot_title, xaxis_label, ya
   return(p)
 }
 
-rfm_gg_hist <- function(data, hist_bins, hist_color, plot_title, xaxis_label, yaxis_label, print_plot) {
+rfm_gg_hist <- function(data, hist_bins, hist_color, plot_title, xaxis_label,
+                        yaxis_label, print_plot) {
 
   p <-
     data %>%
@@ -62,7 +66,7 @@ rfm_gg_hist <- function(data, hist_bins, hist_color, plot_title, xaxis_label, ya
     geom_histogram(bins = hist_bins, fill = hist_color, color = I("white")) +
     xlab(xaxis_label) +
     ylab(yaxis_label) +
-    ggtitle(plot_title) 
+    ggtitle(plot_title)
 
   if (print_plot) {
     print(p)
@@ -72,7 +76,9 @@ rfm_gg_hist <- function(data, hist_bins, hist_color, plot_title, xaxis_label, ya
 
 }
 
-rfm_gg_plot_segment_summary <- function(data, metric, sort, ascending, flip, bar_color, plot_title, xaxis_label, yaxis_label, angle, size, print_plot) {
+rfm_gg_plot_segment_summary <- function(data, metric, sort, ascending, flip,
+                                        bar_color, plot_title, xaxis_label,
+                                        yaxis_label, angle, size, print_plot) {
 
   if (sort) {
     if (ascending) {
@@ -127,7 +133,9 @@ rfm_gg_plot_segment_summary <- function(data, metric, sort, ascending, flip, bar
   }
 }
 
-rfm_gg_revenue_dist <- function(data, colors, labels, flip, angle, size, plot_title, xaxis_label, yaxis_label, print_plot) {
+rfm_gg_revenue_dist <- function(data, colors, labels, flip, angle, size,
+                                plot_title, xaxis_label, yaxis_label,
+                                print_plot) {
 
   p <-
     ggplot(data, aes(fill = category, y = share, x = segment)) +
@@ -186,15 +194,23 @@ rfm_plot_median <- function(data, color, font_size, sort, ascending, flip) {
   if (sort) {
     if (ascending) {
       if (flip) {
-        p <- ggplot(data, aes(x = reorder(.data[[cnames[1]]], -.data[[cnames[2]]], sum), y = .data[[cnames[2]]]))
+        p <- ggplot(data,
+                    aes(x = reorder(.data[[cnames[1]]], -.data[[cnames[2]]], sum),
+                        y = .data[[cnames[2]]]))
       } else {
-        p <- ggplot(data, aes(x = reorder(.data[[cnames[1]]], .data[[cnames[2]]], sum), y = .data[[cnames[2]]]))
+        p <- ggplot(data,
+                    aes(x = reorder(.data[[cnames[1]]], .data[[cnames[2]]], sum),
+                        y = .data[[cnames[2]]]))
       }
     } else {
       if (flip) {
-        p <- ggplot(data, aes(x = reorder(.data[[cnames[1]]], .data[[cnames[2]]], sum), y = .data[[cnames[2]]]))
+        p <- ggplot(data,
+                    aes(x = reorder(.data[[cnames[1]]], .data[[cnames[2]]], sum),
+                        y = .data[[cnames[2]]]))
       } else {
-        p <- ggplot(data, aes(x = reorder(.data[[cnames[1]]], -.data[[cnames[2]]], sum), y = .data[[cnames[2]]]))
+        p <- ggplot(data,
+                    aes(x = reorder(.data[[cnames[1]]], -.data[[cnames[2]]], sum),
+                        y = .data[[cnames[2]]]))
       }
     }
   } else {
@@ -225,4 +241,23 @@ rfm_plot_median <- function(data, color, font_size, sort, ascending, flip) {
 
   return(p)
 
+}
+
+rfm_gg_segment <- function(table, metric, print_plot) {
+
+  plot <- ggplot(table,
+          aes(area = .data[[metric]],
+             fill = segment,
+             label = paste(toupper(segment),
+                           paste0(.data[[metric]], " (", prop, "%)"),
+                           sep = '\n'))) +
+    geom_treemap() +
+    geom_treemap_text(size = 8, place = 'centre') +
+    theme(legend.position = "none")
+
+    if (print_plot) {
+    print(plot)
+  } else {
+    return(plot)
+  }
 }
