@@ -328,8 +328,7 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #' @param count_size Size of count displayed on top of the bars.
 #' @param interactive If \code{TRUE}, uses \code{plotly} as the visualization
 #'   engine. If \code{FALSE}, uses \code{ggplot2}.
-#' @param animate Logical; if \code{TRUE}, animates the bars.
-#'   Defaults to \code{FALSE}.
+#' @param animate If \code{TRUE}, animates the bars. Defaults to \code{FALSE}.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @return Bar chart.
@@ -399,11 +398,14 @@ rfm_plot_order_dist <- function(rfm_table, flip = FALSE, bar_color = NULL,
                           yaxis_label = yaxis_label)
   } else {
 
-    p <- rfm_gg_order_dist(data, flip, bar_color, plot_title, xaxis_label, yaxis_label, ylim_max, count_size)
-
     if (animate) {
       print_plot <- FALSE
       data <- data_animate_order_dist(data)
+    }
+
+    p <- rfm_gg_order_dist(data, flip, bar_color, plot_title, xaxis_label, yaxis_label, ylim_max, count_size)
+
+    if (animate) {
       p <- rfm_animate_order_dist(p)
       animate(p, fps=8, renderer = gifski_renderer(loop = FALSE))
     }

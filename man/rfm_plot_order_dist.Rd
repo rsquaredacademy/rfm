@@ -36,8 +36,7 @@ rfm_plot_order_dist(
 \item{interactive}{If \code{TRUE}, uses \code{plotly} as the visualization
 engine. If \code{FALSE}, uses \code{ggplot2}.}
 
-\item{animate}{Logical; if \code{TRUE}, animates the bars.
-Defaults to \code{FALSE}.}
+\item{animate}{If \code{TRUE}, animates the bars. Defaults to \code{FALSE}.}
 
 \item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
 }
