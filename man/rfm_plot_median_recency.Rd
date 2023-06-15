@@ -9,30 +9,42 @@
 rfm_plot_median_recency(
   rfm_segment_table,
   color = "blue",
-  font_size = 6,
   sort = FALSE,
   ascending = FALSE,
   flip = FALSE,
+  plot_title = NULL,
+  xaxis_label = NULL,
+  yaxis_label = NULL,
+  font_size = 6,
+  package = c("ggplot2", "plotly"),
   print_plot = TRUE
 )
 
 rfm_plot_median_frequency(
   rfm_segment_table,
   color = "blue",
-  font_size = 6,
   sort = FALSE,
   ascending = FALSE,
   flip = FALSE,
+  plot_title = NULL,
+  xaxis_label = NULL,
+  yaxis_label = NULL,
+  font_size = 6,
+  package = c("ggplot2", "plotly"),
   print_plot = TRUE
 )
 
 rfm_plot_median_monetary(
   rfm_segment_table,
   color = "blue",
-  font_size = 6,
   sort = FALSE,
   ascending = FALSE,
   flip = FALSE,
+  plot_title = NULL,
+  xaxis_label = NULL,
+  yaxis_label = NULL,
+  font_size = 6,
+  package = c("ggplot2", "plotly"),
   print_plot = TRUE
 )
 }
@@ -41,13 +53,19 @@ rfm_plot_median_monetary(
 
 \item{color}{Color of the bars.}
 
-\item{font_size}{Font size for X axis text.}
-
 \item{sort}{logical; if \code{TRUE}, sort metrics.}
 
 \item{ascending}{logical; if \code{TRUE}, sort metrics in ascending order.}
 
 \item{flip}{logical; if \code{TRUE}, creates horizontal bar plot.}
+
+\item{plot_title}{Title of the plot.}
+
+\item{xaxis_label}{X axis label.}
+
+\item{yaxis_label}{Y axis label.}
+
+\item{font_size}{Font size for X axis text.}
 
 \item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
 }
@@ -83,6 +101,9 @@ monetary_upper)
 # plots
 # visualize median recency
 rfm_plot_median_recency(segments)
+
+# plotly
+rfm_plot_median_recency(segments, package = "plotly")
 
 # sort in ascending order
 rfm_plot_median_recency(segments, sort = TRUE, ascending = TRUE)

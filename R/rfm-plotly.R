@@ -310,3 +310,100 @@ rfm_plotly_segment_scatter <- function(segments, x_data = NULL, y_data = NULL,
     config(displayModeBar = FALSE)
 
 }
+
+rfm_plotly_median <- function(data, bar_color = NULL, sort = FALSE,
+                              ascending = FALSE, flip = FALSE,
+                              plot_title = NULL, xaxis_label = NULL,
+                              yaxis_label = NULL) {
+
+  cnames <- colnames(data)
+
+  ycol <- switch(cnames[2],
+                 recency_days   = "Median Recency",
+                 transaction_count = "Median Frequency",
+                 amount  = "Median Monetary Value"
+  )
+
+  text <- paste0("Segment: ", data[[cnames[1]]],
+                 " \nMedian Recency: ", data[[cnames[2]]])
+
+  if (is.null(yaxis_label)) {
+    yaxis_label <- ycol
+  } 
+
+  if (is.null(plot_title)) {
+    plot_title <- paste(yaxis_label, " by Segment")
+  } 
+
+  if (is.null(xaxis_label)) {
+    xaxis_label <- "Segment"
+  } 
+
+  if (flip) {
+    fig <- plot_ly(data,
+                   y = ~segment,
+                   x = ~get(cnames[2]),
+                   type = "bar",
+                   hoverinfo = "text",
+                   hovertext = text,
+                   orientation = 'h',
+                   marker = list(
+                     color = bar_color
+                   ))
+
+    if (sort) {
+      if (ascending) {
+        fig <- fig %>%
+          layout(title = plot_title,
+                 xaxis = list(title = yaxis_label),
+                 yaxis = list(title = xaxis_label,
+                              categoryorder = "total descending"))
+      } else {
+        fig <- fig %>%
+          layout(title = plot_title,
+                 xaxis = list(title = yaxis_label),
+                 yaxis = list(title = xaxis_label,
+                              categoryorder = "total ascending"))
+      }
+    } else {
+      fig <- fig %>%
+        layout(title = plot_title,
+               xaxis = list(title = yaxis_label),
+               yaxis = list(title = xaxis_label))
+    }
+
+  } else {
+    fig <- plot_ly(data,
+                   x = ~segment,
+                   y = ~get(cnames[2]),
+                   type = "bar",
+                   hoverinfo = "text",
+                   hovertext = text,
+                   marker = list(
+                     color = bar_color
+                   ))
+    if (sort) {
+      if (ascending) {
+        fig <- fig %>%
+          layout(title = plot_title,
+                 xaxis = list(title = xaxis_label,
+                              categoryorder = "total ascending"),
+                 yaxis = list(title = yaxis_label))
+      } else {
+        fig <- fig %>%
+          layout(title = plot_title,
+                 xaxis = list(title = xaxis_label,
+                              categoryorder = "total descending"),
+                 yaxis = list(title = yaxis_label))
+      }
+    } else {
+      fig <- fig %>%
+        layout(title = plot_title,
+               xaxis = list(title = xaxis_label),
+               yaxis = list(title = yaxis_label))
+    }
+  }
+
+  fig %>%
+    config(displayModeBar = FALSE)
+}

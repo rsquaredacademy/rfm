@@ -327,6 +327,9 @@ rfm_plot_revenue_dist <- function(x, flip = FALSE, angle = 90, size = 8,
 #' @param sort logical; if \code{TRUE}, sort metrics.
 #' @param ascending logical; if \code{TRUE}, sort metrics in ascending order.
 #' @param flip logical; if \code{TRUE}, creates horizontal bar plot.
+#' @param plot_title Title of the plot.
+#' @param xaxis_label X axis label.
+#' @param yaxis_label Y axis label.
 #' @param font_size Font size for X axis text.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
@@ -360,6 +363,9 @@ rfm_plot_revenue_dist <- function(x, flip = FALSE, angle = 90, size = 8,
 #' # visualize median recency
 #' rfm_plot_median_recency(segments)
 #'
+#' # plotly
+#' rfm_plot_median_recency(segments, package = "plotly")
+#'
 #' # sort in ascending order
 #' rfm_plot_median_recency(segments, sort = TRUE, ascending = TRUE)
 #'
@@ -378,18 +384,24 @@ rfm_plot_revenue_dist <- function(x, flip = FALSE, angle = 90, size = 8,
 #' @export
 #'
 rfm_plot_median_recency <- function(rfm_segment_table, color = "blue",
-                                    font_size = 6, sort = FALSE,
-                                    ascending = FALSE, flip = FALSE,
+                                    sort = FALSE, ascending = FALSE,
+                                    flip = FALSE, plot_title = NULL,
+                                    xaxis_label = NULL, yaxis_label = NULL,
+                                    font_size = 6,
+                                    package = c("ggplot2", "plotly"),
                                     print_plot = TRUE) {
 
   data <- rfm_prep_median(rfm_segment_table, recency_days)
-  plot <- rfm_plot_median(data, color, font_size, sort, ascending, flip)
+  lib  <- match.arg(package)
 
-  if (print_plot) {
-    print(plot)
+  if (lib == "ggplot2") {
+    rfm_plot_median(data, color, sort, ascending, flip, plot_title,
+                    xaxis_label, yaxis_label, font_size, print_plot)
   } else {
-    return(plot)
+    rfm_plotly_median(data, color, sort, ascending, flip, plot_title,
+                      xaxis_label, yaxis_label)
   }
+
 
 }
 
@@ -397,17 +409,22 @@ rfm_plot_median_recency <- function(rfm_segment_table, color = "blue",
 #' @export
 #'
 rfm_plot_median_frequency <- function(rfm_segment_table, color = "blue",
-                                      font_size = 6, sort = FALSE,
-                                      ascending = FALSE, flip = FALSE,
+                                      sort = FALSE, ascending = FALSE,
+                                      flip = FALSE, plot_title = NULL,
+                                      xaxis_label = NULL, yaxis_label = NULL,
+                                      font_size = 6,
+                                      package = c("ggplot2", "plotly"),
                                       print_plot = TRUE) {
 
   data <- rfm_prep_median(rfm_segment_table, transaction_count)
-  plot <- rfm_plot_median(data, color, font_size, sort, ascending, flip)
+  lib  <- match.arg(package)
 
-  if (print_plot) {
-    print(plot)
+  if (lib == "ggplot2") {
+    rfm_plot_median(data, color, sort, ascending, flip, plot_title,
+                    xaxis_label, yaxis_label, font_size, print_plot)
   } else {
-    return(plot)
+    rfm_plotly_median(data, color, sort, ascending, flip, plot_title,
+                      xaxis_label, yaxis_label)
   }
 
 }
@@ -417,17 +434,22 @@ rfm_plot_median_frequency <- function(rfm_segment_table, color = "blue",
 #' @export
 #'
 rfm_plot_median_monetary <- function(rfm_segment_table, color = "blue",
-                                     font_size = 6, sort = FALSE,
-                                     ascending = FALSE, flip = FALSE,
+                                     sort = FALSE, ascending = FALSE,
+                                     flip = FALSE, plot_title = NULL,
+                                     xaxis_label = NULL, yaxis_label = NULL,
+                                     font_size = 6,
+                                     package = c("ggplot2", "plotly"),
                                      print_plot = TRUE) {
 
   data <- rfm_prep_median(rfm_segment_table, amount)
-  plot <- rfm_plot_median(data, color, font_size, sort, ascending, flip)
+  lib <- match.arg(package)
 
-  if (print_plot) {
-    print(plot)
+  if (lib == "ggplot2") {
+    rfm_plot_median(data, color, sort, ascending, flip, plot_title,
+                    xaxis_label, yaxis_label, font_size, print_plot)
   } else {
-    return(plot)
+    rfm_plotly_median(data, color, sort, ascending, flip, plot_title,
+                      xaxis_label, yaxis_label)
   }
 
 }

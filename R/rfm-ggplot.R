@@ -181,7 +181,8 @@ rfm_gg_revenue_dist <- function(data, colors, labels, flip, angle, size,
 
 }
 
-rfm_plot_median <- function(data, color, font_size, sort, ascending, flip) {
+rfm_plot_median <- function(data, color, sort, ascending, flip, plot_title,
+                            xaxis_label, yaxis_label, font_size, print_plot) {
 
   n_fill <- nrow(data)
   cnames <- names(data)
@@ -190,6 +191,18 @@ rfm_plot_median <- function(data, color, font_size, sort, ascending, flip) {
            recency_days = "Median Recency",
            transaction_count = "Median Frequency",
            amount = "Median Monetary Value")
+
+  if (is.null(yaxis_label)) {
+    yaxis_label <- y_lab
+  }
+
+  if (is.null(plot_title)) {
+    plot_title <- paste(yaxis_label, " by Segment")
+  }
+
+  if (is.null(xaxis_label)) {
+    xaxis_label <- "Segment"
+  }
 
   if (sort) {
     if (ascending) {
@@ -221,25 +234,27 @@ rfm_plot_median <- function(data, color, font_size, sort, ascending, flip) {
   p <-
     p +
     geom_bar(stat = "identity", fill = color) +
-    ggtitle(paste(y_lab, "by Segment")) +
-    theme(plot.title = element_text(hjust = 0.5))
+    ggtitle(plot_title) +
+    xlab(xaxis_label) +
+    ylab(yaxis_label) +
+    theme(plot.title = element_text(hjust = 0.5)) 
 
   if (flip) {
     p <-
       p +
       coord_flip() +
-      xlab(y_lab) +
-      ylab("Segment") +
       theme(axis.text.y = element_text(size = font_size))
   } else {
     p <-
       p +
-      xlab("Segment") +
-      ylab(y_lab) +
       theme(axis.text.x = element_text(size = font_size))
   }
 
-  return(p)
+  if (print_plot) {
+    print(p)
+  } else {
+    return(p)
+  }
 
 }
 
