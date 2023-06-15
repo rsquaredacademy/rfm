@@ -78,7 +78,7 @@ rfm_gg_hist <- function(data, hist_bins, hist_color, plot_title, xaxis_label,
 
 rfm_gg_plot_segment_summary <- function(data, metric, sort, ascending, flip,
                                         bar_color, plot_title, xaxis_label,
-                                        yaxis_label, angle, size, print_plot) {
+                                        yaxis_label, angle, size, ylim_max) {
 
   if (sort) {
     if (ascending) {
@@ -111,26 +111,30 @@ rfm_gg_plot_segment_summary <- function(data, metric, sort, ascending, flip,
     geom_bar(stat = "identity", fill = bar_color) +
     ggtitle(plot_title) +
     xlab(xaxis_label) +
-    ylab(yaxis_label)
+    ylab(yaxis_label) +
+    ylim(0, ylim_max)
 
   if (flip) {
     p <-
       p +
       coord_flip() +
+      geom_text(aes(label = sprintf("%1.0f", .data[[metric]]), y = .data[[metric]] + 3),
+                hjust = 0,
+                size = 3) +
       theme(axis.text.y = element_text(size = 7))
   } else {
     p <-
       p +
-      theme(axis.text.x = element_text(angle = angle, vjust = 1,
-                                       hjust=1, size = size))
+      geom_text(aes(label = sprintf("%1.0f", .data[[metric]]), y = .data[[metric]] + 3),
+                position = position_dodge(0.9),
+                vjust = 0,
+                size = 3) +
+      theme(axis.text.x = element_text(angle = angle, vjust = 0,
+                                       hjust = 0, size = size))
   }
 
+  p
 
-  if (print_plot) {
-      print(p)
-  } else {
-    return(p)
-  }
 }
 
 rfm_gg_revenue_dist <- function(data, colors, labels, flip, angle, size,

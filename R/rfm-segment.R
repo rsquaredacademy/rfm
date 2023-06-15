@@ -146,6 +146,7 @@ rfm_segment_summary <- function(segments) {
 #' @param yaxis_label Y axis label.
 #' @param interactive If \code{TRUE}, uses \code{plotly} as the visualization
 #'   engine. If \code{FALSE}, uses \code{ggplot2}.
+#' @param animate If \code{TRUE}, animates the bars. Defaults to \code{FALSE}.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a
 #'   plot object.
 #'
@@ -206,7 +207,7 @@ rfm_plot_segment_summary <- function(x, metric = NULL, bar_color = NULL,
                                      ascending = FALSE, flip = FALSE,
                                      plot_title = NULL, xaxis_label = NULL,
                                      yaxis_label = NULL, interactive = FALSE,
-                                     print_plot = TRUE) {
+                                     animate = FALSE, print_plot = TRUE) {
 
   if (is.null(metric)) {
     metric <- "customers"
@@ -229,14 +230,35 @@ rfm_plot_segment_summary <- function(x, metric = NULL, bar_color = NULL,
   }
 
   data <- x[c("segment", metric)]
+  ylim_max <- 
+    data[[metric]] %>%
+    max() %>%
+    multiply_by(1.15) %>%
+    ceiling(.)
 
   if (interactive) {
     rfm_plotly_segment_summary(data, metric, flip, sort, ascending, bar_color,
                                plot_title, xaxis_label, yaxis_label)
   } else {
-    rfm_gg_plot_segment_summary(data, metric, sort, ascending, flip, bar_color,
-                                plot_title, xaxis_label, yaxis_label, angle,
-                                size, print_plot)
+    if (animate) {
+      print_plot <- FALSE
+      data <- data_animate_segment_summary(data, metric)
+    }
+
+    p <- rfm_gg_plot_segment_summary(data, metric, sort, ascending, flip,
+                                        bar_color, plot_title, xaxis_label,
+                                        yaxis_label, angle, size, ylim_max)
+
+    if (animate) {
+      p <- rfm_animate_segment_summary(p)
+      animate(p, fps=8, renderer = gifski_renderer(loop = FALSE))
+    }
+
+    if (print_plot) {
+      print(p)
+    } else {
+      return(p)
+    }
   }
 
 }
