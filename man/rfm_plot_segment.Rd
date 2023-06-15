@@ -7,7 +7,7 @@
 rfm_plot_segment(
   table,
   metric = "customers",
-  package = c("ggplot2", "plotly"),
+  interactive = FALSE,
   print_plot = TRUE
 )
 }
@@ -22,8 +22,8 @@ values are:
 \item \code{"revenue"}
 }}
 
-\item{package}{Visualization engine. Choose between \code{ggplot2}
-and \code{plotly}.}
+\item{interactive}{If \code{TRUE}, uses \code{plotly} as the visualization
+engine. If \code{FALSE}, uses \code{ggplot2}.}
 
 \item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
 }
@@ -67,6 +67,6 @@ rfm_plot_segment(segment_overview)
 rfm_plot_segment(segment_overview, metric = "orders")
 
 # plotly
-rfm_plot_segment(segment_overview, metric = "revenue", package = "plotly")
+rfm_plot_segment(segment_overview, metric = "revenue", interactive = TRUE)
 
 }

@@ -6,8 +6,6 @@
 #'   the darker areas in the heatmap.
 #'
 #' @param data An object of class \code{rfm_table}.
-#' @param package Visualization engine. Choose between \code{ggplot2}
-#'   and \code{plotly}.
 #' @param brewer_n Indicates the number of colors in the palette; RColorBrewer
 #'   is used for the color palette of the heatmap; check the documentation of
 #'   \code{brewer.pal}.
@@ -17,6 +15,8 @@
 #' @param yaxis_label Y axis label.
 #' @param plot_title Title of the plot.
 #' @param legend_title Legend title.
+#' @param interactive If \code{TRUE}, uses \code{plotly} as the visualization
+#'   engine. If \code{FALSE}, uses \code{ggplot2}.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a
 #'   plot object.
 #'
@@ -38,7 +38,7 @@
 #' rfm_plot_heatmap(rfm_order)
 #'
 #' # plotly
-#' rfm_plot_heatmap(rfm_order, "plotly")
+#' rfm_plot_heatmap(rfm_order, interactive = TRUE)
 #'
 #' # using customer data
 #' analysis_date <- as.Date('2007-01-01')
@@ -50,11 +50,10 @@
 #'
 #' @export
 #'
-rfm_plot_heatmap <- function(data, package = c("ggplot2", "plotly"),
-                             brewer_n = 5, brewer_name = "PuBu",
+rfm_plot_heatmap <- function(data, brewer_n = 5, brewer_name = "PuBu",
                              xaxis_label = NULL, yaxis_label = NULL,
                              plot_title = NULL, legend_title = NULL,
-                             print_plot = TRUE) {
+                             interactive = FALSE, print_plot = TRUE) {
 
   mapdata <- rfm_heatmap_data(rfm_table = data)
 
@@ -74,14 +73,12 @@ rfm_plot_heatmap <- function(data, package = c("ggplot2", "plotly"),
     yaxis_label <- "Recency Score"
   }
 
-  lib <- match.arg(package)
-
-  if (lib == "ggplot2") {
-    rfm_gg_heatmap(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n,
-                   brewer_name, legend_title, print_plot)
-  } else {
+  if (interactive) {
     rfm_plotly_heatmap(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n,
                        brewer_name, legend_title)
+  } else {
+    rfm_gg_heatmap(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n,
+                   brewer_name, legend_title, print_plot)
   }
 
 }
@@ -111,8 +108,6 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
 #' Histograms of recency, frequency and monetary value.
 #'
 #' @param rfm_table An object of class \code{rfm_table}.
-#' @param package Visualization engine. Choose between \code{ggplot2}
-#'   and \code{plotly}.
 #' @param metric Metric to be visualized. Defaults to \code{"recency"}. Valid
 #'  values are:
 #' \itemize{
@@ -125,6 +120,8 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
 #' @param plot_title Title of the plot.
 #' @param xaxis_label X axis label.
 #' @param yaxis_label Y axis label.
+#' @param interactive If \code{TRUE}, uses \code{plotly} as the visualization
+#'   engine. If \code{FALSE}, uses \code{ggplot2}.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a
 #' plot object.
 #'
@@ -148,7 +145,7 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
 #' rfm_plot_histogram(rfm_order, metric = "frequency")
 #'
 #' # plotly
-#' rfm_plot_histogram(rfm_order, metric = "frequency", package = "plotly")
+#' rfm_plot_histogram(rfm_order, metric = "frequency", interactive = TRUE)
 #'
 #' # using customer data
 #' analysis_date <- as.Date('2007-01-01')
@@ -161,10 +158,10 @@ rfm_heatmap <- function(data, plot_title = "RFM Heat Map",
 #' @export
 #'
 rfm_plot_histogram <- function(rfm_table, metric = "recency",
-                                package = c("ggplot2", "plotly"),
-                                hist_bins = 9, hist_color = NULL,
-                                plot_title = NULL, xaxis_label = NULL,
-                                yaxis_label = NULL, print_plot = TRUE) {
+                               hist_bins = 9, hist_color = NULL,
+                               plot_title = NULL, xaxis_label = NULL,
+                               yaxis_label = NULL, interactive = FALSE,
+                               print_plot = TRUE) {
 
   if (is.null(xaxis_label)) {
     xaxis_label <- to_title_case(metric)
@@ -194,12 +191,11 @@ rfm_plot_histogram <- function(rfm_table, metric = "recency",
   data <- rfm_table$rfm[, ycol, drop = FALSE]
   names(data) <- c("score")
 
-  lib <- match.arg(package)
-
-  if (lib == "ggplot2") {
-    rfm_gg_hist(data, hist_bins, hist_color, plot_title, xaxis_label, yaxis_label, print_plot)
-  } else {
+  if (interactive) {
     rfm_plotly_hist(data, hist_color, plot_title, xaxis_label, yaxis_label)
+  } else {
+    rfm_gg_hist(data, hist_bins, hist_color, plot_title, xaxis_label,
+                yaxis_label, print_plot)
   }
 
 }
@@ -213,10 +209,10 @@ rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
                            yaxis_title = 'Count', print_plot = TRUE) {
   .Deprecated("rfm_plot_histograms()")
   rfm_plot_histogram(rfm_table, metric = "recency",
-                     package = c("ggplot2", "plotly"),
                      hist_bins = hist_bins, hist_color = hist_color,
                      plot_title = plot_title, xaxis_label = xaxis_title,
-                     yaxis_label = xaxis_title, print_plot = print_plot)
+                     yaxis_label = xaxis_title, interactive = FALSE,
+                     print_plot = print_plot)
 }
 
 
@@ -324,16 +320,16 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #' Visualize the distribution of customers across orders.
 #'
 #' @param rfm_table An object of class \code{rfm_table}.
-#' @param package Visualization engine. Choose between \code{ggplot2}
-#'   and \code{plotly}.
 #' @param flip logical; if \code{TRUE}, creates horizontal bar plot.
-#' @param animate Logical; if \code{TRUE}, animates the bars.
-#'   Defaults to \code{FALSE}.
 #' @param bar_color Color of the bars.
 #' @param plot_title Title of the plot.
 #' @param xaxis_label X axis title.
 #' @param yaxis_label Y axis title.
 #' @param count_size Size of count displayed on top of the bars.
+#' @param interactive If \code{TRUE}, uses \code{plotly} as the visualization
+#'   engine. If \code{FALSE}, uses \code{ggplot2}.
+#' @param animate Logical; if \code{TRUE}, animates the bars.
+#'   Defaults to \code{FALSE}.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @return Bar chart.
@@ -358,7 +354,7 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #' rfm_plot_order_dist(rfm_order, flip = TRUE)
 #'
 #' # plotly
-#' rfm_plot_order_dist(rfm_order, package = "plotly")
+#' rfm_plot_order_dist(rfm_order, interactive = TRUE)
 #'
 #' # using customer data
 #' analysis_date <- as.Date('2007-01-01')
@@ -372,11 +368,11 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #'
 #' @export
 #'
-rfm_plot_order_dist <- function(rfm_table, package = c("ggplot2", "plotly"),
-                                flip = FALSE, animate = FALSE,
-                                bar_color = NULL, plot_title = NULL,
-                                xaxis_label = NULL, yaxis_label = NULL,
-                                count_size = 3, print_plot = TRUE) {
+rfm_plot_order_dist <- function(rfm_table, flip = FALSE, bar_color = NULL,
+                                plot_title = NULL, xaxis_label = NULL,
+                                yaxis_label = NULL, count_size = 3,
+                                interactive = FALSE, animate = FALSE,
+                                print_plot = TRUE) {
 
   if (is.null(plot_title)) {
     plot_title <- "Customer Distribution by Orders"
@@ -397,17 +393,17 @@ rfm_plot_order_dist <- function(rfm_table, package = c("ggplot2", "plotly"),
   data <- rfm_order_dist_data(rfm_table)
   ylim_max <- rfm_order_dist_ylim(data)
 
-  lib <- match.arg(package)
-
-  if (lib == "ggplot2") {
-    if (animate) {
-      print_plot <- FALSE
-      data <- data_animate_order_dist(data)
-    }
+  if (interactive) {
+    rfm_plotly_order_dist(data, flip = flip, bar_color = bar_color,
+                          plot_title = plot_title, xaxis_label = xaxis_label,
+                          yaxis_label = yaxis_label)
+  } else {
 
     p <- rfm_gg_order_dist(data, flip, bar_color, plot_title, xaxis_label, yaxis_label, ylim_max, count_size)
 
     if (animate) {
+      print_plot <- FALSE
+      data <- data_animate_order_dist(data)
       p <- rfm_animate_order_dist(p)
       animate(p, fps=8, renderer = gifski_renderer(loop = FALSE))
     }
@@ -417,12 +413,6 @@ rfm_plot_order_dist <- function(rfm_table, package = c("ggplot2", "plotly"),
     } else {
       return(p)
     }
-  } else {
-    rfm_plotly_order_dist(data, flip = flip, bar_color = bar_color,
-                          plot_title = plot_title,
-                          xaxis_label = xaxis_label,
-                          yaxis_label = yaxis_label)
-
   }
 
 }

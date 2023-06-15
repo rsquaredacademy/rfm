@@ -8,12 +8,12 @@
 rfm_plot_histogram(
   rfm_table,
   metric = "recency",
-  package = c("ggplot2", "plotly"),
   hist_bins = 9,
   hist_color = NULL,
   plot_title = NULL,
   xaxis_label = NULL,
   yaxis_label = NULL,
+  interactive = FALSE,
   print_plot = TRUE
 )
 }
@@ -28,9 +28,6 @@ rfm_plot_histogram(
 \item \code{"monetary"}
 }}
 
-\item{package}{Visualization engine. Choose between \code{ggplot2}
-and \code{plotly}.}
-
 \item{hist_bins}{Number of bins of the histograms.}
 
 \item{hist_color}{Color of the histogram.}
@@ -40,6 +37,9 @@ and \code{plotly}.}
 \item{xaxis_label}{X axis label.}
 
 \item{yaxis_label}{Y axis label.}
+
+\item{interactive}{If \code{TRUE}, uses \code{plotly} as the visualization
+engine. If \code{FALSE}, uses \code{ggplot2}.}
 
 \item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a
 plot object.}
@@ -70,7 +70,7 @@ revenue, analysis_date)
 rfm_plot_histogram(rfm_order, metric = "frequency")
 
 # plotly
-rfm_plot_histogram(rfm_order, metric = "frequency", package = "plotly")
+rfm_plot_histogram(rfm_order, metric = "frequency", interactive = TRUE)
 
 # using customer data
 analysis_date <- as.Date('2007-01-01')

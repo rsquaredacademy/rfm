@@ -7,21 +7,18 @@
 \usage{
 rfm_plot_heatmap(
   data,
-  package = c("ggplot2", "plotly"),
   brewer_n = 5,
   brewer_name = "PuBu",
   xaxis_label = NULL,
   yaxis_label = NULL,
   plot_title = NULL,
   legend_title = NULL,
+  interactive = FALSE,
   print_plot = TRUE
 )
 }
 \arguments{
 \item{data}{An object of class \code{rfm_table}.}
-
-\item{package}{Visualization engine. Choose between \code{ggplot2}
-and \code{plotly}.}
 
 \item{brewer_n}{Indicates the number of colors in the palette; RColorBrewer
 is used for the color palette of the heatmap; check the documentation of
@@ -37,6 +34,9 @@ is used for the color palette of the heatmap; check the documentation of
 \item{plot_title}{Title of the plot.}
 
 \item{legend_title}{Legend title.}
+
+\item{interactive}{If \code{TRUE}, uses \code{plotly} as the visualization
+engine. If \code{FALSE}, uses \code{ggplot2}.}
 
 \item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a
 plot object.}
@@ -67,7 +67,7 @@ revenue, analysis_date)
 rfm_plot_heatmap(rfm_order)
 
 # plotly
-rfm_plot_heatmap(rfm_order, "plotly")
+rfm_plot_heatmap(rfm_order, interactive = TRUE)
 
 # using customer data
 analysis_date <- as.Date('2007-01-01')

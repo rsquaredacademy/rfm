@@ -16,7 +16,7 @@ rfm_plot_median_recency(
   xaxis_label = NULL,
   yaxis_label = NULL,
   font_size = 6,
-  package = c("ggplot2", "plotly"),
+  interactive = FALSE,
   print_plot = TRUE
 )
 
@@ -30,7 +30,7 @@ rfm_plot_median_frequency(
   xaxis_label = NULL,
   yaxis_label = NULL,
   font_size = 6,
-  package = c("ggplot2", "plotly"),
+  interactive = FALSE,
   print_plot = TRUE
 )
 
@@ -44,7 +44,7 @@ rfm_plot_median_monetary(
   xaxis_label = NULL,
   yaxis_label = NULL,
   font_size = 6,
-  package = c("ggplot2", "plotly"),
+  interactive = FALSE,
   print_plot = TRUE
 )
 }
@@ -66,6 +66,9 @@ rfm_plot_median_monetary(
 \item{yaxis_label}{Y axis label.}
 
 \item{font_size}{Font size for X axis text.}
+
+\item{interactive}{If \code{TRUE}, uses \code{plotly} as the visualization
+engine. If \code{FALSE}, uses \code{ggplot2}.}
 
 \item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
 }
@@ -103,7 +106,7 @@ monetary_upper)
 rfm_plot_median_recency(segments)
 
 # plotly
-rfm_plot_median_recency(segments, package = "plotly")
+rfm_plot_median_recency(segments, interactive = TRUE)
 
 # sort in ascending order
 rfm_plot_median_recency(segments, sort = TRUE, ascending = TRUE)

@@ -7,27 +7,21 @@
 \usage{
 rfm_plot_order_dist(
   rfm_table,
-  package = c("ggplot2", "plotly"),
   flip = FALSE,
-  animate = FALSE,
   bar_color = NULL,
   plot_title = NULL,
   xaxis_label = NULL,
   yaxis_label = NULL,
   count_size = 3,
+  interactive = FALSE,
+  animate = FALSE,
   print_plot = TRUE
 )
 }
 \arguments{
 \item{rfm_table}{An object of class \code{rfm_table}.}
 
-\item{package}{Visualization engine. Choose between \code{ggplot2}
-and \code{plotly}.}
-
 \item{flip}{logical; if \code{TRUE}, creates horizontal bar plot.}
-
-\item{animate}{Logical; if \code{TRUE}, animates the bars.
-Defaults to \code{FALSE}.}
 
 \item{bar_color}{Color of the bars.}
 
@@ -38,6 +32,12 @@ Defaults to \code{FALSE}.}
 \item{yaxis_label}{Y axis title.}
 
 \item{count_size}{Size of count displayed on top of the bars.}
+
+\item{interactive}{If \code{TRUE}, uses \code{plotly} as the visualization
+engine. If \code{FALSE}, uses \code{ggplot2}.}
+
+\item{animate}{Logical; if \code{TRUE}, animates the bars.
+Defaults to \code{FALSE}.}
 
 \item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
 }
@@ -69,7 +69,7 @@ rfm_plot_order_dist(rfm_order)
 rfm_plot_order_dist(rfm_order, flip = TRUE)
 
 # plotly
-rfm_plot_order_dist(rfm_order, package = "plotly")
+rfm_plot_order_dist(rfm_order, interactive = TRUE)
 
 # using customer data
 analysis_date <- as.Date('2007-01-01')

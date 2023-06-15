@@ -14,7 +14,7 @@ rfm_plot_revenue_dist(
   plot_title = "Revenue & Customer Distribution",
   xaxis_label = NULL,
   yaxis_label = NULL,
-  package = c("ggplot2", "plotly"),
+  interactive = FALSE,
   print_plot = TRUE
 )
 }
@@ -37,8 +37,8 @@ rfm_plot_revenue_dist(
 
 \item{yaxis_label}{Y axis label.}
 
-\item{package}{Visualization engine. Choose between \code{ggplot2}
-and \code{plotly}.}
+\item{interactive}{If \code{TRUE}, uses \code{plotly} as the visualization
+engine. If \code{FALSE}, uses \code{ggplot2}.}
 
 \item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
 }
@@ -82,6 +82,6 @@ rfm_plot_revenue_dist(segment_overview)
 rfm_plot_revenue_dist(segment_overview, flip = TRUE)
 
 # plotly
-rfm_plot_revenue_dist(segment_overview, package = "plotly")
+rfm_plot_revenue_dist(segment_overview, interactive = TRUE)
 
 }

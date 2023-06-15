@@ -7,7 +7,6 @@
 rfm_plot_segment_summary(
   x,
   metric = NULL,
-  package = c("ggplot2", "plotly"),
   bar_color = NULL,
   angle = 90,
   size = 5,
@@ -17,6 +16,7 @@ rfm_plot_segment_summary(
   plot_title = NULL,
   xaxis_label = NULL,
   yaxis_label = NULL,
+  interactive = FALSE,
   print_plot = TRUE
 )
 }
@@ -31,9 +31,6 @@ rfm_plot_segment_summary(
 \item \code{"revenue"}
 \item \code{"aov"}
 }}
-
-\item{package}{Visualization engine. Choose between \code{ggplot2}
-and \code{plotly}.}
 
 \item{bar_color}{Color of the bars.}
 
@@ -52,6 +49,9 @@ and \code{plotly}.}
 \item{xaxis_label}{X axis label.}
 
 \item{yaxis_label}{Y axis label.}
+
+\item{interactive}{If \code{TRUE}, uses \code{plotly} as the visualization
+engine. If \code{FALSE}, uses \code{ggplot2}.}
 
 \item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a
 plot object.}
@@ -95,13 +95,14 @@ segment_overview <- rfm_segment_summary(segments)
 rfm_plot_segment_summary(segment_overview)
 
 # plotly
-rfm_plot_segment_summary(segment_overview, package = "plotly")
+rfm_plot_segment_summary(segment_overview, interactive = TRUE)
 
 # select metric to be visualized
 rfm_plot_segment_summary(segment_overview, metric = "orders")
 
 # sort the metric in ascending order
-rfm_plot_segment_summary(segment_overview, metric = "orders", sort = TRUE, ascending = TRUE)
+rfm_plot_segment_summary(segment_overview, metric = "orders", sort = TRUE,
+  ascending = TRUE)
 
 # default sorting is in descending order
 rfm_plot_segment_summary(segment_overview, metric = "orders", sort = TRUE)

@@ -135,8 +135,6 @@ rfm_segment_summary <- function(segments) {
 #' \item \code{"revenue"}
 #' \item \code{"aov"}
 #' }
-#' @param package Visualization engine. Choose between \code{ggplot2}
-#'   and \code{plotly}.
 #' @param bar_color Color of the bars.
 #' @param angle Angle at which X axis tick labels should be displayed.
 #' @param size Size of X axis tick labels.
@@ -146,6 +144,8 @@ rfm_segment_summary <- function(segments) {
 #' @param plot_title Title of the plot.
 #' @param xaxis_label X axis label.
 #' @param yaxis_label Y axis label.
+#' @param interactive If \code{TRUE}, uses \code{plotly} as the visualization
+#'   engine. If \code{FALSE}, uses \code{ggplot2}.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a
 #'   plot object.
 #'
@@ -184,13 +184,14 @@ rfm_segment_summary <- function(segments) {
 #' rfm_plot_segment_summary(segment_overview)
 #'
 #' # plotly
-#' rfm_plot_segment_summary(segment_overview, package = "plotly")
+#' rfm_plot_segment_summary(segment_overview, interactive = TRUE)
 #'
 #' # select metric to be visualized
 #' rfm_plot_segment_summary(segment_overview, metric = "orders")
 #'
 #' # sort the metric in ascending order
-#' rfm_plot_segment_summary(segment_overview, metric = "orders", sort = TRUE, ascending = TRUE)
+#' rfm_plot_segment_summary(segment_overview, metric = "orders", sort = TRUE,
+#'   ascending = TRUE)
 #'
 #' # default sorting is in descending order
 #' rfm_plot_segment_summary(segment_overview, metric = "orders", sort = TRUE)
@@ -200,11 +201,11 @@ rfm_segment_summary <- function(segments) {
 #'
 #' @export
 #'
-rfm_plot_segment_summary <- function(x, metric = NULL, package = c("ggplot2", "plotly"), bar_color = NULL,
-                                     angle = 90, size = 5,
-                                     sort = FALSE, ascending = FALSE,
-                                     flip = FALSE, plot_title = NULL,
-                                     xaxis_label = NULL, yaxis_label = NULL,
+rfm_plot_segment_summary <- function(x, metric = NULL, bar_color = NULL,
+                                     angle = 90, size = 5, sort = FALSE,
+                                     ascending = FALSE, flip = FALSE,
+                                     plot_title = NULL, xaxis_label = NULL,
+                                     yaxis_label = NULL, interactive = FALSE,
                                      print_plot = TRUE) {
 
   if (is.null(metric)) {
@@ -228,12 +229,14 @@ rfm_plot_segment_summary <- function(x, metric = NULL, package = c("ggplot2", "p
   }
 
   data <- x[c("segment", metric)]
-  lib <- match.arg(package)
 
-  if (lib == "ggplot2") {
-    rfm_gg_plot_segment_summary(data, metric, sort, ascending, flip, bar_color, plot_title, xaxis_label, yaxis_label, angle, size, print_plot)
+  if (interactive) {
+    rfm_plotly_segment_summary(data, metric, flip, sort, ascending, bar_color,
+                               plot_title, xaxis_label, yaxis_label)
   } else {
-    rfm_plotly_segment_summary(data, metric, flip, sort, ascending, bar_color, plot_title, xaxis_label, yaxis_label)
+    rfm_gg_plot_segment_summary(data, metric, sort, ascending, flip, bar_color,
+                                plot_title, xaxis_label, yaxis_label, angle,
+                                size, print_plot)
   }
 
 }
@@ -251,8 +254,8 @@ rfm_plot_segment_summary <- function(x, metric = NULL, package = c("ggplot2", "p
 #' @param plot_title Title of the plot.
 #' @param xaxis_label X axis label.
 #' @param yaxis_label Y axis label.
-#' @param package Visualization engine. Choose between \code{ggplot2}
-#'   and \code{plotly}.
+#' @param interactive If \code{TRUE}, uses \code{plotly} as the visualization
+#'   engine. If \code{FALSE}, uses \code{ggplot2}.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @examples
@@ -292,7 +295,7 @@ rfm_plot_segment_summary <- function(x, metric = NULL, package = c("ggplot2", "p
 #' rfm_plot_revenue_dist(segment_overview, flip = TRUE)
 #'
 #' # plotly
-#' rfm_plot_revenue_dist(segment_overview, package = "plotly")
+#' rfm_plot_revenue_dist(segment_overview, interactive = TRUE)
 #'
 #' @export
 #'
@@ -301,19 +304,16 @@ rfm_plot_revenue_dist <- function(x, flip = FALSE, angle = 90, size = 8,
                                   labels = c("Revenue", "Customers"),
                                   plot_title = "Revenue & Customer Distribution",
                                   xaxis_label = NULL, yaxis_label = NULL,
-                                  package = c("ggplot2", "plotly"),
-                                  print_plot = TRUE) {
+                                  interactive = FALSE, print_plot = TRUE) {
 
   data <- rfm_prep_revenue_dist(x)
 
-  lib <- match.arg(package)
-
-  if (lib == "ggplot2") {
-    rfm_gg_revenue_dist(data, colors, labels, flip, angle, size, plot_title,
-                        xaxis_label, yaxis_label, print_plot)
-  } else {
+  if (interactive) {
     rfm_plotly_revenue_dist(x, flip, colors, labels, plot_title, xaxis_label,
                             yaxis_label)
+  } else {
+    rfm_gg_revenue_dist(data, colors, labels, flip, angle, size, plot_title,
+                        xaxis_label, yaxis_label, print_plot)
   }
 
 }
@@ -331,6 +331,8 @@ rfm_plot_revenue_dist <- function(x, flip = FALSE, angle = 90, size = 8,
 #' @param xaxis_label X axis label.
 #' @param yaxis_label Y axis label.
 #' @param font_size Font size for X axis text.
+#' @param interactive If \code{TRUE}, uses \code{plotly} as the visualization
+#'   engine. If \code{FALSE}, uses \code{ggplot2}.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @examples
@@ -364,7 +366,7 @@ rfm_plot_revenue_dist <- function(x, flip = FALSE, angle = 90, size = 8,
 #' rfm_plot_median_recency(segments)
 #'
 #' # plotly
-#' rfm_plot_median_recency(segments, package = "plotly")
+#' rfm_plot_median_recency(segments, interactive = TRUE)
 #'
 #' # sort in ascending order
 #' rfm_plot_median_recency(segments, sort = TRUE, ascending = TRUE)
@@ -387,19 +389,17 @@ rfm_plot_median_recency <- function(rfm_segment_table, color = "blue",
                                     sort = FALSE, ascending = FALSE,
                                     flip = FALSE, plot_title = NULL,
                                     xaxis_label = NULL, yaxis_label = NULL,
-                                    font_size = 6,
-                                    package = c("ggplot2", "plotly"),
+                                    font_size = 6, interactive = FALSE,
                                     print_plot = TRUE) {
 
   data <- rfm_prep_median(rfm_segment_table, recency_days)
-  lib  <- match.arg(package)
 
-  if (lib == "ggplot2") {
-    rfm_plot_median(data, color, sort, ascending, flip, plot_title,
-                    xaxis_label, yaxis_label, font_size, print_plot)
-  } else {
+  if (interactive) {
     rfm_plotly_median(data, color, sort, ascending, flip, plot_title,
                       xaxis_label, yaxis_label)
+  } else {
+    rfm_plot_median(data, color, sort, ascending, flip, plot_title,
+                    xaxis_label, yaxis_label, font_size, print_plot)
   }
 
 
@@ -412,19 +412,17 @@ rfm_plot_median_frequency <- function(rfm_segment_table, color = "blue",
                                       sort = FALSE, ascending = FALSE,
                                       flip = FALSE, plot_title = NULL,
                                       xaxis_label = NULL, yaxis_label = NULL,
-                                      font_size = 6,
-                                      package = c("ggplot2", "plotly"),
+                                      font_size = 6, interactive = FALSE,
                                       print_plot = TRUE) {
 
   data <- rfm_prep_median(rfm_segment_table, transaction_count)
-  lib  <- match.arg(package)
 
-  if (lib == "ggplot2") {
-    rfm_plot_median(data, color, sort, ascending, flip, plot_title,
-                    xaxis_label, yaxis_label, font_size, print_plot)
-  } else {
+  if (interactive) {
     rfm_plotly_median(data, color, sort, ascending, flip, plot_title,
                       xaxis_label, yaxis_label)
+  } else {
+    rfm_plot_median(data, color, sort, ascending, flip, plot_title,
+                    xaxis_label, yaxis_label, font_size, print_plot)
   }
 
 }
@@ -437,19 +435,17 @@ rfm_plot_median_monetary <- function(rfm_segment_table, color = "blue",
                                      sort = FALSE, ascending = FALSE,
                                      flip = FALSE, plot_title = NULL,
                                      xaxis_label = NULL, yaxis_label = NULL,
-                                     font_size = 6,
-                                     package = c("ggplot2", "plotly"),
+                                     font_size = 6, interactive = FALSE,
                                      print_plot = TRUE) {
 
   data <- rfm_prep_median(rfm_segment_table, amount)
-  lib <- match.arg(package)
 
-  if (lib == "ggplot2") {
-    rfm_plot_median(data, color, sort, ascending, flip, plot_title,
-                    xaxis_label, yaxis_label, font_size, print_plot)
-  } else {
+  if (interactive) {
     rfm_plotly_median(data, color, sort, ascending, flip, plot_title,
                       xaxis_label, yaxis_label)
+  } else {
+    rfm_plot_median(data, color, sort, ascending, flip, plot_title,
+                    xaxis_label, yaxis_label, font_size, print_plot)
   }
 
 }
@@ -466,8 +462,8 @@ rfm_plot_median_monetary <- function(rfm_segment_table, color = "blue",
 #' \item \code{"orders"}
 #' \item \code{"revenue"}
 #' }
-#' @param package Visualization engine. Choose between \code{ggplot2}
-#'   and \code{plotly}.
+#' @param interactive If \code{TRUE}, uses \code{plotly} as the visualization
+#'   engine. If \code{FALSE}, uses \code{ggplot2}.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @examples
@@ -507,20 +503,20 @@ rfm_plot_median_monetary <- function(rfm_segment_table, color = "blue",
 #' rfm_plot_segment(segment_overview, metric = "orders")
 #'
 #' # plotly
-#' rfm_plot_segment(segment_overview, metric = "revenue", package = "plotly")
+#' rfm_plot_segment(segment_overview, metric = "revenue", interactive = TRUE)
 #'
 #' @import treemapify
 #' @export
 #'
-rfm_plot_segment <- function(table, metric = "customers", package = c("ggplot2", "plotly"), print_plot = TRUE) {
+rfm_plot_segment <- function(table, metric = "customers", interactive = FALSE,
+                             print_plot = TRUE) {
 
-  lib <- match.arg(package)
   table$prop <- round((table[[metric]] / sum(table[[metric]])) * 100, 2)
 
-  if (lib == "ggplot2") {
-    rfm_gg_segment(table, metric, print_plot)
-  } else {
+  if (interactive) {
     rfm_plotly_segment(table, metric)
+  } else {
+    rfm_gg_segment(table, metric, print_plot)
   }
 
 }
@@ -537,8 +533,8 @@ rfm_plot_segment <- function(table, metric = "customers", package = c("ggplot2",
 #' @param legend_title Title of the plot legend.
 #' @param xaxis_label X axis label.
 #' @param yaxis_label Y axis label.
-#' @param package Visualization engine. Choose between \code{ggplot2}
-#'   and \code{plotly}.
+#' @param interactive If \code{TRUE}, uses \code{plotly} as the visualization
+#'   engine. If \code{FALSE}, uses \code{ggplot2}.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a
 #'   plot object.
 #'
@@ -575,14 +571,13 @@ rfm_plot_segment <- function(table, metric = "customers", package = c("ggplot2",
 #' rfm_plot_segment_scatter(segments, "monetary", "recency")
 #'
 #' # plotly
-#' rfm_plot_segment_scatter(segments, "monetary", "recency", package = "plotly")
+#' rfm_plot_segment_scatter(segments, "monetary", "recency", interactive = TRUE)
 #'
 #' @export
 rfm_plot_segment_scatter <- function(segments, x = "monetary", y = "recency",
                                      plot_title = NULL, legend_title = NULL,
                                      xaxis_label = NULL, yaxis_label = NULL,
-                                     package = c("ggplot2", "plotly"),
-                                     print_plot = TRUE) {
+                                     interactive = FALSE, print_plot = TRUE) {
 
   x_data <- switch(x,
                    "recency" = "recency_days",
@@ -614,15 +609,12 @@ rfm_plot_segment_scatter <- function(segments, x = "monetary", y = "recency",
     plot_title <- paste(yaxis_label, "vs", xaxis_label)
   }
 
-  lib <- match.arg(package)
-
-  if (lib == "ggplot2") {
+  if (interactive) {
+    rfm_plotly_segment_scatter(segments, x_data, y_data, plot_title,
+                               legend_title, xaxis_label, yaxis_label)
+  } else {
     rfm_gg_segment_scatter(segments, x_data, y_data, plot_title,
                          legend_title, xaxis_label, yaxis_label, print_plot)
-  } else {
-    rfm_plotly_segment_scatter(segments, x_data, y_data,
-                               plot_title, legend_title,
-                               xaxis_label, yaxis_label)
   }
 
 }
