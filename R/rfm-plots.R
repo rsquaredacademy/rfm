@@ -500,20 +500,3 @@ rfm_rf_plot <- function(segments, xaxis_label = NULL,
                    yaxis_label, plot_title, print_plot)
 
 }
-
-rfm_plot_combine <- function(rfm_table, x = "amount", y = "recency_days",
-                             xaxis_title = "Monetary", yaxis_title = "Recency",
-                             plot_title = "Recency vs Monetary", legend_title = "Segment") {
-
-  plot <-
-    rfm_table %>%
-    ggplot() +
-    geom_point(aes(x = .data[[x]], y = .data[[y]], color = factor(segment))) +
-    xlab(xaxis_title) +
-    ylab(yaxis_title) +
-    ggtitle(plot_title) +
-    labs(color = legend_title)
-
-  return(plot)
-}
-
