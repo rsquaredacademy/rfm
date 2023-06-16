@@ -242,7 +242,7 @@ rfm_plot_segment_summary <- function(x, metric = NULL, bar_color = NULL,
   } else {
     if (animate) {
       print_plot <- FALSE
-      data <- data_animate_segment_summary(data, metric)
+      data <- rfm_animate_data(data, metric)
     }
 
     p <- rfm_gg_plot_segment_summary(data, metric, sort, ascending, flip,
@@ -250,7 +250,7 @@ rfm_plot_segment_summary <- function(x, metric = NULL, bar_color = NULL,
                                         yaxis_label, angle, size, ylim_max)
 
     if (animate) {
-      p <- rfm_animate_segment_summary(p)
+      p <- rfm_animate_plot(p)
       animate(p, fps=8, renderer = gifski_renderer(loop = FALSE))
     }
 
@@ -330,23 +330,25 @@ rfm_plot_revenue_dist <- function(x, flip = FALSE, angle = 315, size = 6,
                                   interactive = FALSE, animate = FALSE,
                                   print_plot = TRUE) {
 
-  data <- rfm_prep_revenue_dist(x)
-
   if (interactive) {
     rfm_plotly_revenue_dist(x, flip, colors, labels, plot_title, xaxis_label,
                             yaxis_label)
   } else {
 
+    data <- rfm_prep_revenue_dist(x)
+    share_data <- data[, c("category"), drop = FALSE]
+
     if (animate) {
       print_plot <- FALSE
-      data <- data_animate_revenue_dist(data)
+      data <- rfm_animate_data(data, "share")
+      data$category <- rep(share_data$category, 10)
     }
 
     p <- rfm_gg_revenue_dist(data, colors, labels, flip, angle, size, plot_title,
                              xaxis_label, yaxis_label)
 
     if (animate) {
-      p <- rfm_animate_revenue_dist(p)
+      p <- rfm_animate_plot(p)
       animate(p, fps=8, renderer = gifski_renderer(loop = FALSE))
     }
 
@@ -443,14 +445,14 @@ rfm_plot_median_recency <- function(rfm_segment_table, color = "blue",
 
     if (animate) {
       print_plot <- FALSE
-      data <- data_animate_median_recency(data)
+      data <- rfm_animate_data(data, "recency_days")
     }
 
     p <- rfm_plot_median(data, color, sort, ascending, flip, plot_title,
                          xaxis_label, yaxis_label, font_size)
 
     if (animate) {
-      p <- rfm_animate_median_recency(p)
+      p <- rfm_animate_plot(p)
       animate(p, fps=8, renderer = gifski_renderer(loop = FALSE))
     }
 
@@ -482,14 +484,14 @@ rfm_plot_median_frequency <- function(rfm_segment_table, color = "blue",
   } else {
     if (animate) {
       print_plot <- FALSE
-      data <- data_animate_median_frequency(data)
+      data <- rfm_animate_data(data, "transaction_count")
     }
 
     p <- rfm_plot_median(data, color, sort, ascending, flip, plot_title,
                          xaxis_label, yaxis_label, font_size)
 
     if (animate) {
-      p <- rfm_animate_median_frequency(p)
+      p <- rfm_animate_plot(p)
       animate(p, fps=8, renderer = gifski_renderer(loop = FALSE))
     }
 
@@ -521,14 +523,14 @@ rfm_plot_median_monetary <- function(rfm_segment_table, color = "blue",
   } else {
     if (animate) {
       print_plot <- FALSE
-      data <- data_animate_median_monetary(data)
+      data <- rfm_animate_data(data, "amount")
     }
 
     p <- rfm_plot_median(data, color, sort, ascending, flip, plot_title,
                          xaxis_label, yaxis_label, font_size)
 
     if (animate) {
-      p <- rfm_animate_median_monetary(p)
+      p <- rfm_animate_plot(p)
       animate(p, fps=8, renderer = gifski_renderer(loop = FALSE))
     }
 

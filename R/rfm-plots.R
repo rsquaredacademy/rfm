@@ -400,13 +400,13 @@ rfm_plot_order_dist <- function(rfm_table, flip = FALSE, bar_color = NULL,
 
     if (animate) {
       print_plot <- FALSE
-      data <- data_animate_order_dist(data)
+      data <- rfm_animate_data(data, "n")
     }
 
     p <- rfm_gg_order_dist(data, flip, bar_color, plot_title, xaxis_label, yaxis_label, ylim_max, count_size)
 
     if (animate) {
-      p <- rfm_animate_order_dist(p)
+      p <- rfm_animate_plot(p)
       animate(p, fps=8, renderer = gifski_renderer(loop = FALSE))
     }
 

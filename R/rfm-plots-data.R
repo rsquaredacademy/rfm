@@ -100,6 +100,7 @@ rfm_order_dist_data <- function(rfm_table) {
     use_series(rfm) %>%
     data.table() %>%
     .[, .(n = .N), by = transaction_count] %>%
+    setnames(old = "transaction_count", new = "segment") %>%
     setDF()
 }
 

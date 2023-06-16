@@ -31,12 +31,12 @@ rfm_gg_order_dist <- function(data, flip, bar_color, plot_title, xaxis_label,
 
   p <-
     data %>%
-    ggplot(aes(x = transaction_count, y = n)) +
+    ggplot(aes(x = segment, y = n)) +
     geom_bar(stat = "identity", fill = bar_color) +
     ggtitle(plot_title) +
     xlab(xaxis_label) +
-      ylab(yaxis_label) +
-      ylim(0, ylim_max)
+    ylab(yaxis_label) +
+    ylim(0, ylim_max)
 
   if (flip) {
     p <-
