@@ -17,6 +17,7 @@ rfm_plot_median_recency(
   yaxis_label = NULL,
   font_size = 6,
   interactive = FALSE,
+  animate = FALSE,
   print_plot = TRUE
 )
 
@@ -31,6 +32,7 @@ rfm_plot_median_frequency(
   yaxis_label = NULL,
   font_size = 6,
   interactive = FALSE,
+  animate = FALSE,
   print_plot = TRUE
 )
 
@@ -45,6 +47,7 @@ rfm_plot_median_monetary(
   yaxis_label = NULL,
   font_size = 6,
   interactive = FALSE,
+  animate = FALSE,
   print_plot = TRUE
 )
 }
@@ -69,6 +72,8 @@ rfm_plot_median_monetary(
 
 \item{interactive}{If \code{TRUE}, uses \code{plotly} as the visualization
 engine. If \code{FALSE}, uses \code{ggplot2}.}
+
+\item{animate}{If \code{TRUE}, animates the bars. Defaults to \code{FALSE}.}
 
 \item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
 }

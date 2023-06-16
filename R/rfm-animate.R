@@ -85,3 +85,87 @@ rfm_animate_revenue_dist <- function(p) {
     ) +
     ease_aes('linear')
 }
+
+data_animate_median_recency <- function(data) {
+  n_groups <- length(data$recency_days)
+
+  gap <- data$recency_days / 9
+  start <- rep(0, n_groups)
+  value <- start
+  for (i in seq_len(9)) {
+    n <- start + gap
+    value <- c(value, n)
+    start <- n
+  }
+
+  data.frame(segment = rep(data$segment, 10),
+             recency_days = round(value, 2),
+             frame = rep(letters[1:10], each = n_groups))
+}
+
+rfm_animate_median_recency <- function(p) {
+  p +
+    transition_states(
+      frame,
+      transition_length = 10,
+      state_length = 1,
+      wrap = FALSE
+    ) +
+    ease_aes('linear')
+}
+
+data_animate_median_frequency <- function(data) {
+  n_groups <- length(data$transaction_count)
+
+  gap <- data$transaction_count / 9
+  start <- rep(0, n_groups)
+  value <- start
+  for (i in seq_len(9)) {
+    n <- start + gap
+    value <- c(value, n)
+    start <- n
+  }
+
+  data.frame(segment = rep(data$segment, 10),
+             transaction_count = round(value, 2),
+             frame = rep(letters[1:10], each = n_groups))
+}
+
+rfm_animate_median_frequency <- function(p) {
+  p +
+    transition_states(
+      frame,
+      transition_length = 10,
+      state_length = 1,
+      wrap = FALSE
+    ) +
+    ease_aes('linear')
+}
+
+data_animate_median_monetary <- function(data) {
+  n_groups <- length(data$amount)
+
+  gap <- data$amount / 9
+  start <- rep(0, n_groups)
+  value <- start
+  for (i in seq_len(9)) {
+    n <- start + gap
+    value <- c(value, n)
+    start <- n
+  }
+
+  data.frame(segment = rep(data$segment, 10),
+             amount = round(value, 2),
+             frame = rep(letters[1:10], each = n_groups))
+}
+
+rfm_animate_median_monetary <- function(p) {
+  p +
+    transition_states(
+      frame,
+      transition_length = 10,
+      state_length = 1,
+      wrap = FALSE
+    ) +
+    ease_aes('linear')
+}

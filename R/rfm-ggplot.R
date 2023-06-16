@@ -179,7 +179,7 @@ rfm_gg_revenue_dist <- function(data, colors, labels, flip, angle, size,
 }
 
 rfm_plot_median <- function(data, color, sort, ascending, flip, plot_title,
-                            xaxis_label, yaxis_label, font_size, print_plot) {
+                            xaxis_label, yaxis_label, font_size) {
 
   n_fill <- nrow(data)
   cnames <- names(data)
@@ -245,12 +245,6 @@ rfm_plot_median <- function(data, color, sort, ascending, flip, plot_title,
     p <-
       p +
       theme(axis.text.x = element_text(size = font_size))
-  }
-
-  if (print_plot) {
-    print(p)
-  } else {
-    return(p)
   }
 
 }

@@ -374,6 +374,7 @@ rfm_plot_revenue_dist <- function(x, flip = FALSE, angle = 315, size = 6,
 #' @param font_size Font size for X axis text.
 #' @param interactive If \code{TRUE}, uses \code{plotly} as the visualization
 #'   engine. If \code{FALSE}, uses \code{ggplot2}.
+#' @param animate If \code{TRUE}, animates the bars. Defaults to \code{FALSE}.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @examples
@@ -431,7 +432,7 @@ rfm_plot_median_recency <- function(rfm_segment_table, color = "blue",
                                     flip = FALSE, plot_title = NULL,
                                     xaxis_label = NULL, yaxis_label = NULL,
                                     font_size = 6, interactive = FALSE,
-                                    print_plot = TRUE) {
+                                    animate = FALSE, print_plot = TRUE) {
 
   data <- rfm_prep_median(rfm_segment_table, recency_days)
 
@@ -439,8 +440,25 @@ rfm_plot_median_recency <- function(rfm_segment_table, color = "blue",
     rfm_plotly_median(data, color, sort, ascending, flip, plot_title,
                       xaxis_label, yaxis_label)
   } else {
-    rfm_plot_median(data, color, sort, ascending, flip, plot_title,
-                    xaxis_label, yaxis_label, font_size, print_plot)
+
+    if (animate) {
+      print_plot <- FALSE
+      data <- data_animate_median_recency(data)
+    }
+
+    p <- rfm_plot_median(data, color, sort, ascending, flip, plot_title,
+                         xaxis_label, yaxis_label, font_size)
+
+    if (animate) {
+      p <- rfm_animate_median_recency(p)
+      animate(p, fps=8, renderer = gifski_renderer(loop = FALSE))
+    }                         
+
+    if (print_plot) {
+      print(p)
+    } else {
+      return(p)
+    }                         
   }
 
 
@@ -454,7 +472,7 @@ rfm_plot_median_frequency <- function(rfm_segment_table, color = "blue",
                                       flip = FALSE, plot_title = NULL,
                                       xaxis_label = NULL, yaxis_label = NULL,
                                       font_size = 6, interactive = FALSE,
-                                      print_plot = TRUE) {
+                                      animate = FALSE, print_plot = TRUE) {
 
   data <- rfm_prep_median(rfm_segment_table, transaction_count)
 
@@ -462,8 +480,24 @@ rfm_plot_median_frequency <- function(rfm_segment_table, color = "blue",
     rfm_plotly_median(data, color, sort, ascending, flip, plot_title,
                       xaxis_label, yaxis_label)
   } else {
-    rfm_plot_median(data, color, sort, ascending, flip, plot_title,
-                    xaxis_label, yaxis_label, font_size, print_plot)
+    if (animate) {
+      print_plot <- FALSE
+      data <- data_animate_median_frequency(data)
+    }
+
+    p <- rfm_plot_median(data, color, sort, ascending, flip, plot_title,
+                         xaxis_label, yaxis_label, font_size)
+
+    if (animate) {
+      p <- rfm_animate_median_frequency(p)
+      animate(p, fps=8, renderer = gifski_renderer(loop = FALSE))
+    }                           
+
+    if (print_plot) {
+      print(p)
+    } else {
+      return(p)
+    }
   }
 
 }
@@ -477,7 +511,7 @@ rfm_plot_median_monetary <- function(rfm_segment_table, color = "blue",
                                      flip = FALSE, plot_title = NULL,
                                      xaxis_label = NULL, yaxis_label = NULL,
                                      font_size = 6, interactive = FALSE,
-                                     print_plot = TRUE) {
+                                     animate = FALSE, print_plot = TRUE) {
 
   data <- rfm_prep_median(rfm_segment_table, amount)
 
@@ -485,8 +519,24 @@ rfm_plot_median_monetary <- function(rfm_segment_table, color = "blue",
     rfm_plotly_median(data, color, sort, ascending, flip, plot_title,
                       xaxis_label, yaxis_label)
   } else {
-    rfm_plot_median(data, color, sort, ascending, flip, plot_title,
-                    xaxis_label, yaxis_label, font_size, print_plot)
+    if (animate) {
+      print_plot <- FALSE
+      data <- data_animate_median_monetary(data)
+    }
+
+    p <- rfm_plot_median(data, color, sort, ascending, flip, plot_title,
+                         xaxis_label, yaxis_label, font_size)
+
+    if (animate) {
+      p <- rfm_animate_median_monetary(p)
+      animate(p, fps=8, renderer = gifski_renderer(loop = FALSE))
+    }                           
+
+    if (print_plot) {
+      print(p)
+    } else {
+      return(p)
+    }
   }
 
 }
