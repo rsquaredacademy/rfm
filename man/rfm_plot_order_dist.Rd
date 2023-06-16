@@ -13,6 +13,7 @@ rfm_plot_order_dist(
   xaxis_label = NULL,
   yaxis_label = NULL,
   count_size = 3,
+  bar_labels = TRUE,
   interactive = FALSE,
   animate = FALSE,
   print_plot = TRUE
@@ -32,6 +33,8 @@ rfm_plot_order_dist(
 \item{yaxis_label}{Y axis title.}
 
 \item{count_size}{Size of count displayed on top of the bars.}
+
+\item{bar_labels}{If \code{TRUE}, add labels to the bars. Defaults to \code{TRUE}.}
 
 \item{interactive}{If \code{TRUE}, uses \code{plotly} as the visualization
 engine. If \code{FALSE}, uses \code{ggplot2}.}

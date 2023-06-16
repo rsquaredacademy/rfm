@@ -27,7 +27,7 @@ rfm_gg_heatmap <- function(mapdata, plot_title, xaxis_label, yaxis_label,
 }
 
 rfm_gg_order_dist <- function(data, flip, bar_color, plot_title, xaxis_label,
-                              yaxis_label, ylim_max, count_size) {
+                              yaxis_label, ylim_max, count_size, bar_labels) {
 
   p <-
     data %>%
@@ -41,17 +41,24 @@ rfm_gg_order_dist <- function(data, flip, bar_color, plot_title, xaxis_label,
   if (flip) {
     p <-
       p +
-      coord_flip() +
-      geom_text(aes(label = sprintf("%1.0f", n), y = n + 3),
+      coord_flip() 
+
+    if (bar_labels) {
+      p <- 
+        p +
+        geom_text(aes(label = sprintf("%1.0f", n), y = n *1.025),
                 hjust = 0,
                 size = count_size)
+    }    
   } else {
-    p <-
-      p +
-      geom_text(aes(label = sprintf("%1.0f", n), y = n + 3),
-                position = position_dodge(0.9),
-                vjust = 0,
-                size = count_size)
+    if (bar_labels) {
+      p <-
+        p +
+        geom_text(aes(label = sprintf("%1.0f", n), y = n * 1.025),
+                  position = position_dodge(0.9),
+                  vjust = 0,
+                  size = count_size)
+    }
   }
 
   return(p)
@@ -76,9 +83,10 @@ rfm_gg_hist <- function(data, hist_bins, hist_color, plot_title, xaxis_label,
 
 }
 
-rfm_gg_plot_segment_summary <- function(data, metric, sort, ascending, flip,
+rfm_gg_segment_summary <- function(data, metric, sort, ascending, flip,
                                         bar_color, plot_title, xaxis_label,
-                                        yaxis_label, angle, size, ylim_max) {
+                                        yaxis_label, angle, size, ylim_max,
+                                        bar_labels) {
 
   if (sort) {
     if (ascending) {
@@ -118,19 +126,29 @@ rfm_gg_plot_segment_summary <- function(data, metric, sort, ascending, flip,
     p <-
       p +
       coord_flip() +
-      geom_text(aes(label = sprintf("%1.0f", .data[[metric]]), y = .data[[metric]] + 3),
-                hjust = 0,
-                size = 3) +
       theme(axis.text.y = element_text(size = 7))
+
+    if (bar_labels) {
+      p <- 
+        p +
+        geom_text(aes(label = sprintf("%1.0f", .data[[metric]]), y = .data[[metric]] * 1.025),
+                hjust = 0,
+                size = 3)
+    }
   } else {
     p <-
       p +
-      geom_text(aes(label = sprintf("%1.0f", .data[[metric]]), y = .data[[metric]] + 3),
-                position = position_dodge(0.9),
-                vjust = 0,
-                size = 3) +
       theme(axis.text.x = element_text(angle = angle, vjust = 0,
                                        hjust = 0, size = size))
+
+    if (bar_labels) {
+      p <- 
+        p +
+        geom_text(aes(label = sprintf("%1.0f", .data[[metric]]), y = .data[[metric]] * 1.025),
+                position = position_dodge(0.9),
+                vjust = 0,
+                size = 3)
+    }
   }
 
   p
@@ -178,8 +196,8 @@ rfm_gg_revenue_dist <- function(data, colors, labels, flip, angle, size,
 
 }
 
-rfm_plot_median <- function(data, color, sort, ascending, flip, plot_title,
-                            xaxis_label, yaxis_label, font_size) {
+rfm_gg_median <- function(data, color, sort, ascending, flip, plot_title,
+                            xaxis_label, yaxis_label, font_size, bar_labels) {
 
   n_fill <- nrow(data)
   cnames <- names(data)
@@ -241,11 +259,30 @@ rfm_plot_median <- function(data, color, sort, ascending, flip, plot_title,
       p +
       coord_flip() +
       theme(axis.text.y = element_text(size = font_size))
+
+    if (bar_labels) {
+      p <- 
+        p +
+        geom_text(aes(label = sprintf("%1.0f", .data[[cnames[2]]]), y = .data[[cnames[2]]] * 1.025),
+                hjust = 0,
+                size = 3) 
+    }
   } else {
     p <-
       p +
       theme(axis.text.x = element_text(size = font_size))
+
+    if (bar_labels) {
+      p <- 
+        p +
+        geom_text(aes(label = sprintf("%1.0f", .data[[cnames[2]]]), y = .data[[cnames[2]]] * 1.025),
+                position = position_dodge(0.9),
+                vjust = 0,
+                size = 3)
+    }
   }
+
+  return(p)
 
 }
 
@@ -271,12 +308,12 @@ rfm_gg_segment <- function(table, metric, print_plot) {
 rfm_gg_segment_scatter <- function(segments, x_data, y_data, plot_title,
                                    legend_title, xaxis_label, yaxis_label) {
 
-  rfm_plot_combine(segments, x_data, y_data, xaxis_label, yaxis_label,
+  rfm_gg_combine(segments, x_data, y_data, xaxis_label, yaxis_label,
                    plot_title, legend_title)
 
 }
 
-rfm_plot_combine <- function(rfm_table, x = "amount", y = "recency_days",
+rfm_gg_combine <- function(rfm_table, x = "amount", y = "recency_days",
                              xaxis_title = "Monetary", yaxis_title = "Recency",
                              plot_title = "Recency vs Monetary",
                              legend_title = "Segment") {

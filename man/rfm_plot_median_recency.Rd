@@ -16,6 +16,7 @@ rfm_plot_median_recency(
   xaxis_label = NULL,
   yaxis_label = NULL,
   font_size = 6,
+  bar_labels = TRUE,
   interactive = FALSE,
   animate = FALSE,
   print_plot = TRUE
@@ -31,6 +32,7 @@ rfm_plot_median_frequency(
   xaxis_label = NULL,
   yaxis_label = NULL,
   font_size = 6,
+  bar_labels = TRUE,
   interactive = FALSE,
   animate = FALSE,
   print_plot = TRUE
@@ -46,6 +48,7 @@ rfm_plot_median_monetary(
   xaxis_label = NULL,
   yaxis_label = NULL,
   font_size = 6,
+  bar_labels = TRUE,
   interactive = FALSE,
   animate = FALSE,
   print_plot = TRUE
@@ -69,6 +72,8 @@ rfm_plot_median_monetary(
 \item{yaxis_label}{Y axis label.}
 
 \item{font_size}{Font size for X axis text.}
+
+\item{bar_labels}{If \code{TRUE}, add labels to the bars. Defaults to \code{TRUE}.}
 
 \item{interactive}{If \code{TRUE}, uses \code{plotly} as the visualization
 engine. If \code{FALSE}, uses \code{ggplot2}.}
