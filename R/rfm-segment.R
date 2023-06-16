@@ -230,7 +230,7 @@ rfm_plot_segment_summary <- function(x, metric = NULL, bar_color = NULL,
   }
 
   data <- x[c("segment", metric)]
-  ylim_max <- 
+  ylim_max <-
     data[[metric]] %>%
     max() %>%
     multiply_by(1.15) %>%
@@ -278,6 +278,7 @@ rfm_plot_segment_summary <- function(x, metric = NULL, bar_color = NULL,
 #' @param yaxis_label Y axis label.
 #' @param interactive If \code{TRUE}, uses \code{plotly} as the visualization
 #'   engine. If \code{FALSE}, uses \code{ggplot2}.
+#' @param animate If \code{TRUE}, animates the bars. Defaults to \code{FALSE}.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
 #'
 #' @examples
@@ -321,12 +322,13 @@ rfm_plot_segment_summary <- function(x, metric = NULL, bar_color = NULL,
 #'
 #' @export
 #'
-rfm_plot_revenue_dist <- function(x, flip = FALSE, angle = 90, size = 8,
+rfm_plot_revenue_dist <- function(x, flip = FALSE, angle = 315, size = 6,
                                   colors = c("#3b5bdb", "#91a7ff"),
                                   labels = c("Revenue", "Customers"),
                                   plot_title = "Revenue & Customer Distribution",
                                   xaxis_label = NULL, yaxis_label = NULL,
-                                  interactive = FALSE, print_plot = TRUE) {
+                                  interactive = FALSE, animate = FALSE,
+                                  print_plot = TRUE) {
 
   data <- rfm_prep_revenue_dist(x)
 
@@ -334,8 +336,25 @@ rfm_plot_revenue_dist <- function(x, flip = FALSE, angle = 90, size = 8,
     rfm_plotly_revenue_dist(x, flip, colors, labels, plot_title, xaxis_label,
                             yaxis_label)
   } else {
-    rfm_gg_revenue_dist(data, colors, labels, flip, angle, size, plot_title,
-                        xaxis_label, yaxis_label, print_plot)
+
+    if (animate) {
+      print_plot <- FALSE
+      data <- data_animate_revenue_dist(data)
+    }
+
+    p <- rfm_gg_revenue_dist(data, colors, labels, flip, angle, size, plot_title,
+                             xaxis_label, yaxis_label)
+
+    if (animate) {
+      p <- rfm_animate_revenue_dist(p)
+      animate(p, fps=8, renderer = gifski_renderer(loop = FALSE))
+    }
+
+    if (print_plot) {
+      print(p)
+    } else {
+      return(p)
+    }
   }
 
 }

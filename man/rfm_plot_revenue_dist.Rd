@@ -7,14 +7,15 @@
 rfm_plot_revenue_dist(
   x,
   flip = FALSE,
-  angle = 90,
-  size = 8,
+  angle = 315,
+  size = 6,
   colors = c("#3b5bdb", "#91a7ff"),
   labels = c("Revenue", "Customers"),
   plot_title = "Revenue & Customer Distribution",
   xaxis_label = NULL,
   yaxis_label = NULL,
   interactive = FALSE,
+  animate = FALSE,
   print_plot = TRUE
 )
 }
@@ -39,6 +40,8 @@ rfm_plot_revenue_dist(
 
 \item{interactive}{If \code{TRUE}, uses \code{plotly} as the visualization
 engine. If \code{FALSE}, uses \code{ggplot2}.}
+
+\item{animate}{If \code{TRUE}, animates the bars. Defaults to \code{FALSE}.}
 
 \item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
 }

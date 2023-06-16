@@ -120,7 +120,7 @@ rfm_gg_plot_segment_summary <- function(data, metric, sort, ascending, flip,
       coord_flip() +
       geom_text(aes(label = sprintf("%1.0f", .data[[metric]]), y = .data[[metric]] + 3),
                 hjust = 0,
-                size = 3) +
+                size = 3) +   
       theme(axis.text.y = element_text(size = 7))
   } else {
     p <-
@@ -138,12 +138,11 @@ rfm_gg_plot_segment_summary <- function(data, metric, sort, ascending, flip,
 }
 
 rfm_gg_revenue_dist <- function(data, colors, labels, flip, angle, size,
-                                plot_title, xaxis_label, yaxis_label,
-                                print_plot) {
+                                plot_title, xaxis_label, yaxis_label) {
 
   p <-
     ggplot(data, aes(fill = category, y = share, x = segment)) +
-    geom_bar(position="dodge", stat="identity")
+    geom_bar(position="dodge", stat="identity") 
 
   p <-
     p +
@@ -161,14 +160,14 @@ rfm_gg_revenue_dist <- function(data, colors, labels, flip, angle, size,
   if (flip) {
     p <-
       p +
-      theme(panel.grid.major.x = element_line(colour = "#ced4da")) +
-      coord_flip()
+      coord_flip() +
+      theme(panel.grid.major.x = element_line(colour = "#ced4da")) 
   } else {
     p <-
       p +
       theme(panel.grid.major.y = element_line(colour = "#ced4da"),
             axis.text.x = element_text(angle = angle, vjust = 1,
-                                       hjust=1, size = size))
+                                       hjust = 0, size = size))
   }
 
   p <-
@@ -176,12 +175,6 @@ rfm_gg_revenue_dist <- function(data, colors, labels, flip, angle, size,
     xlab(xaxis_label) +
     ylab(yaxis_label) +
     ggtitle(plot_title)
-
-  if (print_plot) {
-    print(p)
-  } else {
-    return(p)
-  }
 
 }
 
