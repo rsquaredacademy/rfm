@@ -120,7 +120,7 @@ rfm_gg_plot_segment_summary <- function(data, metric, sort, ascending, flip,
       coord_flip() +
       geom_text(aes(label = sprintf("%1.0f", .data[[metric]]), y = .data[[metric]] + 3),
                 hjust = 0,
-                size = 3) +   
+                size = 3) +
       theme(axis.text.y = element_text(size = 7))
   } else {
     p <-
@@ -142,7 +142,7 @@ rfm_gg_revenue_dist <- function(data, colors, labels, flip, angle, size,
 
   p <-
     ggplot(data, aes(fill = category, y = share, x = segment)) +
-    geom_bar(position="dodge", stat="identity") 
+    geom_bar(position="dodge", stat="identity")
 
   p <-
     p +
@@ -161,7 +161,7 @@ rfm_gg_revenue_dist <- function(data, colors, labels, flip, angle, size,
     p <-
       p +
       coord_flip() +
-      theme(panel.grid.major.x = element_line(colour = "#ced4da")) 
+      theme(panel.grid.major.x = element_line(colour = "#ced4da"))
   } else {
     p <-
       p +
@@ -234,7 +234,7 @@ rfm_plot_median <- function(data, color, sort, ascending, flip, plot_title,
     ggtitle(plot_title) +
     xlab(xaxis_label) +
     ylab(yaxis_label) +
-    theme(plot.title = element_text(hjust = 0.5)) 
+    theme(plot.title = element_text(hjust = 0.5))
 
   if (flip) {
     p <-
@@ -269,25 +269,27 @@ rfm_gg_segment <- function(table, metric, print_plot) {
 }
 
 rfm_gg_segment_scatter <- function(segments, x_data, y_data, plot_title,
-                        legend_title, xaxis_label, yaxis_label, print_plot) {
-  p <- rfm_plot_combine(segments, x_data, y_data, xaxis_label, yaxis_label, plot_title,
-                        legend_title)
+                                   legend_title, xaxis_label, yaxis_label) {
 
-  if (print_plot) {
-    print(p)
-  } else {
-    return(p)
-  }
+  rfm_plot_combine(segments, x_data, y_data, xaxis_label, yaxis_label,
+                   plot_title, legend_title)
+
 }
 
 rfm_plot_combine <- function(rfm_table, x = "amount", y = "recency_days",
                              xaxis_title = "Monetary", yaxis_title = "Recency",
-                             plot_title = "Recency vs Monetary", legend_title = "Segment") {
+                             plot_title = "Recency vs Monetary",
+                             legend_title = "Segment") {
+
+  data <- rfm_table[order(rfm_table$rfm_score), ]
 
   plot <-
-    rfm_table %>%
+    data %>%
     ggplot() +
-    geom_point(aes(x = .data[[x]], y = .data[[y]], color = factor(segment))) +
+    geom_point(aes(x = .data[[x]],
+                   y = .data[[y]],
+                   color = factor(segment),
+                   group = seq_along(rfm_score))) +
     xlab(xaxis_title) +
     ylab(yaxis_title) +
     ggtitle(plot_title) +

@@ -452,13 +452,13 @@ rfm_plot_median_recency <- function(rfm_segment_table, color = "blue",
     if (animate) {
       p <- rfm_animate_median_recency(p)
       animate(p, fps=8, renderer = gifski_renderer(loop = FALSE))
-    }                         
+    }
 
     if (print_plot) {
       print(p)
     } else {
       return(p)
-    }                         
+    }
   }
 
 
@@ -491,7 +491,7 @@ rfm_plot_median_frequency <- function(rfm_segment_table, color = "blue",
     if (animate) {
       p <- rfm_animate_median_frequency(p)
       animate(p, fps=8, renderer = gifski_renderer(loop = FALSE))
-    }                           
+    }
 
     if (print_plot) {
       print(p)
@@ -530,7 +530,7 @@ rfm_plot_median_monetary <- function(rfm_segment_table, color = "blue",
     if (animate) {
       p <- rfm_animate_median_monetary(p)
       animate(p, fps=8, renderer = gifski_renderer(loop = FALSE))
-    }                           
+    }
 
     if (print_plot) {
       print(p)
@@ -626,6 +626,7 @@ rfm_plot_segment <- function(table, metric = "customers", interactive = FALSE,
 #' @param yaxis_label Y axis label.
 #' @param interactive If \code{TRUE}, uses \code{plotly} as the visualization
 #'   engine. If \code{FALSE}, uses \code{ggplot2}.
+#' @param animate If \code{TRUE}, animates the bars. Defaults to \code{FALSE}.
 #' @param print_plot logical; if \code{TRUE}, prints the plot else returns a
 #'   plot object.
 #'
@@ -668,7 +669,8 @@ rfm_plot_segment <- function(table, metric = "customers", interactive = FALSE,
 rfm_plot_segment_scatter <- function(segments, x = "monetary", y = "recency",
                                      plot_title = NULL, legend_title = NULL,
                                      xaxis_label = NULL, yaxis_label = NULL,
-                                     interactive = FALSE, print_plot = TRUE) {
+                                     interactive = FALSE, animate = FALSE,
+                                     print_plot = TRUE) {
 
   x_data <- switch(x,
                    "recency" = "recency_days",
@@ -704,8 +706,23 @@ rfm_plot_segment_scatter <- function(segments, x = "monetary", y = "recency",
     rfm_plotly_segment_scatter(segments, x_data, y_data, plot_title,
                                legend_title, xaxis_label, yaxis_label)
   } else {
-    rfm_gg_segment_scatter(segments, x_data, y_data, plot_title,
-                         legend_title, xaxis_label, yaxis_label, print_plot)
+    p <- rfm_gg_segment_scatter(segments, x_data, y_data, plot_title,
+                                legend_title, xaxis_label, yaxis_label)
+
+    if (animate) {
+      print_plot <- FALSE
+      p <-
+        p +
+        transition_reveal(along = rfm_score)
+
+      animate(p, fps=8, renderer = gifski_renderer(loop = FALSE))
+    }
+
+    if (print_plot) {
+      print(p)
+    } else {
+      return(p)
+    }
   }
 
 }
