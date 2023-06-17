@@ -52,7 +52,8 @@ rfm_plot_segment_summary(
 
 \item{yaxis_label}{Y axis label.}
 
-\item{bar_labels}{If \code{TRUE}, add labels to the bars. Defaults to \code{TRUE}.}
+\item{bar_labels}{If \code{TRUE}, add labels to the bars. Defaults to
+\code{TRUE}.}
 
 \item{interactive}{If \code{TRUE}, uses \code{plotly} as the visualization
 engine. If \code{FALSE}, uses \code{ggplot2}.}

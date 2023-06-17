@@ -25,13 +25,13 @@
 #'
 rfm_heatmap_data <- function(rfm_table) {
 
-  result <- 
-    rfm_table %>% 
-    use_series(rfm) %>% 
-    data.table() %>% 
-    .[, .(frequency_score, recency_score, amount)] %>% 
-    .[, .(monetary = mean(amount)), 
-      keyby = .(frequency_score, recency_score)] %>% 
+  result <-
+    rfm_table %>%
+    use_series(rfm) %>%
+    data.table() %>%
+    .[, .(frequency_score, recency_score, amount)] %>%
+    .[, .(monetary = mean(amount)),
+      keyby = .(frequency_score, recency_score)] %>%
     setDF()
 
   l_frequency      <- check_levels(result, frequency_score)
@@ -129,7 +129,8 @@ rfm_prep_revenue_dist <- function(x) {
   }
 
   result <- data.frame(segment, category, share)
-  result$category <- factor(result$category, levels = c("revenue_share", "customer_share"))
+  result$category <- factor(result$category,
+                            levels = c("revenue_share", "customer_share"))
   return(result)
 }
 

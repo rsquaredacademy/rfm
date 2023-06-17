@@ -1,8 +1,9 @@
-#' @import magrittr 
+#' @import magrittr
 #' @import ggplot2
 #' @import data.table
 #' @importFrom stats median runif quantile reorder
-#' @importFrom utils available.packages menu update.packages packageVersion install.packages
+#' @importFrom utils available.packages menu update.packages packageVersion
+#' @importFrom utils install.packages
 bins <- function(data, value, n_bins) {
 
   my_value   <- deparse(substitute(value))

@@ -38,14 +38,16 @@ rfm_plot_revenue_dist(
 
 \item{yaxis_label}{Y axis label.}
 
-\item{bar_labels}{If \code{TRUE}, add labels to the bars. Defaults to \code{FALSE}.}
+\item{bar_labels}{If \code{TRUE}, add labels to the bars. Defaults to
+\code{FALSE}.}
 
 \item{interactive}{If \code{TRUE}, uses \code{plotly} as the visualization
 engine. If \code{FALSE}, uses \code{ggplot2}.}
 
 \item{animate}{If \code{TRUE}, animates the bars. Defaults to \code{FALSE}.}
 
-\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
+\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a
+plot object.}
 
 \item{labels}{Legend labels.}
 }

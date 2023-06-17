@@ -34,14 +34,16 @@ rfm_plot_order_dist(
 
 \item{count_size}{Size of count displayed on top of the bars.}
 
-\item{bar_labels}{If \code{TRUE}, add labels to the bars. Defaults to \code{TRUE}.}
+\item{bar_labels}{If \code{TRUE}, add labels to the bars. Defaults to
+\code{TRUE}.}
 
 \item{interactive}{If \code{TRUE}, uses \code{plotly} as the visualization
 engine. If \code{FALSE}, uses \code{ggplot2}.}
 
 \item{animate}{If \code{TRUE}, animates the bars. Defaults to \code{FALSE}.}
 
-\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
+\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a
+plot object.}
 }
 \value{
 Bar chart.

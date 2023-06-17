@@ -73,14 +73,16 @@ rfm_plot_median_monetary(
 
 \item{font_size}{Font size for X axis text.}
 
-\item{bar_labels}{If \code{TRUE}, add labels to the bars. Defaults to \code{TRUE}.}
+\item{bar_labels}{If \code{TRUE}, add labels to the bars. Defaults to
+\code{TRUE}.}
 
 \item{interactive}{If \code{TRUE}, uses \code{plotly} as the visualization
 engine. If \code{FALSE}, uses \code{ggplot2}.}
 
 \item{animate}{If \code{TRUE}, animates the bars. Defaults to \code{FALSE}.}
 
-\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
+\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a
+plot object.}
 }
 \description{
 Segment wise median recency, frequency & monetary value plot.

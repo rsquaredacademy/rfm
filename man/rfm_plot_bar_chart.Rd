@@ -28,7 +28,8 @@ rfm_plot_bar_chart(
 
 \item{sec_yaxis_label}{Secondary y axis label.}
 
-\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
+\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a
+plot object.}
 }
 \value{
 Bar chart.

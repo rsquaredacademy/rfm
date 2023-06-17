@@ -53,17 +53,21 @@ rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
 
   for (i in seq_len(n_segments)) {
     rfm_score_table$segment[(
-      (rfm_score_table$recency_score %>% between(recency_lower[i], recency_upper[i])) &
-        (rfm_score_table$frequency_score %>% between(frequency_lower[i], frequency_upper[i])) &
-        (rfm_score_table$monetary_score %>% between(monetary_lower[i], monetary_upper[i])) &
+      (rfm_score_table$recency_score %>% between(recency_lower[i],
+                                                 recency_upper[i])) &
+        (rfm_score_table$frequency_score %>% between(frequency_lower[i],
+                                                     frequency_upper[i])) &
+        (rfm_score_table$monetary_score %>% between(monetary_lower[i],
+                                                    monetary_upper[i])) &
         !rfm_score_table$segment %in% segment_names)] <- segment_names[i]
   }
 
   rfm_score_table$segment[is.na(rfm_score_table$segment)] <- "Others"
   rfm_score_table$segment[rfm_score_table$segment == 1]   <- "Others"
 
-  rfm_score_table[c("customer_id", "segment", "rfm_score", "transaction_count", "recency_days",
-                    "amount", "recency_score", "frequency_score", "monetary_score")]
+  rfm_score_table[c("customer_id", "segment", "rfm_score", "transaction_count",
+                    "recency_days", "amount", "recency_score",
+                    "frequency_score", "monetary_score")]
 
 
 }
@@ -144,7 +148,8 @@ rfm_segment_summary <- function(segments) {
 #' @param plot_title Title of the plot.
 #' @param xaxis_label X axis label.
 #' @param yaxis_label Y axis label.
-#' @param bar_labels If \code{TRUE}, add labels to the bars. Defaults to \code{TRUE}.
+#' @param bar_labels If \code{TRUE}, add labels to the bars. Defaults to
+#'   \code{TRUE}.
 #' @param interactive If \code{TRUE}, uses \code{plotly} as the visualization
 #'   engine. If \code{FALSE}, uses \code{ggplot2}.
 #' @param animate If \code{TRUE}, animates the bars. Defaults to \code{FALSE}.
@@ -248,9 +253,9 @@ rfm_plot_segment_summary <- function(x, metric = NULL, bar_color = NULL,
     }
 
     p <- rfm_gg_segment_summary(data, metric, sort, ascending, flip,
-                                     bar_color, plot_title, xaxis_label,
-                                     yaxis_label, angle, size, ylim_max,
-                                     bar_labels)
+                                bar_color, plot_title, xaxis_label,
+                                yaxis_label, angle, size, ylim_max,
+                                bar_labels)
 
     if (animate) {
       p <- rfm_animate_plot(p)
@@ -279,11 +284,13 @@ rfm_plot_segment_summary <- function(x, metric = NULL, bar_color = NULL,
 #' @param plot_title Title of the plot.
 #' @param xaxis_label X axis label.
 #' @param yaxis_label Y axis label.
-#' @param bar_labels If \code{TRUE}, add labels to the bars. Defaults to \code{FALSE}.
+#' @param bar_labels If \code{TRUE}, add labels to the bars. Defaults to
+#'   \code{FALSE}.
 #' @param interactive If \code{TRUE}, uses \code{plotly} as the visualization
 #'   engine. If \code{FALSE}, uses \code{ggplot2}.
 #' @param animate If \code{TRUE}, animates the bars. Defaults to \code{FALSE}.
-#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
+#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a
+#'   plot object.
 #'
 #' @examples
 #' # analysis date
@@ -381,11 +388,13 @@ rfm_plot_revenue_dist <- function(x, flip = FALSE, angle = 315, size = 6,
 #' @param xaxis_label X axis label.
 #' @param yaxis_label Y axis label.
 #' @param font_size Font size for X axis text.
-#' @param bar_labels If \code{TRUE}, add labels to the bars. Defaults to \code{TRUE}.
+#' @param bar_labels If \code{TRUE}, add labels to the bars. Defaults to
+#'   \code{TRUE}.
 #' @param interactive If \code{TRUE}, uses \code{plotly} as the visualization
 #'   engine. If \code{FALSE}, uses \code{ggplot2}.
 #' @param animate If \code{TRUE}, animates the bars. Defaults to \code{FALSE}.
-#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
+#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a
+#'   plot object.
 #'
 #' @examples
 #' # analysis date
@@ -458,7 +467,7 @@ rfm_plot_median_recency <- function(rfm_segment_table, color = "blue",
     }
 
     p <- rfm_gg_median(data, color, sort, ascending, flip, plot_title,
-                         xaxis_label, yaxis_label, font_size, bar_labels)
+                       xaxis_label, yaxis_label, font_size, bar_labels)
 
     if (animate) {
       p <- rfm_animate_plot(p)
@@ -498,7 +507,7 @@ rfm_plot_median_frequency <- function(rfm_segment_table, color = "blue",
     }
 
     p <- rfm_gg_median(data, color, sort, ascending, flip, plot_title,
-                         xaxis_label, yaxis_label, font_size, bar_labels)
+                       xaxis_label, yaxis_label, font_size, bar_labels)
 
     if (animate) {
       p <- rfm_animate_plot(p)
@@ -538,7 +547,7 @@ rfm_plot_median_monetary <- function(rfm_segment_table, color = "blue",
     }
 
     p <- rfm_gg_median(data, color, sort, ascending, flip, plot_title,
-                         xaxis_label, yaxis_label, font_size, bar_labels)
+                       xaxis_label, yaxis_label, font_size, bar_labels)
 
     if (animate) {
       p <- rfm_animate_plot(p)
@@ -568,7 +577,8 @@ rfm_plot_median_monetary <- function(rfm_segment_table, color = "blue",
 #' }
 #' @param interactive If \code{TRUE}, uses \code{plotly} as the visualization
 #'   engine. If \code{FALSE}, uses \code{ggplot2}.
-#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
+#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a
+#'   plot object.
 #'
 #' @examples
 #' # analysis date

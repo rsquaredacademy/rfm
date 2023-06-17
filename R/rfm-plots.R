@@ -227,7 +227,8 @@ rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
 #' @param yaxis_label Y axis label.
 #' @param sec_xaxis_label Secondary x axis label.
 #' @param sec_yaxis_label Secondary y axis label.
-#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
+#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a
+#'   plot object.
 #'
 #' @return Bar chart.
 #'
@@ -326,11 +327,13 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #' @param xaxis_label X axis title.
 #' @param yaxis_label Y axis title.
 #' @param count_size Size of count displayed on top of the bars.
-#' @param bar_labels If \code{TRUE}, add labels to the bars. Defaults to \code{TRUE}.
+#' @param bar_labels If \code{TRUE}, add labels to the bars. Defaults to
+#'   \code{TRUE}.
 #' @param interactive If \code{TRUE}, uses \code{plotly} as the visualization
 #'   engine. If \code{FALSE}, uses \code{ggplot2}.
 #' @param animate If \code{TRUE}, animates the bars. Defaults to \code{FALSE}.
-#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
+#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a
+#'   plot object.
 #'
 #' @return Bar chart.
 #'
@@ -447,7 +450,8 @@ rfm_order_dist <- function(rfm_table, bar_color = 'blue',
 #' @param xaxis_label X axis label.
 #' @param yaxis_label Y axis label.
 #' @param plot_title Title of the plot.
-#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a plot object.
+#' @param print_plot logical; if \code{TRUE}, prints the plot else returns a
+#'   plot object.
 #'
 #' @return Scatter plot.
 #'
@@ -456,7 +460,7 @@ rfm_order_dist <- function(rfm_table, bar_color = 'blue',
 #' been deprecated and will be made defunct. These functions have been provided
 #' for compatibility with older versions only, and will be made defunct at the
 #' next release.
-#' Instead use the replacement function \code{rfm_plot_segment_scatter()()}.
+#' Instead use the replacement function \code{rfm_plot_segment_scatter()}.
 #'
 #' @export
 #'

@@ -61,9 +61,9 @@ rfm_plotly_order_dist <- function(data, flip = FALSE, bar_color = NULL,
 
   fig <-
     fig %>%
-    layout(title = plot_title,
-           xaxis = list(title = xaxis_label),
-           yaxis = list(title = yaxis_label))
+    layout(title = paste0("<b>", plot_title, "</b>"),
+           xaxis = list(title = paste0("<b>", xaxis_label, "</b>")),
+           yaxis = list(title = paste0("<b>", yaxis_label, "</b>")))
 
   fig %>%
     config(displayModeBar = FALSE)
