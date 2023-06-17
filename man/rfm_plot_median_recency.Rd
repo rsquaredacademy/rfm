@@ -8,14 +8,15 @@
 \usage{
 rfm_plot_median_recency(
   rfm_segment_table,
-  color = "blue",
   sort = FALSE,
   ascending = FALSE,
   flip = FALSE,
+  bar_color = NULL,
   plot_title = NULL,
   xaxis_label = NULL,
   yaxis_label = NULL,
-  font_size = 6,
+  axis_label_size = 8,
+  axis_label_angle = 315,
   bar_labels = TRUE,
   interactive = FALSE,
   animate = FALSE,
@@ -24,14 +25,15 @@ rfm_plot_median_recency(
 
 rfm_plot_median_frequency(
   rfm_segment_table,
-  color = "blue",
   sort = FALSE,
   ascending = FALSE,
   flip = FALSE,
+  bar_color = NULL,
   plot_title = NULL,
   xaxis_label = NULL,
   yaxis_label = NULL,
-  font_size = 6,
+  axis_label_size = 8,
+  axis_label_angle = 315,
   bar_labels = TRUE,
   interactive = FALSE,
   animate = FALSE,
@@ -40,14 +42,15 @@ rfm_plot_median_frequency(
 
 rfm_plot_median_monetary(
   rfm_segment_table,
-  color = "blue",
   sort = FALSE,
   ascending = FALSE,
   flip = FALSE,
+  bar_color = NULL,
   plot_title = NULL,
   xaxis_label = NULL,
   yaxis_label = NULL,
-  font_size = 6,
+  axis_label_size = 8,
+  axis_label_angle = 315,
   bar_labels = TRUE,
   interactive = FALSE,
   animate = FALSE,
@@ -57,13 +60,13 @@ rfm_plot_median_monetary(
 \arguments{
 \item{rfm_segment_table}{Output from \code{rfm_segment}.}
 
-\item{color}{Color of the bars.}
-
 \item{sort}{logical; if \code{TRUE}, sort metrics.}
 
 \item{ascending}{logical; if \code{TRUE}, sort metrics in ascending order.}
 
 \item{flip}{logical; if \code{TRUE}, creates horizontal bar plot.}
+
+\item{bar_color}{Color of the bars.}
 
 \item{plot_title}{Title of the plot.}
 
@@ -71,7 +74,9 @@ rfm_plot_median_monetary(
 
 \item{yaxis_label}{Y axis label.}
 
-\item{font_size}{Font size for X axis text.}
+\item{axis_label_size}{Font size of X axis tick labels.}
+
+\item{axis_label_angle}{Angle of X axis tick labels.}
 
 \item{bar_labels}{If \code{TRUE}, add labels to the bars. Defaults to
 \code{TRUE}.}

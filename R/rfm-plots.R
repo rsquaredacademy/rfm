@@ -326,7 +326,7 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #' @param plot_title Title of the plot.
 #' @param xaxis_label X axis title.
 #' @param yaxis_label Y axis title.
-#' @param count_size Size of count displayed on top of the bars.
+#' @param bar_label_size Size of bar labels.
 #' @param bar_labels If \code{TRUE}, add labels to the bars. Defaults to
 #'   \code{TRUE}.
 #' @param interactive If \code{TRUE}, uses \code{plotly} as the visualization
@@ -373,7 +373,7 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #'
 rfm_plot_order_dist <- function(rfm_table, flip = FALSE, bar_color = NULL,
                                 plot_title = NULL, xaxis_label = NULL,
-                                yaxis_label = NULL, count_size = 3,
+                                yaxis_label = NULL, bar_label_size = 3,
                                 bar_labels = TRUE, interactive = FALSE,
                                 animate = FALSE, print_plot = TRUE) {
 
@@ -409,7 +409,7 @@ rfm_plot_order_dist <- function(rfm_table, flip = FALSE, bar_color = NULL,
     }
 
     p <- rfm_gg_order_dist(data, flip, bar_color, plot_title, xaxis_label,
-                           yaxis_label, ylim_max, count_size, bar_labels)
+                           yaxis_label, ylim_max, bar_labels, bar_label_size)
 
     if (animate) {
       p <- rfm_animate_plot(p)

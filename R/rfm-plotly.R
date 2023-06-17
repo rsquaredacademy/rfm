@@ -338,6 +338,10 @@ rfm_plotly_median <- function(data, bar_color = NULL, sort = FALSE,
     xaxis_label <- "Segment"
   } 
 
+  if (is.null(bar_color)) {
+    bar_color <- "blue"
+  }
+
   if (flip) {
     fig <- plot_ly(data,
                    y = ~segment,

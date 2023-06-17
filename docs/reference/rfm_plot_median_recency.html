@@ -69,14 +69,15 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">rfm_plot_median_recency</span><span class="op">(</span>
   <span class="va">rfm_segment_table</span>,
-  color <span class="op">=</span> <span class="st">"blue"</span>,
   sort <span class="op">=</span> <span class="cn">FALSE</span>,
   ascending <span class="op">=</span> <span class="cn">FALSE</span>,
   flip <span class="op">=</span> <span class="cn">FALSE</span>,
+  bar_color <span class="op">=</span> <span class="cn">NULL</span>,
   plot_title <span class="op">=</span> <span class="cn">NULL</span>,
   xaxis_label <span class="op">=</span> <span class="cn">NULL</span>,
   yaxis_label <span class="op">=</span> <span class="cn">NULL</span>,
-  font_size <span class="op">=</span> <span class="fl">6</span>,
+  axis_label_size <span class="op">=</span> <span class="fl">8</span>,
+  axis_label_angle <span class="op">=</span> <span class="fl">315</span>,
   bar_labels <span class="op">=</span> <span class="cn">TRUE</span>,
   interactive <span class="op">=</span> <span class="cn">FALSE</span>,
   animate <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -85,14 +86,15 @@
 
 <span class="fu">rfm_plot_median_frequency</span><span class="op">(</span>
   <span class="va">rfm_segment_table</span>,
-  color <span class="op">=</span> <span class="st">"blue"</span>,
   sort <span class="op">=</span> <span class="cn">FALSE</span>,
   ascending <span class="op">=</span> <span class="cn">FALSE</span>,
   flip <span class="op">=</span> <span class="cn">FALSE</span>,
+  bar_color <span class="op">=</span> <span class="cn">NULL</span>,
   plot_title <span class="op">=</span> <span class="cn">NULL</span>,
   xaxis_label <span class="op">=</span> <span class="cn">NULL</span>,
   yaxis_label <span class="op">=</span> <span class="cn">NULL</span>,
-  font_size <span class="op">=</span> <span class="fl">6</span>,
+  axis_label_size <span class="op">=</span> <span class="fl">8</span>,
+  axis_label_angle <span class="op">=</span> <span class="fl">315</span>,
   bar_labels <span class="op">=</span> <span class="cn">TRUE</span>,
   interactive <span class="op">=</span> <span class="cn">FALSE</span>,
   animate <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -101,14 +103,15 @@
 
 <span class="fu">rfm_plot_median_monetary</span><span class="op">(</span>
   <span class="va">rfm_segment_table</span>,
-  color <span class="op">=</span> <span class="st">"blue"</span>,
   sort <span class="op">=</span> <span class="cn">FALSE</span>,
   ascending <span class="op">=</span> <span class="cn">FALSE</span>,
   flip <span class="op">=</span> <span class="cn">FALSE</span>,
+  bar_color <span class="op">=</span> <span class="cn">NULL</span>,
   plot_title <span class="op">=</span> <span class="cn">NULL</span>,
   xaxis_label <span class="op">=</span> <span class="cn">NULL</span>,
   yaxis_label <span class="op">=</span> <span class="cn">NULL</span>,
-  font_size <span class="op">=</span> <span class="fl">6</span>,
+  axis_label_size <span class="op">=</span> <span class="fl">8</span>,
+  axis_label_angle <span class="op">=</span> <span class="fl">315</span>,
   bar_labels <span class="op">=</span> <span class="cn">TRUE</span>,
   interactive <span class="op">=</span> <span class="cn">FALSE</span>,
   animate <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -120,10 +123,6 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>rfm_segment_table</dt>
 <dd><p>Output from <code>rfm_segment</code>.</p></dd>
-
-
-<dt>color</dt>
-<dd><p>Color of the bars.</p></dd>
 
 
 <dt>sort</dt>
@@ -138,6 +137,10 @@
 <dd><p>logical; if <code>TRUE</code>, creates horizontal bar plot.</p></dd>
 
 
+<dt>bar_color</dt>
+<dd><p>Color of the bars.</p></dd>
+
+
 <dt>plot_title</dt>
 <dd><p>Title of the plot.</p></dd>
 
@@ -150,8 +153,12 @@
 <dd><p>Y axis label.</p></dd>
 
 
-<dt>font_size</dt>
-<dd><p>Font size for X axis text.</p></dd>
+<dt>axis_label_size</dt>
+<dd><p>Font size of X axis tick labels.</p></dd>
+
+
+<dt>axis_label_angle</dt>
+<dd><p>Angle of X axis tick labels.</p></dd>
 
 
 <dt>bar_labels</dt>
@@ -208,8 +215,8 @@ plot object.</p></dd>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># plotly</span></span>
 <span class="r-in"><span class="fu">rfm_plot_median_recency</span><span class="op">(</span><span class="va">segments</span>, interactive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<div id="htmlwidget-2d836ff1c99eb3619fbc" style="width:700px;height:432.632880098888px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2d836ff1c99eb3619fbc">{"x":{"visdat":{"91c5cf1d6f":["function () ","plotlyVisDat"]},"cur_data":"91c5cf1d6f","attrs":{"91c5cf1d6f":{"x":{},"y":{},"hoverinfo":"text","hovertext":["Segment: Champions <br />Median Recency: 53","Segment: New Customers <br />Median Recency: 101.5","Segment: Potential Loyalist <br />Median Recency: 151.5","Segment: Promising <br />Median Recency: 231","Segment: About To Sleep <br />Median Recency: 331","Segment: Loyal Customers <br />Median Recency: 356.5","Segment: At Risk <br />Median Recency: 453.5","Segment: Can't Lose Them <br />Median Recency: 494","Segment: Need Attention <br />Median Recency: 508.5","Segment: Lost <br />Median Recency: 576"],"marker":{"color":"blue"},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Median Recency  by Segment","xaxis":{"domain":[0,1],"automargin":true,"title":"Segment","type":"category","categoryorder":"array","categoryarray":["About To Sleep","At Risk","Can't Lose Them","Champions","Lost","Loyal Customers","Need Attention","New Customers","Potential Loyalist","Promising"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Median Recency"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false},"data":[{"x":["Champions","New Customers","Potential Loyalist","Promising","About To Sleep","Loyal Customers","At Risk","Can't Lose Them","Need Attention","Lost"],"y":[53,101.5,151.5,231,331,356.5,453.5,494,508.5,576],"hoverinfo":["text","text","text","text","text","text","text","text","text","text"],"hovertext":["Segment: Champions <br />Median Recency: 53","Segment: New Customers <br />Median Recency: 101.5","Segment: Potential Loyalist <br />Median Recency: 151.5","Segment: Promising <br />Median Recency: 231","Segment: About To Sleep <br />Median Recency: 331","Segment: Loyal Customers <br />Median Recency: 356.5","Segment: At Risk <br />Median Recency: 453.5","Segment: Can't Lose Them <br />Median Recency: 494","Segment: Need Attention <br />Median Recency: 508.5","Segment: Lost <br />Median Recency: 576"],"marker":{"color":"blue","line":{"color":"rgba(31,119,180,1)"}},"type":"bar","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script><span class="r-in"></span>
+<div id="htmlwidget-3b4278c52b040d14f9f9" style="width:700px;height:432.632880098888px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3b4278c52b040d14f9f9">{"x":{"visdat":{"69870444fb":["function () ","plotlyVisDat"]},"cur_data":"69870444fb","attrs":{"69870444fb":{"x":{},"y":{},"hoverinfo":"text","hovertext":["Segment: Champions <br />Median Recency: 53","Segment: New Customers <br />Median Recency: 101.5","Segment: Potential Loyalist <br />Median Recency: 151.5","Segment: Promising <br />Median Recency: 231","Segment: About To Sleep <br />Median Recency: 331","Segment: Loyal Customers <br />Median Recency: 356.5","Segment: At Risk <br />Median Recency: 453.5","Segment: Can't Lose Them <br />Median Recency: 494","Segment: Need Attention <br />Median Recency: 508.5","Segment: Lost <br />Median Recency: 576"],"marker":{"color":"blue"},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"<b>Median Recency  by Segment<\/b>","xaxis":{"domain":[0,1],"automargin":true,"title":"<b>Segment<\/b>","type":"category","categoryorder":"array","categoryarray":["About To Sleep","At Risk","Can't Lose Them","Champions","Lost","Loyal Customers","Need Attention","New Customers","Potential Loyalist","Promising"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"<b>Median Recency<\/b>"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false},"data":[{"x":["Champions","New Customers","Potential Loyalist","Promising","About To Sleep","Loyal Customers","At Risk","Can't Lose Them","Need Attention","Lost"],"y":[53,101.5,151.5,231,331,356.5,453.5,494,508.5,576],"hoverinfo":["text","text","text","text","text","text","text","text","text","text"],"hovertext":["Segment: Champions <br />Median Recency: 53","Segment: New Customers <br />Median Recency: 101.5","Segment: Potential Loyalist <br />Median Recency: 151.5","Segment: Promising <br />Median Recency: 231","Segment: About To Sleep <br />Median Recency: 331","Segment: Loyal Customers <br />Median Recency: 356.5","Segment: At Risk <br />Median Recency: 453.5","Segment: Can't Lose Them <br />Median Recency: 494","Segment: Need Attention <br />Median Recency: 508.5","Segment: Lost <br />Median Recency: 576"],"marker":{"color":"blue","line":{"color":"rgba(31,119,180,1)"}},"type":"bar","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script><span class="r-in"></span>
 <span class="r-in"><span class="co"># sort in ascending order</span></span>
 <span class="r-in"><span class="fu">rfm_plot_median_recency</span><span class="op">(</span><span class="va">segments</span>, sort <span class="op">=</span> <span class="cn">TRUE</span>, ascending <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="rfm_plot_median_recency-2.png" alt="" width="700" height="433"></span>
@@ -228,7 +235,7 @@ plot object.</p></dd>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># median monetary value</span></span>
 <span class="r-in"><span class="fu">rfm_plot_median_monetary</span><span class="op">(</span><span class="va">segments</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="rfm_plot_median_recency-6.png" alt="" width="700" height="433"></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in rfm_gg_median(data, bar_color, sort, ascending, flip, plot_title,     xaxis_label, yaxis_label, axis_label_size, bar_labels):</span> argument "bar_labels" is missing, with no default</span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

@@ -139,15 +139,15 @@ rfm_segment_summary <- function(segments) {
 #' \item \code{"revenue"}
 #' \item \code{"aov"}
 #' }
-#' @param bar_color Color of the bars.
-#' @param angle Angle at which X axis tick labels should be displayed.
-#' @param size Size of X axis tick labels.
 #' @param sort logical; if \code{TRUE}, sort metrics.
 #' @param ascending logical; if \code{TRUE}, sort metrics in ascending order.
 #' @param flip logical; if \code{TRUE}, creates horizontal bar plot.
+#' @param bar_color Color of the bars.
 #' @param plot_title Title of the plot.
 #' @param xaxis_label X axis label.
 #' @param yaxis_label Y axis label.
+#' @param axis_label_size Font size of X axis tick labels.
+#' @param axis_label_angle Angle of X axis tick labels.
 #' @param bar_labels If \code{TRUE}, add labels to the bars. Defaults to
 #'   \code{TRUE}.
 #' @param interactive If \code{TRUE}, uses \code{plotly} as the visualization
@@ -208,13 +208,13 @@ rfm_segment_summary <- function(segments) {
 #'
 #' @export
 #'
-rfm_plot_segment_summary <- function(x, metric = NULL, bar_color = NULL,
-                                     angle = 90, size = 5, sort = FALSE,
+rfm_plot_segment_summary <- function(x, metric = NULL,  sort = FALSE,
                                      ascending = FALSE, flip = FALSE,
-                                     plot_title = NULL, xaxis_label = NULL,
-                                     yaxis_label = NULL, bar_labels = TRUE,
-                                     interactive = FALSE, animate = FALSE,
-                                     print_plot = TRUE) {
+                                     bar_color = NULL, plot_title = NULL,
+                                     xaxis_label = NULL, yaxis_label = NULL,
+                                     axis_label_size = 8, axis_label_angle = 315,
+                                     bar_labels = TRUE, interactive = FALSE,
+                                     animate = FALSE, print_plot = TRUE) {
 
   if (is.null(metric)) {
     metric <- "customers"
@@ -254,8 +254,8 @@ rfm_plot_segment_summary <- function(x, metric = NULL, bar_color = NULL,
 
     p <- rfm_gg_segment_summary(data, metric, sort, ascending, flip,
                                 bar_color, plot_title, xaxis_label,
-                                yaxis_label, angle, size, ylim_max,
-                                bar_labels)
+                                yaxis_label, axis_label_size, axis_label_angle,
+                                ylim_max, bar_labels)
 
     if (animate) {
       p <- rfm_animate_plot(p)
@@ -277,15 +277,16 @@ rfm_plot_segment_summary <- function(x, metric = NULL, bar_color = NULL,
 #'
 #' @param x An object of class \code{rfm_segment_summary}.
 #' @param flip logical; if \code{TRUE}, creates horizontal bar plot.
-#' @param angle Angle at which X axis tick labels should be displayed.
-#' @param size Size of X axis tick labels.
 #' @param colors Bar colors.
 #' @param labels Legend labels.
 #' @param plot_title Title of the plot.
 #' @param xaxis_label X axis label.
 #' @param yaxis_label Y axis label.
+#' @param axis_label_size Font size of X axis tick labels.
+#' @param axis_label_angle Angle of X axis tick labels.
 #' @param bar_labels If \code{TRUE}, add labels to the bars. Defaults to
 #'   \code{FALSE}.
+#' @param bar_label_size Size of bar labels.
 #' @param interactive If \code{TRUE}, uses \code{plotly} as the visualization
 #'   engine. If \code{FALSE}, uses \code{ggplot2}.
 #' @param animate If \code{TRUE}, animates the bars. Defaults to \code{FALSE}.
@@ -333,12 +334,13 @@ rfm_plot_segment_summary <- function(x, metric = NULL, bar_color = NULL,
 #'
 #' @export
 #'
-rfm_plot_revenue_dist <- function(x, flip = FALSE, angle = 315, size = 6,
+rfm_plot_revenue_dist <- function(x, flip = FALSE,
                                   colors = c("#3b5bdb", "#91a7ff"),
                                   legend_labels = c("Revenue", "Customers"),
                                   plot_title = "Revenue & Customer Distribution",
                                   xaxis_label = NULL, yaxis_label = NULL,
-                                  bar_labels = FALSE, bar_labels_size = 2,
+                                  axis_label_size = 8, axis_label_angle = 315,
+                                  bar_labels = FALSE, bar_label_size = 2,
                                   interactive = FALSE, animate = FALSE,
                                   print_plot = TRUE) {
 
@@ -357,9 +359,10 @@ rfm_plot_revenue_dist <- function(x, flip = FALSE, angle = 315, size = 6,
       data$category <- rep(share_data$category, 10)
     }
 
-    p <- rfm_gg_revenue_dist(data, colors, legend_labels, flip, angle, size,
-                             plot_title, xaxis_label, yaxis_label, bar_labels,
-                             bar_labels_size)
+    p <- rfm_gg_revenue_dist(data, colors, legend_labels, flip,
+                             plot_title, xaxis_label, yaxis_label,
+                             axis_label_size, axis_label_angle,
+                             bar_labels, bar_label_size)
 
     if (animate) {
       p <- rfm_animate_plot(p)
@@ -380,14 +383,15 @@ rfm_plot_revenue_dist <- function(x, flip = FALSE, angle = 315, size = 6,
 #' Segment wise median recency, frequency & monetary value plot.
 #'
 #' @param rfm_segment_table Output from \code{rfm_segment}.
-#' @param color Color of the bars.
 #' @param sort logical; if \code{TRUE}, sort metrics.
 #' @param ascending logical; if \code{TRUE}, sort metrics in ascending order.
 #' @param flip logical; if \code{TRUE}, creates horizontal bar plot.
+#' @param bar_color Color of the bars.
 #' @param plot_title Title of the plot.
 #' @param xaxis_label X axis label.
 #' @param yaxis_label Y axis label.
-#' @param font_size Font size for X axis text.
+#' @param axis_label_size Font size of X axis tick labels.
+#' @param axis_label_angle Angle of X axis tick labels.
 #' @param bar_labels If \code{TRUE}, add labels to the bars. Defaults to
 #'   \code{TRUE}.
 #' @param interactive If \code{TRUE}, uses \code{plotly} as the visualization
@@ -446,18 +450,18 @@ rfm_plot_revenue_dist <- function(x, flip = FALSE, angle = 315, size = 6,
 #'
 #' @export
 #'
-rfm_plot_median_recency <- function(rfm_segment_table, color = "blue",
-                                     sort = FALSE, ascending = FALSE,
-                                     flip = FALSE, plot_title = NULL,
-                                     xaxis_label = NULL, yaxis_label = NULL,
-                                     font_size = 6, bar_labels = TRUE,
-                                     interactive = FALSE, animate = FALSE,
-                                     print_plot = TRUE) {
+rfm_plot_median_recency <- function(rfm_segment_table, sort = FALSE,
+                                    ascending = FALSE, flip = FALSE,
+                                    bar_color = NULL, plot_title = NULL,
+                                    xaxis_label = NULL, yaxis_label = NULL,
+                                    axis_label_size = 8, axis_label_angle = 315,
+                                    bar_labels = TRUE, interactive = FALSE,
+                                    animate = FALSE, print_plot = TRUE) {
 
   data <- rfm_prep_median(rfm_segment_table, recency_days)
 
   if (interactive) {
-    rfm_plotly_median(data, color, sort, ascending, flip, plot_title,
+    rfm_plotly_median(data, bar_color, sort, ascending, flip, plot_title,
                       xaxis_label, yaxis_label)
   } else {
 
@@ -466,8 +470,9 @@ rfm_plot_median_recency <- function(rfm_segment_table, color = "blue",
       data <- rfm_animate_data(data, "recency_days")
     }
 
-    p <- rfm_gg_median(data, color, sort, ascending, flip, plot_title,
-                       xaxis_label, yaxis_label, font_size, bar_labels)
+    p <- rfm_gg_median(data, bar_color, sort, ascending, flip, plot_title,
+                       xaxis_label, yaxis_label, axis_label_size,
+                       axis_label_angle, bar_labels)
 
     if (animate) {
       p <- rfm_animate_plot(p)
@@ -487,18 +492,19 @@ rfm_plot_median_recency <- function(rfm_segment_table, color = "blue",
 #' @rdname rfm_plot_median_recency
 #' @export
 #'
-rfm_plot_median_frequency <- function(rfm_segment_table, color = "blue",
-                                     sort = FALSE, ascending = FALSE,
-                                     flip = FALSE, plot_title = NULL,
-                                     xaxis_label = NULL, yaxis_label = NULL,
-                                     font_size = 6, bar_labels = TRUE,
-                                     interactive = FALSE, animate = FALSE,
-                                     print_plot = TRUE) {
+rfm_plot_median_frequency <- function(rfm_segment_table, sort = FALSE,
+                                      ascending = FALSE, flip = FALSE,
+                                      bar_color = NULL, plot_title = NULL,
+                                      xaxis_label = NULL, yaxis_label = NULL,
+                                      axis_label_size = 8,
+                                      axis_label_angle = 315,
+                                      bar_labels = TRUE, interactive = FALSE,
+                                      animate = FALSE, print_plot = TRUE) {
 
   data <- rfm_prep_median(rfm_segment_table, transaction_count)
 
   if (interactive) {
-    rfm_plotly_median(data, color, sort, ascending, flip, plot_title,
+    rfm_plotly_median(data, bar_color, sort, ascending, flip, plot_title,
                       xaxis_label, yaxis_label)
   } else {
     if (animate) {
@@ -506,8 +512,9 @@ rfm_plot_median_frequency <- function(rfm_segment_table, color = "blue",
       data <- rfm_animate_data(data, "transaction_count")
     }
 
-    p <- rfm_gg_median(data, color, sort, ascending, flip, plot_title,
-                       xaxis_label, yaxis_label, font_size, bar_labels)
+    p <- rfm_gg_median(data, bar_color, sort, ascending, flip, plot_title,
+                       xaxis_label, yaxis_label, axis_label_size,
+                       axis_label_angle, bar_labels)
 
     if (animate) {
       p <- rfm_animate_plot(p)
@@ -527,18 +534,19 @@ rfm_plot_median_frequency <- function(rfm_segment_table, color = "blue",
 #' @rdname rfm_plot_median_recency
 #' @export
 #'
-rfm_plot_median_monetary <- function(rfm_segment_table, color = "blue",
-                                     sort = FALSE, ascending = FALSE,
-                                     flip = FALSE, plot_title = NULL,
+rfm_plot_median_monetary <- function(rfm_segment_table, sort = FALSE,
+                                     ascending = FALSE, flip = FALSE,
+                                     bar_color = NULL, plot_title = NULL,
                                      xaxis_label = NULL, yaxis_label = NULL,
-                                     font_size = 6, bar_labels = TRUE,
-                                     interactive = FALSE, animate = FALSE,
-                                     print_plot = TRUE) {
+                                     axis_label_size = 8,
+                                     axis_label_angle = 315,
+                                     bar_labels = TRUE, interactive = FALSE,
+                                     animate = FALSE, print_plot = TRUE) {
 
   data <- rfm_prep_median(rfm_segment_table, amount)
 
   if (interactive) {
-    rfm_plotly_median(data, color, sort, ascending, flip, plot_title,
+    rfm_plotly_median(data, bar_color, sort, ascending, flip, plot_title,
                       xaxis_label, yaxis_label)
   } else {
     if (animate) {
@@ -546,8 +554,9 @@ rfm_plot_median_monetary <- function(rfm_segment_table, color = "blue",
       data <- rfm_animate_data(data, "amount")
     }
 
-    p <- rfm_gg_median(data, color, sort, ascending, flip, plot_title,
-                       xaxis_label, yaxis_label, font_size, bar_labels)
+    p <- rfm_gg_median(data, bar_color, sort, ascending, flip, plot_title,
+                       xaxis_label, yaxis_label, axis_label_size, axis_label_angle, 
+                       bar_labels)
 
     if (animate) {
       p <- rfm_animate_plot(p)

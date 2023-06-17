@@ -12,7 +12,7 @@ rfm_plot_order_dist(
   plot_title = NULL,
   xaxis_label = NULL,
   yaxis_label = NULL,
-  count_size = 3,
+  bar_label_size = 3,
   bar_labels = TRUE,
   interactive = FALSE,
   animate = FALSE,
@@ -32,7 +32,7 @@ rfm_plot_order_dist(
 
 \item{yaxis_label}{Y axis title.}
 
-\item{count_size}{Size of count displayed on top of the bars.}
+\item{bar_label_size}{Size of bar labels.}
 
 \item{bar_labels}{If \code{TRUE}, add labels to the bars. Defaults to
 \code{TRUE}.}

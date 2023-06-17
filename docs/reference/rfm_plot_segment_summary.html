@@ -73,15 +73,15 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">rfm_plot_segment_summary</span><span class="op">(</span>
   <span class="va">x</span>,
   metric <span class="op">=</span> <span class="cn">NULL</span>,
-  bar_color <span class="op">=</span> <span class="cn">NULL</span>,
-  angle <span class="op">=</span> <span class="fl">90</span>,
-  size <span class="op">=</span> <span class="fl">5</span>,
   sort <span class="op">=</span> <span class="cn">FALSE</span>,
   ascending <span class="op">=</span> <span class="cn">FALSE</span>,
   flip <span class="op">=</span> <span class="cn">FALSE</span>,
+  bar_color <span class="op">=</span> <span class="cn">NULL</span>,
   plot_title <span class="op">=</span> <span class="cn">NULL</span>,
   xaxis_label <span class="op">=</span> <span class="cn">NULL</span>,
   yaxis_label <span class="op">=</span> <span class="cn">NULL</span>,
+  axis_label_size <span class="op">=</span> <span class="fl">8</span>,
+  axis_label_angle <span class="op">=</span> <span class="fl">315</span>,
   bar_labels <span class="op">=</span> <span class="cn">TRUE</span>,
   interactive <span class="op">=</span> <span class="cn">FALSE</span>,
   animate <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -104,18 +104,6 @@
 </ul></dd>
 
 
-<dt>bar_color</dt>
-<dd><p>Color of the bars.</p></dd>
-
-
-<dt>angle</dt>
-<dd><p>Angle at which X axis tick labels should be displayed.</p></dd>
-
-
-<dt>size</dt>
-<dd><p>Size of X axis tick labels.</p></dd>
-
-
 <dt>sort</dt>
 <dd><p>logical; if <code>TRUE</code>, sort metrics.</p></dd>
 
@@ -128,6 +116,10 @@
 <dd><p>logical; if <code>TRUE</code>, creates horizontal bar plot.</p></dd>
 
 
+<dt>bar_color</dt>
+<dd><p>Color of the bars.</p></dd>
+
+
 <dt>plot_title</dt>
 <dd><p>Title of the plot.</p></dd>
 
@@ -138,6 +130,14 @@
 
 <dt>yaxis_label</dt>
 <dd><p>Y axis label.</p></dd>
+
+
+<dt>axis_label_size</dt>
+<dd><p>Font size of X axis tick labels.</p></dd>
+
+
+<dt>axis_label_angle</dt>
+<dd><p>Angle of X axis tick labels.</p></dd>
 
 
 <dt>bar_labels</dt>
@@ -198,8 +198,8 @@ plot object.</p></dd>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># plotly</span></span>
 <span class="r-in"><span class="fu">rfm_plot_segment_summary</span><span class="op">(</span><span class="va">segment_overview</span>, interactive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<div id="htmlwidget-4c22233c0e6e542b7ab1" style="width:700px;height:432.632880098888px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-4c22233c0e6e542b7ab1">{"x":{"visdat":{"91ce6f1d43":["function () ","plotlyVisDat"]},"cur_data":"91ce6f1d43","attrs":{"91ce6f1d43":{"x":{},"y":{},"hoverinfo":"text","hovertext":["Segment: Potential Loyalist<br />Customers: 342","Segment: Lost<br />Customers: 148","Segment: Champions<br />Customers: 35","Segment: Can't Lose Them<br />Customers: 47","Segment: Loyal Customers<br />Customers: 170","Segment: New Customers<br />Customers: 104","Segment: At Risk<br />Customers: 28","Segment: About To Sleep<br />Customers: 102","Segment: Need Attention<br />Customers: 10","Segment: Promising<br />Customers: 9"],"marker":{"color":"blue"},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Customers  Distribution by Segment","xaxis":{"domain":[0,1],"automargin":true,"title":"Segment","type":"category","categoryorder":"array","categoryarray":["About To Sleep","At Risk","Can't Lose Them","Champions","Lost","Loyal Customers","Need Attention","New Customers","Potential Loyalist","Promising"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Customers"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false},"data":[{"x":["Potential Loyalist","Lost","Champions","Can't Lose Them","Loyal Customers","New Customers","At Risk","About To Sleep","Need Attention","Promising"],"y":[342,148,35,47,170,104,28,102,10,9],"hoverinfo":["text","text","text","text","text","text","text","text","text","text"],"hovertext":["Segment: Potential Loyalist<br />Customers: 342","Segment: Lost<br />Customers: 148","Segment: Champions<br />Customers: 35","Segment: Can't Lose Them<br />Customers: 47","Segment: Loyal Customers<br />Customers: 170","Segment: New Customers<br />Customers: 104","Segment: At Risk<br />Customers: 28","Segment: About To Sleep<br />Customers: 102","Segment: Need Attention<br />Customers: 10","Segment: Promising<br />Customers: 9"],"marker":{"color":"blue","line":{"color":"rgba(31,119,180,1)"}},"type":"bar","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script><span class="r-in"></span>
+<div id="htmlwidget-6e8b2163dcbbe87dbb50" style="width:700px;height:432.632880098888px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6e8b2163dcbbe87dbb50">{"x":{"visdat":{"69812796247":["function () ","plotlyVisDat"]},"cur_data":"69812796247","attrs":{"69812796247":{"x":{},"y":{},"hoverinfo":"text","hovertext":["Segment: Potential Loyalist<br />Customers: 342","Segment: Lost<br />Customers: 148","Segment: Champions<br />Customers: 35","Segment: Can't Lose Them<br />Customers: 47","Segment: Loyal Customers<br />Customers: 170","Segment: New Customers<br />Customers: 104","Segment: At Risk<br />Customers: 28","Segment: About To Sleep<br />Customers: 102","Segment: Need Attention<br />Customers: 10","Segment: Promising<br />Customers: 9"],"marker":{"color":"blue"},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"<b>Customers  Distribution by Segment<\/b>","xaxis":{"domain":[0,1],"automargin":true,"title":"<b>Segment<\/b>","type":"category","categoryorder":"array","categoryarray":["About To Sleep","At Risk","Can't Lose Them","Champions","Lost","Loyal Customers","Need Attention","New Customers","Potential Loyalist","Promising"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"<b>Customers<\/b>"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false},"data":[{"x":["Potential Loyalist","Lost","Champions","Can't Lose Them","Loyal Customers","New Customers","At Risk","About To Sleep","Need Attention","Promising"],"y":[342,148,35,47,170,104,28,102,10,9],"hoverinfo":["text","text","text","text","text","text","text","text","text","text"],"hovertext":["Segment: Potential Loyalist<br />Customers: 342","Segment: Lost<br />Customers: 148","Segment: Champions<br />Customers: 35","Segment: Can't Lose Them<br />Customers: 47","Segment: Loyal Customers<br />Customers: 170","Segment: New Customers<br />Customers: 104","Segment: At Risk<br />Customers: 28","Segment: About To Sleep<br />Customers: 102","Segment: Need Attention<br />Customers: 10","Segment: Promising<br />Customers: 9"],"marker":{"color":"blue","line":{"color":"rgba(31,119,180,1)"}},"type":"bar","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script><span class="r-in"></span>
 <span class="r-in"><span class="co"># select metric to be visualized</span></span>
 <span class="r-in"><span class="fu">rfm_plot_segment_summary</span><span class="op">(</span><span class="va">segment_overview</span>, metric <span class="op">=</span> <span class="st">"orders"</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="rfm_plot_segment_summary-2.png" alt="" width="700" height="433"></span>

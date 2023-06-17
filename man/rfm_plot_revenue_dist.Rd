@@ -7,15 +7,15 @@
 rfm_plot_revenue_dist(
   x,
   flip = FALSE,
-  angle = 315,
-  size = 6,
   colors = c("#3b5bdb", "#91a7ff"),
   legend_labels = c("Revenue", "Customers"),
   plot_title = "Revenue & Customer Distribution",
   xaxis_label = NULL,
   yaxis_label = NULL,
+  axis_label_size = 8,
+  axis_label_angle = 315,
   bar_labels = FALSE,
-  bar_labels_size = 2,
+  bar_label_size = 2,
   interactive = FALSE,
   animate = FALSE,
   print_plot = TRUE
@@ -26,10 +26,6 @@ rfm_plot_revenue_dist(
 
 \item{flip}{logical; if \code{TRUE}, creates horizontal bar plot.}
 
-\item{angle}{Angle at which X axis tick labels should be displayed.}
-
-\item{size}{Size of X axis tick labels.}
-
 \item{colors}{Bar colors.}
 
 \item{plot_title}{Title of the plot.}
@@ -38,8 +34,14 @@ rfm_plot_revenue_dist(
 
 \item{yaxis_label}{Y axis label.}
 
+\item{axis_label_size}{Font size of X axis tick labels.}
+
+\item{axis_label_angle}{Angle of X axis tick labels.}
+
 \item{bar_labels}{If \code{TRUE}, add labels to the bars. Defaults to
 \code{FALSE}.}
+
+\item{bar_label_size}{Size of bar labels.}
 
 \item{interactive}{If \code{TRUE}, uses \code{plotly} as the visualization
 engine. If \code{FALSE}, uses \code{ggplot2}.}

@@ -7,15 +7,15 @@
 rfm_plot_segment_summary(
   x,
   metric = NULL,
-  bar_color = NULL,
-  angle = 90,
-  size = 5,
   sort = FALSE,
   ascending = FALSE,
   flip = FALSE,
+  bar_color = NULL,
   plot_title = NULL,
   xaxis_label = NULL,
   yaxis_label = NULL,
+  axis_label_size = 8,
+  axis_label_angle = 315,
   bar_labels = TRUE,
   interactive = FALSE,
   animate = FALSE,
@@ -34,23 +34,23 @@ rfm_plot_segment_summary(
 \item \code{"aov"}
 }}
 
-\item{bar_color}{Color of the bars.}
-
-\item{angle}{Angle at which X axis tick labels should be displayed.}
-
-\item{size}{Size of X axis tick labels.}
-
 \item{sort}{logical; if \code{TRUE}, sort metrics.}
 
 \item{ascending}{logical; if \code{TRUE}, sort metrics in ascending order.}
 
 \item{flip}{logical; if \code{TRUE}, creates horizontal bar plot.}
 
+\item{bar_color}{Color of the bars.}
+
 \item{plot_title}{Title of the plot.}
 
 \item{xaxis_label}{X axis label.}
 
 \item{yaxis_label}{Y axis label.}
+
+\item{axis_label_size}{Font size of X axis tick labels.}
+
+\item{axis_label_angle}{Angle of X axis tick labels.}
 
 \item{bar_labels}{If \code{TRUE}, add labels to the bars. Defaults to
 \code{TRUE}.}

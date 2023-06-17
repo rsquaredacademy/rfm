@@ -27,7 +27,7 @@ rfm_gg_heatmap <- function(mapdata, plot_title, xaxis_label, yaxis_label,
 }
 
 rfm_gg_order_dist <- function(data, flip, bar_color, plot_title, xaxis_label,
-                              yaxis_label, ylim_max, count_size, bar_labels) {
+                              yaxis_label, ylim_max, bar_labels, bar_label_size) {
 
   p <-
     data %>%
@@ -48,7 +48,7 @@ rfm_gg_order_dist <- function(data, flip, bar_color, plot_title, xaxis_label,
         p +
         geom_text(aes(label = sprintf("%1.0f", n), y = n *1.025),
                   hjust = 0,
-                  size = count_size)
+                  size = bar_label_size)
     }
   } else {
     if (bar_labels) {
@@ -57,7 +57,7 @@ rfm_gg_order_dist <- function(data, flip, bar_color, plot_title, xaxis_label,
         geom_text(aes(label = sprintf("%1.0f", n), y = n * 1.025),
                   position = position_dodge(0.9),
                   vjust = 0,
-                  size = count_size)
+                  size = bar_label_size)
     }
   }
 
@@ -85,8 +85,8 @@ rfm_gg_hist <- function(data, hist_bins, hist_color, plot_title, xaxis_label,
 
 rfm_gg_segment_summary <- function(data, metric, sort, ascending, flip,
                                    bar_color, plot_title, xaxis_label,
-                                   yaxis_label, angle, size, ylim_max,
-                                   bar_labels) {
+                                   yaxis_label, axis_label_size, 
+                                   axis_label_angle, ylim_max, bar_labels) {
 
   if (sort) {
     if (ascending) {
@@ -126,7 +126,7 @@ rfm_gg_segment_summary <- function(data, metric, sort, ascending, flip,
     p <-
       p +
       coord_flip() +
-      theme(axis.text.y = element_text(size = 7))
+      theme(axis.text.y = element_text(size = axis_label_size))
 
     if (bar_labels) {
       p <-
@@ -139,8 +139,8 @@ rfm_gg_segment_summary <- function(data, metric, sort, ascending, flip,
   } else {
     p <-
       p +
-      theme(axis.text.x = element_text(angle = angle, vjust = 0,
-                                       hjust = 0, size = size))
+      theme(axis.text.x = element_text(angle = axis_label_angle, vjust = 0,
+                                       hjust = 0, size = axis_label_size))
 
     if (bar_labels) {
       p <-
@@ -157,9 +157,10 @@ rfm_gg_segment_summary <- function(data, metric, sort, ascending, flip,
 
 }
 
-rfm_gg_revenue_dist <- function(data, colors, legend_labels, flip, angle, size,
-                                plot_title, xaxis_label, yaxis_label, bar_labels,
-                                bar_labels_size) {
+rfm_gg_revenue_dist <- function(data, colors, legend_labels, flip, 
+                                plot_title, xaxis_label, yaxis_label, 
+                                axis_label_size, axis_label_angle, 
+                                bar_labels, bar_labels_size) {
 
   ylim_max <-
     data %>%
@@ -204,8 +205,8 @@ rfm_gg_revenue_dist <- function(data, colors, legend_labels, flip, angle, size,
     p <-
       p +
       theme(panel.grid.major.y = element_line(colour = "#ced4da"),
-            axis.text.x = element_text(angle = angle, vjust = 1,
-                                       hjust = 0, size = size))
+            axis.text.x = element_text(angle = axis_label_angle, vjust = 1,
+                                       hjust = 0, size = axis_label_size))
 
     if (bar_labels) {
       p <-
@@ -227,8 +228,9 @@ rfm_gg_revenue_dist <- function(data, colors, legend_labels, flip, angle, size,
 
 }
 
-rfm_gg_median <- function(data, color, sort, ascending, flip, plot_title,
-                          xaxis_label, yaxis_label, font_size, bar_labels) {
+rfm_gg_median <- function(data, bar_color, sort, ascending, flip, plot_title,
+                          xaxis_label, yaxis_label, axis_label_size, axis_label_angle, 
+                          bar_labels) {
 
   n_fill <- nrow(data)
   cnames <- names(data)
@@ -248,6 +250,10 @@ rfm_gg_median <- function(data, color, sort, ascending, flip, plot_title,
 
   if (is.null(xaxis_label)) {
     xaxis_label <- "Segment"
+  }
+
+  if (is.null(bar_color)) {
+    bar_color <- "blue"
   }
 
   if (sort) {
@@ -279,7 +285,7 @@ rfm_gg_median <- function(data, color, sort, ascending, flip, plot_title,
 
   p <-
     p +
-    geom_bar(stat = "identity", fill = color) +
+    geom_bar(stat = "identity", fill = bar_color) +
     ggtitle(plot_title) +
     xlab(xaxis_label) +
     ylab(yaxis_label) +
@@ -289,7 +295,7 @@ rfm_gg_median <- function(data, color, sort, ascending, flip, plot_title,
     p <-
       p +
       coord_flip() +
-      theme(axis.text.y = element_text(size = font_size))
+      theme(axis.text.y = element_text(size = axis_label_size))
 
     if (bar_labels) {
       p <-
@@ -302,7 +308,9 @@ rfm_gg_median <- function(data, color, sort, ascending, flip, plot_title,
   } else {
     p <-
       p +
-      theme(axis.text.x = element_text(size = font_size))
+      theme(axis.text.x = element_text(angle = axis_label_angle, 
+                                       size = axis_label_size,
+                                       hjust = 0))
 
     if (bar_labels) {
       p <-
