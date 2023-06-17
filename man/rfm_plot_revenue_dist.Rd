@@ -28,6 +28,8 @@ rfm_plot_revenue_dist(
 
 \item{colors}{Bar colors.}
 
+\item{legend_labels}{Legend labels.}
+
 \item{plot_title}{Title of the plot.}
 
 \item{xaxis_label}{X axis label.}
@@ -50,8 +52,6 @@ engine. If \code{FALSE}, uses \code{ggplot2}.}
 
 \item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a
 plot object.}
-
-\item{labels}{Legend labels.}
 }
 \description{
 Customer and revenue distribution by segments.

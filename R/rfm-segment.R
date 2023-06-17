@@ -278,7 +278,7 @@ rfm_plot_segment_summary <- function(x, metric = NULL,  sort = FALSE,
 #' @param x An object of class \code{rfm_segment_summary}.
 #' @param flip logical; if \code{TRUE}, creates horizontal bar plot.
 #' @param colors Bar colors.
-#' @param labels Legend labels.
+#' @param legend_labels Legend labels.
 #' @param plot_title Title of the plot.
 #' @param xaxis_label X axis label.
 #' @param yaxis_label Y axis label.

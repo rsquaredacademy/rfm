@@ -257,7 +257,7 @@ rfm_plotly_revenue_dist <- function(x, flip = FALSE,
 rfm_plotly_segment <- function(table, metric = "customers") {
 
   text <- paste0("Segment:", toupper(table$segment), "\n",
-                 rfm:::to_title_case(metric), ": ", table[[metric]],
+                 to_title_case(metric), ": ", table[[metric]],
                  " (", table$prop, "%)")
 
   fig <- plot_ly(

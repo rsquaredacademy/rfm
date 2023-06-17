@@ -20,7 +20,6 @@ Imports:
     gganimate,
     ggplot2,
     gifski,
-    gridExtra,
     magrittr,
     plotly,
     RColorBrewer,
