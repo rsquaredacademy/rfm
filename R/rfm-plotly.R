@@ -178,7 +178,7 @@ rfm_plotly_segment_summary <- function(data, metric, flip, sort, ascending,
 
 rfm_plotly_revenue_dist <- function(x, flip = FALSE,
                                     colors = c("#3b5bdb", "#91a7ff"),
-                                    labels = c("Revenue", "Customers"),
+                                    legend_labels = c("Revenue", "Customers"),
                                     plot_title = "Revenue & Customer Distribution",
                                     xaxis_label = NULL, yaxis_label = NULL) {
 
@@ -207,12 +207,12 @@ rfm_plotly_revenue_dist <- function(x, flip = FALSE,
             y = ~segment,
             type = 'bar',
             orientation = "h",
-            name = labels[1],
+            name = legend_labels[1],
             hoverinfo = "text",
             hovertext = revenue_text,
             marker = list(color = colors[1])) %>%
     add_trace(x = ~customer_share,
-              name = labels[2],
+              name = legend_labels[2],
               hoverinfo = "text",
               hovertext = customer_text,
               marker = list(color = colors[2])) %>%
@@ -226,12 +226,12 @@ rfm_plotly_revenue_dist <- function(x, flip = FALSE,
             x = ~segment,
             y = ~revenue_share,
             type = 'bar',
-            name = labels[1],
+            name = legend_labels[1],
             hoverinfo = "text",
             hovertext = revenue_text,
             marker = list(color = colors[1])) %>%
     add_trace(y = ~customer_share,
-              name = labels[2],
+              name = legend_labels[2],
               hoverinfo = "text",
               hovertext = customer_text,
               marker = list(color = colors[2])) %>%

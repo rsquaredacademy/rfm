@@ -10,10 +10,12 @@ rfm_plot_revenue_dist(
   angle = 315,
   size = 6,
   colors = c("#3b5bdb", "#91a7ff"),
-  labels = c("Revenue", "Customers"),
+  legend_labels = c("Revenue", "Customers"),
   plot_title = "Revenue & Customer Distribution",
   xaxis_label = NULL,
   yaxis_label = NULL,
+  bar_labels = FALSE,
+  bar_labels_size = 2,
   interactive = FALSE,
   animate = FALSE,
   print_plot = TRUE
@@ -30,13 +32,13 @@ rfm_plot_revenue_dist(
 
 \item{colors}{Bar colors.}
 
-\item{labels}{Legend labels.}
-
 \item{plot_title}{Title of the plot.}
 
 \item{xaxis_label}{X axis label.}
 
 \item{yaxis_label}{Y axis label.}
+
+\item{bar_labels}{If \code{TRUE}, add labels to the bars. Defaults to \code{FALSE}.}
 
 \item{interactive}{If \code{TRUE}, uses \code{plotly} as the visualization
 engine. If \code{FALSE}, uses \code{ggplot2}.}
@@ -44,6 +46,8 @@ engine. If \code{FALSE}, uses \code{ggplot2}.}
 \item{animate}{If \code{TRUE}, animates the bars. Defaults to \code{FALSE}.}
 
 \item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
+
+\item{labels}{Legend labels.}
 }
 \description{
 Customer and revenue distribution by segments.

@@ -155,17 +155,26 @@ rfm_gg_segment_summary <- function(data, metric, sort, ascending, flip,
 
 }
 
-rfm_gg_revenue_dist <- function(data, colors, labels, flip, angle, size,
-                                plot_title, xaxis_label, yaxis_label) {
+rfm_gg_revenue_dist <- function(data, colors, legend_labels, flip, angle, size,
+                                plot_title, xaxis_label, yaxis_label, bar_labels,
+                                bar_labels_size) {
+
+  ylim_max <- 
+    data %>%
+    use_series(share) %>%
+    max() %>%
+    multiply_by(1.3) %>%
+    round(2)
 
   p <-
     ggplot(data, aes(fill = category, y = share, x = segment)) +
-    geom_bar(position="dodge", stat="identity")
+    geom_bar(position = "dodge", stat = "identity") +
+    ylim(0, ylim_max)
 
   p <-
     p +
     scale_fill_manual(values = c(colors[1], colors[2]),
-                      labels = c(labels[1], labels[2])) +
+                      labels = c(legend_labels[1], legend_labels[2])) +
     scale_y_continuous(labels = scales::percent)
 
   p <-
@@ -180,12 +189,30 @@ rfm_gg_revenue_dist <- function(data, colors, labels, flip, angle, size,
       p +
       coord_flip() +
       theme(panel.grid.major.x = element_line(colour = "#ced4da"))
+    
+    if (bar_labels) {
+      p <- 
+        p +
+        geom_text(aes(label = paste0(round(share * 100, 2), "%"),
+                y = round(share, 2) * 1.03), 
+                stat = 'identity', position = position_dodge(0.9),
+                vjust = 0.5, hjust = 0, size = bar_labels_size)
+    }
   } else {
     p <-
       p +
       theme(panel.grid.major.y = element_line(colour = "#ced4da"),
             axis.text.x = element_text(angle = angle, vjust = 1,
                                        hjust = 0, size = size))
+
+    if (bar_labels) {
+      p <-
+        p +
+        geom_text(aes(label = paste0(round(share * 100, 2), "%"),
+                  y = round(share, 2) * 1.03), 
+                  stat = 'identity', position = position_dodge(0.9),
+                  vjust = 0, hjust = 0.5, size = bar_labels_size)
+    }                                       
   }
 
   p <-
@@ -193,6 +220,8 @@ rfm_gg_revenue_dist <- function(data, colors, labels, flip, angle, size,
     xlab(xaxis_label) +
     ylab(yaxis_label) +
     ggtitle(plot_title)
+
+  return(p)
 
 }
 
