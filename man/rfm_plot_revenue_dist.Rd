@@ -4,14 +4,54 @@
 \alias{rfm_plot_revenue_dist}
 \title{Revenue distribution}
 \usage{
-rfm_plot_revenue_dist(x, flip = FALSE, print_plot = TRUE)
+rfm_plot_revenue_dist(
+  x,
+  flip = FALSE,
+  colors = c("#3b5bdb", "#91a7ff"),
+  legend_labels = c("Revenue", "Customers"),
+  plot_title = "Revenue & Customer Distribution",
+  xaxis_label = NULL,
+  yaxis_label = NULL,
+  axis_label_size = 8,
+  axis_label_angle = 315,
+  bar_labels = FALSE,
+  bar_label_size = 2,
+  interactive = FALSE,
+  animate = FALSE,
+  print_plot = TRUE
+)
 }
 \arguments{
 \item{x}{An object of class \code{rfm_segment_summary}.}
 
 \item{flip}{logical; if \code{TRUE}, creates horizontal bar plot.}
 
-\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
+\item{colors}{Bar colors.}
+
+\item{legend_labels}{Legend labels.}
+
+\item{plot_title}{Title of the plot.}
+
+\item{xaxis_label}{X axis label.}
+
+\item{yaxis_label}{Y axis label.}
+
+\item{axis_label_size}{Font size of X axis tick labels.}
+
+\item{axis_label_angle}{Angle of X axis tick labels.}
+
+\item{bar_labels}{If \code{TRUE}, add labels to the bars. Defaults to
+\code{FALSE}.}
+
+\item{bar_label_size}{Size of bar labels.}
+
+\item{interactive}{If \code{TRUE}, uses \code{plotly} as the visualization
+engine. If \code{FALSE}, uses \code{ggplot2}.}
+
+\item{animate}{If \code{TRUE}, animates the bars. Defaults to \code{FALSE}.}
+
+\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a
+plot object.}
 }
 \description{
 Customer and revenue distribution by segments.
@@ -25,17 +65,17 @@ rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
 revenue, analysis_date)
 
 # segment names
-segment_names <- c("Champions", "Loyal Customers", "Potential Loyalist",
-  "New Customers", "Promising", "Need Attention", "About To Sleep",
-  "At Risk", "Can't Lose Them", "Lost")
+segment_names <- c("Champions", "Potential Loyalist", "Loyal Customers",
+                   "Promising", "New Customers", "Can't Lose Them",
+                   "At Risk", "Need Attention", "About To Sleep", "Lost")
 
 # segment intervals
-recency_lower <- c(4, 2, 3, 4, 3, 2, 2, 1, 1, 1)
-recency_upper <- c(5, 5, 5, 5, 4, 3, 3, 2, 1, 2)
-frequency_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
-frequency_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
-monetary_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
-monetary_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
+recency_lower <-   c(5, 3, 2, 3, 4, 1, 1, 1, 2, 1)
+recency_upper <-   c(5, 5, 4, 4, 5, 2, 2, 3, 3, 1)
+frequency_lower <- c(5, 3, 2, 1, 1, 3, 2, 3, 1, 1)
+frequency_upper <- c(5, 5, 4, 3, 3, 4, 5, 5, 3, 5)
+monetary_lower <-  c(5, 2, 2, 3, 1, 4, 4, 3, 1, 1)
+monetary_upper <-  c(5, 5, 4, 5, 5, 5, 5, 5, 4, 5)
 
 # generate segments
 segments <- rfm_segment(rfm_result, segment_names, recency_lower,
@@ -45,7 +85,14 @@ monetary_upper)
 # segment summary
 segment_overview <- rfm_segment_summary(segments)
 
-# visualize revenue distribution
+# revenue distribution
+# ggplot2
 rfm_plot_revenue_dist(segment_overview)
+
+# flip
+rfm_plot_revenue_dist(segment_overview, flip = TRUE)
+
+# plotly
+rfm_plot_revenue_dist(segment_overview, interactive = TRUE)
 
 }

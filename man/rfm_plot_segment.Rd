@@ -4,7 +4,12 @@
 \alias{rfm_plot_segment}
 \title{RFM Segmentation Plot}
 \usage{
-rfm_plot_segment(table, metric = "customers", print_plot = TRUE)
+rfm_plot_segment(
+  table,
+  metric = "customers",
+  interactive = FALSE,
+  print_plot = TRUE
+)
 }
 \arguments{
 \item{table}{An object of class \code{rfm_segment_summary}.}
@@ -12,11 +17,16 @@ rfm_plot_segment(table, metric = "customers", print_plot = TRUE)
 \item{metric}{Metric to be visualized. Defaults to \code{"customers"}. Valid
 values are:
 \itemize{
+\item \code{"customers"}
 \item \code{"orders"}
 \item \code{"revenue"}
 }}
 
-\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
+\item{interactive}{If \code{TRUE}, uses \code{plotly} as the visualization
+engine. If \code{FALSE}, uses \code{ggplot2}.}
+
+\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a
+plot object.}
 }
 \description{
 Generates tree map to visualize segments.
@@ -30,17 +40,17 @@ rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
 revenue, analysis_date)
 
 # segment names
-segment_names <- c("Champions", "Loyal Customers", "Potential Loyalist",
-  "New Customers", "Promising", "Need Attention", "About To Sleep",
-  "At Risk", "Can't Lose Them", "Lost")
+segment_names <- c("Champions", "Potential Loyalist", "Loyal Customers",
+                   "Promising", "New Customers", "Can't Lose Them",
+                   "At Risk", "Need Attention", "About To Sleep", "Lost")
 
 # segment intervals
-recency_lower <- c(4, 2, 3, 4, 3, 2, 2, 1, 1, 1)
-recency_upper <- c(5, 5, 5, 5, 4, 3, 3, 2, 1, 2)
-frequency_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
-frequency_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
-monetary_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
-monetary_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
+recency_lower <-   c(5, 3, 2, 3, 4, 1, 1, 1, 2, 1)
+recency_upper <-   c(5, 5, 4, 4, 5, 2, 2, 3, 3, 1)
+frequency_lower <- c(5, 3, 2, 1, 1, 3, 2, 3, 1, 1)
+frequency_upper <- c(5, 5, 4, 3, 3, 4, 5, 5, 3, 5)
+monetary_lower <-  c(5, 2, 2, 3, 1, 4, 4, 3, 1, 1)
+monetary_upper <-  c(5, 5, 4, 5, 5, 5, 5, 5, 4, 5)
 
 # generate segments
 segments <- rfm_segment(rfm_result, segment_names, recency_lower,
@@ -57,7 +67,7 @@ rfm_plot_segment(segment_overview)
 # treemap of orders
 rfm_plot_segment(segment_overview, metric = "orders")
 
-# treemap of revenue
-rfm_plot_segment(segment_overview, metric = "revenue")
+# plotly
+rfm_plot_segment(segment_overview, metric = "revenue", interactive = TRUE)
 
 }

@@ -39,7 +39,8 @@ rfm_rf_plot(
 
 \item{plot_title}{Title of the plot.}
 
-\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
+\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a
+plot object.}
 }
 \value{
 Scatter plot.
@@ -54,6 +55,6 @@ Examine the relationship between recency, frequency
 been deprecated and will be made defunct. These functions have been provided
 for compatibility with older versions only, and will be made defunct at the
 next release.
-Instead use the replacement function \code{rfm_plot_segment_scatter()()}.
+Instead use the replacement function \code{rfm_plot_segment_scatter()}.
 }
 

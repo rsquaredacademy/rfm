@@ -8,10 +8,12 @@ rfm_plot_segment_scatter(
   segments,
   x = "monetary",
   y = "recency",
-  xaxis_label = NULL,
-  yaxis_label = NULL,
   plot_title = NULL,
   legend_title = NULL,
+  xaxis_label = NULL,
+  yaxis_label = NULL,
+  interactive = FALSE,
+  animate = FALSE,
   print_plot = TRUE
 )
 }
@@ -22,15 +24,21 @@ rfm_plot_segment_scatter(
 
 \item{y}{Metric to be represented on Y axis.}
 
-\item{xaxis_label}{X axis label.}
-
-\item{yaxis_label}{Y axis label.}
-
 \item{plot_title}{Title of the plot.}
 
 \item{legend_title}{Title of the plot legend.}
 
-\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
+\item{xaxis_label}{X axis label.}
+
+\item{yaxis_label}{Y axis label.}
+
+\item{interactive}{If \code{TRUE}, uses \code{plotly} as the visualization
+engine. If \code{FALSE}, uses \code{ggplot2}.}
+
+\item{animate}{If \code{TRUE}, animates the bars. Defaults to \code{FALSE}.}
+
+\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a
+plot object.}
 }
 \value{
 Scatter plot.
@@ -48,26 +56,28 @@ rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
 revenue, analysis_date)
 
 # segment names
-segment_names <- c("Champions", "Loyal Customers", "Potential Loyalist",
-  "New Customers", "Promising", "Need Attention", "About To Sleep",
-  "At Risk", "Can't Lose Them", "Lost")
+segment_names <- c("Champions", "Potential Loyalist", "Loyal Customers",
+                   "Promising", "New Customers", "Can't Lose Them",
+                   "At Risk", "Need Attention", "About To Sleep", "Lost")
 
 # segment intervals
-recency_lower <- c(4, 2, 3, 4, 3, 2, 2, 1, 1, 1)
-recency_upper <- c(5, 5, 5, 5, 4, 3, 3, 2, 1, 2)
-frequency_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
-frequency_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
-monetary_lower <- c(4, 3, 1, 1, 1, 2, 1, 2, 4, 1)
-monetary_upper <- c(5, 5, 3, 1, 1, 3, 2, 5, 5, 2)
+recency_lower <-   c(5, 3, 2, 3, 4, 1, 1, 1, 2, 1)
+recency_upper <-   c(5, 5, 4, 4, 5, 2, 2, 3, 3, 1)
+frequency_lower <- c(5, 3, 2, 1, 1, 3, 2, 3, 1, 1)
+frequency_upper <- c(5, 5, 4, 3, 3, 4, 5, 5, 3, 5)
+monetary_lower <-  c(5, 2, 2, 3, 1, 4, 4, 3, 1, 1)
+monetary_upper <-  c(5, 5, 4, 5, 5, 5, 5, 5, 4, 5)
 
 # generate segments
 segments <- rfm_segment(rfm_result, segment_names, recency_lower,
 recency_upper, frequency_lower, frequency_upper, monetary_lower,
 monetary_upper)
 
-# generate plots
+# visualize
+# ggplot2
 rfm_plot_segment_scatter(segments, "monetary", "recency")
-rfm_plot_segment_scatter(segments, "monetary", "frequency")
-rfm_plot_segment_scatter(segments, "frequency", "recency")
+
+# plotly
+rfm_plot_segment_scatter(segments, "monetary", "recency", interactive = TRUE)
 
 }

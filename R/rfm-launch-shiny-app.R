@@ -26,7 +26,8 @@ rfm_launch_app <- function() {
 				install.packages(to_install)
 				xplorerr::app_rfm_analysis()
 			} else {
-				stop('Sorry! The app cannot be launched without installing the required packages.', call. = FALSE)
+				stop('Sorry! The app cannot be launched without installing the required
+				     packages.', call. = FALSE)
 			}
 		}
 	} else {
@@ -35,4 +36,4 @@ rfm_launch_app <- function() {
 
 
 }
- 
+

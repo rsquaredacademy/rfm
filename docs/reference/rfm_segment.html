@@ -124,131 +124,131 @@
 <span class="r-in"><span class="va">revenue</span>, <span class="va">analysis_date</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># segment names</span></span>
-<span class="r-in"><span class="va">segment_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Champions"</span>, <span class="st">"Loyal Customers"</span>, <span class="st">"Potential Loyalist"</span>,</span>
-<span class="r-in">  <span class="st">"New Customers"</span>, <span class="st">"Promising"</span>, <span class="st">"Need Attention"</span>, <span class="st">"About To Sleep"</span>,</span>
-<span class="r-in">  <span class="st">"At Risk"</span>, <span class="st">"Can't Lose Them"</span>, <span class="st">"Lost"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">segment_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Champions"</span>, <span class="st">"Potential Loyalist"</span>, <span class="st">"Loyal Customers"</span>,</span>
+<span class="r-in">                   <span class="st">"Promising"</span>, <span class="st">"New Customers"</span>, <span class="st">"Can't Lose Them"</span>,</span>
+<span class="r-in">                   <span class="st">"At Risk"</span>, <span class="st">"Need Attention"</span>, <span class="st">"About To Sleep"</span>, <span class="st">"Lost"</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># segment intervals</span></span>
-<span class="r-in"><span class="va">recency_lower</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">recency_upper</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">frequency_lower</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">frequency_upper</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">monetary_lower</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">monetary_upper</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">recency_lower</span> <span class="op">&lt;-</span>   <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">recency_upper</span> <span class="op">&lt;-</span>   <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">frequency_lower</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">frequency_upper</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">3</span>, <span class="fl">5</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">monetary_lower</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">monetary_upper</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># generate segments</span></span>
 <span class="r-in"><span class="fu">rfm_segment</span><span class="op">(</span><span class="va">rfm_result</span>, <span class="va">segment_names</span>, <span class="va">recency_lower</span>, <span class="va">recency_upper</span>,</span>
 <span class="r-in"><span class="va">frequency_lower</span>, <span class="va">frequency_upper</span>, <span class="va">monetary_lower</span>, <span class="va">monetary_upper</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   customer_id            segment rfm_score transaction_count</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1         Mr. Brion Stark Sr.    Loyal Customers       355                 8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2              Ethyl Botsford    Loyal Customers       354                 8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3              Hosteen Jacobi            At Risk       122                 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1         Mr. Brion Stark Sr. Potential Loyalist       355                 8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2              Ethyl Botsford Potential Loyalist       354                 8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3              Hosteen Jacobi               Lost       122                 4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4               Mr. Edw Frami          Champions       555                10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5                 Josef Lemke    Loyal Customers       533                 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6            Julisa Halvorson          Champions       455                12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7            Judyth Lueilwitz            At Risk       134                 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8           Mr. Mekhi Goyette     Need Attention       222                 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9           Hansford Moen PhD    Loyal Customers       345                 7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10              Fount Flatley          Champions       455                11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                 Josef Lemke Potential Loyalist       533                 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6            Julisa Halvorson Potential Loyalist       455                12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7            Judyth Lueilwitz    Can't Lose Them       134                 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8           Mr. Mekhi Goyette    Loyal Customers       222                 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9           Hansford Moen PhD Potential Loyalist       345                 7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10              Fount Flatley Potential Loyalist       455                11</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 11             Reynaldo Davis               Lost       112                 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12              Shirl Keebler Potential Loyalist       522                 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13            Dr. Aden Murphy          Champions       544                 7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14             Hattie Roberts    Loyal Customers       433                 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15              Luciano Kling          Champions       544                 6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16             Admiral Senger    Loyal Customers       433                 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17               Hyman Kemmer    Loyal Customers       333                 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18             Torry Reynolds          Champions       444                 7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19         Ms. Erica Gottlieb    Loyal Customers       255                 8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20             Jabbar Dickens          Champions       455                10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21             Gunner Wiegand Potential Loyalist       521                 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22            Devante Gerhold            At Risk       135                 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12              Shirl Keebler      New Customers       522                 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13            Dr. Aden Murphy Potential Loyalist       544                 7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14             Hattie Roberts Potential Loyalist       433                 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15              Luciano Kling Potential Loyalist       544                 6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16             Admiral Senger Potential Loyalist       433                 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17               Hyman Kemmer Potential Loyalist       333                 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18             Torry Reynolds Potential Loyalist       444                 7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19         Ms. Erica Gottlieb            At Risk       255                 8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20             Jabbar Dickens Potential Loyalist       455                10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21             Gunner Wiegand      New Customers       521                 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22            Devante Gerhold    Can't Lose Them       135                 5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 23        Dr. Jeff Bartoletti          Champions       555                 8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24      Dr. Tyreke DuBuque IV    Loyal Customers       345                 7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25      Dr. Dell Baumbach III Potential Loyalist       512                 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24      Dr. Tyreke DuBuque IV Potential Loyalist       345                 7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25      Dr. Dell Baumbach III      New Customers       512                 3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 26               Bobby Corwin     About To Sleep       211                 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27             Helyn Ondricka    Loyal Customers       333                 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27             Helyn Ondricka Potential Loyalist       333                 5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 28       Curtis Runolfsdottir    Loyal Customers       234                 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29        Dr. Lucious Langosh Potential Loyalist       422                 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30           Ronan McLaughlin Potential Loyalist       323                 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31       Barrett Turcotte DVM Potential Loyalist       322                 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32             Lyndon McClure    Loyal Customers       334                 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29        Dr. Lucious Langosh    Loyal Customers       422                 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30           Ronan McLaughlin    Loyal Customers       323                 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31       Barrett Turcotte DVM    Loyal Customers       322                 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32             Lyndon McClure Potential Loyalist       334                 5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 33                Brooks Funk               Lost       111                 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34              Alf Lueilwitz    Loyal Customers       344                 7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35           Lilah Blanda PhD             Others       342                 6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36               Daryn Hickle     Need Attention       222                 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37              Davy Leuschke Potential Loyalist       322                 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38              Shirl Kuvalis    Loyal Customers       333                 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34              Alf Lueilwitz Potential Loyalist       344                 7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35           Lilah Blanda PhD Potential Loyalist       342                 6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36               Daryn Hickle    Loyal Customers       222                 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37              Davy Leuschke    Loyal Customers       322                 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38              Shirl Kuvalis Potential Loyalist       333                 5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 39     Miss Lovie Keeling DVM Potential Loyalist       532                 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40                Burns Mayer    Loyal Customers       333                 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40                Burns Mayer Potential Loyalist       333                 5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 41             Elza Gleichner     About To Sleep       212                 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42        Darrion Stoltenberg          Champions       445                 6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43             Somer Turcotte    Loyal Customers       355                10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44            Mr. Tad Johnson    Loyal Customers       355                10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45         Robert Satterfield Potential Loyalist       422                 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42        Darrion Stoltenberg Potential Loyalist       445                 6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43             Somer Turcotte Potential Loyalist       355                10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44            Mr. Tad Johnson Potential Loyalist       355                10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45         Robert Satterfield    Loyal Customers       422                 4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 46            Quintin Tillman          Champions       555                 9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47          Vivienne Medhurst             Others       113                 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48              Holland Lynch            At Risk       143                 6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49              Davian Ledner Potential Loyalist       322                 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50               Vannie Kunze    Loyal Customers       255                 9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47          Vivienne Medhurst               Lost       113                 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48              Holland Lynch     Need Attention       143                 6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49              Davian Ledner    Loyal Customers       322                 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50               Vannie Kunze            At Risk       255                 9</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 51          Dr. Micayla Kutch          Champions       555                10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52         Dr. Jaren Schmeler Potential Loyalist       513                 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53              Gracia Wunsch    Loyal Customers       344                 6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54               Rebeca Kling          Champions       455                 8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 55           Avery Bartoletti Potential Loyalist       322                 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52         Dr. Jaren Schmeler      New Customers       513                 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53              Gracia Wunsch Potential Loyalist       344                 6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54               Rebeca Kling Potential Loyalist       455                 8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55           Avery Bartoletti    Loyal Customers       322                 4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 56              Collie Von MD    Loyal Customers       244                 6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 57                 Etta Towne          Champions       444                 6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 58       Josephus Bradtke DVM            At Risk       224                 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 59        Jacqueline Nikolaus    Loyal Customers       343                 7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57                 Etta Towne Potential Loyalist       444                 6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58       Josephus Bradtke DVM    Loyal Customers       224                 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59        Jacqueline Nikolaus Potential Loyalist       343                 7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 60              Aileen Barton          Champions       555                 9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 61             Doshia Stroman Potential Loyalist       511                 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 62              Texas Keebler            At Risk       135                 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 63              Triston Mills     Need Attention       222                 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 64          Dr. Kieth Wiegand Potential Loyalist       322                 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 65           Torrance Pollich Potential Loyalist       512                 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 66           Essence Metz DDS    Loyal Customers       255                 8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 67           Rochelle Johnson    Loyal Customers       344                 7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 68    Margarette Eichmann DVM Potential Loyalist       312                 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61             Doshia Stroman      New Customers       511                 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62              Texas Keebler    Can't Lose Them       135                 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 63              Triston Mills    Loyal Customers       222                 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64          Dr. Kieth Wiegand    Loyal Customers       322                 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65           Torrance Pollich      New Customers       512                 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66           Essence Metz DDS            At Risk       255                 8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67           Rochelle Johnson Potential Loyalist       344                 7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68    Margarette Eichmann DVM     About To Sleep       312                 3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 69             Omie Cummerata               Lost       121                 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 70              Casen Kuhlman Potential Loyalist       511                 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70              Casen Kuhlman      New Customers       511                 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 71               Korey Cronin     About To Sleep       211                 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 72                 Tia Zulauf          Champions       444                 6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72                 Tia Zulauf Potential Loyalist       444                 6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 73            Mitzi Bergstrom     About To Sleep       211                 3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 74             Latoya Stanton          Champions       555                10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 75              Winifred Kris    Loyal Customers       243                 6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 76            Suzette Pollich     Need Attention       223                 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 77         Delfina Watsica MD          Champions       545                 6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 78              Mykel Johnson    Loyal Customers       353                 8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 79        Marcello Torphy Jr.    Loyal Customers       543                 6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 80               Cary McGlynn    Loyal Customers       334                 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 81           Rolla Hodkiewicz            At Risk       123                 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 82      Dr. Cheyenne Dach DVM    Loyal Customers       433                 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 83          Mrs. Lucetta Auer Potential Loyalist       311                 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 84          Devaughn Erdman V Potential Loyalist       523                 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76            Suzette Pollich    Loyal Customers       223                 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 77         Delfina Watsica MD Potential Loyalist       545                 6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 78              Mykel Johnson Potential Loyalist       353                 8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79        Marcello Torphy Jr. Potential Loyalist       543                 6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80               Cary McGlynn Potential Loyalist       334                 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 81           Rolla Hodkiewicz               Lost       123                 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82      Dr. Cheyenne Dach DVM Potential Loyalist       433                 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83          Mrs. Lucetta Auer     About To Sleep       311                 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 84          Devaughn Erdman V      New Customers       523                 4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 85             Benji Jacobson               Lost       111                 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 86  Miss Katelynn Lebsack DVM    Loyal Customers       543                 7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 87               Amina Renner    Loyal Customers       334                 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 88       Miss Halle Davis DDS          Champions       454                 8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 89     Dr. Jeannie Rutherford            At Risk       123                 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 90              Casen Blick V     Need Attention       223                 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 91     Miss Haleigh Wilkinson    Loyal Customers       355                10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 92             Alex Armstrong            At Risk       144                 6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 93             Warren Osinski          Champions       455                10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 94          Mr. Lary Champlin          Champions       455                14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 95        Mr. Armin Klocko IV            At Risk       143                 6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 86  Miss Katelynn Lebsack DVM Potential Loyalist       543                 7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 87               Amina Renner Potential Loyalist       334                 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 88       Miss Halle Davis DDS Potential Loyalist       454                 8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 89     Dr. Jeannie Rutherford               Lost       123                 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 90              Casen Blick V    Loyal Customers       223                 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 91     Miss Haleigh Wilkinson Potential Loyalist       355                10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 92             Alex Armstrong    Can't Lose Them       144                 6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 93             Warren Osinski Potential Loyalist       455                10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 94          Mr. Lary Champlin Potential Loyalist       455                14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 95        Mr. Armin Klocko IV     Need Attention       143                 6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 96         Dr. Bree Stehr DVM    Loyal Customers       244                 7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 97              Dow Halvorson    Loyal Customers       245                 6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 97              Dow Halvorson    Can't Lose Them       245                 6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 98  Dr. Valentine Volkman DVM          Champions       555                 8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 99          Mrs. Hildur Mante             Others       213                 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 100                Ivy Kohler    Loyal Customers       245                 7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 101             Dr. Darl Rice     Need Attention       223                 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 102         Murl Wilkinson II          Champions       445                 7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 99          Mrs. Hildur Mante     About To Sleep       213                 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100                Ivy Kohler    Can't Lose Them       245                 7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 101             Dr. Darl Rice    Loyal Customers       223                 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 102         Murl Wilkinson II Potential Loyalist       445                 7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 103              Jayden Hayes    Loyal Customers       243                 7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 104                Franz Mohr            At Risk       123                 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 105              Byrd Kuhn MD    Loyal Customers       334                 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 106           Buddie Terry MD    Loyal Customers       344                 7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 107           Candido Krajcik          Champions       554                 8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 108   Ms. Maebell Reinger DVM    Loyal Customers       245                 6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 109            Dwan Wilderman Potential Loyalist       412                 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 104                Franz Mohr               Lost       123                 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 105              Byrd Kuhn MD Potential Loyalist       334                 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 106           Buddie Terry MD Potential Loyalist       344                 7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 107           Candido Krajcik Potential Loyalist       554                 8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 108   Ms. Maebell Reinger DVM    Can't Lose Them       245                 6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 109            Dwan Wilderman      New Customers       412                 3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 110          Laisha VonRueden          Champions       555                 9</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 111        Damarcus Erdman II    Loyal Customers       234                 5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     recency_days amount recency_score frequency_score monetary_score</span>

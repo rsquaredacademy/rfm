@@ -7,29 +7,43 @@
 \usage{
 rfm_plot_order_dist(
   rfm_table,
-  bar_color = "blue",
-  xaxis_title = "Orders",
-  yaxis_title = "Customers",
-  plot_title = "Customers by Orders",
-  plot_title_justify = 0.5,
+  flip = FALSE,
+  bar_color = NULL,
+  plot_title = NULL,
+  xaxis_label = NULL,
+  yaxis_label = NULL,
+  bar_label_size = 3,
+  bar_labels = TRUE,
+  interactive = FALSE,
+  animate = FALSE,
   print_plot = TRUE
 )
 }
 \arguments{
 \item{rfm_table}{An object of class \code{rfm_table}.}
 
+\item{flip}{logical; if \code{TRUE}, creates horizontal bar plot.}
+
 \item{bar_color}{Color of the bars.}
-
-\item{xaxis_title}{X axis title.}
-
-\item{yaxis_title}{Y axis title.}
 
 \item{plot_title}{Title of the plot.}
 
-\item{plot_title_justify}{Horizontal justification of the plot title;
-0 for left justified and 1 for right justified.}
+\item{xaxis_label}{X axis title.}
 
-\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
+\item{yaxis_label}{Y axis title.}
+
+\item{bar_label_size}{Size of bar labels.}
+
+\item{bar_labels}{If \code{TRUE}, add labels to the bars. Defaults to
+\code{TRUE}.}
+
+\item{interactive}{If \code{TRUE}, uses \code{plotly} as the visualization
+engine. If \code{FALSE}, uses \code{ggplot2}.}
+
+\item{animate}{If \code{TRUE}, animates the bars. Defaults to \code{FALSE}.}
+
+\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a
+plot object.}
 }
 \value{
 Bar chart.
@@ -39,11 +53,11 @@ Visualize the distribution of customers across orders.
 }
 \section{Deprecated Functions}{
 
-\code{rfm_order_dist()} has been deprecated and will be made defunct. It has 
-been provided for compatibility with older versions only, and will be made 
+\code{rfm_order_dist()} has been deprecated and will be made defunct. It has
+been provided for compatibility with older versions only, and will be made
 defunct at the next release.
 
-Instead use the replacement function \code{rfm_plot_order_dist()()}.
+Instead use the replacement function \code{rfm_plot_order_dist()}.
 }
 
 \examples{
@@ -54,6 +68,12 @@ revenue, analysis_date)
 
 # order distribution
 rfm_plot_order_dist(rfm_order)
+
+# horizontal bars
+rfm_plot_order_dist(rfm_order, flip = TRUE)
+
+# plotly
+rfm_plot_order_dist(rfm_order, interactive = TRUE)
 
 # using customer data
 analysis_date <- as.Date('2007-01-01')

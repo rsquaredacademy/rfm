@@ -7,11 +7,11 @@
 \usage{
 rfm_plot_bar_chart(
   rfm_table,
-  bar_color = "blue",
-  xaxis_title = "Monetary Score",
-  sec_xaxis_title = "Frequency Score",
-  yaxis_title = " ",
-  sec_yaxis_title = "Recency Score",
+  bar_color = NULL,
+  xaxis_label = NULL,
+  sec_xaxis_label = NULL,
+  yaxis_label = NULL,
+  sec_yaxis_label = NULL,
   print_plot = TRUE
 )
 }
@@ -20,15 +20,16 @@ rfm_plot_bar_chart(
 
 \item{bar_color}{Color of the bars.}
 
-\item{xaxis_title}{X axis title.}
+\item{xaxis_label}{X axis label.}
 
-\item{sec_xaxis_title}{Secondary x axis title.}
+\item{sec_xaxis_label}{Secondary x axis label.}
 
-\item{yaxis_title}{Y axis title.}
+\item{yaxis_label}{Y axis label.}
 
-\item{sec_yaxis_title}{Secondary y axis title.}
+\item{sec_yaxis_label}{Secondary y axis label.}
 
-\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a plot object.}
+\item{print_plot}{logical; if \code{TRUE}, prints the plot else returns a
+plot object.}
 }
 \value{
 Bar chart.
@@ -39,11 +40,11 @@ Examine the distribution of monetary scores for the different
 }
 \section{Deprecated Functions}{
 
-\code{rfm_bar_chart()} has been deprecated and will be made defunct. It has 
-been provided for compatibility with older versions only, and will be made 
+\code{rfm_bar_chart()} has been deprecated and will be made defunct. It has
+been provided for compatibility with older versions only, and will be made
 defunct at the next release.
 
-Instead use the replacement function \code{rfm_plot_bar_chart()()}.
+Instead use the replacement function \code{rfm_plot_bar_chart()}.
 }
 
 \examples{
