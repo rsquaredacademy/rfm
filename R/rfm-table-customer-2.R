@@ -32,31 +32,33 @@
 #' most_recent_visit, revenue, analysis_date)
 #' result$rfm
 #'
-#' # using custom threshold 
+#' # using custom threshold
 #' rfm_table_customer_2(rfm_data_customer, customer_id, number_of_orders,
-#' most_recent_visit, revenue, analysis_date, recency_bins = c(115, 181, 297, 482), 
+#' most_recent_visit, revenue, analysis_date, recency_bins = c(115, 181, 297, 482),
 #' frequency_bins = c(4, 5, 6, 8), monetary_bins = c(256, 382, 506, 666))
 #'
 #' @export
 #'
-rfm_table_customer_2 <- function(data = NULL, customer_id = NULL, n_transactions = NULL,
-                                       latest_visit_date = NULL, total_revenue = NULL, analysis_date = NULL,
-                                       recency_bins = 5, frequency_bins = 5, monetary_bins = 5, ...) {
+rfm_table_customer_2 <- function(data = NULL, customer_id = NULL,
+                                 n_transactions = NULL, latest_visit_date = NULL,
+                                 total_revenue = NULL, analysis_date = NULL,
+                                 recency_bins = 5, frequency_bins = 5,
+                                 monetary_bins = 5, ...) {
 
   cust_id      <- deparse(substitute(customer_id))
   order_count  <- deparse(substitute(n_transactions))
   recent_visit <- deparse(substitute(latest_visit_date))
   reven        <- deparse(substitute(total_revenue))
 
-  result <- 
-    data %>% 
-    data.table() %>% 
-    .[, ':='(recency_days = as.numeric(analysis_date - get(recent_visit), units = "days"))] %>% 
-    .[, .(get(cust_id), recency_days, get(order_count), get(reven))] %>% 
-    setDF()
-  
-  colnames(result) <- c("customer_id", "recency_days", "transaction_count", "amount")
-  out <- rfm_prep_bins(result, recency_bins, frequency_bins, monetary_bins, analysis_date)
+  result <- as.data.frame(data)
+  result$recency_days <- as.numeric(analysis_date - result[[recent_visit]],
+                                    units = "days")
+  result <- result[, c(cust_id, "recency_days", order_count, reven)]
+  colnames(result) <- c("customer_id", "recency_days", "transaction_count",
+                        "amount")
+
+  out <- rfm_prep_bins(result, recency_bins, frequency_bins, monetary_bins,
+                       analysis_date)
 
   return(out)
 
