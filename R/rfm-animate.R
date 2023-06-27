@@ -18,6 +18,7 @@ rfm_animate_data <- function(data, metric) {
   result
 }
 
+#' @importFrom gganimate transition_states ease_aes
 rfm_animate_plot <- function(p) {
   p +
     transition_states(

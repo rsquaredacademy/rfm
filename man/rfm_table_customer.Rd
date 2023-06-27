@@ -61,9 +61,9 @@ result <- rfm_table_customer(rfm_data_customer, customer_id, number_of_orders,
 recency_days, revenue, analysis_date)
 result$rfm
 
-# using custom threshold 
-rfm_table_customer(rfm_data_customer, customer_id, number_of_orders, 
-recency_days, revenue, analysis_date, recency_bins = c(115, 181, 297, 482), 
+# using custom threshold
+rfm_table_customer(rfm_data_customer, customer_id, number_of_orders,
+recency_days, revenue, analysis_date, recency_bins = c(115, 181, 297, 482),
 frequency_bins = c(4, 5, 6, 8), monetary_bins = c(256, 382, 506, 666))
 
 }

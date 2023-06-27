@@ -45,17 +45,14 @@ rfm_table_customer_2 <- function(data = NULL, customer_id = NULL,
                                  recency_bins = 5, frequency_bins = 5,
                                  monetary_bins = 5, ...) {
 
-  cust_id      <- deparse(substitute(customer_id))
-  order_count  <- deparse(substitute(n_transactions))
-  recent_visit <- deparse(substitute(latest_visit_date))
-  reven        <- deparse(substitute(total_revenue))
-
-  result <- as.data.frame(data)
-  result$recency_days <- as.numeric(analysis_date - result[[recent_visit]],
-                                    units = "days")
-  result <- result[, c(cust_id, "recency_days", order_count, reven)]
-  colnames(result) <- c("customer_id", "recency_days", "transaction_count",
-                        "amount")
+  result <-
+    data %>%
+    mutate(
+      recency_days = as.numeric(analysis_date - {{ latest_visit_date }},
+                                units = "days")) %>%
+    select({{ customer_id }}, recency_days, {{ n_transactions }},
+           {{ total_revenue }}) %>%
+    set_names(c("customer_id", "recency_days", "transaction_count", "amount"))
 
   out <- rfm_prep_bins(result, recency_bins, frequency_bins, monetary_bins,
                        analysis_date)
@@ -63,3 +60,4 @@ rfm_table_customer_2 <- function(data = NULL, customer_id = NULL,
   return(out)
 
 }
+

@@ -1,3 +1,5 @@
+#' @importFrom ggplot2 ggplot geom_tile aes ggtitle xlab ylab scale_fill_gradientn
+#' @importFrom RColorBrewer brewer.pal
 rfm_gg_heatmap <- function(mapdata, plot_title, xaxis_label, yaxis_label,
                            brewer_n, brewer_name, legend_title, print_plot) {
 
@@ -15,9 +17,8 @@ rfm_gg_heatmap <- function(mapdata, plot_title, xaxis_label, yaxis_label,
     xlab(xaxis_label) +
     ylab(yaxis_label) +
     scale_fill_gradientn(limits = c(llm, ulm),
-                         colours = RColorBrewer::brewer.pal(n = brewer_n,
-                                                            name = brewer_name),
-                         name = legend_title)
+                        colours = brewer.pal(n = brewer_n, name = brewer_name),
+                        name = legend_title)
 
   if (print_plot) {
     print(p)
@@ -26,6 +27,7 @@ rfm_gg_heatmap <- function(mapdata, plot_title, xaxis_label, yaxis_label,
   }
 }
 
+#' @importFrom ggplot2 geom_bar ylim coord_flip geom_text position_dodge
 rfm_gg_order_dist <- function(data, flip, bar_color, plot_title, xaxis_label,
                               yaxis_label, ylim_max, bar_labels, bar_label_size) {
 
@@ -64,6 +66,7 @@ rfm_gg_order_dist <- function(data, flip, bar_color, plot_title, xaxis_label,
   return(p)
 }
 
+#' @importFrom ggplot2 geom_histogram
 rfm_gg_hist <- function(data, hist_bins, hist_color, plot_title, xaxis_label,
                         yaxis_label, print_plot) {
 
@@ -83,9 +86,10 @@ rfm_gg_hist <- function(data, hist_bins, hist_color, plot_title, xaxis_label,
 
 }
 
+#' @importFrom ggplot2 theme element_text
 rfm_gg_segment_summary <- function(data, metric, sort, ascending, flip,
                                    bar_color, plot_title, xaxis_label,
-                                   yaxis_label, axis_label_size, 
+                                   yaxis_label, axis_label_size,
                                    axis_label_angle, ylim_max, bar_labels) {
 
   if (sort) {
@@ -157,9 +161,11 @@ rfm_gg_segment_summary <- function(data, metric, sort, ascending, flip,
 
 }
 
-rfm_gg_revenue_dist <- function(data, colors, legend_labels, flip, 
-                                plot_title, xaxis_label, yaxis_label, 
-                                axis_label_size, axis_label_angle, 
+#' @importFrom ggplot2 scale_fill_manual scale_y_continuous element_blank
+#' @importFrom ggplot2 element_line element_rect
+rfm_gg_revenue_dist <- function(data, colors, legend_labels, flip,
+                                plot_title, xaxis_label, yaxis_label,
+                                axis_label_size, axis_label_angle,
                                 bar_labels, bar_labels_size) {
 
   ylim_max <-
@@ -229,7 +235,7 @@ rfm_gg_revenue_dist <- function(data, colors, legend_labels, flip,
 }
 
 rfm_gg_median <- function(data, bar_color, sort, ascending, flip, plot_title,
-                          xaxis_label, yaxis_label, axis_label_size, axis_label_angle, 
+                          xaxis_label, yaxis_label, axis_label_size, axis_label_angle,
                           bar_labels) {
 
   n_fill <- nrow(data)
@@ -308,7 +314,7 @@ rfm_gg_median <- function(data, bar_color, sort, ascending, flip, plot_title,
   } else {
     p <-
       p +
-      theme(axis.text.x = element_text(angle = axis_label_angle, 
+      theme(axis.text.x = element_text(angle = axis_label_angle,
                                        size = axis_label_size,
                                        hjust = 0))
 
@@ -327,19 +333,20 @@ rfm_gg_median <- function(data, bar_color, sort, ascending, flip, plot_title,
 
 }
 
+#' @importFrom treemapify geom_treemap geom_treemap_text
 rfm_gg_segment <- function(table, metric, print_plot) {
 
   plot <- ggplot(table,
-          aes(area = .data[[metric]],
-             fill = segment,
-             label = paste(toupper(segment),
-                           paste0(.data[[metric]], " (", prop, "%)"),
-                           sep = '\n'))) +
+                 aes(area = .data[[metric]],
+                     fill = segment,
+                     label = paste(toupper(segment),
+                                   paste0(.data[[metric]], " (", prop, "%)"),
+                                   sep = '\n'))) +
     geom_treemap() +
     geom_treemap_text(size = 8, place = 'centre') +
     theme(legend.position = "none")
 
-    if (print_plot) {
+  if (print_plot) {
     print(plot)
   } else {
     return(plot)
@@ -350,10 +357,11 @@ rfm_gg_segment_scatter <- function(segments, x_data, y_data, plot_title,
                                    legend_title, xaxis_label, yaxis_label) {
 
   rfm_gg_combine(segments, x_data, y_data, xaxis_label, yaxis_label,
-                   plot_title, legend_title)
+                 plot_title, legend_title)
 
 }
 
+#' @importFrom ggplot2 geom_point labs
 rfm_gg_combine <- function(rfm_table, x = "amount", y = "recency_days",
                            xaxis_title = "Monetary", yaxis_title = "Recency",
                            plot_title = "Recency vs Monetary",

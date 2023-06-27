@@ -21,6 +21,9 @@
 #' # heat map data
 #' rfm_heatmap_data(rfm_customer)
 #'
+#' @importFrom magrittr use_series
+#' @importFrom dplyr group_by summarise
+#'
 #' @export
 #'
 rfm_heatmap_data <- function(rfm_table) {
@@ -28,16 +31,14 @@ rfm_heatmap_data <- function(rfm_table) {
   result <-
     rfm_table %>%
     use_series(rfm) %>%
-    data.table() %>%
-    .[, .(frequency_score, recency_score, amount)] %>%
-    .[, .(monetary = mean(amount)),
-      keyby = .(frequency_score, recency_score)] %>%
-    setDF()
+    group_by(frequency_score, recency_score) %>%
+    select(frequency_score, recency_score, amount) %>%
+    summarise(monetary = mean(amount))
 
-  l_frequency      <- check_levels(result, frequency_score)
-  l_recency        <- check_levels(result, recency_score)
-  levels_frequency <- check_levels(result, frequency_score) %>% length()
-  levels_recency   <- check_levels(result, recency_score) %>% length()
+  l_frequency      <- check_levels(result, "frequency_score")
+  l_recency        <- check_levels(result, "recency_score")
+  levels_frequency <- length(l_frequency)
+  levels_recency   <- length(l_recency)
   f_frequency      <- use_series(rfm_table, frequency_bins)
   r_recency        <- use_series(rfm_table, recency_bins)
 
@@ -95,15 +96,16 @@ rfm_barchart_data <- function(rfm_table) {
 
 }
 
+#' @importFrom dplyr rename
 rfm_order_dist_data <- function(rfm_table) {
-  rfm_table %>%
+  rfm_result %>%
     use_series(rfm) %>%
-    data.table() %>%
-    .[, .(n = .N), by = transaction_count] %>%
-    setnames(old = "transaction_count", new = "segment") %>%
-    setDF()
+    group_by(transaction_count) %>%
+    summarise(n = n()) %>%
+    rename(segment = transaction_count)
 }
 
+#' @importFrom magrittr multiply_by
 rfm_order_dist_ylim <- function(data) {
   data %>%
     use_series(n) %>%
@@ -136,17 +138,10 @@ rfm_prep_revenue_dist <- function(x) {
 
 rfm_prep_median <- function(rfm_segment_table, metric) {
 
-  met <- deparse(substitute(metric))
-
-  result <-
-    rfm_segment_table %>%
-    data.table() %>%
-    .[, .(segment, met = get(met))] %>%
-    .[, .(mem = median(met)), by = segment] %>%
-    .[order(mem)] %>%
-    setnames(old = "mem", new = met) %>%
-    setDF()
-
-  return(result)
+  rfm_segment_table %>%
+    select(segment, {{ metric }}) %>%
+    group_by(segment) %>%
+    summarize({{ metric }} := median({{ metric }})) %>%
+    arrange({{ metric }})
 
 }

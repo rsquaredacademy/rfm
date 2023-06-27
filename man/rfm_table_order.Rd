@@ -49,16 +49,24 @@ rfm_table_order(
 Recency, frequency, monetary and RFM score.
 }
 \examples{
-analysis_date <- as.Date('2006-12-31')
-rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
+analysis_date <- as.Date("2006-12-31")
+rfm_table_order(
+  rfm_data_orders, customer_id, order_date, revenue,
+  analysis_date
+)
 
 # access rfm table
-result <- rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
+result <- rfm_table_order(
+  rfm_data_orders, customer_id, order_date,
+  revenue, analysis_date
+)
 result$rfm
 
 # using custom threshold
-rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date,
-recency_bins = c(115, 181, 297, 482), frequency_bins = c(4, 5, 6, 8),
-monetary_bins = c(256, 382, 506, 666))
+rfm_table_order(rfm_data_orders, customer_id, order_date, revenue,
+  analysis_date,
+  recency_bins = c(115, 181, 297, 482), frequency_bins = c(4, 5, 6, 8),
+  monetary_bins = c(256, 382, 506, 666)
+)
 
 }

@@ -1,15 +1,12 @@
-#' @import magrittr
-#' @import ggplot2
-#' @import data.table
+#' @importFrom magrittr extract
 #' @importFrom stats median runif quantile reorder
 #' @importFrom utils available.packages menu update.packages packageVersion
 #' @importFrom utils install.packages
 bins <- function(data, value, n_bins) {
 
-  my_value   <- deparse(substitute(value))
   length_out <- n_bins + 1
 
-  data[[my_value]] %>%
+  data[[value]] %>%
     quantile(probs = seq(0, 1, length.out = length_out)) %>%
     unname() %>%
     extract(c(-1, -length_out)) %>%
@@ -19,9 +16,7 @@ bins <- function(data, value, n_bins) {
 
 bins_lower <- function(data, value, bins) {
 
-  my_value   <- deparse(substitute(value))
-
-  data[[my_value]] %>%
+  data[[value]] %>%
     min() %>%
     append(bins)
 
@@ -29,10 +24,8 @@ bins_lower <- function(data, value, bins) {
 
 bins_upper <- function(data, value, bins) {
 
-  my_value <- deparse(substitute(value))
-
   data_max <-
-    data[[my_value]] %>%
+    data[[value]] %>%
     max() %>%
     add(1)
 
@@ -42,9 +35,7 @@ bins_upper <- function(data, value, bins) {
 
 check_levels <- function(rfm_heatmap_data, column) {
 
-  my_column <- deparse(substitute(column))
-
-  rfm_heatmap_data[[my_column]] %>%
+  rfm_heatmap_data[[column]] %>%
     as.factor() %>%
     levels() %>%
     as.vector() %>%
