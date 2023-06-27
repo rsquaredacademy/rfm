@@ -13,7 +13,9 @@ vignette: >
 
 ```{r, echo=FALSE, message=FALSE}
 library(rfm)
-library(data.table)
+library(dplyr)
+library(rlang)
+library(scales)
 library(knitr)
 library(kableExtra)
 library(magrittr)
