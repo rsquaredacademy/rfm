@@ -136,6 +136,7 @@ rfm_prep_revenue_dist <- function(x) {
   return(result)
 }
 
+#' @importFrom dplyr arrange
 rfm_prep_median <- function(rfm_segment_table, metric) {
 
   rfm_segment_table %>%
