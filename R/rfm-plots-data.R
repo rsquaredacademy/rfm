@@ -98,7 +98,7 @@ rfm_barchart_data <- function(rfm_table) {
 
 #' @importFrom dplyr rename
 rfm_order_dist_data <- function(rfm_table) {
-  rfm_result %>%
+  rfm_table %>%
     use_series(rfm) %>%
     group_by(transaction_count) %>%
     summarise(n = n()) %>%

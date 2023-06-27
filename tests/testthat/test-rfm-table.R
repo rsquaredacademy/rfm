@@ -8,7 +8,7 @@ test_that("output from rfm_table_order is as expected", {
   actual <-
     result %>%
     use_series(rfm) %>%
-    extract2("transaction_count") %>%
+    magrittr::extract2("transaction_count") %>%
     sum()
 
   expected <- 4906
@@ -28,7 +28,7 @@ test_that("output from rfm_table_order is as expected when using custom threshol
   actual <-
     result %>%
     use_series(rfm) %>%
-    extract2("transaction_count") %>%
+    magrittr::extract2("transaction_count") %>%
     sum()
 
   expected <- 4906
@@ -46,7 +46,7 @@ test_that("output from rfm_table_customer is as expected", {
   actual <-
     result %>%
     use_series(rfm) %>%
-    extract2("transaction_count") %>%
+    magrittr::extract2("transaction_count") %>%
     sum()
 
   expected <- 393223
@@ -68,7 +68,7 @@ test_that("output from rfm_table_customer is as expected when using custom
   actual <-
     result %>%
     use_series(rfm) %>%
-    extract2("transaction_count") %>%
+    magrittr::extract2("transaction_count") %>%
     sum()
 
   expected <- 393223
@@ -86,7 +86,7 @@ test_that("output from rfm_table_customer_2 is as expected", {
   actual <-
     result %>%
     use_series(rfm) %>%
-    extract2("transaction_count") %>%
+    magrittr::extract2("transaction_count") %>%
     sum()
 
   expected <- 393223
@@ -107,7 +107,7 @@ test_that("output from rfm_table_customer_2 is as expected when using custom
   actual <-
     result %>%
     use_series(rfm) %>%
-    extract2("transaction_count") %>%
+    magrittr::extract2("transaction_count") %>%
     sum()
 
   expected <- 393223
