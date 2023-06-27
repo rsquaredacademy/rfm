@@ -214,22 +214,6 @@ segments %>%
   )
 ```
 
-## Segment Size
-
-Now that we have defined and segmented our customers, let us examine the distribution of customers across the segments. Ideally, we should have very few or no customer in segments such as `At Risk` or `Needs Attention`. 
-
-```{r rfm_customers, echo=FALSE}
-result <-
-  segments %>% 
-  data.table() %>% 
-  .[, .(Count = .N), by = segment] %>% 
-  .[order(-Count)] %>% 
-  setnames(old = "segment", new = "Segment") %>% 
-  setDF()
-
-result
-```
-
 We can also examine the median recency, frequency and monetary value across segments to ensure that the
 logic used for customer classification is sound and practical.
 
