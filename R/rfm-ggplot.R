@@ -87,6 +87,7 @@ rfm_gg_hist <- function(data, hist_bins, hist_color, plot_title, xaxis_label,
 }
 
 #' @importFrom ggplot2 theme element_text
+#' @importFrom rlang .data
 rfm_gg_segment_summary <- function(data, metric, sort, ascending, flip,
                                    bar_color, plot_title, xaxis_label,
                                    yaxis_label, axis_label_size,

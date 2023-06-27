@@ -137,12 +137,13 @@ rfm_prep_revenue_dist <- function(x) {
 }
 
 #' @importFrom dplyr arrange
+#' @importFrom rlang :=
 rfm_prep_median <- function(rfm_segment_table, metric) {
 
   rfm_segment_table %>%
     select(segment, {{ metric }}) %>%
     group_by(segment) %>%
-    summarize({{ metric }} := median({{ metric }})) %>%
+    summarise({{ metric }} := median({{ metric }})) %>%
     arrange({{ metric }})
 
 }

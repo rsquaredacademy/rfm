@@ -14,6 +14,7 @@ if (getRversion() >= "2.15.1") {
     "date_most_recent", "frequency_bins", "frequency_score", "monetary",
     "monetary_score", "recency_bins", "recency_days", "recency_score",
     "rfm", "rfm_score", "transaction_count", "n", "category", "share",
-    "customers", "customer_share", "revenue_share", "prop", "frame"
+    "customers", "customer_share", "revenue_share", "prop", "frame",
+    "rfm_result", "customer_id"
   ))
 }

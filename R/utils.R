@@ -1,4 +1,4 @@
-#' @importFrom magrittr extract
+#' @importFrom magrittr extract add
 #' @importFrom stats median runif quantile reorder
 #' @importFrom utils available.packages menu update.packages packageVersion
 #' @importFrom utils install.packages

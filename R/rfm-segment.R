@@ -35,6 +35,8 @@
 #' # generate segments
 #' rfm_segment(rfm_result, segment_names, recency_lower, recency_upper,
 #' frequency_lower, frequency_upper, monetary_lower, monetary_upper)
+#' 
+#' @importFrom dplyr between
 #'
 #'@export
 #'
