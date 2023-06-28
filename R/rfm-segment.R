@@ -35,6 +35,8 @@
 #' # generate segments
 #' rfm_segment(rfm_result, segment_names, recency_lower, recency_upper,
 #' frequency_lower, frequency_upper, monetary_lower, monetary_upper)
+#' 
+#' @importFrom dplyr between
 #'
 #'@export
 #'
@@ -111,17 +113,14 @@ rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
 #'
 rfm_segment_summary <- function(segments) {
 
-  result <-
-    segments %>%
-    data.table() %>%
-    .[, .(customers = .N,
-          orders = sum(transaction_count),
-          revenue = sum(amount)),
-      by = segment] %>%
-    setDF()
-
-  result$aov <- result$revenue / result$orders
-  return(result)
+  segments %>%
+    group_by(segment) %>%
+    summarise(
+      customers = n(),
+      orders = sum(transaction_count),
+      revenue = sum(amount)
+    ) %>%
+    mutate(aov = revenue / orders)
 
 }
 
@@ -555,7 +554,7 @@ rfm_plot_median_monetary <- function(rfm_segment_table, sort = FALSE,
     }
 
     p <- rfm_gg_median(data, bar_color, sort, ascending, flip, plot_title,
-                       xaxis_label, yaxis_label, axis_label_size, axis_label_angle, 
+                       xaxis_label, yaxis_label, axis_label_size, axis_label_angle,
                        bar_labels)
 
     if (animate) {
@@ -628,7 +627,6 @@ rfm_plot_median_monetary <- function(rfm_segment_table, sort = FALSE,
 #' # plotly
 #' rfm_plot_segment(segment_overview, metric = "revenue", interactive = TRUE)
 #'
-#' @import treemapify
 #' @export
 #'
 rfm_plot_segment <- function(table, metric = "customers", interactive = FALSE,
@@ -696,6 +694,8 @@ rfm_plot_segment <- function(table, metric = "customers", interactive = FALSE,
 #'
 #' # plotly
 #' rfm_plot_segment_scatter(segments, "monetary", "recency", interactive = TRUE)
+#'
+#' @importFrom gganimate transition_reveal
 #'
 #' @export
 rfm_plot_segment_scatter <- function(segments, x = "monetary", y = "recency",

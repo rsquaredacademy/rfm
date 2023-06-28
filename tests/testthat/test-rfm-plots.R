@@ -1,5 +1,3 @@
-context("test-rfm-plots.R")
-
 test_that('output from rfm_plot_bar_chart is as expected', {
 
   skip_on_cran()

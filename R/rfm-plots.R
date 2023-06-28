@@ -247,6 +247,8 @@ rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
 #'
 #' # bar chart
 #' rfm_plot_bar_chart(rfm_order)
+#' 
+#' @importFrom ggplot2 sec_axis facet_grid
 #'
 #' @export
 #'
@@ -367,7 +369,7 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #' # order distribution
 #' rfm_plot_order_dist(rfm_customer)
 #'
-#' @import gganimate gifski
+#' @importFrom gganimate animate gifski_renderer
 #'
 #' @export
 #'

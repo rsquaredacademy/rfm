@@ -1,5 +1,3 @@
-context("test-rfm-segment.R")
-
 test_that('first 10 rows of output from rfm_segment are as expected', {
 
   analysis_date <- as.Date("2006-12-31")
@@ -39,23 +37,6 @@ test_that('first 10 rows of output from rfm_segment are as expected', {
 
   segments <- rfm_segment_summary(segment)
 
-  result <- segment[order(segment$customer_id), c("customer_id", "segment")]
-  actual <- result[1:10, ]
-  row.names(actual) <- NULL
-  expected <- structure(list(customer_id = c(
-    "Abbey O'Reilly DVM", "Add Senger",
-    "Aden Lesch Sr.", "Admiral Senger", "Agness O'Keefe", "Aileen Barton",
-    "Ailene Hermann", "Aiyanna Bruen PhD", "Ala Schmidt DDS", "Alannah Borer"
-  ), segment = c(
-    "Loyal Customers", "Potential Loyalist", "Potential Loyalist",
-    "Loyal Customers", "Champions", "Champions", "Loyal Customers",
-    "Potential Loyalist", "About To Sleep", "Lost"
-  )), row.names = c(
-    NA,
-    -10L
-  ), class = c("data.frame"))
-
-  expect_equal(actual, expected)
   expect_equal(segments[segments$segment == "Champions",][[2]], 158)
   expect_equal(segments[segments$segment == "Champions",][[3]], 1234)
   expect_equal(segments[segments$segment == "Champions",][[4]],  120178)

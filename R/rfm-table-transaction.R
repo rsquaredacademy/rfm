@@ -22,67 +22,85 @@
 #' \item{threshold}{thresholds used for generating RFM scores.}
 #'
 #' @examples
-#' analysis_date <- as.Date('2006-12-31')
-#' rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
+#' analysis_date <- as.Date("2006-12-31")
+#' rfm_table_order(
+#'   rfm_data_orders, customer_id, order_date, revenue,
+#'   analysis_date
+#' )
 #'
 #' # access rfm table
-#' result <- rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
+#' result <- rfm_table_order(
+#'   rfm_data_orders, customer_id, order_date,
+#'   revenue, analysis_date
+#' )
 #' result$rfm
 #'
 #' # using custom threshold
-#' rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date,
-#' recency_bins = c(115, 181, 297, 482), frequency_bins = c(4, 5, 6, 8),
-#' monetary_bins = c(256, 382, 506, 666))
+#' rfm_table_order(rfm_data_orders, customer_id, order_date, revenue,
+#'   analysis_date,
+#'   recency_bins = c(115, 181, 297, 482), frequency_bins = c(4, 5, 6, 8),
+#'   monetary_bins = c(256, 382, 506, 666)
+#' )
 #'
 #' @export
 #'
 rfm_table_order <- function(data = NULL, customer_id = NULL, order_date = NULL,
-                              revenue = NULL, analysis_date = NULL, recency_bins = 5,
-                              frequency_bins = 5, monetary_bins = 5, ...) {
-
-  cust_id <- deparse(substitute(customer_id))
-  odate   <- deparse(substitute(order_date))
-  reven   <- deparse(substitute(revenue))                                  
-
-  result <- rfm_prep_table_data(data, cust_id, odate, reven, analysis_date)
-  out    <- rfm_prep_bins(result, recency_bins, frequency_bins, monetary_bins, analysis_date)
+                            revenue = NULL, analysis_date = NULL,
+                            recency_bins = 5, frequency_bins = 5,
+                            monetary_bins = 5, ...) {
+  result <- rfm_prep_table_data(
+    data, {{ customer_id }}, {{ order_date }},
+    {{ revenue }}, analysis_date
+  )
+  out <- rfm_prep_bins(
+    result, recency_bins, frequency_bins, monetary_bins,
+    analysis_date
+  )
 
   return(out)
-
 }
 
-rfm_prep_table_data <- function(data, customer_id, order_date, revenue, analysis_date) {
-
-  result <- 
-    data %>% 
-    data.table() %>% 
-    .[, .(date_most_recent = max(order_date),
-          amount = sum(revenue),
-          transaction_count = .N), 
-      by = customer_id] %>% 
-    .[, ':='(recency_days = as.numeric(analysis_date - date_most_recent, units = "days"))] %>% 
-    .[, .(customer_id, recency_days, transaction_count, amount)] %>% 
-    setDF()
-
-  return(result)
+#' @importFrom dplyr select group_by summarise n mutate
+#' @importFrom magrittr %>% %<>% set_names
+rfm_prep_table_data <- function(data, customer_id, order_date, revenue,
+                                analysis_date) {
+  data %>%
+    select({{ customer_id }}, {{ order_date }}, {{ revenue }}) %>%
+    group_by({{ customer_id }}) %>%
+    summarise(
+      date_most_recent = max({{ order_date }}),
+      amount = sum({{ revenue }}),
+      transaction_count = n()
+    ) %>%
+    mutate(recency_days = as.numeric(analysis_date - date_most_recent,
+      units = "days"
+    )) %>%
+    select(
+      {{ customer_id }}, date_most_recent, recency_days, transaction_count,
+      amount
+    ) %>%
+    set_names(c(
+      "customer_id", "date_most_recent", "recency_days",
+      "transaction_count", "amount"
+    ))
 }
 
+#' @importFrom rlang int
 rfm_prep_bins <- function(result, recency_bins, frequency_bins, monetary_bins, analysis_date) {
-
-  result$recency_score   <- NA
+  result$recency_score <- NA
   result$frequency_score <- NA
-  result$monetary_score  <- NA
+  result$monetary_score <- NA
 
   if (length(recency_bins) == 1) {
     rscore <- rev(seq_len(recency_bins))
-    bins_recency <- bins(result, recency_days, recency_bins)
+    bins_recency <- bins(result, "recency_days", recency_bins)
   } else {
     rscore <- rev(seq_len((length(recency_bins) + 1)))
     bins_recency <- recency_bins
   }
 
-  lower_recency <- bins_lower(result, recency_days, bins_recency)
-  upper_recency <- bins_upper(result, recency_days, bins_recency)
+  lower_recency <- bins_lower(result, "recency_days", bins_recency)
+  upper_recency <- bins_upper(result, "recency_days", bins_recency)
 
   rscore_len <- length(rscore)
 
@@ -94,14 +112,14 @@ rfm_prep_bins <- function(result, recency_bins, frequency_bins, monetary_bins, a
 
   if (length(frequency_bins) == 1) {
     fscore <- rev(seq_len(frequency_bins))
-    bins_frequency <- bins(result, transaction_count, frequency_bins)
+    bins_frequency <- bins(result, "transaction_count", frequency_bins)
   } else {
     fscore <- rev(seq_len((length(frequency_bins) + 1)))
     bins_frequency <- frequency_bins
   }
 
-  lower_frequency <- bins_lower(result, transaction_count, bins_frequency)
-  upper_frequency <- bins_upper(result, transaction_count, bins_frequency)
+  lower_frequency <- bins_lower(result, "transaction_count", bins_frequency)
+  upper_frequency <- bins_upper(result, "transaction_count", bins_frequency)
 
   fscore_len <- length(fscore)
 
@@ -112,15 +130,15 @@ rfm_prep_bins <- function(result, recency_bins, frequency_bins, monetary_bins, a
 
   if (length(monetary_bins) == 1) {
     mscore <- rev(seq_len(monetary_bins))
-    bins_monetary <- bins(result, amount, monetary_bins)
+    bins_monetary <- bins(result, "amount", monetary_bins)
   } else {
     mscore <- rev(seq_len((length(monetary_bins) + 1)))
     bins_monetary <- monetary_bins
   }
 
 
-  lower_monetary <- bins_lower(result, amount, bins_monetary)
-  upper_monetary <- bins_upper(result, amount, bins_monetary)
+  lower_monetary <- bins_lower(result, "amount", bins_monetary)
+  upper_monetary <- bins_upper(result, "amount", bins_monetary)
 
   mscore_len <- length(mscore)
 
@@ -129,18 +147,28 @@ rfm_prep_bins <- function(result, recency_bins, frequency_bins, monetary_bins, a
       result$amount < upper_monetary[i]] <- i
   }
 
-  result$rfm_score <- result$recency_score * 100 + result$frequency_score * 10 + result$monetary_score
+  result %<>%
+    mutate(
+      rfm_score = recency_score * 100 + frequency_score * 10 + monetary_score
+    ) %>%
+    select(
+      customer_id, recency_days, transaction_count, amount,
+      recency_score, frequency_score, monetary_score, rfm_score
+    )
 
-  result$transaction_count <- as.numeric(result$transaction_count)
+  result$transaction_count <- int(result$transaction_count)
 
-  threshold <- data.frame(recency_lower   = lower_recency,
-                          recency_upper   = upper_recency,
-                          frequency_lower = lower_frequency,
-                          frequency_upper = upper_frequency,
-                          monetary_lower  = lower_monetary,
-                          monetary_upper  = upper_monetary)
+  threshold <- data.frame(
+    recency_lower = lower_recency,
+    recency_upper = upper_recency,
+    frequency_lower = lower_frequency,
+    frequency_upper = upper_frequency,
+    monetary_lower = lower_monetary,
+    monetary_upper = upper_monetary
+  )
 
-  list(rfm = result, analysis_date = analysis_date, frequency_bins = frequency_bins,
-       recency_bins = recency_bins, monetary_bins = monetary_bins, threshold = threshold)
-
+  list(
+    rfm = result, analysis_date = analysis_date, frequency_bins = frequency_bins,
+    recency_bins = recency_bins, monetary_bins = monetary_bins, threshold = threshold
+  )
 }

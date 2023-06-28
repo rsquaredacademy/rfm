@@ -16,13 +16,13 @@ BugReports: https://github.com/rsquaredacademy/rfm/issues
 Depends: 
     R (>= 3.2)
 Imports: 
-    data.table,
+    dplyr,
     gganimate,
     ggplot2,
-    gifski,
     magrittr,
     plotly,
     RColorBrewer,
+    rlang,
     scales,
     stats,
     treemapify,
@@ -31,12 +31,15 @@ Imports:
 Suggests: 
     covr,
     DT,
+    gifski,
     kableExtra,
     knitr,
+    png,
     rmarkdown,
-    testthat,
+    testthat (>= 3.0.0),
     vdiffr
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
+Config/testthat/edition: 3
