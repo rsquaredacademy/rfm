@@ -1,10 +1,10 @@
 ---
-title: "RFM - Customer Level Data"
+title: "RFM - Introduction"
 author: "Aravind Hebbali"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{RFM - Customer Level Data}
+  %\VignetteIndexEntry{RFM - Transaction Level Data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -39,14 +39,13 @@ It is based on the marketing axiom that **80% of your business comes from 20% of
 To calculate the RFM score for each customer we need transaction data which should include the following:
 
 - a unique customer id 
-- number of transaction/order
-- total revenue from the customer
-- number of days since the last visit
+- date of transaction/order
+- transaction/order amount
 
 `rfm` includes a sample data set `rfm_data_orders` which includes the above details:
 
 ```{r rfm_data_orders}
-rfm_data_customer
+rfm_data_orders
 ```
 
 ## RFM Score
@@ -80,22 +79,20 @@ The customers with the highest RFM scores are most likely to respond to an offer
 ## RFM Table
 
 ```{r rfm_table_order, eval=FALSE}
-analysis_date <- as.Date('2007-01-01')
-rfm_result <- rfm_table_customer(rfm_data_customer, customer_id, number_of_orders,
-  recency_days, revenue, analysis_date)
+analysis_date <- as.Date("2006-12-31")
+rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
 rfm_result
 ```
 
 ```{r rfm_table_order2, eval=TRUE, echo=FALSE}
-analysis_date <- as.Date('2007-01-01')
-rfm_result <- rfm_table_customer(rfm_data_customer, customer_id, number_of_orders,
-  recency_days, revenue, analysis_date)
+analysis_date <- as.Date("2006-12-31")
+rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
 rfm_result$rfm[1:10, ] %>%
   kable() %>%
   kable_styling()
 ```
 
-`rfm_table_customer()` will return the following columns as seen in the above table:
+`rfm_table_order()` will return the following columns as seen in the above table:
 
 - `customer_id`: unique customer id
 - `date_most_recent`: date of most recent visit
@@ -171,7 +168,6 @@ segments <- data.frame(
   Segment = segment, Description = description,
   R = recency, `F` = frequency, M = monetary
 )
-
 segments %>%
   kable() %>%
   kable_styling(full_width = TRUE, font_size = 12)
@@ -200,7 +196,8 @@ frequency_upper <- c(5, 5, 4, 3, 3, 4, 5, 5, 3, 5)
 monetary_lower <-  c(5, 2, 2, 3, 1, 4, 4, 3, 1, 1)
 monetary_upper <-  c(5, 5, 4, 5, 5, 5, 5, 5, 4, 5)
 
-segments <- rfm_segment(rfm_result, segment_names, recency_lower, recency_upper, frequency_lower, frequency_upper, monetary_lower, monetary_upper)
+segments <- rfm_segment(rfm_result, segment_names, recency_lower, recency_upper,
+frequency_lower, frequency_upper, monetary_lower, monetary_upper)
 
 # use datatable
 segments %>%
@@ -213,9 +210,6 @@ segments %>%
     )
   )
 ```
-
-We can also examine the median recency, frequency and monetary value across segments to ensure that the
-logic used for customer classification is sound and practical.
 
 ## Scatter Plots
 
@@ -250,6 +244,9 @@ Customers with low frequency visited in the distant past while those with high f
 ```{r fr, fig.align='center', fig.width=7, fig.height=7}
 rfm_plot_segment_scatter(segments, "frequency", "recency")
 ```
+
+We can also examine the median recency, frequency and monetary value across segments to ensure that the
+logic used for customer classification is sound and practical.
 
 ### Median Recency
 
