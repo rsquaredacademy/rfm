@@ -1,5 +1,3 @@
-context("test-rfm-segment.R")
-
 test_that('first 10 rows of output from rfm_segment are as expected', {
 
   analysis_date <- as.Date("2006-12-31")

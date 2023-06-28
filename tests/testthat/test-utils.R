@@ -1,5 +1,3 @@
-context("test-utils.R")
-
 test_that('output from bins is as expected', {
 
   actual <- bins(mtcars, "mpg", 5)

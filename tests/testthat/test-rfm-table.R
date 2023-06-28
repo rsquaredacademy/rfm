@@ -1,5 +1,3 @@
-context("rfm_table")
-
 test_that("output from rfm_table_order is as expected", {
 
   analysis_date <- as.Date("2006-12-31")
