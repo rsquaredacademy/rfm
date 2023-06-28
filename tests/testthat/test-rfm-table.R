@@ -77,10 +77,10 @@ test_that("output from rfm_table_customer is as expected when using custom
 
 })
 
-test_that("output from rfm_table_customer_2 is as expected", {
+test_that("output from rfm_table_customer is as expected when using dates", {
 
   analysis_date <- as.Date('2007-01-01')
-	result <- rfm_table_customer_2(rfm_data_customer, customer_id, number_of_orders,
+	result <- rfm_table_customer(rfm_data_customer, customer_id, number_of_orders,
 		most_recent_visit, revenue, analysis_date)
 
   actual <-
@@ -94,11 +94,11 @@ test_that("output from rfm_table_customer_2 is as expected", {
   expect_equal(actual, expected)
 })
 
-test_that("output from rfm_table_customer_2 is as expected when using custom
-          thresholds", {
+test_that("output from rfm_table_customer is as expected when using dates and 
+           custom thresholds", {
 
   analysis_date <- as.Date('2007-01-01')
-  result <- rfm_table_customer_2(rfm_data_customer, customer_id, number_of_orders,
+  result <- rfm_table_customer(rfm_data_customer, customer_id, number_of_orders,
                                  most_recent_visit, revenue, analysis_date,
                                  recency_bins = c(115, 181, 297, 482),
                                  frequency_bins = c(4, 5, 6, 8),
