@@ -2,6 +2,7 @@
 
 export(rfm_bar_chart)
 export(rfm_barchart_data)
+export(rfm_create_report)
 export(rfm_fm_plot)
 export(rfm_heatmap)
 export(rfm_heatmap_data)

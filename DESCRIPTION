@@ -29,6 +29,7 @@ Imports:
     utils,
     xplorerr
 Suggests: 
+    cli,
     covr,
     DT,
     gifski,
@@ -36,6 +37,7 @@ Suggests:
     knitr,
     png,
     rmarkdown,
+    rmdformats,
     testthat (>= 3.0.0),
     vdiffr
 VignetteBuilder: knitr
