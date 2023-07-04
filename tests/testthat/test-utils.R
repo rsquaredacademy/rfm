@@ -2,7 +2,7 @@ test_that('output from bins is as expected', {
 
   actual <- bins(mtcars, "mpg", 5)
   expected <- c(16.20, 18.92, 22.00, 25.08)
-  expect_equivalent(actual, expected)
+  expect_equal(actual, expected)
 
 })
 
@@ -10,14 +10,14 @@ test_that('output from bins_lower is as expected', {
 
   actual <- bins_lower(mtcars, "mpg", 5)
   expected <- c(10.4, 5.0)
-  expect_equivalent(actual, expected)
+  expect_equal(actual, expected)
 })
 
 test_that('output from bins_upper is as expected', {
 
   actual <- bins_upper(mtcars, "mpg", 5)
   expected <- c(5.0, 34.9)
-  expect_equivalent(actual, expected)
+  expect_equal(actual, expected)
 })
 
 test_that('output from rfm_heatmap_data is as expected', {
@@ -46,7 +46,7 @@ test_that('output from check_levels is as expected', {
     check_levels(column = "recency_score")
 
   expected <- c(1, 2, 3, 4, 5)
-  expect_equivalent(actual, expected)
+  expect_equal(actual, expected)
 
 })
 
