@@ -47,7 +47,14 @@
 rfm_table_order <- function(data = NULL, customer_id = NULL, order_date = NULL,
                             revenue = NULL, analysis_date = NULL,
                             recency_bins = 5, frequency_bins = 5,
-                            monetary_bins = 5, ...) {
+                            monetary_bins = 5, ...) UseMethod("rfm_table_order")
+
+#' @export
+#'
+rfm_table_order.default <- function(data = NULL, customer_id = NULL,
+                                    order_date = NULL, revenue = NULL,
+                                    analysis_date = NULL, recency_bins = 5,
+                                    frequency_bins = 5, monetary_bins = 5, ...) {
   result <- rfm_prep_table_data(
     data, {{ customer_id }}, {{ order_date }},
     {{ revenue }}, analysis_date
@@ -57,8 +64,16 @@ rfm_table_order <- function(data = NULL, customer_id = NULL, order_date = NULL,
     analysis_date
   )
 
+  class(out) <- c("rfm_table_order", "tibble", "data.frame")
   return(out)
 }
+
+#' @export
+#'
+print.rfm_table_order <- function(x, ...) {
+  print(x$rfm)
+}
+
 
 #' @importFrom dplyr select group_by summarise n mutate
 #' @importFrom magrittr %>% %<>% set_names
