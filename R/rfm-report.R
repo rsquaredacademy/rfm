@@ -49,6 +49,9 @@ rfm_create_report <- function(rfm_table, segments, interactive = FALSE,
                               file_name = NULL) {
 
   pkg_deps <- c("cli", "DT", "rmarkdown", "knitr", "rmdformats")
+  if (interactive) {
+    pkg_deps <- append(pkg_deps, "plotly")
+  }
 
   is_installed <- sapply(pkg_deps, try_pkg)
   to_install <- pkg_deps[is.na(is_installed)]
