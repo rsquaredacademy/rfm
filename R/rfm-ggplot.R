@@ -169,17 +169,10 @@ rfm_gg_revenue_dist <- function(data, colors, legend_labels, flip,
                                 axis_label_size, axis_label_angle,
                                 bar_labels, bar_labels_size) {
 
-  ylim_max <-
-    data %>%
-    use_series(share) %>%
-    max() %>%
-    multiply_by(1.3) %>%
-    round(2)
-
   p <-
     ggplot(data, aes(fill = category, y = share, x = segment)) +
-    geom_bar(position = "dodge", stat = "identity") +
-    ylim(0, ylim_max)
+    geom_bar(position = "dodge", stat = "identity") 
+    
 
   p <-
     p +
@@ -192,7 +185,8 @@ rfm_gg_revenue_dist <- function(data, colors, legend_labels, flip,
     theme(legend.title = element_blank(),
           legend.position = "bottom",
           panel.background = element_rect(fill = NA),
-          axis.ticks = element_line(color = NA))
+          axis.ticks = element_line(color = NA)) 
+
 
   if (flip) {
     p <-
