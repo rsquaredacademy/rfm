@@ -247,7 +247,7 @@ rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
 #'
 #' # bar chart
 #' rfm_plot_bar_chart(rfm_order)
-#' 
+#'
 #' @importFrom ggplot2 sec_axis facet_grid
 #'
 #' @export
@@ -369,8 +369,6 @@ rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
 #' # order distribution
 #' rfm_plot_order_dist(rfm_customer)
 #'
-#' @importFrom gganimate animate gifski_renderer
-#'
 #' @export
 #'
 rfm_plot_order_dist <- function(rfm_table, flip = FALSE, bar_color = NULL,
@@ -406,8 +404,25 @@ rfm_plot_order_dist <- function(rfm_table, flip = FALSE, bar_color = NULL,
   } else {
 
     if (animate) {
-      print_plot <- FALSE
-      data <- rfm_animate_data(data, "n")
+      pkg_flag <- requireNamespace("gganimate", quietly = TRUE)
+      if (pkg_flag) {
+        print_plot <- FALSE
+        data <- rfm_animate_data(data, "n")
+      } else {
+        if (interactive()) {
+          message('`gganimate` must be installed for this functionality. Would you like to install?')
+          if (menu(c("Yes", "No")) == 1) {
+            install.packages("gganimate")
+            print_plot <- FALSE
+            data <- rfm_animate_data(data, "n")
+          } else {
+            stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
+          }
+        } else {
+          animate <- FALSE
+          warning("`gganimate` is not installed. Using `ggplot2` instead to generate the plot!")
+        }
+      }
     }
 
     p <- rfm_gg_order_dist(data, flip, bar_color, plot_title, xaxis_label,
@@ -415,7 +430,8 @@ rfm_plot_order_dist <- function(rfm_table, flip = FALSE, bar_color = NULL,
 
     if (animate) {
       p <- rfm_animate_plot(p)
-      animate(p, fps=8, renderer = gifski_renderer(loop = FALSE))
+      gganimate::animate(p, fps=8,
+                         renderer = gganimate::gifski_renderer(loop = FALSE))
     }
 
     if (print_plot) {
