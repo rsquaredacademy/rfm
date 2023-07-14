@@ -41,6 +41,8 @@
 #' rfm_create_report(rfm_result, segments, FALSE,
 #' "Customer Segmentation Report")
 #' }
+#' 
+#' @importFrom utils browseURL
 #'
 #' @export
 #'
