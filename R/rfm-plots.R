@@ -434,6 +434,10 @@ rfm_plot_order_dist <- function(rfm_table, flip = FALSE, bar_color = NULL,
     bar_color <- "blue"
   }
 
+  if (interactive) {
+    animate <- FALSE
+  }
+
   data <- rfm_order_dist_data(rfm_table)
   ylim_max <- rfm_order_dist_ylim(data)
 
