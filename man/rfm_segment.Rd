@@ -57,7 +57,10 @@ monetary_lower <-  c(5, 2, 2, 3, 1, 4, 4, 3, 1, 1)
 monetary_upper <-  c(5, 5, 4, 5, 5, 5, 5, 5, 4, 5)
 
 # generate segments
-rfm_segment(rfm_result, segment_names, recency_lower, recency_upper,
-frequency_lower, frequency_upper, monetary_lower, monetary_upper)
+segments <- rfm_segment(rfm_result, segment_names, recency_lower,
+recency_upper, frequency_lower, frequency_upper, monetary_lower,
+monetary_upper)
+
+segments
 
 }
