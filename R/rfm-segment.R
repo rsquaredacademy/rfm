@@ -123,7 +123,7 @@ rfm_segment_summary <- function(segments) {
       orders = sum(transaction_count),
       revenue = sum(amount)
     ) %>%
-    mutate(aov = revenue / orders)
+    mutate(aov = round((revenue / orders), 2))
 
 }
 
@@ -236,6 +236,10 @@ rfm_plot_segment_summary <- function(x, metric = NULL,  sort = FALSE,
 
   if (is.null(yaxis_label)) {
     yaxis_label <- to_title_case(metric)
+  }
+
+  if (interactive) {
+    animate <- FALSE
   }
 
   data <- x[c("segment", metric)]
@@ -382,6 +386,10 @@ rfm_plot_revenue_dist <- function(x, flip = FALSE,
                                   bar_labels = FALSE, bar_label_size = 2,
                                   interactive = FALSE, animate = FALSE,
                                   print_plot = TRUE) {
+
+  if (interactive) {
+    animate <- FALSE
+  }
 
   if (interactive) {
     pkg_flag <- requireNamespace("plotly", quietly = TRUE)
@@ -536,6 +544,10 @@ rfm_plot_median_recency <- function(rfm_segment_table, sort = FALSE,
                                     bar_labels = TRUE, interactive = FALSE,
                                     animate = FALSE, print_plot = TRUE) {
 
+  if (interactive) {
+    animate <- FALSE
+  }
+
   data <- rfm_prep_median(rfm_segment_table, recency_days)
 
   if (interactive) {
@@ -615,6 +627,10 @@ rfm_plot_median_frequency <- function(rfm_segment_table, sort = FALSE,
                                       bar_labels = TRUE, interactive = FALSE,
                                       animate = FALSE, print_plot = TRUE) {
 
+  if (interactive) {
+    animate <- FALSE
+  }
+
   data <- rfm_prep_median(rfm_segment_table, transaction_count)
 
   if (interactive) {
@@ -693,6 +709,10 @@ rfm_plot_median_monetary <- function(rfm_segment_table, sort = FALSE,
                                      axis_label_angle = 315,
                                      bar_labels = TRUE, interactive = FALSE,
                                      animate = FALSE, print_plot = TRUE) {
+
+  if (interactive) {
+    animate <- FALSE
+  }
 
   data <- rfm_prep_median(rfm_segment_table, amount)
 
@@ -935,6 +955,10 @@ rfm_plot_segment_scatter <- function(segments, x = "monetary", y = "recency",
 
   if (is.null(plot_title)) {
     plot_title <- paste(yaxis_label, "vs", xaxis_label)
+  }
+
+  if (interactive) {
+    animate <- FALSE
   }
 
   if (interactive) {
