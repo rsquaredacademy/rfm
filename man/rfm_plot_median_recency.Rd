@@ -4,7 +4,7 @@
 \alias{rfm_plot_median_recency}
 \alias{rfm_plot_median_frequency}
 \alias{rfm_plot_median_monetary}
-\title{Segmentation plots}
+\title{Median plots}
 \usage{
 rfm_plot_median_recency(
   rfm_segment_table,
