@@ -42,7 +42,7 @@
 #' rfm_table_customer(rfm_data_customer, customer_id, number_of_orders,
 #' recency_days, revenue, analysis_date, recency_bins = c(115, 181, 297, 482),
 #' frequency_bins = c(4, 5, 6, 8), monetary_bins = c(256, 382, 506, 666))
-#' 
+#'
 #' @importFrom dplyr pull
 #'
 #' @export
@@ -51,7 +51,15 @@ rfm_table_customer <- function(data = NULL, customer_id = NULL,
                                n_transactions = NULL, recency = NULL,
                                total_revenue = NULL, analysis_date = NULL,
                                recency_bins = 5, frequency_bins = 5,
-                               monetary_bins = 5, ...) {
+                               monetary_bins = 5, ...) UseMethod("rfm_table_customer")
+
+#' @export
+#'
+rfm_table_customer.default <- function(data = NULL, customer_id = NULL,
+                                       n_transactions = NULL, recency = NULL,
+                                       total_revenue = NULL, analysis_date = NULL,
+                                       recency_bins = 5, frequency_bins = 5,
+                                       monetary_bins = 5, ...) {
 
   col_names <- c("customer_id", "recency_days", "transaction_count", "amount")
 
@@ -77,7 +85,15 @@ rfm_table_customer <- function(data = NULL, customer_id = NULL,
       set_names(col_names)
   }
 
-  rfm_prep_bins(result, recency_bins, frequency_bins, monetary_bins,
-                analysis_date)
+  out <- rfm_prep_bins(result, recency_bins, frequency_bins, monetary_bins,
+                       analysis_date)
+  class(out) <- c("rfm_table_customer", "tibble", "data.frame")
+  return(out)
 
+}
+
+#' @export
+#'
+print.rfm_table_customer <- function(x, ...) {
+  print(x$rfm)
 }

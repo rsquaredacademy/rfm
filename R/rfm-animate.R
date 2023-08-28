@@ -18,14 +18,13 @@ rfm_animate_data <- function(data, metric) {
   result
 }
 
-#' @importFrom gganimate transition_states ease_aes
 rfm_animate_plot <- function(p) {
   p +
-    transition_states(
+    gganimate::transition_states(
       frame,
       transition_length = 10,
       state_length = 1,
       wrap = FALSE
     ) +
-    ease_aes('linear')
+    gganimate::ease_aes('linear')
 }

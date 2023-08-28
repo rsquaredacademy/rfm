@@ -33,9 +33,12 @@
 #' monetary_upper <-  c(5, 5, 4, 5, 5, 5, 5, 5, 4, 5)
 #'
 #' # generate segments
-#' rfm_segment(rfm_result, segment_names, recency_lower, recency_upper,
-#' frequency_lower, frequency_upper, monetary_lower, monetary_upper)
-#' 
+#' segments <- rfm_segment(rfm_result, segment_names, recency_lower,
+#' recency_upper, frequency_lower, frequency_upper, monetary_lower,
+#' monetary_upper)
+#'
+#' segments
+#'
 #' @importFrom dplyr between
 #'
 #'@export
@@ -120,7 +123,7 @@ rfm_segment_summary <- function(segments) {
       orders = sum(transaction_count),
       revenue = sum(amount)
     ) %>%
-    mutate(aov = revenue / orders)
+    mutate(aov = round((revenue / orders), 2))
 
 }
 
@@ -235,6 +238,10 @@ rfm_plot_segment_summary <- function(x, metric = NULL,  sort = FALSE,
     yaxis_label <- to_title_case(metric)
   }
 
+  if (interactive) {
+    animate <- FALSE
+  }
+
   data <- x[c("segment", metric)]
   ylim_max <-
     data[[metric]] %>%
@@ -243,12 +250,49 @@ rfm_plot_segment_summary <- function(x, metric = NULL,  sort = FALSE,
     ceiling(.)
 
   if (interactive) {
-    rfm_plotly_segment_summary(data, metric, flip, sort, ascending, bar_color,
-                               plot_title, xaxis_label, yaxis_label)
+    pkg_flag <- requireNamespace("plotly", quietly = TRUE)
+    if (pkg_flag) {
+      rfm_plotly_segment_summary(data, metric, flip, sort, ascending, bar_color,
+                                 plot_title, xaxis_label, yaxis_label)
+    } else {
+      if (interactive()) {
+        message('`plotly` must be installed for this functionality. Would you like to install?')
+        if (menu(c("Yes", "No")) == 1) {
+          install.packages("plotly")
+          rfm_plotly_segment_summary(data, metric, flip, sort, ascending, bar_color,
+                                     plot_title, xaxis_label, yaxis_label)
+        } else {
+          stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
+        }
+      } else {
+        warning("`plot` is not installed. Using `ggplot2` instead to generate the plot!")
+        p <- rfm_gg_segment_summary(data, metric, sort, ascending, flip,
+                                    bar_color, plot_title, xaxis_label,
+                                    yaxis_label, axis_label_size, axis_label_angle,
+                                    ylim_max, bar_labels)
+      }
+    }
   } else {
     if (animate) {
-      print_plot <- FALSE
-      data <- rfm_animate_data(data, metric)
+      pkg_flag <- requireNamespace("gganimate", quietly = TRUE)
+      if (pkg_flag) {
+        print_plot <- FALSE
+        data <- rfm_animate_data(data, metric)
+      } else {
+        if (interactive()) {
+          message('`gganimate` must be installed for this functionality. Would you like to install?')
+          if (menu(c("Yes", "No")) == 1) {
+            install.packages("gganimate")
+            print_plot <- FALSE
+            data <- rfm_animate_data(data, metric)
+          } else {
+            stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
+          }
+        } else {
+          animate <- FALSE
+          warning("`gganimate` is not installed. Using `ggplot2` instead to generate the plot!")
+        }
+      }
     }
 
     p <- rfm_gg_segment_summary(data, metric, sort, ascending, flip,
@@ -258,7 +302,7 @@ rfm_plot_segment_summary <- function(x, metric = NULL,  sort = FALSE,
 
     if (animate) {
       p <- rfm_animate_plot(p)
-      animate(p, fps=8, renderer = gifski_renderer(loop = FALSE))
+      gganimate::animate(p, fps=8, renderer = gganimate::gifski_renderer(loop = FALSE))
     }
 
     if (print_plot) {
@@ -344,18 +388,61 @@ rfm_plot_revenue_dist <- function(x, flip = FALSE,
                                   print_plot = TRUE) {
 
   if (interactive) {
-    rfm_plotly_revenue_dist(x, flip, colors, legend_labels, plot_title,
-                            xaxis_label, yaxis_label)
+    animate <- FALSE
+  }
+
+  if (interactive) {
+    pkg_flag <- requireNamespace("plotly", quietly = TRUE)
+    if (pkg_flag) {
+      rfm_plotly_revenue_dist(x, flip, colors, legend_labels, plot_title,
+                              xaxis_label, yaxis_label)
+    } else {
+      if (interactive()) {
+        message('`plotly` must be installed for this functionality. Would you like to install?')
+        if (menu(c("Yes", "No")) == 1) {
+          install.packages("plotly")
+          rfm_plotly_revenue_dist(x, flip, colors, legend_labels, plot_title,
+                                  xaxis_label, yaxis_label)
+        } else {
+          stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
+        }
+      } else {
+        warning("`plot` is not installed. Using `ggplot2` instead to generate the plot!")
+        p <- rfm_gg_revenue_dist(data, colors, legend_labels, flip,
+                                 plot_title, xaxis_label, yaxis_label,
+                                 axis_label_size, axis_label_angle,
+                                 bar_labels, bar_label_size)
+      }
+    }
   } else {
 
     data <- rfm_prep_revenue_dist(x)
     share_data <- data[, c("category"), drop = FALSE]
 
     if (animate) {
-      print_plot <- FALSE
-      bar_labels <- FALSE
-      data <- rfm_animate_data(data, "share")
-      data$category <- rep(share_data$category, 10)
+      pkg_flag <- requireNamespace("gganimate", quietly = TRUE)
+      if (pkg_flag) {
+        print_plot <- FALSE
+        bar_labels <- FALSE
+        data <- rfm_animate_data(data, "share")
+        data$category <- rep(share_data$category, 10)
+      } else {
+        if (interactive()) {
+          message('`gganimate` must be installed for this functionality. Would you like to install?')
+          if (menu(c("Yes", "No")) == 1) {
+            install.packages("gganimate")
+            print_plot <- FALSE
+            bar_labels <- FALSE
+            data <- rfm_animate_data(data, "share")
+            data$category <- rep(share_data$category, 10)
+          } else {
+            stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
+          }
+        } else {
+          animate <- FALSE
+          warning("`gganimate` is not installed. Using `ggplot2` instead to generate the plot!")
+        }
+      }
     }
 
     p <- rfm_gg_revenue_dist(data, colors, legend_labels, flip,
@@ -365,7 +452,7 @@ rfm_plot_revenue_dist <- function(x, flip = FALSE,
 
     if (animate) {
       p <- rfm_animate_plot(p)
-      animate(p, fps=8, renderer = gifski_renderer(loop = FALSE))
+      gganimate::animate(p, fps=8, renderer = gganimate::gifski_renderer(loop = FALSE))
     }
 
     if (print_plot) {
@@ -377,7 +464,7 @@ rfm_plot_revenue_dist <- function(x, flip = FALSE,
 
 }
 
-#' Segmentation plots
+#' Median plots
 #'
 #' Segment wise median recency, frequency & monetary value plot.
 #'
@@ -457,16 +544,56 @@ rfm_plot_median_recency <- function(rfm_segment_table, sort = FALSE,
                                     bar_labels = TRUE, interactive = FALSE,
                                     animate = FALSE, print_plot = TRUE) {
 
+  if (interactive) {
+    animate <- FALSE
+  }
+
   data <- rfm_prep_median(rfm_segment_table, recency_days)
 
   if (interactive) {
-    rfm_plotly_median(data, bar_color, sort, ascending, flip, plot_title,
-                      xaxis_label, yaxis_label)
+    pkg_flag <- requireNamespace("plotly", quietly = TRUE)
+    if (pkg_flag) {
+      rfm_plotly_median(data, bar_color, sort, ascending, flip, plot_title,
+                        xaxis_label, yaxis_label)
+    } else {
+      if (interactive()) {
+        message('`plotly` must be installed for this functionality. Would you like to install?')
+        if (menu(c("Yes", "No")) == 1) {
+          install.packages("plotly")
+          rfm_plotly_median(data, bar_color, sort, ascending, flip, plot_title,
+                            xaxis_label, yaxis_label)
+        } else {
+          stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
+        }
+      } else {
+        warning("`plot` is not installed. Using `ggplot2` instead to generate the plot!")
+        p <- rfm_gg_median(data, bar_color, sort, ascending, flip, plot_title,
+                           xaxis_label, yaxis_label, axis_label_size,
+                           axis_label_angle, bar_labels)
+      }
+    }
   } else {
 
     if (animate) {
-      print_plot <- FALSE
-      data <- rfm_animate_data(data, "recency_days")
+      pkg_flag <- requireNamespace("gganimate", quietly = TRUE)
+      if (pkg_flag) {
+        print_plot <- FALSE
+        data <- rfm_animate_data(data, "recency_days")
+      } else {
+        if (interactive()) {
+          message('`gganimate` must be installed for this functionality. Would you like to install?')
+          if (menu(c("Yes", "No")) == 1) {
+            install.packages("gganimate")
+            print_plot <- FALSE
+            data <- rfm_animate_data(data, "recency_days")
+          } else {
+            stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
+          }
+        } else {
+          animate <- FALSE
+          warning("`gganimate` is not installed. Using `ggplot2` instead to generate the plot!")
+        }
+      }
     }
 
     p <- rfm_gg_median(data, bar_color, sort, ascending, flip, plot_title,
@@ -475,7 +602,7 @@ rfm_plot_median_recency <- function(rfm_segment_table, sort = FALSE,
 
     if (animate) {
       p <- rfm_animate_plot(p)
-      animate(p, fps=8, renderer = gifski_renderer(loop = FALSE))
+      gganimate::animate(p, fps=8, renderer = gganimate::gifski_renderer(loop = FALSE))
     }
 
     if (print_plot) {
@@ -500,15 +627,56 @@ rfm_plot_median_frequency <- function(rfm_segment_table, sort = FALSE,
                                       bar_labels = TRUE, interactive = FALSE,
                                       animate = FALSE, print_plot = TRUE) {
 
+  if (interactive) {
+    animate <- FALSE
+  }
+
   data <- rfm_prep_median(rfm_segment_table, transaction_count)
 
   if (interactive) {
-    rfm_plotly_median(data, bar_color, sort, ascending, flip, plot_title,
-                      xaxis_label, yaxis_label)
+    pkg_flag <- requireNamespace("plotly", quietly = TRUE)
+    if (pkg_flag) {
+      rfm_plotly_median(data, bar_color, sort, ascending, flip, plot_title,
+                        xaxis_label, yaxis_label)
+    } else {
+      if (interactive()) {
+        message('`plotly` must be installed for this functionality. Would you like to install?')
+        if (menu(c("Yes", "No")) == 1) {
+          install.packages("plotly")
+          rfm_plotly_median(data, bar_color, sort, ascending, flip, plot_title,
+                            xaxis_label, yaxis_label)
+        } else {
+          stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
+        }
+      } else {
+        warning("`plot` is not installed. Using `ggplot2` instead to generate the plot!")
+        p <- rfm_gg_median(data, bar_color, sort, ascending, flip, plot_title,
+                           xaxis_label, yaxis_label, axis_label_size,
+                           axis_label_angle, bar_labels)
+      }
+    }
   } else {
+
     if (animate) {
-      print_plot <- FALSE
-      data <- rfm_animate_data(data, "transaction_count")
+      pkg_flag <- requireNamespace("gganimate", quietly = TRUE)
+      if (pkg_flag) {
+        print_plot <- FALSE
+        data <- rfm_animate_data(data, "transaction_count")
+      } else {
+        if (interactive()) {
+          message('`gganimate` must be installed for this functionality. Would you like to install?')
+          if (menu(c("Yes", "No")) == 1) {
+            install.packages("gganimate")
+            print_plot <- FALSE
+            data <- rfm_animate_data(data, "transaction_count")
+          } else {
+            stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
+          }
+        } else {
+          animate <- FALSE
+          warning("`gganimate` is not installed. Using `ggplot2` instead to generate the plot!")
+        }
+      }
     }
 
     p <- rfm_gg_median(data, bar_color, sort, ascending, flip, plot_title,
@@ -517,7 +685,7 @@ rfm_plot_median_frequency <- function(rfm_segment_table, sort = FALSE,
 
     if (animate) {
       p <- rfm_animate_plot(p)
-      animate(p, fps=8, renderer = gifski_renderer(loop = FALSE))
+      gganimate::animate(p, fps=8, renderer = gganimate::gifski_renderer(loop = FALSE))
     }
 
     if (print_plot) {
@@ -542,15 +710,56 @@ rfm_plot_median_monetary <- function(rfm_segment_table, sort = FALSE,
                                      bar_labels = TRUE, interactive = FALSE,
                                      animate = FALSE, print_plot = TRUE) {
 
+  if (interactive) {
+    animate <- FALSE
+  }
+
   data <- rfm_prep_median(rfm_segment_table, amount)
 
   if (interactive) {
-    rfm_plotly_median(data, bar_color, sort, ascending, flip, plot_title,
-                      xaxis_label, yaxis_label)
+    pkg_flag <- requireNamespace("plotly", quietly = TRUE)
+    if (pkg_flag) {
+      rfm_plotly_median(data, bar_color, sort, ascending, flip, plot_title,
+                        xaxis_label, yaxis_label)
+    } else {
+      if (interactive()) {
+        message('`plotly` must be installed for this functionality. Would you like to install?')
+        if (menu(c("Yes", "No")) == 1) {
+          install.packages("plotly")
+          rfm_plotly_median(data, bar_color, sort, ascending, flip, plot_title,
+                            xaxis_label, yaxis_label)
+        } else {
+          stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
+        }
+      } else {
+        warning("`plot` is not installed. Using `ggplot2` instead to generate the plot!")
+        p <- rfm_gg_median(data, bar_color, sort, ascending, flip, plot_title,
+                           xaxis_label, yaxis_label, axis_label_size,
+                           axis_label_angle, bar_labels)
+      }
+    }
   } else {
+
     if (animate) {
-      print_plot <- FALSE
-      data <- rfm_animate_data(data, "amount")
+      pkg_flag <- requireNamespace("gganimate", quietly = TRUE)
+      if (pkg_flag) {
+        print_plot <- FALSE
+        data <- rfm_animate_data(data, "amount")
+      } else {
+        if (interactive()) {
+          message('`gganimate` must be installed for this functionality. Would you like to install?')
+          if (menu(c("Yes", "No")) == 1) {
+            install.packages("gganimate")
+            print_plot <- FALSE
+            data <- rfm_animate_data(data, "amount")
+          } else {
+            stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
+          }
+        } else {
+          animate <- FALSE
+          warning("`gganimate` is not installed. Using `ggplot2` instead to generate the plot!")
+        }
+      }
     }
 
     p <- rfm_gg_median(data, bar_color, sort, ascending, flip, plot_title,
@@ -559,7 +768,7 @@ rfm_plot_median_monetary <- function(rfm_segment_table, sort = FALSE,
 
     if (animate) {
       p <- rfm_animate_plot(p)
-      animate(p, fps=8, renderer = gifski_renderer(loop = FALSE))
+      gganimate::animate(p, fps=8, renderer = gganimate::gifski_renderer(loop = FALSE))
     }
 
     if (print_plot) {
@@ -635,9 +844,25 @@ rfm_plot_segment <- function(table, metric = "customers", interactive = FALSE,
   table$prop <- round((table[[metric]] / sum(table[[metric]])) * 100, 2)
 
   if (interactive) {
-    rfm_plotly_segment(table, metric)
+    pkg_flag <- requireNamespace("plotly", quietly = TRUE)
+    if (pkg_flag) {
+      rfm_plotly_segment(table, metric)
+    } else {
+      if (interactive()) {
+        message('`plotly` must be installed for this functionality. Would you like to install?')
+        if (menu(c("Yes", "No")) == 1) {
+          install.packages("plotly")
+          rfm_plotly_segment(table, metric)
+        } else {
+          stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
+        }
+      } else {
+        warning("`plot` is not installed. Using `ggplot2` instead to generate the plot!")
+        p <- rfm_gg_segment(table, metric, print_plot)
+      }
+    }
   } else {
-    rfm_gg_segment(table, metric, print_plot)
+    p <- rfm_gg_segment(table, metric, print_plot)
   }
 
 }
@@ -695,8 +920,6 @@ rfm_plot_segment <- function(table, metric = "customers", interactive = FALSE,
 #' # plotly
 #' rfm_plot_segment_scatter(segments, "monetary", "recency", interactive = TRUE)
 #'
-#' @importFrom gganimate transition_reveal
-#'
 #' @export
 rfm_plot_segment_scatter <- function(segments, x = "monetary", y = "recency",
                                      plot_title = NULL, legend_title = NULL,
@@ -735,19 +958,63 @@ rfm_plot_segment_scatter <- function(segments, x = "monetary", y = "recency",
   }
 
   if (interactive) {
-    rfm_plotly_segment_scatter(segments, x_data, y_data, plot_title,
-                               legend_title, xaxis_label, yaxis_label)
+    animate <- FALSE
+  }
+
+  if (interactive) {
+    pkg_flag <- requireNamespace("plotly", quietly = TRUE)
+    if (pkg_flag) {
+      rfm_plotly_segment_scatter(segments, x_data, y_data, plot_title,
+                                 legend_title, xaxis_label, yaxis_label)
+    } else {
+      if (interactive()) {
+        message('`plotly` must be installed for this functionality. Would you like to install?')
+        if (menu(c("Yes", "No")) == 1) {
+          install.packages("plotly")
+          rfm_plotly_segment_scatter(segments, x_data, y_data, plot_title,
+                                     legend_title, xaxis_label, yaxis_label)
+        } else {
+          stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
+        }
+      } else {
+        warning("`plot` is not installed. Using `ggplot2` instead to generate the plot!")
+        p <- rfm_gg_segment_scatter(segments, x_data, y_data, plot_title,
+                                    legend_title, xaxis_label, yaxis_label)
+      }
+    }
+
   } else {
     p <- rfm_gg_segment_scatter(segments, x_data, y_data, plot_title,
                                 legend_title, xaxis_label, yaxis_label)
 
     if (animate) {
-      print_plot <- FALSE
-      p <-
-        p +
-        transition_reveal(along = rfm_score)
+      pkg_flag <- requireNamespace("gganimate", quietly = TRUE)
+      if (pkg_flag) {
+        print_plot <- FALSE
+        p <-
+          p +
+          gganimate::transition_reveal(along = rfm_score)
 
-      animate(p, fps=8, renderer = gifski_renderer(loop = FALSE))
+        gganimate::animate(p, fps=8, renderer = gganimate::gifski_renderer(loop = FALSE))
+      } else {
+        if (interactive()) {
+          message('`gganimate` must be installed for this functionality. Would you like to install?')
+          if (menu(c("Yes", "No")) == 1) {
+            install.packages("gganimate")
+            print_plot <- FALSE
+            p <-
+              p +
+              gganimate::transition_reveal(along = rfm_score)
+
+            gganimate::animate(p, fps=8, renderer = gganimate::gifski_renderer(loop = FALSE))
+          } else {
+            stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
+          }
+        } else {
+          animate <- FALSE
+          warning("`gganimate` is not installed. Using `ggplot2` instead to generate the plot!")
+        }
+      }
     }
 
     if (print_plot) {

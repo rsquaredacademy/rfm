@@ -17,10 +17,8 @@ Depends:
     R (>= 3.2)
 Imports: 
     dplyr,
-    gganimate,
     ggplot2,
     magrittr,
-    plotly,
     RColorBrewer,
     rlang,
     scales,
@@ -29,13 +27,17 @@ Imports:
     utils,
     xplorerr
 Suggests: 
+    cli,
     covr,
     DT,
+    gganimate,
     gifski,
     kableExtra,
     knitr,
     png,
+    plotly,
     rmarkdown,
+    rmdformats,
     testthat (>= 3.0.0),
     vdiffr
 VignetteBuilder: knitr

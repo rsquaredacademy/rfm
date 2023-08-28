@@ -1,4 +1,3 @@
-#' @importFrom plotly plot_ly layout config add_trace
 rfm_plotly_heatmap <- function(mapdata, plot_title, xaxis_label, yaxis_label,
                                brewer_n, brewer_name, legend_title) {
 
@@ -7,7 +6,7 @@ rfm_plotly_heatmap <- function(mapdata, plot_title, xaxis_label, yaxis_label,
                  "\nMean Monetary Value: ", round(mapdata$monetary, 2))
 
   fig <-
-    plot_ly(
+    plotly::plot_ly(
       data = mapdata,
       x = ~frequency_score,
       y = ~recency_score,
@@ -21,12 +20,12 @@ rfm_plotly_heatmap <- function(mapdata, plot_title, xaxis_label, yaxis_label,
 
   fig <-
     fig %>%
-    layout(title = paste0("<b>", plot_title, "</b>"),
+    plotly::layout(title = paste0("<b>", plot_title, "</b>"),
            xaxis = list(title = paste0("<b>", xaxis_label, "</b>")),
            yaxis = list(title = paste0("<b>", yaxis_label, "</b>")))
 
   fig %>%
-    config(displayModeBar = FALSE)
+    plotly::config(displayModeBar = FALSE)
 }
 
 rfm_plotly_order_dist <- function(data, flip = FALSE, bar_color = NULL,
@@ -37,7 +36,7 @@ rfm_plotly_order_dist <- function(data, flip = FALSE, bar_color = NULL,
   text <- paste0("Orders: ", data$transaction_count, " \nCustomers: ", data$n)
 
   if (flip) {
-    fig <- plot_ly(data,
+    fig <- plotly::plot_ly(data,
                    x = ~n,
                    y = ~transaction_count,
                    type = "bar",
@@ -48,7 +47,7 @@ rfm_plotly_order_dist <- function(data, flip = FALSE, bar_color = NULL,
                      color = bar_color
                    ))
   } else {
-    fig <- plot_ly(data,
+    fig <- plotly::plot_ly(data,
                    x = ~transaction_count,
                    y = ~n,
                    type = "bar",
@@ -61,19 +60,19 @@ rfm_plotly_order_dist <- function(data, flip = FALSE, bar_color = NULL,
 
   fig <-
     fig %>%
-    layout(title = paste0("<b>", plot_title, "</b>"),
+    plotly::layout(title = paste0("<b>", plot_title, "</b>"),
            xaxis = list(title = paste0("<b>", xaxis_label, "</b>")),
            yaxis = list(title = paste0("<b>", yaxis_label, "</b>")))
 
   fig %>%
-    config(displayModeBar = FALSE)
+    plotly::config(displayModeBar = FALSE)
 
 }
 
 rfm_plotly_hist <- function(data, hist_color = NULL, plot_title = NULL,
                             xaxis_label = NULL, yaxis_label = NULL) {
 
-  fig <- plot_ly(data,
+  fig <- plotly::plot_ly(data,
                  x = ~score,
                  type = "histogram",
                  histnorm = "count",
@@ -89,12 +88,12 @@ rfm_plotly_hist <- function(data, hist_color = NULL, plot_title = NULL,
 
   fig <-
     fig %>%
-    layout(title = paste0("<b>", plot_title, "</b>"),
+    plotly::layout(title = paste0("<b>", plot_title, "</b>"),
            xaxis = list(title = paste0("<b>", xaxis_label, "</b>")),
            yaxis = list(title = paste0("<b>", yaxis_label, "</b>")))
 
   fig %>%
-    config(displayModeBar = FALSE)
+    plotly::config(displayModeBar = FALSE)
 
 }
 
@@ -106,7 +105,7 @@ rfm_plotly_segment_summary <- function(data, metric, flip, sort, ascending,
                  "\n", to_title_case(metric), ": ", data[[metric]])
 
   if (flip) {
-    fig <- plot_ly(data,
+    fig <- plotly::plot_ly(data,
                    y = ~segment,
                    x = ~get(metric),
                    type = "bar",
@@ -120,26 +119,26 @@ rfm_plotly_segment_summary <- function(data, metric, flip, sort, ascending,
     if (sort) {
       if (ascending) {
         fig <- fig %>%
-          layout(title = paste0("<b>", plot_title, "</b>"),
+          plotly::layout(title = paste0("<b>", plot_title, "</b>"),
                  xaxis = list(title = paste0("<b>", yaxis_label, "</b>")),
                  yaxis = list(title = paste0("<b>", xaxis_label, "</b>"),
                               categoryorder = "total descending"))
       } else {
         fig <- fig %>%
-          layout(title = paste0("<b>", plot_title, "</b>"),
+          plotly::layout(title = paste0("<b>", plot_title, "</b>"),
                  xaxis = list(title = paste0("<b>", yaxis_label, "</b>")),
                  yaxis = list(title = paste0("<b>", xaxis_label, "</b>"),
                               categoryorder = "total ascending"))
       }
     } else {
       fig <- fig %>%
-        layout(title = paste0("<b>", plot_title, "</b>"),
+        plotly::layout(title = paste0("<b>", plot_title, "</b>"),
                xaxis = list(title = paste0("<b>", yaxis_label, "</b>")),
                yaxis = list(title = paste0("<b>", xaxis_label, "</b>")))
     }
 
   } else {
-    fig <- plot_ly(data,
+    fig <- plotly::plot_ly(data,
                    x = ~segment,
                    y = ~get(metric),
                    type = "bar",
@@ -151,27 +150,27 @@ rfm_plotly_segment_summary <- function(data, metric, flip, sort, ascending,
     if (sort) {
       if (ascending) {
         fig <- fig %>%
-          layout(title = paste0("<b>", plot_title, "</b>"),
+          plotly::layout(title = paste0("<b>", plot_title, "</b>"),
                  xaxis = list(title = paste0("<b>", xaxis_label, "</b>"),
                               categoryorder = "total ascending"),
                  yaxis = list(title = paste0("<b>", yaxis_label, "</b>")))
       } else {
         fig <- fig %>%
-          layout(title = paste0("<b>", plot_title, "</b>"),
+          plotly::layout(title = paste0("<b>", plot_title, "</b>"),
                  xaxis = list(title = paste0("<b>", xaxis_label, "</b>"),
                               categoryorder = "total descending"),
                  yaxis = list(title = paste0("<b>", yaxis_label, "</b>")))
       }
     } else {
       fig <- fig %>%
-        layout(title = paste0("<b>", plot_title, "</b>"),
+        plotly::layout(title = paste0("<b>", plot_title, "</b>"),
                xaxis = list(title = paste0("<b>", xaxis_label, "</b>")),
                yaxis = list(title = paste0("<b>", yaxis_label, "</b>")))
     }
   }
 
   fig %>%
-    config(displayModeBar = FALSE)
+    plotly::config(displayModeBar = FALSE)
 
 }
 
@@ -202,7 +201,7 @@ rfm_plotly_revenue_dist <- function(x, flip = FALSE,
 
   if (flip) {
     fig <-
-    plot_ly(data,
+    plotly::plot_ly(data,
             x = ~revenue_share,
             y = ~segment,
             type = 'bar',
@@ -211,18 +210,18 @@ rfm_plotly_revenue_dist <- function(x, flip = FALSE,
             hoverinfo = "text",
             hovertext = revenue_text,
             marker = list(color = colors[1])) %>%
-    add_trace(x = ~customer_share,
+    plotly::add_trace(x = ~customer_share,
               name = legend_labels[2],
               hoverinfo = "text",
               hovertext = customer_text,
               marker = list(color = colors[2])) %>%
-    layout(title = paste0("<b>", plot_title, "</b>"),
+    plotly::layout(title = paste0("<b>", plot_title, "</b>"),
            xaxis = list(title = paste0("<b>", xaxis_label, "</b>"), ticksuffix = "%"),
            yaxis = list(title = paste0("<b>", yaxis_label, "</b>")),
            legend = list(x = 100, y = 0.5))
   } else {
     fig <-
-    plot_ly(data,
+    plotly::plot_ly(data,
             x = ~segment,
             y = ~revenue_share,
             type = 'bar',
@@ -230,12 +229,12 @@ rfm_plotly_revenue_dist <- function(x, flip = FALSE,
             hoverinfo = "text",
             hovertext = revenue_text,
             marker = list(color = colors[1])) %>%
-    add_trace(y = ~customer_share,
+    plotly::add_trace(y = ~customer_share,
               name = legend_labels[2],
               hoverinfo = "text",
               hovertext = customer_text,
               marker = list(color = colors[2])) %>%
-    layout(title = paste0("<b>", plot_title, "</b>"),
+    plotly::layout(title = paste0("<b>", plot_title, "</b>"),
            xaxis = list(title = paste0("<b>", xaxis_label, "</b>")),
            yaxis = list(title = paste0("<b>", yaxis_label, "</b>"), ticksuffix = "%"),
            legend = list(x = 100, y = 0.5))
@@ -243,13 +242,13 @@ rfm_plotly_revenue_dist <- function(x, flip = FALSE,
 
   fig <-
     fig %>%
-    layout(title = paste0("<b>", plot_title, "</b>"),
+    plotly::layout(title = paste0("<b>", plot_title, "</b>"),
            xaxis = list(title = paste0("<b>", xaxis_label, "</b>")),
            yaxis = list(title = paste0("<b>", yaxis_label, "</b>"), ticksuffix = "%"),
            legend = list(x = 100, y = 0.5))
 
   fig %>%
-    config(displayModeBar = FALSE)
+    plotly::config(displayModeBar = FALSE)
 
 }
 
@@ -260,7 +259,7 @@ rfm_plotly_segment <- function(table, metric = "customers") {
                  to_title_case(metric), ": ", table[[metric]],
                  " (", table$prop, "%)")
 
-  fig <- plot_ly(
+  fig <- plotly::plot_ly(
     type = "treemap",
     labels = table$segment,
     parents = rep("", nrow(table)),
@@ -270,7 +269,7 @@ rfm_plotly_segment <- function(table, metric = "customers") {
   )
 
   fig %>%
-    config(displayModeBar = FALSE)
+    plotly::config(displayModeBar = FALSE)
 }
 
 rfm_plotly_segment_scatter <- function(segments, x_data = NULL, y_data = NULL,
@@ -288,7 +287,7 @@ rfm_plotly_segment_scatter <- function(segments, x_data = NULL, y_data = NULL,
 
 
 
-  fig <- plot_ly(segments,
+  fig <- plotly::plot_ly(segments,
                  x = ~get(x_data),
                  y = ~get(y_data),
                  type = "scatter",
@@ -300,13 +299,13 @@ rfm_plotly_segment_scatter <- function(segments, x_data = NULL, y_data = NULL,
 
   fig <-
     fig %>%
-    layout(title = paste0("<b>", plot_title, "</b>"),
+    plotly::layout(title = paste0("<b>", plot_title, "</b>"),
            xaxis = list(title = paste0("<b>", xaxis_label, "</b>")),
            yaxis = list(title = paste0("<b>", yaxis_label, "</b>")),
            legend = list(title = list(text = legend_title)))
 
   fig %>%
-    config(displayModeBar = FALSE)
+    plotly::config(displayModeBar = FALSE)
 
 }
 
@@ -343,7 +342,7 @@ rfm_plotly_median <- function(data, bar_color = NULL, sort = FALSE,
   }
 
   if (flip) {
-    fig <- plot_ly(data,
+    fig <- plotly::plot_ly(data,
                    y = ~segment,
                    x = ~get(cnames[2]),
                    type = "bar",
@@ -357,26 +356,26 @@ rfm_plotly_median <- function(data, bar_color = NULL, sort = FALSE,
     if (sort) {
       if (ascending) {
         fig <- fig %>%
-          layout(title = paste0("<b>", plot_title, "</b>"),
+          plotly::layout(title = paste0("<b>", plot_title, "</b>"),
                  xaxis = list(title = paste0("<b>", yaxis_label, "</b>")),
                  yaxis = list(title = paste0("<b>", xaxis_label, "</b>"),
                               categoryorder = "total descending"))
       } else {
         fig <- fig %>%
-          layout(title = paste0("<b>", plot_title, "</b>"),
+          plotly::layout(title = paste0("<b>", plot_title, "</b>"),
                  xaxis = list(title = paste0("<b>", yaxis_label, "</b>")),
                  yaxis = list(title = paste0("<b>", xaxis_label, "</b>"),
                               categoryorder = "total ascending"))
       }
     } else {
       fig <- fig %>%
-        layout(title = paste0("<b>", plot_title, "</b>"),
+        plotly::layout(title = paste0("<b>", plot_title, "</b>"),
                xaxis = list(title = paste0("<b>", yaxis_label, "</b>")),
                yaxis = list(title = paste0("<b>", xaxis_label, "</b>")))
     }
 
   } else {
-    fig <- plot_ly(data,
+    fig <- plotly::plot_ly(data,
                    x = ~segment,
                    y = ~get(cnames[2]),
                    type = "bar",
@@ -388,25 +387,25 @@ rfm_plotly_median <- function(data, bar_color = NULL, sort = FALSE,
     if (sort) {
       if (ascending) {
         fig <- fig %>%
-          layout(title = paste0("<b>", plot_title, "</b>"),
+          plotly::layout(title = paste0("<b>", plot_title, "</b>"),
                  xaxis = list(title = paste0("<b>", xaxis_label, "</b>"),
                               categoryorder = "total ascending"),
                  yaxis = list(title = paste0("<b>", yaxis_label, "</b>")))
       } else {
         fig <- fig %>%
-          layout(title = paste0("<b>", plot_title, "</b>"),
+          plotly::layout(title = paste0("<b>", plot_title, "</b>"),
                  xaxis = list(title = paste0("<b>", xaxis_label, "</b>"),
                               categoryorder = "total descending"),
                  yaxis = list(title = paste0("<b>", yaxis_label, "</b>")))
       }
     } else {
       fig <- fig %>%
-        layout(title = paste0("<b>", plot_title, "</b>"),
+        plotly::layout(title = paste0("<b>", plot_title, "</b>"),
                xaxis = list(title = paste0("<b>", xaxis_label, "</b>")),
                yaxis = list(title = paste0("<b>", yaxis_label, "</b>")))
     }
   }
 
   fig %>%
-    config(displayModeBar = FALSE)
+    plotly::config(displayModeBar = FALSE)
 }
