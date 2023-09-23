@@ -3,8 +3,23 @@
 \docType{package}
 \name{rfm}
 \alias{rfm}
+\alias{_PACKAGE}
+\alias{rfm-package}
 \title{\code{rfm} package}
 \description{
 Tools for customer segmentation analysis
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/rsquaredacademy/rfm}
+  \item \url{https://rfm.rsquaredacademy.com/}
+  \item Report bugs at \url{https://github.com/rsquaredacademy/rfm/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Aravind Hebbali \email{hebbali.aravind@gmail.com} (\href{https://orcid.org/0000-0001-9220-9669}{ORCID})
+
 }
 \keyword{internal}
