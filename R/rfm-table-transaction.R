@@ -49,6 +49,7 @@ rfm_table_order <- function(data = NULL, customer_id = NULL, order_date = NULL,
                             recency_bins = 5, frequency_bins = 5,
                             monetary_bins = 5, ...) UseMethod("rfm_table_order")
 
+#' @importFrom dplyr distinct
 #' @export
 #'
 rfm_table_order.default <- function(data = NULL, customer_id = NULL,
@@ -59,9 +60,15 @@ rfm_table_order.default <- function(data = NULL, customer_id = NULL,
     data, {{ customer_id }}, {{ order_date }},
     {{ revenue }}, analysis_date
   )
+
+  other_cols <-
+    data %>%
+    select(!c({{ order_date }}, {{ revenue }})) %>%
+    distinct()
+
   out <- rfm_prep_bins(
     result, recency_bins, frequency_bins, monetary_bins,
-    analysis_date
+    analysis_date, other_cols
   )
 
   class(out) <- c("rfm_table_order", "tibble", "data.frame")
@@ -101,7 +108,9 @@ rfm_prep_table_data <- function(data, customer_id, order_date, revenue,
 }
 
 #' @importFrom rlang int
-rfm_prep_bins <- function(result, recency_bins, frequency_bins, monetary_bins, analysis_date) {
+#' @importFrom dplyr left_join join_by
+rfm_prep_bins <- function(result, recency_bins, frequency_bins, monetary_bins,
+                          analysis_date, data) {
   result$recency_score <- NA
   result$frequency_score <- NA
   result$monetary_score <- NA
@@ -173,6 +182,8 @@ rfm_prep_bins <- function(result, recency_bins, frequency_bins, monetary_bins, a
 
   result$transaction_count <- int(result$transaction_count)
 
+  result <- left_join(result, data, by = join_by(customer_id))
+
   threshold <- data.frame(
     recency_lower = lower_recency,
     recency_upper = upper_recency,
@@ -183,7 +194,11 @@ rfm_prep_bins <- function(result, recency_bins, frequency_bins, monetary_bins, a
   )
 
   list(
-    rfm = result, analysis_date = analysis_date, frequency_bins = frequency_bins,
-    recency_bins = recency_bins, monetary_bins = monetary_bins, threshold = threshold
+    rfm = result,
+    analysis_date = analysis_date,
+    frequency_bins = frequency_bins,
+    recency_bins = recency_bins,
+    monetary_bins = monetary_bins,
+    threshold = threshold
   )
 }

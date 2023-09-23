@@ -74,6 +74,10 @@ rfm_table_customer.default <- function(data = NULL, customer_id = NULL,
       select({{ customer_id }}, {{ recency }}, {{ n_transactions }},
              {{ total_revenue }}) %>%
       set_names(col_names)
+
+    other_cols <- 
+      data %>%
+      select(!c({{ recency }}, {{ n_transactions }}, {{ total_revenue }}))
   } else {
     result <-
       data %>%
@@ -83,10 +87,14 @@ rfm_table_customer.default <- function(data = NULL, customer_id = NULL,
       select({{ customer_id }}, recency_days, {{ n_transactions }},
              {{ total_revenue }}) %>%
       set_names(col_names)
+
+    other_cols <- 
+      data %>%
+      select(!c(recency_days, {{ n_transactions }}, {{ total_revenue }}))
   }
 
   out <- rfm_prep_bins(result, recency_bins, frequency_bins, monetary_bins,
-                       analysis_date)
+                       analysis_date, other_cols)
   class(out) <- c("rfm_table_customer", "tibble", "data.frame")
   return(out)
 

@@ -39,7 +39,7 @@
 #'
 #' segments
 #'
-#' @importFrom dplyr between
+#' @importFrom dplyr between everything
 #'
 #'@export
 #'
@@ -73,6 +73,10 @@ rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
   rfm_score_table[c("customer_id", "segment", "rfm_score", "transaction_count",
                     "recency_days", "amount", "recency_score",
                     "frequency_score", "monetary_score")]
+  rfm_score_table %>%
+    select(c("customer_id", "segment", "rfm_score", "transaction_count",
+                    "recency_days", "amount", "recency_score",
+                    "frequency_score", "monetary_score"), everything())
 
 
 }
