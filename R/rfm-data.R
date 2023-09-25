@@ -4,9 +4,12 @@
 #'
 #' @format A tibble with 49.6 rows and 3 variables:
 #' \describe{
-#'   \item{order_date}{order date}
-#'   \item{customer_id}{customer id}
-#'   \item{revenue}{transaction amount}
+#'   \item{order_date}{Order date.}
+#'   \item{customer_id}{Customer id}
+#'   \item{revenue}{Transaction amount.}
+#'   \item{first_name}{First name of the customer.}
+#'   \item{last_name}{Last name of the customer.}
+#'   \item{email}{email id of the customer.}
 #' }
 #'
 "rfm_data_orders"
@@ -22,6 +25,9 @@
 #'   \item{most_recent_visit}{Date of the most recent transaction.}
 #'   \item{number_of_purchases}{Total number of transactions/orders.}
 #'   \item{purchase_interval}{Number of days since last transaction/order.}
+#'   #'   \item{first_name}{First name of the customer.}
+#'   \item{last_name}{Last name of the customer.}
+#'   \item{email}{email id of the customer.}
 #' }
 #'
 "rfm_data_customer"
