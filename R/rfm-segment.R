@@ -227,7 +227,7 @@ rfm_plot_segment_summary <- function(x, metric = NULL,  sort = FALSE,
   }
 
   if (is.null(bar_color)) {
-    bar_color <- "blue"
+    bar_color <- "#0f1a34"
   }
 
   if (is.null(plot_title)) {

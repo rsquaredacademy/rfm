@@ -197,7 +197,7 @@ rfm_plot_histogram <- function(rfm_table, metric = "recency",
   }
 
   if (is.null(hist_color)) {
-    hist_color <- "blue"
+    hist_color <- "#0f1a34"
   }
 
   ycol <- switch(metric,
@@ -245,7 +245,7 @@ rfm_plot_histogram <- function(rfm_table, metric = "recency",
 #' @rdname rfm_plot_histogram
 #' @usage NULL
 #'
-rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
+rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = "#0f1a34",
                            plot_title = 'RFM Histograms', xaxis_title = ' ',
                            yaxis_title = 'Count', print_plot = TRUE) {
   .Deprecated("rfm_plot_histograms()")
@@ -299,7 +299,7 @@ rfm_plot_bar_chart <- function(rfm_table, bar_color = NULL,
                                print_plot = TRUE) {
 
   if (is.null(bar_color)) {
-    bar_color <- "blue"
+    bar_color <- "#0f1a34"
   }
 
   if (is.null(xaxis_label)) {
@@ -343,7 +343,7 @@ rfm_plot_bar_chart <- function(rfm_table, bar_color = NULL,
 #' @rdname rfm_plot_bar_chart
 #' @usage NULL
 #'
-rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
+rfm_bar_chart <- function(rfm_table, bar_color = '#0f1a34',
                           xaxis_title = 'Monetary Score',
                           sec_xaxis_title = 'Frequency Score',
                           yaxis_title = ' ',
@@ -431,7 +431,7 @@ rfm_plot_order_dist <- function(rfm_table, flip = FALSE, bar_color = NULL,
   }
 
   if (is.null(bar_color)) {
-    bar_color <- "blue"
+    bar_color <- "#0f1a34"
   }
 
   if (interactive) {
@@ -512,7 +512,7 @@ rfm_plot_order_dist <- function(rfm_table, flip = FALSE, bar_color = NULL,
 #' @rdname rfm_plot_order_dist
 #' @usage NULL
 #'
-rfm_order_dist <- function(rfm_table, bar_color = 'blue',
+rfm_order_dist <- function(rfm_table, bar_color = '#0f1a34',
                            xaxis_title = 'Orders', yaxis_title = 'Customers',
                            plot_title = 'Customers by Orders',
                            print_plot = TRUE) {
