@@ -89,7 +89,7 @@ rfm_plot_heatmap <- function(data, brewer_n = 5, brewer_name = "PuBu",
           stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
         }
       } else {
-        warning("`plot` is not installed. Using `ggplot2` instead to generate the plot!")
+        warning("`plotly` is not installed. Using `ggplot2` instead to generate the plot!")
         p <- rfm_gg_heatmap(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n,
                             brewer_name, legend_title, print_plot)
       }
@@ -223,7 +223,7 @@ rfm_plot_histogram <- function(rfm_table, metric = "recency",
           stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
         }
       } else {
-        warning("`plot` is not installed. Using `ggplot2` instead to generate the plot!")
+        warning("`plotly` is not installed. Using `ggplot2` instead to generate the plot!")
         p <- rfm_gg_hist(data, hist_bins, hist_color, plot_title, xaxis_label,
                          yaxis_label, print_plot)
       }
@@ -461,7 +461,7 @@ rfm_plot_order_dist <- function(rfm_table, flip = FALSE, bar_color = NULL,
           stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
         }
       } else {
-        warning("`plot` is not installed. Using `ggplot2` instead to generate the plot!")
+        warning("`plotly` is not installed. Using `ggplot2` instead to generate the plot!")
         p <- rfm_gg_order_dist(data, flip, bar_color, plot_title, xaxis_label,
                                yaxis_label, ylim_max, bar_labels, bar_label_size)
       }

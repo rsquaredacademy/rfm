@@ -269,7 +269,7 @@ rfm_plot_segment_summary <- function(x, metric = NULL,  sort = FALSE,
           stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
         }
       } else {
-        warning("`plot` is not installed. Using `ggplot2` instead to generate the plot!")
+        warning("`plotly` is not installed. Using `ggplot2` instead to generate the plot!")
         p <- rfm_gg_segment_summary(data, metric, sort, ascending, flip,
                                     bar_color, plot_title, xaxis_label,
                                     yaxis_label, axis_label_size, axis_label_angle,
@@ -411,7 +411,7 @@ rfm_plot_revenue_dist <- function(x, flip = FALSE,
           stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
         }
       } else {
-        warning("`plot` is not installed. Using `ggplot2` instead to generate the plot!")
+        warning("`plotly` is not installed. Using `ggplot2` instead to generate the plot!")
         p <- rfm_gg_revenue_dist(data, colors, legend_labels, flip,
                                  plot_title, xaxis_label, yaxis_label,
                                  axis_label_size, axis_label_angle,
@@ -570,7 +570,7 @@ rfm_plot_median_recency <- function(rfm_segment_table, sort = FALSE,
           stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
         }
       } else {
-        warning("`plot` is not installed. Using `ggplot2` instead to generate the plot!")
+        warning("`plotly` is not installed. Using `ggplot2` instead to generate the plot!")
         p <- rfm_gg_median(data, bar_color, sort, ascending, flip, plot_title,
                            xaxis_label, yaxis_label, axis_label_size,
                            axis_label_angle, bar_labels)
@@ -653,7 +653,7 @@ rfm_plot_median_frequency <- function(rfm_segment_table, sort = FALSE,
           stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
         }
       } else {
-        warning("`plot` is not installed. Using `ggplot2` instead to generate the plot!")
+        warning("`plotly` is not installed. Using `ggplot2` instead to generate the plot!")
         p <- rfm_gg_median(data, bar_color, sort, ascending, flip, plot_title,
                            xaxis_label, yaxis_label, axis_label_size,
                            axis_label_angle, bar_labels)
@@ -736,7 +736,7 @@ rfm_plot_median_monetary <- function(rfm_segment_table, sort = FALSE,
           stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
         }
       } else {
-        warning("`plot` is not installed. Using `ggplot2` instead to generate the plot!")
+        warning("`plotly` is not installed. Using `ggplot2` instead to generate the plot!")
         p <- rfm_gg_median(data, bar_color, sort, ascending, flip, plot_title,
                            xaxis_label, yaxis_label, axis_label_size,
                            axis_label_angle, bar_labels)
@@ -861,7 +861,7 @@ rfm_plot_segment <- function(table, metric = "customers", interactive = FALSE,
           stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
         }
       } else {
-        warning("`plot` is not installed. Using `ggplot2` instead to generate the plot!")
+        warning("`plotly` is not installed. Using `ggplot2` instead to generate the plot!")
         p <- rfm_gg_segment(table, metric, print_plot)
       }
     }
@@ -981,7 +981,7 @@ rfm_plot_segment_scatter <- function(segments, x = "monetary", y = "recency",
           stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
         }
       } else {
-        warning("`plot` is not installed. Using `ggplot2` instead to generate the plot!")
+        warning("`plotly` is not installed. Using `ggplot2` instead to generate the plot!")
         p <- rfm_gg_segment_scatter(segments, x_data, y_data, plot_title,
                                     legend_title, xaxis_label, yaxis_label)
       }
