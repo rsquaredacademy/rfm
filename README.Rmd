@@ -21,7 +21,7 @@ options(tibble.print_min = 5, tibble.print_max = 5)
 
 ## Overview
 
-Tools for customer segmentation using RFM (recency, frequency and monetary) analysis. Generates segments from RFM score. Works with both transaction and customer level data.
+Tools for customer segmentation using RFM (recency, frequency and monetary) analysis.  
 
 ## Installation
 
@@ -85,6 +85,24 @@ monetary_upper)
 
 segments
 ```
+
+### Plotting Engines
+
+`rfm` supports the following plotting engines:
+
+- [ggplot2](https://ggplot2.tidyverse.org)
+- [plotly](https://plotly.com/r/)
+- [gganimate](https://gganimate.com) 
+
+### Shiny App
+
+`rfm` includes a shiny app for interactive RFM analysis. In the latest release, we have added project management features to allow users to save/clone their projects. 
+
+## Resources
+
+- [Online Course](https://rsquared-academy.thinkific.com/courses/customer-segmentation-using-rfm-analysis)
+- [YouTube Tutorial](https://www.youtube.com/watch?v=275X7yaSsoQ)
+- [Blog](https://blog.rsquaredacademy.com/customer-segmentation-using-rfm-analysis/)
 
 ## Getting Help
 

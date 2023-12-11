@@ -15,8 +15,7 @@ Status](https://img.shields.io/codecov/c/github/rsquaredacademy/rfm/master.svg)]
 ## Overview
 
 Tools for customer segmentation using RFM (recency, frequency and
-monetary) analysis. Generates segments from RFM score. Works with both
-transaction and customer level data.
+monetary) analysis.
 
 ## Installation
 
@@ -103,6 +102,27 @@ segments
 #> # i 6 more variables: recency_score <int>, frequency_score <int>,
 #> #   monetary_score <int>, first_name <chr>, last_name <chr>, email <chr>
 ```
+
+### Plotting Engines
+
+`rfm` supports the following plotting engines:
+
+- [ggplot2](https://ggplot2.tidyverse.org)
+- [plotly](https://plotly.com/r/)
+- [gganimate](https://gganimate.com)
+
+### Shiny App
+
+`rfm` includes a shiny app for interactive RFM analysis. In the latest
+release, we have added project management features to allow users to
+save/clone their projects. Below is a quick demo of the shiny app:
+
+## Resources
+
+- [Online
+  Course](https://rsquared-academy.thinkific.com/courses/customer-segmentation-using-rfm-analysis)
+- [YouTube Tutorial](https://www.youtube.com/watch?v=275X7yaSsoQ)
+- [Blog](https://blog.rsquaredacademy.com/customer-segmentation-using-rfm-analysis/)
 
 ## Getting Help
 
