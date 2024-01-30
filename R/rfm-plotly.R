@@ -327,18 +327,18 @@ rfm_plotly_median <- function(data, bar_color = NULL, sort = FALSE,
 
   if (is.null(yaxis_label)) {
     yaxis_label <- ycol
-  } 
+  }
 
   if (is.null(plot_title)) {
     plot_title <- paste(yaxis_label, " by Segment")
-  } 
+  }
 
   if (is.null(xaxis_label)) {
     xaxis_label <- "Segment"
-  } 
+  }
 
   if (is.null(bar_color)) {
-    bar_color <- "blue"
+    bar_color <- "#0f1a34"
   }
 
   if (flip) {
