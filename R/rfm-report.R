@@ -1,6 +1,6 @@
 #' RFM report
 #'
-#' Generates a segmentation ananlysis report.
+#' Generates a segmentation analysis report.
 #'
 #' @param rfm_table An object of class \code{rfm_table}.
 #' @param segments Output from \code{rfm_segment}.
@@ -41,7 +41,7 @@
 #' rfm_create_report(rfm_result, segments, FALSE,
 #' "Customer Segmentation Report")
 #' }
-#' 
+#'
 #' @importFrom utils browseURL
 #'
 #' @export
