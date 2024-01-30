@@ -850,23 +850,29 @@ rfm_plot_segment <- function(table, metric = "customers", interactive = FALSE,
   if (interactive) {
     pkg_flag <- requireNamespace("plotly", quietly = TRUE)
     if (pkg_flag) {
-      rfm_plotly_segment(table, metric)
+      p <- rfm_plotly_segment(table, metric)
     } else {
       if (interactive()) {
         message('`plotly` must be installed for this functionality. Would you like to install?')
         if (menu(c("Yes", "No")) == 1) {
           install.packages("plotly")
-          rfm_plotly_segment(table, metric)
+          p <- rfm_plotly_segment(table, metric)
         } else {
           stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
         }
       } else {
         warning("`plotly` is not installed. Using `ggplot2` instead to generate the plot!")
-        p <- rfm_gg_segment(table, metric, print_plot)
+        p <- rfm_gg_segment(table, metric)
       }
     }
   } else {
-    p <- rfm_gg_segment(table, metric, print_plot)
+    p <- rfm_gg_segment(table, metric)
+  }
+
+  if (print_plot) {
+    print(p)
+  } else {
+    return(p)
   }
 
 }

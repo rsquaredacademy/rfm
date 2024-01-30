@@ -76,14 +76,14 @@ rfm_plot_heatmap <- function(data, brewer_n = 5, brewer_name = "PuBu",
   if (interactive) {
     pkg_flag <- requireNamespace("plotly", quietly = TRUE)
     if (pkg_flag) {
-      rfm_plotly_heatmap(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n,
+      p <- rfm_plotly_heatmap(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n,
                          brewer_name, legend_title)
     } else {
       if (interactive()) {
         message('`plotly` must be installed for this functionality. Would you like to install?')
         if (menu(c("Yes", "No")) == 1) {
           install.packages("plotly")
-          rfm_plotly_heatmap(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n,
+          p <- rfm_plotly_heatmap(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n,
                              brewer_name, legend_title)
         } else {
           stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
@@ -91,12 +91,18 @@ rfm_plot_heatmap <- function(data, brewer_n = 5, brewer_name = "PuBu",
       } else {
         warning("`plotly` is not installed. Using `ggplot2` instead to generate the plot!")
         p <- rfm_gg_heatmap(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n,
-                            brewer_name, legend_title, print_plot)
+                            brewer_name, legend_title)
       }
     }
   } else {
-    rfm_gg_heatmap(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n,
-                   brewer_name, legend_title, print_plot)
+    p <- rfm_gg_heatmap(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n,
+                   brewer_name, legend_title)
+  }
+
+  if (print_plot) {
+    print(p)
+  } else {
+    return(p)
   }
 
 }
@@ -225,12 +231,12 @@ rfm_plot_histogram <- function(rfm_table, metric = "recency",
       } else {
         warning("`plotly` is not installed. Using `ggplot2` instead to generate the plot!")
         p <- rfm_gg_hist(data, hist_bins, hist_color, plot_title, xaxis_label,
-                         yaxis_label, print_plot)
+                         yaxis_label)
       }
     }
   } else {
     p <- rfm_gg_hist(data, hist_bins, hist_color, plot_title, xaxis_label,
-                     yaxis_label, print_plot)
+                     yaxis_label)
   }
 
   if (print_plot) {
