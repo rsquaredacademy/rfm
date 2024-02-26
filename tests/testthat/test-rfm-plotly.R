@@ -26,7 +26,7 @@ test_that('interactive order distribution plot is as expected', {
   p <- rfm_plot_order_dist(rfm_result, interactive = TRUE)
 
   expect_equal(p$x$attrs[[1]]$type, "bar")
-  expect_equal(p$x$attrs[[1]]$marker$color, "blue")
+  expect_equal(p$x$attrs[[1]]$marker$color, "#0f1a34")
   expect_equal(p$x$layoutAttrs[[1]]$title, "<b>Customer Distribution by Orders</b>")
   expect_equal(p$x$layoutAttrs[[1]]$xaxis$title, "<b>Orders</b>")
   expect_equal(p$x$layoutAttrs[[1]]$yaxis$title, "<b>Customers</b>")
@@ -59,7 +59,7 @@ test_that('interactive histogram is as expected', {
 
   expect_equal(p$x$attrs[[1]]$histnorm, "count")
   expect_true(p$x$attrs[[1]]$autobinx)
-  expect_equal(p$x$attrs[[1]]$marker$color, "blue")
+  expect_equal(p$x$attrs[[1]]$marker$color, "#0f1a34")
   expect_equal(p$x$attrs[[1]]$marker$line$color, "white")
   expect_equal(p$x$attrs[[1]]$marker$line$width, 1.5)
   expect_equal(p$x$attrs[[1]]$type, "histogram")
@@ -76,7 +76,7 @@ test_that("interactive segment summary plot is as expected", {
   p <- rfm_plot_segment_summary(my_segments, interactive = TRUE)
 
   expect_equal(p$x$attrs[[1]]$type, "bar")
-  expect_equal(p$x$attrs[[1]]$marker$color, "blue")
+  expect_equal(p$x$attrs[[1]]$marker$color, "#0f1a34")
   expect_equal(p$x$layoutAttrs[[1]]$title, "<b>Customers  Distribution by Segment</b>")
   expect_equal(p$x$layoutAttrs[[1]]$xaxis$title, "<b>Segment</b>")
   expect_equal(p$x$layoutAttrs[[1]]$yaxis$title, "<b>Customers</b>")
@@ -90,7 +90,7 @@ test_that("interactive segment summary plot is as expected when sorted", {
   p <- rfm_plot_segment_summary(my_segments, sort = TRUE, interactive = TRUE)
 
   expect_equal(p$x$attrs[[1]]$type, "bar")
-  expect_equal(p$x$attrs[[1]]$marker$color, "blue")
+  expect_equal(p$x$attrs[[1]]$marker$color, "#0f1a34")
   expect_equal(p$x$layoutAttrs[[1]]$title, "<b>Customers  Distribution by Segment</b>")
   expect_equal(p$x$layoutAttrs[[1]]$xaxis$title, "<b>Segment</b>")
   expect_equal(p$x$layoutAttrs[[1]]$xaxis$categoryorder, "total descending")
@@ -106,7 +106,7 @@ test_that("interactive segment summary plot sorted in descending order", {
                                 ascending = TRUE, interactive = TRUE)
 
   expect_equal(p$x$attrs[[1]]$type, "bar")
-  expect_equal(p$x$attrs[[1]]$marker$color, "blue")
+  expect_equal(p$x$attrs[[1]]$marker$color, "#0f1a34")
   expect_equal(p$x$layoutAttrs[[1]]$title, "<b>Customers  Distribution by Segment</b>")
   expect_equal(p$x$layoutAttrs[[1]]$xaxis$title, "<b>Segment</b>")
   expect_equal(p$x$layoutAttrs[[1]]$xaxis$categoryorder, "total ascending")
@@ -123,7 +123,7 @@ test_that("interactive segment summary plot flipped", {
 
   expect_equal(p$x$attrs[[1]]$type, "bar")
   expect_equal(p$x$attrs[[1]]$orientation, "h")
-  expect_equal(p$x$attrs[[1]]$marker$color, "blue")
+  expect_equal(p$x$attrs[[1]]$marker$color, "#0f1a34")
   expect_equal(p$x$layoutAttrs[[1]]$title, "<b>Customers  Distribution by Segment</b>")
   expect_equal(p$x$layoutAttrs[[1]]$xaxis$title, "<b>Customers</b>")
   expect_equal(p$x$layoutAttrs[[1]]$yaxis$title, "<b>Segment</b>")
@@ -139,7 +139,7 @@ test_that("interactive segment summary plot flipped sorted", {
 
   expect_equal(p$x$attrs[[1]]$type, "bar")
   expect_equal(p$x$attrs[[1]]$orientation, "h")
-  expect_equal(p$x$attrs[[1]]$marker$color, "blue")
+  expect_equal(p$x$attrs[[1]]$marker$color, "#0f1a34")
   expect_equal(p$x$layoutAttrs[[1]]$title, "<b>Customers  Distribution by Segment</b>")
   expect_equal(p$x$layoutAttrs[[1]]$xaxis$title, "<b>Customers</b>")
   expect_equal(p$x$layoutAttrs[[1]]$yaxis$title, "<b>Segment</b>")
@@ -156,7 +156,7 @@ test_that("interactive segment summary plot flipped sorted ascending", {
 
   expect_equal(p$x$attrs[[1]]$type, "bar")
   expect_equal(p$x$attrs[[1]]$orientation, "h")
-  expect_equal(p$x$attrs[[1]]$marker$color, "blue")
+  expect_equal(p$x$attrs[[1]]$marker$color, "#0f1a34")
   expect_equal(p$x$layoutAttrs[[1]]$title, "<b>Customers  Distribution by Segment</b>")
   expect_equal(p$x$layoutAttrs[[1]]$xaxis$title, "<b>Customers</b>")
   expect_equal(p$x$layoutAttrs[[1]]$yaxis$title, "<b>Segment</b>")
@@ -249,7 +249,7 @@ test_that("interactive median plot", {
   p <- rfm_plot_median_recency(segments, interactive = TRUE)
 
   expect_equal(p$x$attrs[[1]]$type, "bar")
-  expect_equal(p$x$attrs[[1]]$marker$color, "blue")
+  expect_equal(p$x$attrs[[1]]$marker$color, "#0f1a34")
   expect_equal(p$x$layoutAttrs[[1]]$title, "<b>Median Recency  by Segment</b>")
   expect_equal(p$x$layoutAttrs[[1]]$xaxis$title, "<b>Segment</b>")
   expect_equal(p$x$layoutAttrs[[1]]$yaxis$title, "<b>Median Recency</b>")
@@ -263,7 +263,7 @@ test_that("interactive median plot sorted", {
   p <- rfm_plot_median_recency(segments, sort = TRUE, interactive = TRUE)
 
   expect_equal(p$x$attrs[[1]]$type, "bar")
-  expect_equal(p$x$attrs[[1]]$marker$color, "blue")
+  expect_equal(p$x$attrs[[1]]$marker$color, "#0f1a34")
   expect_equal(p$x$layoutAttrs[[1]]$title, "<b>Median Recency  by Segment</b>")
   expect_equal(p$x$layoutAttrs[[1]]$xaxis$title, "<b>Segment</b>")
   expect_equal(p$x$layoutAttrs[[1]]$xaxis$categoryorder, "total descending")
@@ -279,7 +279,7 @@ test_that("interactive median plot sorted ascending", {
                                interactive = TRUE)
 
   expect_equal(p$x$attrs[[1]]$type, "bar")
-  expect_equal(p$x$attrs[[1]]$marker$color, "blue")
+  expect_equal(p$x$attrs[[1]]$marker$color, "#0f1a34")
   expect_equal(p$x$layoutAttrs[[1]]$title, "<b>Median Recency  by Segment</b>")
   expect_equal(p$x$layoutAttrs[[1]]$xaxis$title, "<b>Segment</b>")
   expect_equal(p$x$layoutAttrs[[1]]$xaxis$categoryorder, "total ascending")
@@ -295,7 +295,7 @@ test_that("interactive median plot flipped", {
 
   expect_equal(p$x$attrs[[1]]$type, "bar")
   expect_equal(p$x$attrs[[1]]$orientation, "h")
-  expect_equal(p$x$attrs[[1]]$marker$color, "blue")
+  expect_equal(p$x$attrs[[1]]$marker$color, "#0f1a34")
   expect_equal(p$x$layoutAttrs[[1]]$title, "<b>Median Recency  by Segment</b>")
   expect_equal(p$x$layoutAttrs[[1]]$xaxis$title, "<b>Median Recency</b>")
   expect_equal(p$x$layoutAttrs[[1]]$yaxis$title, "<b>Segment</b>")
@@ -311,7 +311,7 @@ test_that("interactive median plot flipped sorted", {
 
   expect_equal(p$x$attrs[[1]]$type, "bar")
   expect_equal(p$x$attrs[[1]]$orientation, "h")
-  expect_equal(p$x$attrs[[1]]$marker$color, "blue")
+  expect_equal(p$x$attrs[[1]]$marker$color, "#0f1a34")
   expect_equal(p$x$layoutAttrs[[1]]$title, "<b>Median Recency  by Segment</b>")
   expect_equal(p$x$layoutAttrs[[1]]$xaxis$title, "<b>Median Recency</b>")
   expect_equal(p$x$layoutAttrs[[1]]$yaxis$title, "<b>Segment</b>")
@@ -328,7 +328,7 @@ test_that("interactive median plot flipped sorted ascending", {
 
   expect_equal(p$x$attrs[[1]]$type, "bar")
   expect_equal(p$x$attrs[[1]]$orientation, "h")
-  expect_equal(p$x$attrs[[1]]$marker$color, "blue")
+  expect_equal(p$x$attrs[[1]]$marker$color, "#0f1a34")
   expect_equal(p$x$layoutAttrs[[1]]$title, "<b>Median Recency  by Segment</b>")
   expect_equal(p$x$layoutAttrs[[1]]$xaxis$title, "<b>Median Recency</b>")
   expect_equal(p$x$layoutAttrs[[1]]$yaxis$title, "<b>Segment</b>")

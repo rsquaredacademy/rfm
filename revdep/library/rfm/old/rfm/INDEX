@@ -1,0 +1,18 @@
+rfm                     'rfm' package
+rfm_bar_chart           RFM bar chart
+rfm_barchart_data       Bar chart data
+rfm_data_customer       RFM customer data
+rfm_data_orders         RFM transaction data
+rfm_heatmap             RFM heatmap
+rfm_heatmap_data        Heatmap data
+rfm_hist_data           Histogram data
+rfm_histograms          RFM histograms
+rfm_launch_app          Launch shiny app
+rfm_order_dist          Customers by orders
+rfm_plot_median_recency
+                        Segmentation plots
+rfm_rm_plot             RFM Scatter plot
+rfm_segment             Segmentation
+rfm_table_customer      RFM table (customer data)
+rfm_table_customer_2    RFM table 2 (customer data)
+rfm_table_order         RFM table (transaction data)

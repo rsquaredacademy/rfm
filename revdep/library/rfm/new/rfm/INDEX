@@ -1,0 +1,23 @@
+rfm_barchart_data       Bar chart data
+rfm_create_report       RFM report
+rfm_data_customer       RFM customer data
+rfm_data_orders         RFM transaction data
+rfm_heatmap_data        Heatmap data
+rfm_launch_app          Launch shiny app
+rfm_plot_bar_chart      RFM bar chart
+rfm_plot_heatmap        RFM heatmap
+rfm_plot_histogram      RFM histograms
+rfm_plot_median_recency
+                        Median plots
+rfm_plot_order_dist     Customers by orders
+rfm_plot_revenue_dist   Revenue distribution
+rfm_plot_segment        RFM Segmentation Plot
+rfm_plot_segment_scatter
+                        Segment Scatter Plots
+rfm_plot_segment_summary
+                        Visulaize segment summary
+rfm_rm_plot             RFM Scatter plot
+rfm_segment             Segmentation
+rfm_segment_summary     Segment summary
+rfm_table_customer_2    RFM table (customer data)
+rfm_table_order         RFM table (transaction data)

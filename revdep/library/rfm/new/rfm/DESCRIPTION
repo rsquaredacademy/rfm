@@ -1,0 +1,33 @@
+Type: Package
+Package: rfm
+Title: Recency, Frequency and Monetary Value Analysis
+Version: 0.3.0
+Authors@R: person("Aravind", "Hebbali", email = "hebbali.aravind@gmail.com", role = c("aut", "cre"),
+    comment = c(ORCID = "0000-0001-9220-9669"))
+Description: Tools for RFM (recency, frequency and monetary value) analysis. 
+    Generate RFM score from both transaction and customer level data. Visualize the
+    relationship between recency, frequency and monetary value using heatmap, 
+    histograms, bar charts and scatter plots. Includes a 'shiny' app for 
+    interactive segmentation. References:
+    i. Blattberg R.C., Kim BD., Neslin S.A (2008) <doi:10.1007/978-0-387-72579-6_12>.
+License: MIT + file LICENSE
+URL: https://github.com/rsquaredacademy/rfm,
+        https://rfm.rsquaredacademy.com/
+BugReports: https://github.com/rsquaredacademy/rfm/issues
+Depends: R (>= 3.2)
+Imports: dplyr, ggplot2, magrittr, RColorBrewer, rlang, scales, stats,
+        treemapify, utils, xplorerr
+Suggests: cli, covr, DT, gganimate, gifski, kableExtra, knitr, png,
+        plotly, rmarkdown, rmdformats, testthat (>= 3.0.0), vdiffr
+VignetteBuilder: knitr
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.2.3
+Config/testthat/edition: 3
+RemoteType: local
+RemoteUrl: F:\R\Packages\statistics\rfm
+NeedsCompilation: no
+Packaged: 2024-02-19 12:15:11 UTC; HP
+Author: Aravind Hebbali [aut, cre] (<https://orcid.org/0000-0001-9220-9669>)
+Maintainer: Aravind Hebbali <hebbali.aravind@gmail.com>
+Built: R 4.3.2; ; 2024-02-19 12:15:17 UTC; windows

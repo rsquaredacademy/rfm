@@ -18,10 +18,8 @@ navbar:
       href: index.html
     - text: 'Guides'
       menu:
-        - text: 'RFM - Customer Level Data'
-          href: articles/rfm-customer-level-data.html
-        - text: 'RFM - Transaction Level Data'
-          href: articles/rfm-transaction-level-data.html
+        - text: 'RFM - Introduction'
+          href: articles/rfm-introduction.html
     - text: 'Reference'
       href: reference/index.html
     - text: 'News'
@@ -54,6 +52,11 @@ reference:
 
     contents:
       - rfm_launch_app
+
+  - title: Segmentation Report
+
+    contents:
+      - rfm_create_report
 
   - title: RFM Table
 

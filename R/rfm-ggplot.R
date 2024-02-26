@@ -1,7 +1,7 @@
 #' @importFrom ggplot2 ggplot geom_tile aes ggtitle xlab ylab scale_fill_gradientn
 #' @importFrom RColorBrewer brewer.pal
 rfm_gg_heatmap <- function(mapdata, plot_title, xaxis_label, yaxis_label,
-                           brewer_n, brewer_name, legend_title, print_plot) {
+                           brewer_n, brewer_name, legend_title) {
 
   ulm <- ceiling(max(mapdata[["monetary"]]))
   llm <- floor(min(mapdata[["monetary"]]))
@@ -20,11 +20,9 @@ rfm_gg_heatmap <- function(mapdata, plot_title, xaxis_label, yaxis_label,
                         colours = brewer.pal(n = brewer_n, name = brewer_name),
                         name = legend_title)
 
-  if (print_plot) {
-    print(p)
-  } else {
-    return(p)
-  }
+
+  return(p)
+
 }
 
 #' @importFrom ggplot2 geom_bar ylim coord_flip geom_text position_dodge
@@ -68,7 +66,7 @@ rfm_gg_order_dist <- function(data, flip, bar_color, plot_title, xaxis_label,
 
 #' @importFrom ggplot2 geom_histogram
 rfm_gg_hist <- function(data, hist_bins, hist_color, plot_title, xaxis_label,
-                        yaxis_label, print_plot) {
+                        yaxis_label) {
 
   p <-
     data %>%
@@ -78,11 +76,7 @@ rfm_gg_hist <- function(data, hist_bins, hist_color, plot_title, xaxis_label,
     ylab(yaxis_label) +
     ggtitle(plot_title)
 
-  if (print_plot) {
-    print(p)
-  } else {
-    return(p)
-  }
+  return(p)
 
 }
 
@@ -171,8 +165,8 @@ rfm_gg_revenue_dist <- function(data, colors, legend_labels, flip,
 
   p <-
     ggplot(data, aes(fill = category, y = share, x = segment)) +
-    geom_bar(position = "dodge", stat = "identity") 
-    
+    geom_bar(position = "dodge", stat = "identity")
+
 
   p <-
     p +
@@ -185,7 +179,7 @@ rfm_gg_revenue_dist <- function(data, colors, legend_labels, flip,
     theme(legend.title = element_blank(),
           legend.position = "bottom",
           panel.background = element_rect(fill = NA),
-          axis.ticks = element_line(color = NA)) 
+          axis.ticks = element_line(color = NA))
 
 
   if (flip) {
@@ -254,7 +248,7 @@ rfm_gg_median <- function(data, bar_color, sort, ascending, flip, plot_title,
   }
 
   if (is.null(bar_color)) {
-    bar_color <- "blue"
+    bar_color <- "#0f1a34"
   }
 
   if (sort) {
@@ -341,11 +335,8 @@ rfm_gg_segment <- function(table, metric, print_plot) {
     geom_treemap_text(size = 8, place = 'centre') +
     theme(legend.position = "none")
 
-  if (print_plot) {
-    print(plot)
-  } else {
-    return(plot)
-  }
+  return(plot)
+
 }
 
 rfm_gg_segment_scatter <- function(segments, x_data, y_data, plot_title,

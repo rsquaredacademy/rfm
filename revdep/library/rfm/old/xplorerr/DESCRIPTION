@@ -1,0 +1,31 @@
+Package: xplorerr
+Type: Package
+Title: Tools for Interactive Data Exploration
+Version: 0.1.2
+Authors@R: person("Aravind", "Hebbali", email = "hebbali.aravind@gmail.com", role = c("aut", "cre"),
+    comment = c(ORCID = "0000-0001-9220-9669"))
+Description: Tools for interactive data exploration built using 'shiny'. Includes apps for descriptive 
+    statistics, visualizing probability distributions, inferential statistics, linear regression, 
+    logistic regression and RFM analysis.
+Depends: R(>= 3.2.4)
+Imports: Rcpp, shiny, utils
+Suggests: blorr, data.table, descriptr, DT, grid, haven, highcharter,
+        jsonlite, kableExtra, magrittr, olsrr, plotly, rbokeh, readr,
+        readxl, rfm, shinyBS, shinycssloaders, shinythemes, tools,
+        vistributions
+URL: https://github.com/rsquaredacademy/xplorerr,
+        https://xplorerr.rsquaredacademy.com/
+BugReports: https://github.com/rsquaredacademy/xplorerr/issues
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
+LinkingTo: Rcpp
+NeedsCompilation: yes
+Packaged: 2021-05-21 02:41:55 UTC; HP
+Author: Aravind Hebbali [aut, cre] (<https://orcid.org/0000-0001-9220-9669>)
+Maintainer: Aravind Hebbali <hebbali.aravind@gmail.com>
+Repository: CRAN
+Date/Publication: 2021-05-21 04:50:02 UTC
+Built: R 4.3.2; x86_64-w64-mingw32; 2024-02-11 03:52:26 UTC; windows
+Archs: x64

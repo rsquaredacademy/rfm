@@ -1,0 +1,30 @@
+Package: treemapify
+Title: Draw Treemaps in 'ggplot2'
+Version: 2.5.6
+Authors@R: c(
+  person("David", "Wilkins", , "david@wilkox.org", role = c("aut", "cre"),
+         comment = c(ORCID = "0000-0002-3385-8981")),
+  person("Bob", "Rudis", , "bob@rud.is", role = c("ctb"),
+         comment = c(ORCID = "0000-0001-5670-2640"))
+  )
+URL: https://wilkox.org/treemapify/
+BugReports: https://github.com/wilkox/treemapify/issues/
+Description: Provides 'ggplot2' geoms for drawing treemaps.
+Depends: R (>= 3.6)
+Imports: ggplot2 (>= 2.2.1), ggfittext (>= 0.5.0), grid (>= 3.1), cli
+        (>= 3.6.1)
+Suggests: knitr, rmarkdown, testthat, vdiffr, spelling
+License: GPL (>= 3)
+LazyData: true
+RoxygenNote: 7.2.3
+VignetteBuilder: knitr
+Encoding: UTF-8
+Language: en-GB
+NeedsCompilation: no
+Packaged: 2023-09-30 07:12:19 UTC; wilkox
+Author: David Wilkins [aut, cre] (<https://orcid.org/0000-0002-3385-8981>),
+  Bob Rudis [ctb] (<https://orcid.org/0000-0001-5670-2640>)
+Maintainer: David Wilkins <david@wilkox.org>
+Repository: CRAN
+Date/Publication: 2023-09-30 07:40:02 UTC
+Built: R 4.3.2; ; 2024-02-18 03:27:37 UTC; windows

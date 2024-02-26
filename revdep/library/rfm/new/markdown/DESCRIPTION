@@ -1,0 +1,55 @@
+Package: markdown
+Type: Package
+Title: Render Markdown with 'commonmark'
+Version: 1.12
+Authors@R: c(
+   person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
+   person("JJ", "Allaire", role = "aut"),
+   person("Jeffrey", "Horner", role = "aut"),
+   person("Henrik", "Bengtsson", role = "ctb"),
+   person("Jim", "Hester", role = "ctb"),
+   person("Yixuan", "Qiu", role = "ctb"),
+   person("Kohske", "Takahashi", role = "ctb"),
+   person("Adam", "November", role = "ctb"),
+   person("Nacho", "Caballero", role = "ctb"),
+   person("Jeroen", "Ooms", role = "ctb"),
+   person("Thomas", "Leeper", role = "ctb"),
+   person("Joe", "Cheng", role = "ctb"),
+   person("Andrzej", "Oles", role = "ctb"),
+   person(given = "Posit Software, PBC", role = c("cph", "fnd"))
+   )
+Description: Render Markdown to full and lightweight HTML/LaTeX documents with
+    the 'commonmark' package. It also supports features that are missing in
+    'commonmark', such as raw HTML/LaTeX blocks, LaTeX math, superscripts,
+    subscripts, footnotes, element attributes, appendices, and fenced 'Divs'.
+    With additional JavaScript and CSS, it can also create HTML slides and
+    articles.
+Depends: R (>= 2.11.1)
+Imports: utils, commonmark (>= 1.9.0), xfun (>= 0.38)
+Suggests: knitr, rmarkdown (>= 2.18), yaml, RCurl
+License: MIT + file LICENSE
+URL: https://github.com/rstudio/markdown
+BugReports: https://github.com/rstudio/markdown/issues
+VignetteBuilder: knitr
+RoxygenNote: 7.2.3
+Encoding: UTF-8
+NeedsCompilation: no
+Packaged: 2023-12-05 14:26:48 UTC; yihui
+Author: Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>),
+  JJ Allaire [aut],
+  Jeffrey Horner [aut],
+  Henrik Bengtsson [ctb],
+  Jim Hester [ctb],
+  Yixuan Qiu [ctb],
+  Kohske Takahashi [ctb],
+  Adam November [ctb],
+  Nacho Caballero [ctb],
+  Jeroen Ooms [ctb],
+  Thomas Leeper [ctb],
+  Joe Cheng [ctb],
+  Andrzej Oles [ctb],
+  Posit Software, PBC [cph, fnd]
+Maintainer: Yihui Xie <xie@yihui.name>
+Repository: CRAN
+Date/Publication: 2023-12-06 00:20:02 UTC
+Built: R 4.3.2; ; 2024-02-18 02:23:45 UTC; windows

@@ -76,27 +76,33 @@ rfm_plot_heatmap <- function(data, brewer_n = 5, brewer_name = "PuBu",
   if (interactive) {
     pkg_flag <- requireNamespace("plotly", quietly = TRUE)
     if (pkg_flag) {
-      rfm_plotly_heatmap(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n,
+      p <- rfm_plotly_heatmap(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n,
                          brewer_name, legend_title)
     } else {
       if (interactive()) {
         message('`plotly` must be installed for this functionality. Would you like to install?')
         if (menu(c("Yes", "No")) == 1) {
           install.packages("plotly")
-          rfm_plotly_heatmap(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n,
+          p <- rfm_plotly_heatmap(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n,
                              brewer_name, legend_title)
         } else {
           stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
         }
       } else {
-        warning("`plot` is not installed. Using `ggplot2` instead to generate the plot!")
+        warning("`plotly` is not installed. Using `ggplot2` instead to generate the plot!")
         p <- rfm_gg_heatmap(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n,
-                            brewer_name, legend_title, print_plot)
+                            brewer_name, legend_title)
       }
     }
   } else {
-    rfm_gg_heatmap(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n,
-                   brewer_name, legend_title, print_plot)
+    p <- rfm_gg_heatmap(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n,
+                   brewer_name, legend_title)
+  }
+
+  if (print_plot) {
+    print(p)
+  } else {
+    return(p)
   }
 
 }
@@ -197,7 +203,7 @@ rfm_plot_histogram <- function(rfm_table, metric = "recency",
   }
 
   if (is.null(hist_color)) {
-    hist_color <- "blue"
+    hist_color <- "#0f1a34"
   }
 
   ycol <- switch(metric,
@@ -223,14 +229,14 @@ rfm_plot_histogram <- function(rfm_table, metric = "recency",
           stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
         }
       } else {
-        warning("`plot` is not installed. Using `ggplot2` instead to generate the plot!")
+        warning("`plotly` is not installed. Using `ggplot2` instead to generate the plot!")
         p <- rfm_gg_hist(data, hist_bins, hist_color, plot_title, xaxis_label,
-                         yaxis_label, print_plot)
+                         yaxis_label)
       }
     }
   } else {
     p <- rfm_gg_hist(data, hist_bins, hist_color, plot_title, xaxis_label,
-                     yaxis_label, print_plot)
+                     yaxis_label)
   }
 
   if (print_plot) {
@@ -245,7 +251,7 @@ rfm_plot_histogram <- function(rfm_table, metric = "recency",
 #' @rdname rfm_plot_histogram
 #' @usage NULL
 #'
-rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = 'blue',
+rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = "#0f1a34",
                            plot_title = 'RFM Histograms', xaxis_title = ' ',
                            yaxis_title = 'Count', print_plot = TRUE) {
   .Deprecated("rfm_plot_histograms()")
@@ -299,7 +305,7 @@ rfm_plot_bar_chart <- function(rfm_table, bar_color = NULL,
                                print_plot = TRUE) {
 
   if (is.null(bar_color)) {
-    bar_color <- "blue"
+    bar_color <- "#0f1a34"
   }
 
   if (is.null(xaxis_label)) {
@@ -343,7 +349,7 @@ rfm_plot_bar_chart <- function(rfm_table, bar_color = NULL,
 #' @rdname rfm_plot_bar_chart
 #' @usage NULL
 #'
-rfm_bar_chart <- function(rfm_table, bar_color = 'blue',
+rfm_bar_chart <- function(rfm_table, bar_color = '#0f1a34',
                           xaxis_title = 'Monetary Score',
                           sec_xaxis_title = 'Frequency Score',
                           yaxis_title = ' ',
@@ -431,7 +437,7 @@ rfm_plot_order_dist <- function(rfm_table, flip = FALSE, bar_color = NULL,
   }
 
   if (is.null(bar_color)) {
-    bar_color <- "blue"
+    bar_color <- "#0f1a34"
   }
 
   if (interactive) {
@@ -461,7 +467,7 @@ rfm_plot_order_dist <- function(rfm_table, flip = FALSE, bar_color = NULL,
           stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
         }
       } else {
-        warning("`plot` is not installed. Using `ggplot2` instead to generate the plot!")
+        warning("`plotly` is not installed. Using `ggplot2` instead to generate the plot!")
         p <- rfm_gg_order_dist(data, flip, bar_color, plot_title, xaxis_label,
                                yaxis_label, ylim_max, bar_labels, bar_label_size)
       }
@@ -512,7 +518,7 @@ rfm_plot_order_dist <- function(rfm_table, flip = FALSE, bar_color = NULL,
 #' @rdname rfm_plot_order_dist
 #' @usage NULL
 #'
-rfm_order_dist <- function(rfm_table, bar_color = 'blue',
+rfm_order_dist <- function(rfm_table, bar_color = '#0f1a34',
                            xaxis_title = 'Orders', yaxis_title = 'Customers',
                            plot_title = 'Customers by Orders',
                            print_plot = TRUE) {

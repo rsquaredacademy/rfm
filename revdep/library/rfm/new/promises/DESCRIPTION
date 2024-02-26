@@ -1,0 +1,37 @@
+Type: Package
+Package: promises
+Title: Abstractions for Promise-Based Asynchronous Programming
+Version: 1.2.1
+Authors@R: c(
+    person("Joe", "Cheng", , "joe@posit.co", role = c("aut", "cre")),
+    person("Posit Software, PBC", role = c("cph", "fnd"))
+  )
+Description: Provides fundamental abstractions for doing asynchronous
+    programming in R using promises. Asynchronous programming is useful
+    for allowing a single R process to orchestrate multiple tasks in the
+    background while also attending to something else. Semantics are
+    similar to 'JavaScript' promises, but with a syntax that is idiomatic
+    R.
+License: MIT + file LICENSE
+URL: https://rstudio.github.io/promises/,
+        https://github.com/rstudio/promises
+BugReports: https://github.com/rstudio/promises/issues
+Imports: fastmap (>= 1.1.0), later, magrittr (>= 1.5), R6, Rcpp, rlang,
+        stats
+Suggests: future (>= 1.21.0), knitr, purrr, rmarkdown, spelling,
+        testthat, vembedr
+LinkingTo: later, Rcpp
+VignetteBuilder: knitr
+Config/Needs/website: rsconnect
+Encoding: UTF-8
+Language: en-US
+RoxygenNote: 7.2.3
+NeedsCompilation: yes
+Packaged: 2023-08-09 20:29:25 UTC; garrick
+Author: Joe Cheng [aut, cre],
+  Posit Software, PBC [cph, fnd]
+Maintainer: Joe Cheng <joe@posit.co>
+Repository: CRAN
+Date/Publication: 2023-08-10 16:00:02 UTC
+Built: R 4.3.2; x86_64-w64-mingw32; 2024-02-11 02:45:50 UTC; windows
+Archs: x64

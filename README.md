@@ -3,29 +3,19 @@
 
 # rfm
 
-> Tools for RFM Analysis
-
 <!-- badges: start -->
 
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/rfm)](https://cran.r-project.org/package=rfm)
-[![cran
-checks](https://badges.cranchecks.info/summary/rfm.svg)](https://cran.r-project.org/web/checks/check_results_rfm.html)
 [![R build
 status](https://github.com/rsquaredacademy/rfm/workflows/R-CMD-check/badge.svg)](https://github.com/rsquaredacademy/rfm/actions)
 [![Coverage
 Status](https://img.shields.io/codecov/c/github/rsquaredacademy/rfm/master.svg)](https://app.codecov.io/github/rsquaredacademy/rfm?branch=master)
-[![status](https://tinyverse.netlify.com/badge/rfm)](https://CRAN.R-project.org/package=rfm)
-[![Lifecycle:
-stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html)
-[![](https://cranlogs.r-pkg.org/badges/grand-total/rfm)](https://cran.r-project.org/package=rfm)
 <!-- badges: end -->
 
 ## Overview
 
-Tools for RFM (recency, frequency and monetary) analysis. Generate RFM
-score from both transaction and customer level data. Visualize the
-relationship between recency, frequency and monetary value using
-heatmap, histograms, bar charts and scatter plots.
+Tools for customer segmentation using RFM (recency, frequency and
+monetary) analysis.
 
 ## Installation
 
@@ -34,117 +24,105 @@ heatmap, histograms, bar charts and scatter plots.
 install.packages("rfm")
 
 # Or the development version from GitHub
-# install.packages("devtools")
-devtools::install_github("rsquaredacademy/rfm")
+# install.packages("pak")
+pak::pak("rsquaredacademy/rfm")
 ```
-
-## Articles
-
-- [RFM Customer
-  Data](https://rfm.rsquaredacademy.com/articles/rfm-customer-level-data.html)
-- [RFM Transaction
-  Data](https://rfm.rsquaredacademy.com/articles/rfm-transaction-level-data.html)
 
 ## Usage
 
-### Introduction
-
 **RFM** (recency, frequency, monetary) analysis is a behavior based
 technique used to segment customers by examining their transaction
-history such as
+history such as:
 
 - how recently a customer has purchased (recency)
 - how often they purchase (frequency)
 - how much the customer spends (monetary)
 
 It is based on the marketing axiom that **80% of your business comes
-from 20% of your customers**. RFM helps to identify customers who are
-more likely to respond to promotions by segmenting them into various
-categories.
+from 20% of your customers**. RFM analysis helps to identify customers
+who are more likely to respond to promotions by segmenting them into
+various categories.
 
-### Data
-
-To calculate the RFM score for each customer we need transaction data
-which should include the following:
+To calculate the RFM score we need the following info for each customer:
 
 - a unique customer id
 - date of transaction/order
 - transaction/order amount
 
-### RFM Table
-
-rfm uses consistent prefix `rfm_` for easy tab completion. Use
-`rfm_table_order()` to generate the RFM score.
-
 ``` r
+# analysis date
 analysis_date <- as.Date('2006-12-31')
-rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date, revenue, analysis_date)
+
+# generate rfm score
+rfm_result <- rfm_table_order(rfm_data_orders, customer_id, order_date,
+revenue, analysis_date)
+
+# rfm score
 rfm_result
-#> # A tibble: 995 x 8
-#>    customer_id        recency_days transaction_count amount recency_score
-#>    <chr>                     <dbl>             <int>  <dbl>         <int>
-#>  1 Abbey O'Reilly DVM          205                 6    472             3
-#>  2 Add Senger                  140                 3    340             4
-#>  3 Aden Lesch Sr.              194                 4    405             3
-#>  4 Admiral Senger              132                 5    448             4
-#>  5 Agness O'Keefe               90                 9    843             5
-#>  6 Aileen Barton                84                 9    763             5
-#>  7 Ailene Hermann              281                 8    699             3
-#>  8 Aiyanna Bruen PhD           246                 4    157             3
-#>  9 Ala Schmidt DDS             349                 3    363             2
-#> 10 Alannah Borer               619                 4    196             1
-#> # i 985 more rows
-#> # i 3 more variables: frequency_score <int>, monetary_score <int>,
-#> #   rfm_score <dbl>
+#> # A tibble: 995 x 11
+#>   customer_id    recency_days transaction_count amount recency_score
+#>   <chr>                 <dbl>             <int>  <int>         <int>
+#> 1 Abbey O'Reilly          205                 6    472             3
+#> 2 Add Senger              140                 3    340             4
+#> 3 Aden Lesch              194                 4    405             3
+#> 4 Aden Murphy              98                 7    596             5
+#> 5 Admiral Senger          132                 5    448             4
+#> # i 990 more rows
+#> # i 6 more variables: frequency_score <int>, monetary_score <int>,
+#> #   rfm_score <dbl>, first_name <chr>, last_name <chr>, email <chr>
+
+# segment names
+segment_names <- c("Champions", "Potential Loyalist", "Loyal Customers",
+                   "Promising", "New Customers", "Can't Lose Them",
+                   "At Risk", "Need Attention", "About To Sleep", "Lost")
+
+# segment intervals
+recency_lower <-   c(5, 3, 2, 3, 4, 1, 1, 1, 2, 1)
+recency_upper <-   c(5, 5, 4, 4, 5, 2, 2, 3, 3, 1)
+frequency_lower <- c(5, 3, 2, 1, 1, 3, 2, 3, 1, 1)
+frequency_upper <- c(5, 5, 4, 3, 3, 4, 5, 5, 3, 5)
+monetary_lower <-  c(5, 2, 2, 3, 1, 4, 4, 3, 1, 1)
+monetary_upper <-  c(5, 5, 4, 5, 5, 5, 5, 5, 4, 5)
+
+# generate segments
+segments <- rfm_segment(rfm_result, segment_names, recency_lower,
+recency_upper, frequency_lower, frequency_upper, monetary_lower,
+monetary_upper)
+
+segments
+#> # A tibble: 995 x 12
+#>   customer_id    segment         rfm_score transaction_count recency_days amount
+#>   <chr>          <chr>               <dbl>             <int>        <dbl>  <int>
+#> 1 Abbey O'Reilly Potential Loya~       343                 6          205    472
+#> 2 Add Senger     New Customers         412                 3          140    340
+#> 3 Aden Lesch     Loyal Customers       323                 4          194    405
+#> 4 Aden Murphy    Potential Loya~       544                 7           98    596
+#> 5 Admiral Senger Potential Loya~       433                 5          132    448
+#> # i 990 more rows
+#> # i 6 more variables: recency_score <int>, frequency_score <int>,
+#> #   monetary_score <int>, first_name <chr>, last_name <chr>, email <chr>
 ```
 
-### Heat Map
+### Plotting Engines
 
-The heat map shows the average monetary value for different categories
-of recency and frequency scores. Higher scores of frequency and recency
-are characterized by higher average monetary value as indicated by the
-darker areas in the heatmap.
+`rfm` supports the following plotting engines:
 
-``` r
-rfm_plot_heatmap(rfm_result)
-```
+- [ggplot2](https://ggplot2.tidyverse.org)
+- [plotly](https://plotly.com/r/)
+- [gganimate](https://gganimate.com)
 
-<img src="tools/README-heatmap-1.png" style="display: block; margin: auto;" />
+### Shiny App
 
-### Bar Chart
+`rfm` includes a shiny app for interactive RFM analysis. In the latest
+release, we have added project management features to allow users to
+save/clone their projects. Below is a quick demo of the shiny app:
 
-Use `rfm_plot_bar_chart()` to generate the distribution of monetary
-scores for the different combinations of frequency and recency scores.
+## Resources
 
-``` r
-rfm_plot_bar_chart(rfm_result)
-```
-
-<img src="tools/README-barchart-1.png" style="display: block; margin: auto;" />
-
-### Histogram
-
-Use `rfm_plot_histogram()` to examine the relative distribution of
-
-- monetary value (total revenue generated by each customer)
-- recency days (days since the most recent visit for each customer)
-- frequency (transaction count for each customer)
-
-``` r
-rfm_plot_histogram(rfm_result)
-```
-
-<img src="tools/README-rfmhist-1.png" style="display: block; margin: auto;" /><img src="tools/README-rfmhist-2.png" style="display: block; margin: auto;" />
-
-### Customers by Orders
-
-Visualize the distribution of customers across orders.
-
-``` r
-rfm_plot_order_dist(rfm_result)
-```
-
-<img src="tools/README-rfmorders-1.png" style="display: block; margin: auto;" />
+- [Online
+  Course](https://rsquared-academy.thinkific.com/courses/customer-segmentation-using-rfm-analysis)
+- [YouTube Tutorial](https://www.youtube.com/watch?v=275X7yaSsoQ)
+- [Blog](https://blog.rsquaredacademy.com/customer-segmentation-using-rfm-analysis/)
 
 ## Getting Help
 
