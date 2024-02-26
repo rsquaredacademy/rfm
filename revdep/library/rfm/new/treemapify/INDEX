@@ -1,0 +1,13 @@
+G20                     Statistics on the G-20 group of major world
+                        economies.
+draw_key_rrect          Round rect key glyph for legend
+geom_treemap            A 'ggplot2' geom to draw a treemap.
+geom_treemap_subgroup_border
+                        'ggplot2' geoms to draw a border around a
+                        subgroup of treemap tiles.
+geom_treemap_subgroup_text
+                        'ggplot2' geoms to add text labels to treemap
+                        subgroups.
+geom_treemap_text       A 'ggplot2' geom to add text labels to treemap
+                        tiles.
+treemapify              Generate a treemap layout.

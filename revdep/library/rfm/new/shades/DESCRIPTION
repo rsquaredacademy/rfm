@@ -1,0 +1,19 @@
+Package: shades
+Version: 1.4.0
+Date: 2019-08-02
+Title: Simple Colour Manipulation
+Author: Jon Clayden
+Maintainer: Jon Clayden <code@clayden.org>
+Description: Functions for easily manipulating colours, creating colour scales and calculating colour distances.
+Suggests: testthat, covr, ggplot2
+Enhances: colorspace
+Encoding: UTF-8
+License: BSD_3_clause + file LICENCE
+URL: https://github.com/jonclayden/shades
+BugReports: https://github.com/jonclayden/shades/issues
+RoxygenNote: 6.1.1
+NeedsCompilation: no
+Packaged: 2019-08-02 14:53:11 UTC; jon
+Repository: CRAN
+Date/Publication: 2019-08-02 16:00:02 UTC
+Built: R 4.3.2; ; 2024-02-18 01:48:00 UTC; windows
