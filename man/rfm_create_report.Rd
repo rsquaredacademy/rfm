@@ -31,7 +31,7 @@ engine. If \code{FALSE}, uses \code{ggplot2}.}
 \item{file_name}{The name of the report file.}
 }
 \description{
-Generates a segmentation ananlysis report.
+Generates a segmentation analysis report.
 }
 \examples{
 \dontrun{
