@@ -53,6 +53,11 @@ reference:
     contents:
       - rfm_launch_app
 
+  - title: Segmentation Report
+
+    contents:
+      - rfm_create_report
+
   - title: RFM Table
 
     contents:

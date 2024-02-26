@@ -16,6 +16,9 @@
     <loc>https://rfm.rsquaredacademy.com/articles/rfm-customer-level-data.html</loc>
   </url>
   <url>
+    <loc>https://rfm.rsquaredacademy.com/articles/rfm-introduction.html</loc>
+  </url>
+  <url>
     <loc>https://rfm.rsquaredacademy.com/articles/rfm-transaction-level-data.html</loc>
   </url>
   <url>
@@ -58,6 +61,9 @@
     <loc>https://rfm.rsquaredacademy.com/reference/rfm_bar_chart.html</loc>
   </url>
   <url>
+    <loc>https://rfm.rsquaredacademy.com/reference/rfm_create_report.html</loc>
+  </url>
+  <url>
     <loc>https://rfm.rsquaredacademy.com/reference/rfm_data.html</loc>
   </url>
   <url>
@@ -91,10 +97,31 @@
     <loc>https://rfm.rsquaredacademy.com/reference/rfm_order_dist.html</loc>
   </url>
   <url>
+    <loc>https://rfm.rsquaredacademy.com/reference/rfm_plot_bar_chart.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/reference/rfm_plot_heatmap.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/reference/rfm_plot_histogram.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/reference/rfm_plot_histograms.html</loc>
+  </url>
+  <url>
     <loc>https://rfm.rsquaredacademy.com/reference/rfm_plot_median_recency.html</loc>
   </url>
   <url>
+    <loc>https://rfm.rsquaredacademy.com/reference/rfm_plot_order_dist.html</loc>
+  </url>
+  <url>
     <loc>https://rfm.rsquaredacademy.com/reference/rfm_plot_revenue_dist.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/reference/rfm_plot_segment.html</loc>
+  </url>
+  <url>
+    <loc>https://rfm.rsquaredacademy.com/reference/rfm_plot_segment_scatter.html</loc>
   </url>
   <url>
     <loc>https://rfm.rsquaredacademy.com/reference/rfm_plot_segment_summary.html</loc>
