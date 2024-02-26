@@ -412,7 +412,7 @@ rfm_plot_revenue_dist <- function(x, flip = FALSE,
         }
       } else {
         warning("`plotly` is not installed. Using `ggplot2` instead to generate the plot!")
-        p <- rfm_gg_revenue_dist(data, colors, legend_labels, flip,
+        p <- rfm_gg_revenue_dist(x, colors, legend_labels, flip,
                                  plot_title, xaxis_label, yaxis_label,
                                  axis_label_size, axis_label_angle,
                                  bar_labels, bar_label_size)
