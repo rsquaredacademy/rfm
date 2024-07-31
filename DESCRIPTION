@@ -19,7 +19,6 @@ Imports:
     dplyr,
     gganimate,
     ggplot2,
-    gifski,
     magrittr,
     plotly,
     RColorBrewer,
