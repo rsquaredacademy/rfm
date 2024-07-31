@@ -419,25 +419,8 @@ rfm_plot_order_dist <- function(rfm_table, flip = FALSE, bar_color = NULL,
       yaxis_label = yaxis_label)
   } else {
     if (animate) {
-      pkg_flag <- requireNamespace("gganimate", quietly = TRUE)
-      if (pkg_flag) {
-        print_plot <- FALSE
-        data <- rfm_animate_data(data, "n")
-      } else {
-        if (interactive()) {
-          message('`gganimate` must be installed for this functionality. Would you like to install?')
-          if (menu(c("Yes", "No")) == 1) {
-            install.packages("gganimate")
-            print_plot <- FALSE
-            data <- rfm_animate_data(data, "n")
-          } else {
-            stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
-          }
-        } else {
-          animate <- FALSE
-          warning("`gganimate` is not installed. Using `ggplot2` instead to generate the plot!")
-        }
-      }
+      print_plot <- FALSE
+      data <- rfm_animate_data(data, "n")
     }
 
     p <- rfm_gg_order_dist(data, flip, bar_color, plot_title, xaxis_label,

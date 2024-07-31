@@ -17,7 +17,9 @@ Depends:
     R (>= 3.2)
 Imports: 
     dplyr,
+    gganimate,
     ggplot2,
+    gifski,
     magrittr,
     plotly,
     RColorBrewer,
@@ -31,8 +33,6 @@ Suggests:
     cli,
     covr,
     DT,
-    gganimate,
-    gifski,
     kableExtra,
     knitr,
     rmarkdown,
