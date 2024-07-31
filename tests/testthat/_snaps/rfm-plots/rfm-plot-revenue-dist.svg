@@ -18,7 +18,7 @@
   </clipPath>
 </defs>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
-<rect x='0.000000000000064' y='0.00' width='720.00' height='576.00' style='stroke-width: 1.07; stroke: #FFFFFF; fill: #FFFFFF;' />
+<rect x='0.00' y='0.00' width='720.00' height='576.00' style='stroke-width: 1.07; stroke: #FFFFFF; fill: #FFFFFF;' />
 </g>
 <defs>
   <clipPath id='cpMjguMDN8NzE0LjUyfDIyLjc4fDQ3OC41NQ=='>
@@ -85,13 +85,13 @@
 <text transform='translate(492.96,487.38) rotate(-315)' style='font-size: 8.00px; fill: #4D4D4D; font-family: sans;' textLength='52.93px' lengthAdjust='spacingAndGlyphs'>Need Attention</text>
 <text transform='translate(576.68,487.38) rotate(-315)' style='font-size: 8.00px; fill: #4D4D4D; font-family: sans;' textLength='24.01px' lengthAdjust='spacingAndGlyphs'>Others</text>
 <text transform='translate(660.40,487.38) rotate(-315)' style='font-size: 8.00px; fill: #4D4D4D; font-family: sans;' textLength='60.48px' lengthAdjust='spacingAndGlyphs'>Potential Loyalist</text>
-<rect x='298.66' y='542.28' width='145.23' height='28.24' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<rect x='309.62' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #F2F2F2;' />
-<rect x='310.33' y='548.47' width='15.86' height='15.86' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #3B5BDB;' />
-<rect x='373.09' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #F2F2F2;' />
-<rect x='373.80' y='548.47' width='15.86' height='15.86' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #91A7FF;' />
-<text x='332.38' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='35.23px' lengthAdjust='spacingAndGlyphs'>Revenue</text>
-<text x='395.85' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='42.56px' lengthAdjust='spacingAndGlyphs'>Customers</text>
+<rect x='301.40' y='542.28' width='139.75' height='28.24' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<rect x='306.88' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none;' />
+<rect x='307.59' y='548.47' width='15.86' height='15.86' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #3B5BDB;' />
+<rect x='370.35' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none;' />
+<rect x='371.06' y='548.47' width='15.86' height='15.86' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #91A7FF;' />
+<text x='329.64' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='35.23px' lengthAdjust='spacingAndGlyphs'>Revenue</text>
+<text x='393.11' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='42.56px' lengthAdjust='spacingAndGlyphs'>Customers</text>
 <text x='28.03' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='195.92px' lengthAdjust='spacingAndGlyphs'>Revenue &amp; Customer Distribution</text>
 </g>
 </svg>

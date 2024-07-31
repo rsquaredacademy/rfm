@@ -78,17 +78,17 @@
 <text x='311.91' y='568.24' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='83.78px' lengthAdjust='spacingAndGlyphs'>Frequency Score</text>
 <text transform='translate(13.05,283.95) rotate(-90)' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='74.61px' lengthAdjust='spacingAndGlyphs'>Recency Score</text>
 <rect x='606.89' y='233.08' width='107.63' height='101.73' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<text x='606.89' y='241.79' style='font-size: 11.00px; font-family: sans;' textLength='107.63px' lengthAdjust='spacingAndGlyphs'>Mean Monetary Value</text>
 <image width='17.28' height='86.40' x='606.89' y='248.41' preserveAspectRatio='none' xlink:href='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAEsCAYAAAACUNnVAAAAs0lEQVQ4jbWTSxbCMAhF7+O4SvfkmnVQSxMKEe1xBoG8X1Nu98fTJGEAW3VqwYQwJEw+6LY46NiCgbMFjr9NF8sujX0vtJmtzCVzBlSRmA/eFXt1ZA+Yyc9c6bg3DZQAKAHQrwDzYDPTA2CJTACYNVMhM+8NeKXpQ24gagSWLZchXidqfpQmEdeJPPavHYVXQsDLONIbyYsY/rLyLNwoHhxRc5Jfpq+x8tlCFkSwRcx5YesF6zkGK1g92QUAAAAASUVORK5CYII='/>
+<polyline points='620.71,309.85 624.17,309.85 ' style='stroke-width: 0.38; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='620.71,283.99 624.17,283.99 ' style='stroke-width: 0.38; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='620.71,258.13 624.17,258.13 ' style='stroke-width: 0.38; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='610.34,309.85 606.89,309.85 ' style='stroke-width: 0.38; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='610.34,283.99 606.89,283.99 ' style='stroke-width: 0.38; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='610.34,258.13 606.89,258.13 ' style='stroke-width: 0.38; stroke: #FFFFFF; stroke-linecap: butt;' />
 <text x='629.65' y='312.87' style='font-size: 8.80px; font-family: sans;' textLength='14.68px' lengthAdjust='spacingAndGlyphs'>400</text>
 <text x='629.65' y='287.01' style='font-size: 8.80px; font-family: sans;' textLength='14.68px' lengthAdjust='spacingAndGlyphs'>600</text>
 <text x='629.65' y='261.15' style='font-size: 8.80px; font-family: sans;' textLength='14.68px' lengthAdjust='spacingAndGlyphs'>800</text>
-<text x='606.89' y='241.79' style='font-size: 11.00px; font-family: sans;' textLength='107.63px' lengthAdjust='spacingAndGlyphs'>Mean Monetary Value</text>
-<line x1='606.89' y1='309.85' x2='610.34' y2='309.85' style='stroke-width: 0.38; stroke: #FFFFFF; stroke-linecap: butt;' />
-<line x1='606.89' y1='283.99' x2='610.34' y2='283.99' style='stroke-width: 0.38; stroke: #FFFFFF; stroke-linecap: butt;' />
-<line x1='606.89' y1='258.13' x2='610.34' y2='258.13' style='stroke-width: 0.38; stroke: #FFFFFF; stroke-linecap: butt;' />
-<line x1='620.71' y1='309.85' x2='624.17' y2='309.85' style='stroke-width: 0.38; stroke: #FFFFFF; stroke-linecap: butt;' />
-<line x1='620.71' y1='283.99' x2='624.17' y2='283.99' style='stroke-width: 0.38; stroke: #FFFFFF; stroke-linecap: butt;' />
-<line x1='620.71' y1='258.13' x2='624.17' y2='258.13' style='stroke-width: 0.38; stroke: #FFFFFF; stroke-linecap: butt;' />
 <text x='27.90' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='89.50px' lengthAdjust='spacingAndGlyphs'>RFM Heat Map</text>
 </g>
 </svg>
