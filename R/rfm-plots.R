@@ -74,26 +74,8 @@ rfm_plot_heatmap <- function(data, brewer_n = 5, brewer_name = "PuBu",
   }
 
   if (interactive) {
-    pkg_flag <- requireNamespace("plotly", quietly = TRUE)
-    if (pkg_flag) {
-      p <- rfm_plotly_heatmap(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n,
-                         brewer_name, legend_title)
-    } else {
-      if (interactive()) {
-        message('`plotly` must be installed for this functionality. Would you like to install?')
-        if (menu(c("Yes", "No")) == 1) {
-          install.packages("plotly")
-          p <- rfm_plotly_heatmap(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n,
-                             brewer_name, legend_title)
-        } else {
-          stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
-        }
-      } else {
-        warning("`plotly` is not installed. Using `ggplot2` instead to generate the plot!")
-        p <- rfm_gg_heatmap(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n,
+    p <- rfm_plotly_heatmap(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n,
                             brewer_name, legend_title)
-      }
-    }
   } else {
     p <- rfm_gg_heatmap(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n,
                    brewer_name, legend_title)
@@ -216,24 +198,7 @@ rfm_plot_histogram <- function(rfm_table, metric = "recency",
   names(data) <- c("score")
 
   if (interactive) {
-    pkg_flag <- requireNamespace("plotly", quietly = TRUE)
-    if (pkg_flag) {
-      p <- rfm_plotly_hist(data, hist_color, plot_title, xaxis_label, yaxis_label)
-    } else {
-      if (interactive()) {
-        message('`plotly` must be installed for this functionality. Would you like to install?')
-        if (menu(c("Yes", "No")) == 1) {
-          install.packages("plotly")
-          p <- rfm_plotly_hist(data, hist_color, plot_title, xaxis_label, yaxis_label)
-        } else {
-          stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
-        }
-      } else {
-        warning("`plotly` is not installed. Using `ggplot2` instead to generate the plot!")
-        p <- rfm_gg_hist(data, hist_bins, hist_color, plot_title, xaxis_label,
-                         yaxis_label)
-      }
-    }
+    p <- rfm_plotly_hist(data, hist_color, plot_title, xaxis_label, yaxis_label)
   } else {
     p <- rfm_gg_hist(data, hist_bins, hist_color, plot_title, xaxis_label,
                      yaxis_label)
@@ -448,32 +413,11 @@ rfm_plot_order_dist <- function(rfm_table, flip = FALSE, bar_color = NULL,
   ylim_max <- rfm_order_dist_ylim(data)
 
   if (interactive) {
-    pkg_flag <- requireNamespace("plotly", quietly = TRUE)
-    if (pkg_flag) {
-      colnames(data) <- c("transaction_count", "n")
-      rfm_plotly_order_dist(data, flip = flip, bar_color = bar_color,
-                            plot_title = plot_title, xaxis_label = xaxis_label,
-                            yaxis_label = yaxis_label)
-    } else {
-      if (interactive()) {
-        message('`plotly` must be installed for this functionality. Would you like to install?')
-        if (menu(c("Yes", "No")) == 1) {
-          install.packages("plotly")
-          colnames(data) <- c("transaction_count", "n")
-          rfm_plotly_order_dist(data, flip = flip, bar_color = bar_color,
-                                plot_title = plot_title, xaxis_label = xaxis_label,
-                                yaxis_label = yaxis_label)
-        } else {
-          stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
-        }
-      } else {
-        warning("`plotly` is not installed. Using `ggplot2` instead to generate the plot!")
-        p <- rfm_gg_order_dist(data, flip, bar_color, plot_title, xaxis_label,
-                               yaxis_label, ylim_max, bar_labels, bar_label_size)
-      }
-    }
+    colnames(data) <- c("transaction_count", "n")
+    rfm_plotly_order_dist(data, flip = flip, bar_color = bar_color,
+      plot_title = plot_title, xaxis_label = xaxis_label,
+      yaxis_label = yaxis_label)
   } else {
-
     if (animate) {
       pkg_flag <- requireNamespace("gganimate", quietly = TRUE)
       if (pkg_flag) {

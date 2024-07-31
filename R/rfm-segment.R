@@ -254,28 +254,8 @@ rfm_plot_segment_summary <- function(x, metric = NULL,  sort = FALSE,
     ceiling(.)
 
   if (interactive) {
-    pkg_flag <- requireNamespace("plotly", quietly = TRUE)
-    if (pkg_flag) {
-      rfm_plotly_segment_summary(data, metric, flip, sort, ascending, bar_color,
-                                 plot_title, xaxis_label, yaxis_label)
-    } else {
-      if (interactive()) {
-        message('`plotly` must be installed for this functionality. Would you like to install?')
-        if (menu(c("Yes", "No")) == 1) {
-          install.packages("plotly")
-          rfm_plotly_segment_summary(data, metric, flip, sort, ascending, bar_color,
-                                     plot_title, xaxis_label, yaxis_label)
-        } else {
-          stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
-        }
-      } else {
-        warning("`plotly` is not installed. Using `ggplot2` instead to generate the plot!")
-        p <- rfm_gg_segment_summary(data, metric, sort, ascending, flip,
-                                    bar_color, plot_title, xaxis_label,
-                                    yaxis_label, axis_label_size, axis_label_angle,
-                                    ylim_max, bar_labels)
-      }
-    }
+    rfm_plotly_segment_summary(data, metric, flip, sort, ascending, bar_color,
+      plot_title, xaxis_label, yaxis_label)
   } else {
     if (animate) {
       pkg_flag <- requireNamespace("gganimate", quietly = TRUE)
@@ -396,30 +376,9 @@ rfm_plot_revenue_dist <- function(x, flip = FALSE,
   }
 
   if (interactive) {
-    pkg_flag <- requireNamespace("plotly", quietly = TRUE)
-    if (pkg_flag) {
-      rfm_plotly_revenue_dist(x, flip, colors, legend_labels, plot_title,
-                              xaxis_label, yaxis_label)
-    } else {
-      if (interactive()) {
-        message('`plotly` must be installed for this functionality. Would you like to install?')
-        if (menu(c("Yes", "No")) == 1) {
-          install.packages("plotly")
-          rfm_plotly_revenue_dist(x, flip, colors, legend_labels, plot_title,
-                                  xaxis_label, yaxis_label)
-        } else {
-          stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
-        }
-      } else {
-        warning("`plotly` is not installed. Using `ggplot2` instead to generate the plot!")
-        p <- rfm_gg_revenue_dist(x, colors, legend_labels, flip,
-                                 plot_title, xaxis_label, yaxis_label,
-                                 axis_label_size, axis_label_angle,
-                                 bar_labels, bar_label_size)
-      }
-    }
+    rfm_plotly_revenue_dist(x, flip, colors, legend_labels, plot_title,
+      xaxis_label, yaxis_label)
   } else {
-
     data <- rfm_prep_revenue_dist(x)
     share_data <- data[, c("category"), drop = FALSE]
 
@@ -555,29 +514,9 @@ rfm_plot_median_recency <- function(rfm_segment_table, sort = FALSE,
   data <- rfm_prep_median(rfm_segment_table, recency_days)
 
   if (interactive) {
-    pkg_flag <- requireNamespace("plotly", quietly = TRUE)
-    if (pkg_flag) {
-      rfm_plotly_median(data, bar_color, sort, ascending, flip, plot_title,
-                        xaxis_label, yaxis_label)
-    } else {
-      if (interactive()) {
-        message('`plotly` must be installed for this functionality. Would you like to install?')
-        if (menu(c("Yes", "No")) == 1) {
-          install.packages("plotly")
-          rfm_plotly_median(data, bar_color, sort, ascending, flip, plot_title,
-                            xaxis_label, yaxis_label)
-        } else {
-          stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
-        }
-      } else {
-        warning("`plotly` is not installed. Using `ggplot2` instead to generate the plot!")
-        p <- rfm_gg_median(data, bar_color, sort, ascending, flip, plot_title,
-                           xaxis_label, yaxis_label, axis_label_size,
-                           axis_label_angle, bar_labels)
-      }
-    }
+    rfm_plotly_median(data, bar_color, sort, ascending, flip, plot_title,
+      xaxis_label, yaxis_label)
   } else {
-
     if (animate) {
       pkg_flag <- requireNamespace("gganimate", quietly = TRUE)
       if (pkg_flag) {
@@ -638,29 +577,9 @@ rfm_plot_median_frequency <- function(rfm_segment_table, sort = FALSE,
   data <- rfm_prep_median(rfm_segment_table, transaction_count)
 
   if (interactive) {
-    pkg_flag <- requireNamespace("plotly", quietly = TRUE)
-    if (pkg_flag) {
-      rfm_plotly_median(data, bar_color, sort, ascending, flip, plot_title,
-                        xaxis_label, yaxis_label)
-    } else {
-      if (interactive()) {
-        message('`plotly` must be installed for this functionality. Would you like to install?')
-        if (menu(c("Yes", "No")) == 1) {
-          install.packages("plotly")
-          rfm_plotly_median(data, bar_color, sort, ascending, flip, plot_title,
-                            xaxis_label, yaxis_label)
-        } else {
-          stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
-        }
-      } else {
-        warning("`plotly` is not installed. Using `ggplot2` instead to generate the plot!")
-        p <- rfm_gg_median(data, bar_color, sort, ascending, flip, plot_title,
-                           xaxis_label, yaxis_label, axis_label_size,
-                           axis_label_angle, bar_labels)
-      }
-    }
+    rfm_plotly_median(data, bar_color, sort, ascending, flip, plot_title,
+      xaxis_label, yaxis_label)
   } else {
-
     if (animate) {
       pkg_flag <- requireNamespace("gganimate", quietly = TRUE)
       if (pkg_flag) {
@@ -721,27 +640,8 @@ rfm_plot_median_monetary <- function(rfm_segment_table, sort = FALSE,
   data <- rfm_prep_median(rfm_segment_table, amount)
 
   if (interactive) {
-    pkg_flag <- requireNamespace("plotly", quietly = TRUE)
-    if (pkg_flag) {
-      rfm_plotly_median(data, bar_color, sort, ascending, flip, plot_title,
-                        xaxis_label, yaxis_label)
-    } else {
-      if (interactive()) {
-        message('`plotly` must be installed for this functionality. Would you like to install?')
-        if (menu(c("Yes", "No")) == 1) {
-          install.packages("plotly")
-          rfm_plotly_median(data, bar_color, sort, ascending, flip, plot_title,
-                            xaxis_label, yaxis_label)
-        } else {
-          stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
-        }
-      } else {
-        warning("`plotly` is not installed. Using `ggplot2` instead to generate the plot!")
-        p <- rfm_gg_median(data, bar_color, sort, ascending, flip, plot_title,
-                           xaxis_label, yaxis_label, axis_label_size,
-                           axis_label_angle, bar_labels)
-      }
-    }
+    rfm_plotly_median(data, bar_color, sort, ascending, flip, plot_title,
+      xaxis_label, yaxis_label)
   } else {
 
     if (animate) {
@@ -848,23 +748,7 @@ rfm_plot_segment <- function(table, metric = "customers", interactive = FALSE,
   table$prop <- round((table[[metric]] / sum(table[[metric]])) * 100, 2)
 
   if (interactive) {
-    pkg_flag <- requireNamespace("plotly", quietly = TRUE)
-    if (pkg_flag) {
-      p <- rfm_plotly_segment(table, metric)
-    } else {
-      if (interactive()) {
-        message('`plotly` must be installed for this functionality. Would you like to install?')
-        if (menu(c("Yes", "No")) == 1) {
-          install.packages("plotly")
-          p <- rfm_plotly_segment(table, metric)
-        } else {
-          stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
-        }
-      } else {
-        warning("`plotly` is not installed. Using `ggplot2` instead to generate the plot!")
-        p <- rfm_gg_segment(table, metric)
-      }
-    }
+    p <- rfm_plotly_segment(table, metric)
   } else {
     p <- rfm_gg_segment(table, metric)
   }
@@ -972,27 +856,8 @@ rfm_plot_segment_scatter <- function(segments, x = "monetary", y = "recency",
   }
 
   if (interactive) {
-    pkg_flag <- requireNamespace("plotly", quietly = TRUE)
-    if (pkg_flag) {
-      rfm_plotly_segment_scatter(segments, x_data, y_data, plot_title,
-                                 legend_title, xaxis_label, yaxis_label)
-    } else {
-      if (interactive()) {
-        message('`plotly` must be installed for this functionality. Would you like to install?')
-        if (menu(c("Yes", "No")) == 1) {
-          install.packages("plotly")
-          rfm_plotly_segment_scatter(segments, x_data, y_data, plot_title,
-                                     legend_title, xaxis_label, yaxis_label)
-        } else {
-          stop('Sorry! The functionality is not available without installing the required package.', call. = FALSE)
-        }
-      } else {
-        warning("`plotly` is not installed. Using `ggplot2` instead to generate the plot!")
-        p <- rfm_gg_segment_scatter(segments, x_data, y_data, plot_title,
-                                    legend_title, xaxis_label, yaxis_label)
-      }
-    }
-
+    rfm_plotly_segment_scatter(segments, x_data, y_data, plot_title,
+      legend_title, xaxis_label, yaxis_label)
   } else {
     p <- rfm_gg_segment_scatter(segments, x_data, y_data, plot_title,
                                 legend_title, xaxis_label, yaxis_label)

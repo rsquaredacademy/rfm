@@ -19,6 +19,7 @@ Imports:
     dplyr,
     ggplot2,
     magrittr,
+    plotly,
     RColorBrewer,
     rlang,
     scales,
@@ -34,8 +35,6 @@ Suggests:
     gifski,
     kableExtra,
     knitr,
-    png,
-    plotly,
     rmarkdown,
     rmdformats,
     testthat (>= 3.0.0),
@@ -43,5 +42,5 @@ Suggests:
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 Config/testthat/edition: 3
