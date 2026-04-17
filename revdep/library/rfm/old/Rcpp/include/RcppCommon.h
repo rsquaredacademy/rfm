@@ -1,10 +1,9 @@
 
-//
 // RcppCommon.h: Rcpp R/C++ interface class library -- common include and defines statements
 //
 // Copyright (C) 2008 - 2009  Dirk Eddelbuettel
 // Copyright (C) 2009 - 2020  Dirk Eddelbuettel and Romain Francois
-// Copyright (C) 2021         Dirk Eddelbuettel, Romain Francois and Iñaki Ucar
+// Copyright (C) 2021 - 2026  Dirk Eddelbuettel, Romain Francois and Iñaki Ucar
 //
 // This file is part of Rcpp.
 //
@@ -27,7 +26,9 @@
 // #define RCPP_DEBUG_LEVEL 1
 // #define RCPP_DEBUG_MODULE_LEVEL 1
 
+#include <Rcpp/r/check_r_headers.h>
 #include <Rcpp/r/headers.h>
+#include <Rcpp/r/compat.h>
 
 /**
  * \brief Rcpp API
@@ -53,6 +54,9 @@ namespace Rcpp {
 #include <iomanip>
 #include <sstream>
 #include <string>
+#if __cplusplus >= 201703L
+#include <string_view>
+#endif
 #include <list>
 #include <map>
 #include <set>
@@ -68,8 +72,6 @@ namespace Rcpp {
 #include <typeinfo>
 #include <utility>
 #include <Rcpp/sprintf.h>
-#include <R_ext/Callbacks.h>
-#include <R_ext/Visibility.h>
 #include <Rcpp/utils/tinyformat.h>
 
 #include <Rmath.h>
@@ -129,9 +131,7 @@ namespace Rcpp {
 #include <Rcpp/exceptions.h>
 #include <Rcpp/proxy/proxy.h>
 
-#ifdef RCPP_USING_UNWIND_PROTECT
-  #include <Rcpp/unwindProtect.h>
-#endif
+#include <Rcpp/unwindProtect.h>
 
 #include <Rcpp/lang.h>
 #include <Rcpp/complex.h>
@@ -186,5 +186,7 @@ namespace Rcpp {
 #include <Rcpp/iostream/Rstreambuf.h>
 
 #include <Rcpp/internal/wrap.h>
+
+#include <Rcpp/macros/mask.h>
 
 #endif

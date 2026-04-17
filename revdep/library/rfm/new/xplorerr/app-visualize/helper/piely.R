@@ -204,5 +204,3 @@ piely <- function(data = NULL, x = NULL, text_pos = 'inside', text_font = 'Arial
   
 }
 
-p <- piely(mtcars, 'cyl')
-p

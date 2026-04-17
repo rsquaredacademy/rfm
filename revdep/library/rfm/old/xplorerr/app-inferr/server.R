@@ -13,7 +13,6 @@ library(lubridate)
 library(scales)
 library(stringr)
 library(rlang)
-library(xplorerr)
 
 shinyServer(function(input, output, session) {
 

@@ -1,3 +1,7 @@
+# cachem 1.1.0
+
+* Fixed #47: In some cases, with a `cache_mem`, removing an item could result in the spurious message "nothing to compact" being printed out. (#48)
+
 # cachem 1.0.8
 
 * Fixed #38: With a `cache_mem`, `$reset()` did not fully reset the cache, and calling calling `$prune()` could result in an error. (#39)

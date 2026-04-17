@@ -1,3 +1,47 @@
+# fs 2.0.1
+
+* Fix bug in finding system version of libuv, now actually works :)
+
+* Workaround for MacOS if no cmake is available
+
+# fs 2.0.0
+
+* On Linux we now build against the system version of libuv if available.
+  Set envvar USE_BUNDLED_LIBUV to force building a static version instead.
+
+* Vendored version of libuv was updated to 1.52.0. This version now uses
+  cmake instead of autotools to build.
+
+# fs 1.6.7
+
+* Windows: use libuv from Rtools (sync with httpuv)
+
+* `path_has_parent()` now expands `~` (#412).
+
+* New `path_select_components()` function to select components of one or
+  more paths (#326, @Tazinho).
+
+* `dir_exists()` follows relative symlinks in non-current directories
+  (@heavywatal, #395).
+
+* Fix some autotools warning for CRAN
+
+* New maintainer
+
+# fs 1.6.6
+
+* No changes.
+
+# fs 1.6.5
+
+* `path_ext()` and `path_ext_remove()` return correct extension and path, respectively, when multiple dots are present in file name (@IndrajeetPatil, #452, #453).
+
+* `path_rel()` provides an informative error message when multiple starting directory paths are specified (@IndrajeetPatil, #454).
+
+# fs 1.6.4
+
+* No changes.
+
 # fs 1.6.3
 
 * No user visible changes.

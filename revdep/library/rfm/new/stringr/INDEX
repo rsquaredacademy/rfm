@@ -16,7 +16,7 @@ str_flatten             Flatten a string
 str_glue                Interpolation with glue
 str_length              Compute the length/width
 str_like                Detect a pattern in the same way as 'SQL"s
-                        'LIKE' operator
+                        'LIKE' and 'ILIKE' operators
 str_locate              Find location of match
 str_match               Extract components (capturing groups) from a
                         match
@@ -30,6 +30,8 @@ str_starts              Detect the presence/absence of a match at the
                         start/end
 str_sub                 Get and set substrings using their positions
 str_subset              Find matching elements
+str_to_camel            Convert between different types of programming
+                        case
 str_trim                Remove whitespace
 str_trunc               Truncate a string to maximum width
 str_unique              Remove duplicated strings

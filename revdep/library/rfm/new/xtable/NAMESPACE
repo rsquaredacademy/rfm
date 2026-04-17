@@ -1,3 +1,4 @@
+importFrom("methods", "is")
 importFrom("utils", "toLatex")
 importFrom("stats", "anova", "as.ts", "cycle", "end", "frequency",
            "na.omit", "pchisq", "start", "time")

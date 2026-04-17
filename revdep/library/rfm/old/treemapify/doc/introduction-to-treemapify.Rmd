@@ -1,0 +1,124 @@
+---
+title: "Introduction to 'treemapify'"
+author: "David Wilkins"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to 'treemapify'}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteDepends{ggplot2}
+---
+
+## The G20 dataset
+
+'treemapify' includes an example dataset containing statistics about the G-20
+group of major world economies.
+
+```{r message = FALSE}
+library(ggplot2)
+library(treemapify)
+G20
+```
+
+## Drawing a simple treemap
+
+In a treemap, each tile represents a single observation, with the area of the
+tile proportional to a variable. Let's start by drawing a treemap with each
+tile representing a G-20 country. The area of the tile will be mapped to the
+country's GDP, and the tile's fill colour mapped to its HDI (Human Development
+Index). `geom_treemap()` is the basic geom for this purpose.
+
+```{r basic_treemap}
+ggplot(G20, aes(area = gdp_mil_usd, fill = hdi)) +
+  geom_treemap()
+```
+
+This plot isn't very useful without the knowing what country is represented by
+each tile. `geom_treemap_text()` can be used to add a text label to each tile. It
+uses the ['ggfittext'](https://github.com/wilkox/ggfittext) package to resize
+the text so it fits the tile. In addition to standard text formatting aesthetics
+you would use in `geom_text()`, like `fontface` or `colour`, we can pass
+additional options specific for 'ggfittext'. For example, we can place the text
+in the centre of the tile with `place = "centre"`, and expand it to fill as much
+of the tile as possible with `grow = TRUE`.
+
+```{r geom_treemap_text}
+ggplot(G20, aes(area = gdp_mil_usd, fill = hdi, label = country)) +
+  geom_treemap() +
+  geom_treemap_text(fontface = "italic", colour = "white", place = "centre",
+                    grow = TRUE)
+```
+
+Note that several tiles in the top right corner have no labels.
+`geom_treemap_text()` will hide text labels that cannot fit a tile without
+being shrunk below a minimum size, by default 4 points. This can be adjusted
+with the `min.size` argument.
+
+## Subgrouping tiles
+
+`geom_treemap()` supports subgrouping of tiles within a treemap by passing a
+`subgroup` aesthetic. Let's subgroup the countries by region, draw a border
+around each subgroup with `geom_treemap_subgroup_border()`, and label each
+subgroup with `geom_treemap_subgroup_text()`. `geom_treemap_subgroup_text()`
+takes the same arguments for text placement and resizing as
+`geom_treemap_text()`.
+
+```{r subgrouped_treemap}
+ggplot(G20, aes(area = gdp_mil_usd, fill = hdi, label = country,
+                subgroup = region)) +
+  geom_treemap() +
+  geom_treemap_subgroup_border() +
+  geom_treemap_subgroup_text(place = "centre", grow = T, alpha = 0.5, colour =
+                             "black", fontface = "italic", min.size = 0) +
+  geom_treemap_text(colour = "white", place = "topleft", reflow = T)
+```
+
+Up to three nested levels of subgrouping are supported with the `subgroup2` and
+`subgroup3` aesthetics. Borders and text labels for these subgroups can be
+drawn with `geom_treemap_subgroup2_border()`, etc. Note that 'ggplot2' draws
+plot layers in the order that they are added. This means it is possible to
+accidentally hide one layer of subgroup borders with another. Usually, it's
+best to add the border layers in order from deepest to shallowest, i.e.
+`geom_treemap_subgroup3_border()` then `geom_treemap_subgroup2_border()` then
+`geom_treemap_subgroup_border()`.
+
+```{r many_subgroups}
+ggplot(G20, aes(area = 1, label = country, subgroup = hemisphere,
+                subgroup2 = region, subgroup3 = econ_classification)) +
+  geom_treemap() +
+  geom_treemap_subgroup3_border(colour = "blue", size = 1) +
+  geom_treemap_subgroup2_border(colour = "white", size = 3) +
+  geom_treemap_subgroup_border(colour = "red", size = 5) +
+  geom_treemap_subgroup_text(
+    place = "middle",
+    colour = "red",
+    alpha = 0.5,
+    grow = T
+  ) +
+  geom_treemap_subgroup2_text(
+    colour = "white",
+    alpha = 0.5,
+    fontface = "italic"
+  ) +
+  geom_treemap_subgroup3_text(place = "top", colour = "blue", alpha = 0.5) +
+  geom_treemap_text(colour = "white", place = "middle", reflow = T)
+```
+
+As demonstrated, there is no assurance that the resulting plot will look good.
+
+Like any 'ggplot2' plot, 'treemapify' plots can be faceted, scaled, themed, etc.
+
+## Fixed layouts
+
+The default algorithm for laying out the tiles is the 'squarified' algorithm.
+This tries to minimise the tiles' aspect ratios, making sure there are no long
+and flat or tall and skinny tiles. While 'squarified' treemaps are aesthetically
+pleasing, the downside is that the position of tiles within the plot area can
+change dramatically with even small changes to the dataset. This makes it
+difficult to compare treemaps side-by-side, or create animated treemaps.
+
+By providing the `layout = "fixed"` option to 'treemapify' geoms, an alternative
+layout algorithm is used that will always position the tiles based on the order
+of observations in the data frame. It's very important that the same value for
+`layout` is passed to all 'treemapify' geoms, otherwise different layers of the
+plot might not share the same layout.

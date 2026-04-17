@@ -20,7 +20,7 @@ ggbox2 <- function(data, x, y, notch = FALSE, fill = 'blue', col = 'black',
                   add_text = FALSE, xloc = NA, yloc = NA, 
                   label = NA, tex_color = NA, tex_size = NA) {
   
-  p <- ggplot(data, aes_string(x = x, y = y)) + 
+  p <- ggplot(data, aes(x = .data[[x]], y = .data[[y]])) + 
     geom_boxplot(notch = notch, fill = fill, color = col,
                  outlier.color = o_col, outlier.fill = o_fill,
                  outlier.shape = o_shape, outlier.alpha = o_alpha,

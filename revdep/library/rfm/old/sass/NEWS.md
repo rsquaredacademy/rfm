@@ -1,3 +1,13 @@
+# sass 0.4.10
+
+- Closed #149: `FileCache` R6 class `finalize()` method should be private. (#150)
+
+- More informative output when `font_google()` downloads google font files (for `font_google(local=TRUE)`).
+
+# sass 0.4.9
+
+- Closed #138: font_google(local = TRUE) now uses woff2 (instead of woff) for a font file type. (#139) 
+
 # sass 0.4.8
 
 - Closed #132: Fix R CMD check warning re error() format strings (for r-devel). (#133)

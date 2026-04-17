@@ -1,15 +1,3 @@
-# activity flow
-# Step 1: Upload data or use demo data
-
-# Step 2: Choose the type of data being plotted
-#	Options: a. Grouped Data
-#			 b. Ungrouped Data
-
-# Step 3: Choose whether a single plot should be built or multiple plots based on a grouping variable
-#	Options: Select a grouping variable
-
-
-
 # barplot
 # univariate
 bar_plotu <- function(x, horizontal = FALSE, color = NULL, border = "black",

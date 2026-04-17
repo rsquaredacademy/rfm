@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Compatibility with S3 and S4</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Compatibility with S3 and S4</h1>
+
+
+
+<p>S7 is designed to be compatible with S3 and S4. This vignette
+discusses the details.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(S7)</span></code></pre></div>
+<div id="s3" class="section level2">
+<h2>S3</h2>
+<p>S7 objects <em>are</em> S3 objects, because S7 is implemented on top
+of S3. There are two main differences between an S7 object and an S3
+object:</p>
+<ul>
+<li><p>As well as the <code>class</code> attribute possessed by S3
+objects, S7 objects have an additional <code>S7_class</code> attribute
+that contains the object that defines the class.</p></li>
+<li><p>S7 objects have properties; S3 objects have attributes.
+Properties are implemented on top of attributes, so you can access them
+directly with <code>attr</code> and friends. When working inside of S7,
+you should never use attributes directly, but it does mean that existing
+code will continue to work.</p></li>
+</ul>
+<p>All up, this means most usage of S7 with S3 will just work.</p>
+<ul>
+<li><p>S7 can register methods for:</p>
+<ul>
+<li>S7 class and S3 generic</li>
+<li>S3 class and S7 generic</li>
+</ul></li>
+<li><p>S7 classes can extend S3 classes</p></li>
+<li><p>S3 classes can extend S7 classes</p></li>
+</ul>
+<div id="methods" class="section level3">
+<h3>Methods</h3>
+<p><code>method()</code> is designed to be the single tool for method
+registration that you need when working with S7 classes. You can also
+register a method for an S7 class and S3 generic without using S7,
+because all S7 objects have S3 classes, and S3 dispatch will operate on
+them normally.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>Foo <span class="ot">&lt;-</span> <span class="fu">new_class</span>(<span class="st">&quot;Foo&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">class</span>(<span class="fu">Foo</span>())</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Foo&quot;       &quot;S7_object&quot;</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>mean.Foo <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  <span class="st">&quot;mean of foo&quot;</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>}</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">Foo</span>())</span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt; [1] &quot;mean of foo&quot;</span></span></code></pre></div>
+</div>
+<div id="classes" class="section level3">
+<h3>Classes</h3>
+<p>It’s possible to extend an S7 class with S3. This is primarily useful
+because in many cases it allows you to change a class hierarchy from the
+inside out: you can provide a formal definition of an S3 class using S7,
+and its subclasses don’t need to change.</p>
+</div>
+<div id="list-classes" class="section level3">
+<h3>List classes</h3>
+<p>Many simple S3 classes are implemented as lists, e.g. rle.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>rle <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.vector</span>(x) <span class="sc">&amp;&amp;</span> <span class="sc">!</span><span class="fu">is.list</span>(x)) {</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">&quot;&#39;x&#39; must be a vector of an atomic type&quot;</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  }</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">length</span>(x)</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>  <span class="cf">if</span> (n <span class="sc">==</span> <span class="dv">0</span><span class="dt">L</span>) {</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>    <span class="fu">new_rle</span>(<span class="fu">integer</span>(), x)</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>    y <span class="ot">&lt;-</span> x[<span class="sc">-</span><span class="dv">1</span><span class="dt">L</span>] <span class="sc">!=</span> x[<span class="sc">-</span>n]</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>    i <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">which</span>(y <span class="sc">|</span> <span class="fu">is.na</span>(y)), n)</span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>    <span class="fu">new_rle</span>(<span class="fu">diff</span>(<span class="fu">c</span>(<span class="dv">0</span><span class="dt">L</span>, i)), x[i])</span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>  }</span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>}</span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>new_rle <span class="ot">&lt;-</span> <span class="cf">function</span>(lengths, values) {</span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a>  <span class="fu">structure</span>(</span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a>    <span class="fu">list</span>(</span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a>      <span class="at">lengths =</span> lengths,</span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a>      <span class="at">values =</span> values</span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a>    ),</span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a>    <span class="at">class =</span> <span class="st">&quot;rle&quot;</span></span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a>  )</span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a>}</span></code></pre></div>
+<p>There are two ways to convert this to S7. You could keep the
+structure exactly the same, using a <code>list</code> as the underlying
+data structure and using a constructor to enforce the structure:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>new_rle <span class="ot">&lt;-</span> <span class="fu">new_class</span>(<span class="st">&quot;rle&quot;</span>,</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="at">parent =</span> class_list,</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  <span class="at">constructor =</span> <span class="cf">function</span>(lengths, values) {</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>    <span class="fu">new_object</span>(<span class="fu">list</span>(<span class="at">lengths =</span> lengths, <span class="at">values =</span> values))</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  }</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>)</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="fu">rle</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt; Run Length Encoding</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt;   lengths: int [1:10] 1 1 1 1 1 1 1 1 1 1</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">#&gt;   values : int [1:10] 1 2 3 4 5 6 7 8 9 10</span></span></code></pre></div>
+<p>Alternatively you could convert it to the most natural representation
+using S7:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>new_rle <span class="ot">&lt;-</span> <span class="fu">new_class</span>(<span class="st">&quot;rle&quot;</span>, <span class="at">properties =</span> <span class="fu">list</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="at">lengths =</span> class_integer,</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="at">values =</span> class_atomic</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>))</span></code></pre></div>
+<p>To allow existing methods to work you’ll need to override
+<code>$</code> to access properties instead of list elements:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">method</span>(<span class="st">`</span><span class="at">$</span><span class="st">`</span>, new_rle) <span class="ot">&lt;-</span> prop</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">rle</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#&gt; Run Length Encoding</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#&gt;   lengths: int [1:10] 1 1 1 1 1 1 1 1 1 1</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt;   values : int [1:10] 1 2 3 4 5 6 7 8 9 10</span></span></code></pre></div>
+<p>The chief disadvantage of this approach is any subclasses will need
+to be converted to S7 as well.</p>
+</div>
+</div>
+<div id="s4" class="section level2">
+<h2>S4</h2>
+<p>S7 properties are equivalent to S4 slots. The chief difference is
+that they can be dynamic.</p>
+<ul>
+<li>S7 classes can not extend S4 classes</li>
+<li>S4 classes can extend S3 classes</li>
+<li>S7 can register methods for:
+<ul>
+<li>S7 class and S4 generic</li>
+<li>S4 class and S7 generic</li>
+</ul></li>
+</ul>
+<div id="unions" class="section level3">
+<h3>Unions</h3>
+<p>S4 unions are automatically converted to S7 unions. There’s an
+important difference in the way that class unions are handled in S4 and
+S7. In S4, they’re handled at method dispatch time, so when you create
+<code>setUnion(&quot;u1&quot;, c(&quot;class1&quot;, &quot;class2&quot;))</code>, <code>class1</code>
+and <code>class2</code> now extend <code>u1</code>. In S7, unions are
+handled at method registration time so that registering a method for a
+union is just short-hand for registering a method for each of the
+classes.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>Class1 <span class="ot">&lt;-</span> <span class="fu">new_class</span>(<span class="st">&quot;Class1&quot;</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>Class2 <span class="ot">&lt;-</span> <span class="fu">new_class</span>(<span class="st">&quot;Class2&quot;</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>Union1 <span class="ot">&lt;-</span> <span class="fu">new_union</span>(Class1, Class2)</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>foo <span class="ot">&lt;-</span> <span class="fu">new_generic</span>(<span class="st">&quot;foo&quot;</span>, <span class="st">&quot;x&quot;</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="fu">method</span>(foo, Union1) <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="st">&quot;&quot;</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>foo</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt; &lt;S7_generic&gt; foo(x, ...) with 2 methods:</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt; 1: method(foo, Class2)</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#&gt; 2: method(foo, Class1)</span></span></code></pre></div>
+<p>S7 unions allow you to restrict the type of a property in the same
+way that S4 unions allow you to restrict the type of a slot.</p>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

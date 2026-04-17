@@ -48,8 +48,9 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -354,13 +355,13 @@ offsets, like <code>lead()</code> and <code>lag()</code>.</p>
 dataset, including the players that have won an award.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(Lahman)</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>batting <span class="ot">&lt;-</span> Lahman<span class="sc">::</span>Batting <span class="sc">%&gt;%</span></span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>  <span class="fu">select</span>(playerID, yearID, teamID, G, AB<span class="sc">:</span>H) <span class="sc">%&gt;%</span></span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>  <span class="fu">arrange</span>(playerID, yearID, teamID) <span class="sc">%&gt;%</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>batting <span class="ot">&lt;-</span> Lahman<span class="sc">::</span>Batting <span class="sc">|&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>  <span class="fu">select</span>(playerID, yearID, teamID, G, AB<span class="sc">:</span>H) <span class="sc">|&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>  <span class="fu">arrange</span>(playerID, yearID, teamID) <span class="sc">|&gt;</span></span>
 <span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>  <span class="fu">semi_join</span>(Lahman<span class="sc">::</span>AwardsPlayers, <span class="at">by =</span> <span class="st">&quot;playerID&quot;</span>)</span>
 <span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>players <span class="ot">&lt;-</span> batting <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(playerID)</span></code></pre></div>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>players <span class="ot">&lt;-</span> batting <span class="sc">|&gt;</span> <span class="fu">group_by</span>(playerID)</span></code></pre></div>
 <p>Window functions are used in conjunction with <code>mutate()</code>
 and <code>filter()</code> to solve a wide range of problems. Here’s a
 selection:</p>
@@ -442,15 +443,15 @@ equal to the current value.</p>
 <p>These are useful if you want to select (for example) the top 10% of
 records within each group. For example:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">filter</span>(players, <span class="fu">cume_dist</span>(<span class="fu">desc</span>(G)) <span class="sc">&lt;</span> <span class="fl">0.1</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1,090 × 7</span></span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co">#&gt; # Groups:   playerID [995]</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1,604 × 7</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co">#&gt; # Groups:   playerID [1,487]</span></span>
 <span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt;   playerID  yearID teamID     G    AB     R     H</span></span>
 <span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;      &lt;int&gt; &lt;fct&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;</span></span>
 <span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt; 1 aaronha01   1963 ML1      161   631   121   201</span></span>
 <span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#&gt; 2 aaronha01   1968 ATL      160   606    84   174</span></span>
-<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#&gt; 3 abbotji01   1991 CAL       34     0     0     0</span></span>
-<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co">#&gt; 4 abernte02   1965 CHN       84    18     1     3</span></span>
-<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co">#&gt; # ℹ 1,086 more rows</span></span></code></pre></div>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#&gt; 3 aasedo01    1986 BAL       66     0     0     0</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co">#&gt; 4 abbotji01   1991 CAL       34     0     0     0</span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co">#&gt; # ℹ 1,600 more rows</span></span></code></pre></div>
 <p>Finally, <code>ntile()</code> divides the data up into <code>n</code>
 evenly sized buckets. It’s a coarse ranking, and it can be used in with
 <code>mutate()</code> to divide the data into buckets for further
@@ -459,17 +460,21 @@ players within a team into four ranked groups, and calculate the average
 number of games within each group.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>by_team_player <span class="ot">&lt;-</span> <span class="fu">group_by</span>(batting, teamID, playerID)</span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>by_team <span class="ot">&lt;-</span> <span class="fu">summarise</span>(by_team_player, <span class="at">G =</span> <span class="fu">sum</span>(G))</span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by &#39;teamID&#39;. You can override using the</span></span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#&gt; `.groups` argument.</span></span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>by_team_quartile <span class="ot">&lt;-</span> <span class="fu">group_by</span>(by_team, <span class="at">quartile =</span> <span class="fu">ntile</span>(G, <span class="dv">4</span>))</span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="fu">summarise</span>(by_team_quartile, <span class="fu">mean</span>(G))</span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 2</span></span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt;   quartile `mean(G)`</span></span>
-<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#&gt;      &lt;int&gt;     &lt;dbl&gt;</span></span>
-<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co">#&gt; 1        1      22.7</span></span>
-<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co">#&gt; 2        2      91.8</span></span>
-<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co">#&gt; 3        3     253. </span></span>
-<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="co">#&gt; 4        4     961.</span></span></code></pre></div>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#&gt; `summarise()` has regrouped the output.</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#&gt; ℹ Summaries were computed grouped by teamID and playerID.</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt; ℹ Output is grouped by teamID.</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#&gt; ℹ Use `summarise(.groups = &quot;drop_last&quot;)` to silence this message.</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co">#&gt; ℹ Use `summarise(.by = c(teamID, playerID))` for per-operation grouping</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt;   (`?dplyr::dplyr_by`) instead.</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>by_team_quartile <span class="ot">&lt;-</span> <span class="fu">group_by</span>(by_team, <span class="at">quartile =</span> <span class="fu">ntile</span>(G, <span class="dv">4</span>))</span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="fu">summarise</span>(by_team_quartile, <span class="fu">mean</span>(G))</span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 2</span></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co">#&gt;   quartile `mean(G)`</span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="co">#&gt;      &lt;int&gt;     &lt;dbl&gt;</span></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="co">#&gt; 1        1      18.1</span></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co">#&gt; 2        2      70.6</span></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="co">#&gt; 3        3     191. </span></span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a><span class="co">#&gt; 4        4     764.</span></span></code></pre></div>
 <p>All ranking functions rank from lowest to highest so that small input
 values get small ranks. Use <code>desc()</code> to rank from highest to
 lowest.</p>
@@ -503,7 +508,7 @@ variable. This is important if you have not already sorted the data, or
 you want to sort one way and lag another.</p>
 <p>Here’s a simple example of what happens if you don’t specify
 <code>order_by</code> when you need it:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">year =</span> <span class="dv">2000</span><span class="sc">:</span><span class="dv">2005</span>, <span class="at">value =</span> (<span class="dv">0</span><span class="sc">:</span><span class="dv">5</span>) <span class="sc">^</span> <span class="dv">2</span>)</span>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">year =</span> <span class="dv">2000</span><span class="sc">:</span><span class="dv">2005</span>, <span class="at">value =</span> (<span class="dv">0</span><span class="sc">:</span><span class="dv">5</span>)<span class="sc">^</span><span class="dv">2</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>scrambled <span class="ot">&lt;-</span> df[<span class="fu">sample</span>(<span class="fu">nrow</span>(df)), ]</span>
 <span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a></span>
 <span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>wrong <span class="ot">&lt;-</span> <span class="fu">mutate</span>(scrambled, <span class="at">prev_value =</span> <span class="fu">lag</span>(value))</span>
@@ -581,26 +586,26 @@ and allow you to select any number of records.</p>
 compute the “career year”, the number of years a player has played since
 they entered the league:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">mutate</span>(players, <span class="at">career_year =</span> yearID <span class="sc">-</span> <span class="fu">min</span>(yearID) <span class="sc">+</span> <span class="dv">1</span>)</span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 20,874 × 8</span></span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="co">#&gt; # Groups:   playerID [1,436]</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 32,112 × 8</span></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="co">#&gt; # Groups:   playerID [2,466]</span></span>
 <span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="co">#&gt;   playerID  yearID teamID     G    AB     R     H career_year</span></span>
 <span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;      &lt;int&gt; &lt;fct&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;       &lt;dbl&gt;</span></span>
 <span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a><span class="co">#&gt; 1 aaronha01   1954 ML1      122   468    58   131           1</span></span>
 <span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="co">#&gt; 2 aaronha01   1955 ML1      153   602   105   189           2</span></span>
 <span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="co">#&gt; 3 aaronha01   1956 ML1      153   609   106   200           3</span></span>
 <span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a><span class="co">#&gt; 4 aaronha01   1957 ML1      151   615   118   198           4</span></span>
-<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="co">#&gt; # ℹ 20,870 more rows</span></span></code></pre></div>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="co">#&gt; # ℹ 32,108 more rows</span></span></code></pre></div>
 <p>Or, as in the introductory example, we could compute a z-score:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">mutate</span>(players, <span class="at">G_z =</span> (G <span class="sc">-</span> <span class="fu">mean</span>(G)) <span class="sc">/</span> <span class="fu">sd</span>(G))</span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 20,874 × 8</span></span>
-<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="co">#&gt; # Groups:   playerID [1,436]</span></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 32,112 × 8</span></span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="co">#&gt; # Groups:   playerID [2,466]</span></span>
 <span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a><span class="co">#&gt;   playerID  yearID teamID     G    AB     R     H    G_z</span></span>
 <span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;      &lt;int&gt; &lt;fct&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;dbl&gt;</span></span>
 <span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a><span class="co">#&gt; 1 aaronha01   1954 ML1      122   468    58   131 -1.16 </span></span>
 <span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a><span class="co">#&gt; 2 aaronha01   1955 ML1      153   602   105   189  0.519</span></span>
 <span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a><span class="co">#&gt; 3 aaronha01   1956 ML1      153   609   106   200  0.519</span></span>
 <span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a><span class="co">#&gt; 4 aaronha01   1957 ML1      151   615   118   198  0.411</span></span>
-<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a><span class="co">#&gt; # ℹ 20,870 more rows</span></span></code></pre></div>
+<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a><span class="co">#&gt; # ℹ 32,108 more rows</span></span></code></pre></div>
 </div>
 
 

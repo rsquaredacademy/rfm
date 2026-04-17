@@ -1,0 +1,15 @@
+transformr-package	transformr-package
+path_spiral	simple_shapes
+path_waves	simple_shapes
+point_grid	simple_shapes
+point_random	simple_shapes
+poly_circle	simple_shapes
+poly_circles	simple_shapes
+poly_star	simple_shapes
+poly_star_hole	simple_shapes
+simple_shapes	simple_shapes
+st_normalize	st_normalize
+transformr	transformr-package
+tween_path	tween_path
+tween_polygon	tween_polygon
+tween_sf	tween_sf

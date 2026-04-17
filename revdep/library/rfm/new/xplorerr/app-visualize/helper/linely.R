@@ -123,11 +123,3 @@ linely <- function(data, x, y, mode = 'lines', lcol = 'blue', lwidth = 1, ltype 
   
 }
 
-# data1 <- c(7.2, 7.6, 6.8, 6.5, 7)
-# data2 <- c(6.8, 7.2, 7.8, 7, 6.2)
-# data <- data.frame(x = data1, y = data2)
-# 
-# p <- linely(gdp, 'india', mode = 'lines+markers', title = 'Line Chart',
-#             x_title = 'Year', y_title = 'Growth', axis_modify = TRUE,
-#             x_min = 0, x_max = 7, y_min = 4, y_max = 9)
-# p

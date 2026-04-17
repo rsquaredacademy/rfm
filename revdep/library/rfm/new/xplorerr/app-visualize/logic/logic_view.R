@@ -1,4 +1,4 @@
-output$table <- renderDataTable({
+output$table <- renderDT({
  	final_split$train
 })
 

@@ -1,6 +1,6 @@
 Package: lifecycle
 Title: Manage the Life Cycle of your Package Functions
-Version: 1.0.4
+Version: 1.0.5
 Authors@R: c(
     person("Lionel", "Henry", , "lionel@posit.co", role = c("aut", "cre")),
     person("Hadley", "Wickham", , "hadley@posit.co", role = "aut",
@@ -14,20 +14,20 @@ License: MIT + file LICENSE
 URL: https://lifecycle.r-lib.org/, https://github.com/r-lib/lifecycle
 BugReports: https://github.com/r-lib/lifecycle/issues
 Depends: R (>= 3.6)
-Imports: cli (>= 3.4.0), glue, rlang (>= 1.1.0)
-Suggests: covr, crayon, knitr, lintr, rmarkdown, testthat (>= 3.0.1),
-        tibble, tidyverse, tools, vctrs, withr
+Imports: cli (>= 3.4.0), rlang (>= 1.1.0)
+Suggests: covr, knitr, lintr (>= 3.1.0), rmarkdown, testthat (>=
+        3.0.1), tibble, tidyverse, tools, vctrs, withr, xml2
 VignetteBuilder: knitr
 Config/Needs/website: tidyverse/tidytemplate, usethis
 Config/testthat/edition: 3
 Encoding: UTF-8
-RoxygenNote: 7.2.1
+RoxygenNote: 7.3.3
 NeedsCompilation: no
-Packaged: 2023-11-06 16:07:36 UTC; lionel
+Packaged: 2026-01-07 15:00:49 UTC; lionel
 Author: Lionel Henry [aut, cre],
-  Hadley Wickham [aut] (<https://orcid.org/0000-0003-4757-117X>),
+  Hadley Wickham [aut] (ORCID: <https://orcid.org/0000-0003-4757-117X>),
   Posit Software, PBC [cph, fnd]
 Maintainer: Lionel Henry <lionel@posit.co>
 Repository: CRAN
-Date/Publication: 2023-11-07 10:10:10 UTC
-Built: R 4.3.2; ; 2024-02-11 02:31:29 UTC; windows
+Date/Publication: 2026-01-08 08:00:02 UTC
+Built: R 4.5.3; ; 2026-04-14 02:19:55 UTC; windows

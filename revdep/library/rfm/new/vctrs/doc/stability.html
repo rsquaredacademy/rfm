@@ -48,8 +48,9 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -522,7 +523,7 @@ them in a list:</p>
 <span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
 <span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="co">#&gt; function (x, ...) </span></span>
 <span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="co">#&gt; UseMethod(&quot;mean&quot;)</span></span>
-<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="co">#&gt; &lt;bytecode: 0x103a05448&gt;</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="co">#&gt; &lt;bytecode: 0x106372288&gt;</span></span>
 <span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="co">#&gt; &lt;environment: namespace:base&gt;</span></span>
 <span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
@@ -530,23 +531,25 @@ them in a list:</p>
 <p>For numeric versions, this depends on the order of inputs. Version
 first is an error, otherwise the input is wrapped in a list:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">getRversion</span>(), <span class="st">&quot;x&quot;</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="co">#&gt; Error: invalid version specification &#39;x&#39;</span></span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="fu">getRversion</span>())</span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
-<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="co">#&gt; [1] &quot;x&quot;</span></span>
-<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
-<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="co">#&gt; [1] 4 3 1</span></span></code></pre></div>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="co">#&gt; Error:</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="co">#&gt; ! invalid version specification &#39;x&#39;</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="fu">getRversion</span>())</span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="co">#&gt; [1] &quot;x&quot;</span></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="co">#&gt; [1] 4 5 0</span></span></code></pre></div>
 <p><code>vec_c()</code> throws an error if the inputs are not vectors or
 not automatically coercible:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">vec_c</span>(mean, <span class="fu">globalenv</span>())</span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="co">#&gt; Error in `vec_c()`:</span></span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="co">#&gt; ! `..1` must be a vector, not a function.</span></span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a><span class="fu">vec_c</span>(<span class="fu">Sys.Date</span>(), <span class="fu">factor</span>(<span class="st">&quot;x&quot;</span>), <span class="st">&quot;x&quot;</span>)</span>
-<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a><span class="co">#&gt; Error in `vec_c()`:</span></span>
-<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a><span class="co">#&gt; ! Can&#39;t combine `..1` &lt;date&gt; and `..2` &lt;factor&lt;bf275&gt;&gt;.</span></span></code></pre></div>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="co">#&gt; Error in `vec_size()`:</span></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="co">#&gt; ! `x` must be a vector, not a function.</span></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co">#&gt; ℹ Read our FAQ about scalar types (`?vctrs::faq_error_scalar_type`) to learn more.</span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a><span class="fu">vec_c</span>(<span class="fu">Sys.Date</span>(), <span class="fu">factor</span>(<span class="st">&quot;x&quot;</span>), <span class="st">&quot;x&quot;</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a><span class="co">#&gt; Error in `vec_c()`:</span></span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a><span class="co">#&gt; ! Can&#39;t combine `..1` &lt;date&gt; and `..2` &lt;factor&lt;bf275&gt;&gt;.</span></span></code></pre></div>
 </div>
 <div id="factors" class="section level3">
 <h3>Factors</h3>
@@ -771,7 +774,7 @@ inputs should either be mutually recycling or not.</p></li>
 <span id="cb28-20"><a href="#cb28-20" tabindex="-1"></a><span class="co">#&gt; [1] &lt;NA&gt;  big   big   small small</span></span>
 <span id="cb28-21"><a href="#cb28-21" tabindex="-1"></a><span class="co">#&gt; Levels: small big</span></span>
 <span id="cb28-22"><a href="#cb28-22" tabindex="-1"></a><span class="fu">if_else</span>(x <span class="sc">&gt;</span> <span class="dv">2</span>, <span class="fu">Sys.Date</span>(), <span class="fu">Sys.Date</span>() <span class="sc">+</span> <span class="dv">7</span>)</span>
-<span id="cb28-23"><a href="#cb28-23" tabindex="-1"></a><span class="co">#&gt; [1] NA           &quot;2023-12-08&quot; &quot;2023-12-08&quot; &quot;2023-12-01&quot; &quot;2023-12-01&quot;</span></span></code></pre></div>
+<span id="cb28-23"><a href="#cb28-23" tabindex="-1"></a><span class="co">#&gt; [1] NA           &quot;2026-04-17&quot; &quot;2026-04-17&quot; &quot;2026-04-10&quot; &quot;2026-04-10&quot;</span></span></code></pre></div>
 <p>By using <code>vec_size()</code> and <code>vec_slice()</code>, this
 definition of <code>if_else()</code> automatically works with
 data.frames and matrices:</p>

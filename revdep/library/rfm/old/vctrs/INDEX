@@ -21,18 +21,25 @@ internal-faq-matches-algorithm
 internal-faq-ptype2-identity
                         Internal FAQ - 'vec_ptype2()', 'NULL', and
                         unspecified vectors
+list-of-attributes      'list_of' attributes
+list_combine            Combine a list of vectors
 list_drop_empty         Drop empty elements from a list
-list_of                 'list_of' S3 class for homogenous lists
+list_of                 Construct a list of homogenous vectors
+list_of_transpose       Transpose a list of homogenous vectors
 missing                 Missing values
 name_spec               Name specifications
 new_data_frame          Assemble attributes for data frame construction
 obj_is_list             List checks
+parallel-operators      Parallel 'any()' and 'all()'
 reference-faq-compatibility
                         FAQ - Is my class compatible with vctrs?
 runs                    Runs
 theory-faq-coercion     FAQ - How does coercion work in vctrs?
 theory-faq-recycling    FAQ - How does recycling work in vctrs and the
                         tidyverse?
+vec-case-and-replace    Recode and replace using logical conditions
+vec-recode-and-replace
+                        Recode and replace values
 vec-rep                 Repeat a vector
 vec-set                 Set operations
 vec_as_names            Retrieve and repair names
@@ -49,6 +56,7 @@ vec_expand_grid         Create a data frame from all combinations of
                         the inputs
 vec_fill_missing        Fill in missing values with the previous or
                         following value
+vec_if_else             Vectorized if-else
 vec_init                Initialize a vector
 vec_interleave          Interleave many vectors into one vector
 vec_locate_matches      Locate observations matching specified

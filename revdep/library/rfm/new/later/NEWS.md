@@ -1,3 +1,49 @@
+# later 1.4.8
+
+* Fixed #262: Internal update for compatibility with Rcpp re. `Rf_error` handling (#263).
+
+# later 1.4.7
+
+* Fixed #256: compilation failure with glibc >= 2.43 and GCC >= 15, caused by the C11 `once_flag` type now being defined in `<stdlib.h>` under C23. Renamed internal tinycthread symbols to avoid the namespace collision (#257).
+
+# later 1.4.6
+
+* Improved responsiveness when idle at the R console on POSIX systems (#251).
+
+* Fixes #249: Moved the contents of `inst/include/later.h` into `later_api.h` to ensure R headers are not included before Rcpp headers when Rcpp auto-includes `$PACKAGE.h` in RcppExports.cpp. The public API header remains `later_api.h` (#250).
+
+# later 1.4.5
+
+* Now requires R >= 3.5.0 (for `R_UnwindProtect()`) and Rcpp >= 1.0.10. Removed legacy non-unwind-protect code paths that were previously used as a fallback on older R versions (#241).
+
+# later 1.4.4
+
+* Fixed timings in a test (#237). No user-facing changes.
+
+# later 1.4.3
+
+* Fixed #215: The `autorun` argument of `create_loop()`, long deprecated, is removed (#222).
+
+* Fixed #167: `.Random.seed` is no longer affected when the package is loaded (#220).
+
+* Set file-level variables as `static` to avoid triggering `-Wmissing-variable-declarations` (@michaelchirico, #163).
+
+# later 1.4.2
+
+* Fixed #208: Fixed `keyword is hidden by macro definition` compiler warning when using a C23 compiler. (@shikokuchuo, #209)
+
+# later 1.4.1
+
+* Fixed #203: Resolves an issue where packages that have `LinkingTo: later` (including `promises` and `httpuv`) and were built against `later` 1.4.0, would fail to load on systems that actually had older versions of `later` installed, erroring out with the message "function 'execLaterFdNative' not provided by package 'later'". With this fix, such dependent packages should gracefully deal with older versions at load time, and complain with helpful error messages if newer C interfaces (than are available on the installed `later`) are accessed. (#204)
+
+# later 1.4.0
+
+* Adds `later_fd()` which executes a function when a file descriptor is ready for reading or writing, at some indeterminate time in the future (subject to an optional timeout). This facilitates an event-driven approach to asynchronous or streaming downloads. (@shikokuchuo and @jcheng5, #190)
+
+* Fixed #186: Improvements to package load time as `rlang` is now only loaded when used. This is a notable efficiency for packages with only a 'linking to' dependency on `later`. Also updates to native symbol registration from dynamic lookup. (@shikokuchuo and @wch, #187)
+
+* Fixed #191: Errors raised in later callbacks were being re-thrown as generic C++ std::runtime_error with Rcpp >= 1.0.10 (since 2022!). (@shikokuchuo and @lionel-, #192)
+
 # later 1.3.2
 
 * Fixed `unused variable` compiler warning. (@MichaelChirico, #176)

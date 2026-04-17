@@ -1,4 +1,4 @@
-$bslib-value-box-horizontal-break-point: 300px;
+$bslib-value-box-horizontal-break-point: 300px !default;
 
 // CSS variables that start with --- (3 dashes instead of 2) are private vars
 // that are set by user arguments in the R calls. The CSS properties below only
@@ -85,7 +85,7 @@ $bslib-value-box-horizontal-break-point: 300px;
     @include bootstrap-heading-font-and-spacing($h6-font-size);
     // add a non-breaking space to ensure it's not 0 height
     &:empty::after {
-      content: '\00a0 '
+      content: '\00a0 ';
     }
   }
 
@@ -93,7 +93,7 @@ $bslib-value-box-horizontal-break-point: 300px;
     @include bootstrap-heading-font-and-spacing($h2-font-size);
     // add a non-breaking space to ensure it's not 0 height
     &:empty::after {
-      content: '\00a0 '
+      content: '\00a0 ';
     }
   }
 

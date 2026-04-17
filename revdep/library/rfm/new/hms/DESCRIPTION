@@ -1,0 +1,33 @@
+Package: hms
+Title: Pretty Time of Day
+Date: 2025-10-11
+Version: 1.1.4
+Authors@R: c(
+    person("Kirill", "Müller", , "kirill@cynkra.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-1416-3412")),
+    person("R Consortium", role = "fnd"),
+    person("Posit Software, PBC", role = "fnd",
+           comment = c(ROR = "03wc8by49"))
+  )
+Description: Implements an S3 class for storing and formatting time-of-day
+    values, based on the 'difftime' class.
+License: MIT + file LICENSE
+URL: https://hms.tidyverse.org/, https://github.com/tidyverse/hms
+BugReports: https://github.com/tidyverse/hms/issues
+Imports: cli, lifecycle, methods, pkgconfig, rlang (>= 1.0.2), vctrs
+        (>= 0.3.8)
+Suggests: crayon, lubridate, pillar (>= 1.1.0), testthat (>= 3.0.0)
+Config/Needs/website: tidyverse/tidytemplate
+Config/testthat/edition: 3
+Encoding: UTF-8
+RoxygenNote: 7.3.3.9000
+NeedsCompilation: no
+Packaged: 2025-10-16 19:10:16 UTC; kirill
+Author: Kirill Müller [aut, cre] (ORCID:
+    <https://orcid.org/0000-0002-1416-3412>),
+  R Consortium [fnd],
+  Posit Software, PBC [fnd] (ROR: <https://ror.org/03wc8by49>)
+Maintainer: Kirill Müller <kirill@cynkra.com>
+Repository: CRAN
+Date/Publication: 2025-10-17 05:10:11 UTC
+Built: R 4.5.3; ; 2026-04-14 02:54:28 UTC; windows

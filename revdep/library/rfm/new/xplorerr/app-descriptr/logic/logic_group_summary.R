@@ -39,13 +39,13 @@ observeEvent(input$finalok, {
         numdata <- tibble::as_data_frame(num_data)
         colnames(numdata) <- j
         updateSelectInput(session, inputId = "var_grp_summary",
-          choices = names(numdata), selected = names(numdata))
+          choices = names(numdata), selected = names(numdata)[1])
       } else if (ncol(num_data) < 1) {
         updateSelectInput(session, inputId = "var_grp_summary",
           choices = '', selected = '')
       } else {
         updateSelectInput(session, inputId = "var_grp_summary",
-          choices = names(num_data), selected = names(num_data))
+          choices = names(num_data), selected = names(num_data)[1])
       }
 
 
@@ -77,13 +77,13 @@ observeEvent(input$submit_part_train_per, {
         numdata <- tibble::as_data_frame(num_data)
         colnames(numdata) <- j
         updateSelectInput(session, inputId = "var_grp_summary",
-          choices = names(numdata), selected = names(numdata))
+          choices = names(numdata), selected = names(numdata)[1])
       } else if (ncol(num_data) < 1) {
         updateSelectInput(session, inputId = "var_grp_summary",
           choices = '', selected = '')
       } else {
         updateSelectInput(session, inputId = "var_grp_summary",
-          choices = names(num_data), selected = names(num_data))
+          choices = names(num_data), selected = names(num_data)[1])
       }
 
 

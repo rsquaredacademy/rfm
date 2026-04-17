@@ -186,7 +186,3 @@ boxly2 <- function(data = NULL, y = NULL, b_points = "outliers",
 }
 
 
-mtcars$cyl <- as.factor(mtcars$cyl)
-p <- boxly2(mtcars, y = 'mpg', x = 'cyl')
-p
- 

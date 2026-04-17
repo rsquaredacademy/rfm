@@ -12,7 +12,7 @@
 
 
 
-<title>glue custom knitr language engines</title>
+<title>Custom knitr language engines</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -48,6 +48,7 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -336,11 +337,11 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 
-<h1 class="title toc-ignore">glue custom knitr language engines</h1>
+<h1 class="title toc-ignore">Custom knitr language engines</h1>
 
 
 
-<p>Glue provides a few <a href="https://bookdown.org/yihui/rmarkdown-cookbook/custom-engine.html#custom-engine">custom
+<p>Glue provides a few <a href="https://yihui.org/rmarkdown-cookbook/custom-engine.html">custom
 language engines</a> for knitr, which allows you to use glue directly in
 knitr chunks.</p>
 <div id="glue-engine" class="section level2">
@@ -369,7 +370,7 @@ include them as chunk options.</p>
 <h2><code>glue_sql</code> engine</h2>
 <p>The second engine is <code>glue_sql</code>, which will use
 <code>glue::glue_sql()</code> to generate a SQL query and then run the
-query using the <a href="https://bookdown.org/yihui/rmarkdown/language-engines.html#sql">sql
+query using the <a href="https://yihui.org/rmarkdown/language-engines.html">sql
 engine</a>.</p>
 <p>First we create a new connection to an in-memory SQLite database, and
 write a new table to it.</p>

@@ -93,6 +93,7 @@ hash_emoji              Emoji hash
 hash_md5                MD5 hash
 hash_sha1               SHA-1 hash
 hash_sha256             SHA-256 hash
+hash_xxhash             xxHash
 inline-markup           About inline markup in the semantic cli
 is_ansi_tty             Detect if a stream support ANSI escape
                         characters

@@ -2,7 +2,8 @@
 //
 // misc.cpp: Rcpp R/C++ interface class library -- misc unit tests
 //
-// Copyright (C) 2013 - 2022  Dirk Eddelbuettel and Romain Francois
+// Copyright (C) 2013 - 2024  Dirk Eddelbuettel and Romain Francois
+// Copyright (C) 2025         Dirk Eddelbuettel, Romain Francois and Iñaki Ucar
 //
 // This file is part of Rcpp.
 //
@@ -55,7 +56,7 @@ SEXP testSendInterrupt() {
 SEXP maybeThrow(void* data) {
     bool* fail = (bool*) data;
     if (*fail)
-        Rf_error("throw!");
+        (Rf_error)("throw!"); // prevent masking
     else
         return NumericVector::create(42);
 }
@@ -64,10 +65,7 @@ SEXP maybeThrow(void* data) {
 SEXP testUnwindProtect(Environment indicator, bool fail) {
     unwindIndicator my_data(indicator);
     SEXP out = R_NilValue;
-
-#ifdef RCPP_USING_UNWIND_PROTECT
     out = Rcpp::unwindProtect(&maybeThrow, &fail);
-#endif
     return out;
 }
 
@@ -76,11 +74,7 @@ SEXP testUnwindProtect(Environment indicator, bool fail) {
 SEXP testUnwindProtectLambda(Environment indicator, bool fail) {
     unwindIndicator my_data(indicator);
     SEXP out = R_NilValue;
-
-#ifdef RCPP_USING_UNWIND_PROTECT
     out = Rcpp::unwindProtect([&] () { return maybeThrow(&fail); });
-#endif
-
     return out;
 }
 
@@ -99,10 +93,6 @@ struct FunctionObj {
 SEXP testUnwindProtectFunctionObject(Environment indicator, bool fail) {
     unwindIndicator my_data(indicator);
     SEXP out = R_NilValue;
-
-#ifdef RCPP_USING_UNWIND_PROTECT
     out = Rcpp::unwindProtect(FunctionObj(10, fail));
-#endif
-
     return out;
 }

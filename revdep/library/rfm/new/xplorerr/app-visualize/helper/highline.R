@@ -1,12 +1,4 @@
 library(highcharter)
-# title
-# subtitile
-# axis
-# legend
-# plotoptions
-
-
-# gdp <- readr::read_csv('gdp.csv')
 
 highline <- function(data, x, columns, add_labels = FALSE) {
   
@@ -38,5 +30,4 @@ highline <- function(data, x, columns, add_labels = FALSE) {
   
 }
 
-# highline(gdp, 'year', c('india', 'china'), add_labels = TRUE)
 

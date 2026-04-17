@@ -1,10 +1,3 @@
-# gdp <- readr::read_csv('J:/R/ggplot_xplorerr/gdp.csv')
-# p <- ggplot(gdp) +
-#   geom_line(aes(x = year, y = india), col = 'blue') +
-#   geom_line(aes(x = year, y = china), col = 'red')
-# p
-
-
 ggline <- function(data, x, columns, cols = 'black', theme = "Default",
                    alphas = 1, ltypes = 1, sizes = 1,
                    yaxlimit = FALSE, y1 = NA, y2 = NA, 
@@ -25,11 +18,11 @@ ggline <- function(data, x, columns, cols = 'black', theme = "Default",
                    label = NA, tex_color = NA, tex_size = NA) {
   
   x <- data %>%
-  select(x) %>%
+  select(all_of(x)) %>%
   pull(1)
 
   column <- data %>%
-    select(columns)
+    select(all_of(columns))
 
   j <- column %>% ncol()
 
@@ -57,9 +50,9 @@ ggline <- function(data, x, columns, cols = 'black', theme = "Default",
 
   for (i in n) {
     p <- p +
-      geom_line(aes_string(x = x, y = column[[i]]),
+      geom_line(aes(x = x, y = column[[i]]),
                            color = cols[[i]], alpha = alphas[[i]],
-                           linetype = ltypes[[i]], size = sizes[[i]])
+                           linetype = ltypes[[i]], linewidth = sizes[[i]])
   }
   
   if (yaxlimit) {
@@ -121,4 +114,3 @@ ggline <- function(data, x, columns, cols = 'black', theme = "Default",
   
 }
 
-# ggline(gdp, 'year', c('india', 'china'))

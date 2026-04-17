@@ -48,8 +48,9 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -342,15 +343,15 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <p>It’s often useful to perform the same operation on multiple columns,
 but copying and pasting is both tedious and error prone:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="fu">group_by</span>(g1, g2) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="fu">group_by</span>(g1, g2) <span class="sc">|&gt;</span></span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">a =</span> <span class="fu">mean</span>(a), <span class="at">b =</span> <span class="fu">mean</span>(b), <span class="at">c =</span> <span class="fu">mean</span>(c), <span class="at">d =</span> <span class="fu">mean</span>(d))</span></code></pre></div>
 <p>(If you’re trying to compute <code>mean(a, b, c, d)</code> for each
 row, instead see <code>vignette(&quot;rowwise&quot;)</code>)</p>
 <p>This vignette will introduce you to the <code>across()</code>
 function, which lets you rewrite the previous code more succinctly:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="fu">group_by</span>(g1, g2) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="fu">group_by</span>(g1, g2) <span class="sc">|&gt;</span></span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(a<span class="sc">:</span>d, mean))</span></code></pre></div>
 <p>We’ll start by discussing the basic usage of <code>across()</code>,
 particularly as it applies to <code>summarise()</code>, and show how to
@@ -378,16 +379,16 @@ data; you’ll see that technique used in
 with its favourite verb, <code>summarise()</code>. But you can use
 <code>across()</code> with any dplyr verb, as you’ll see a little
 later.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>starwars <span class="sc">|&gt;</span></span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), n_distinct))</span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 8</span></span>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt;    name hair_color skin_color eye_color   sex gender homeworld species</span></span>
 <span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt;   &lt;int&gt;      &lt;int&gt;      &lt;int&gt;     &lt;int&gt; &lt;int&gt;  &lt;int&gt;     &lt;int&gt;   &lt;int&gt;</span></span>
 <span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt; 1    87         12         31        15     5      3        49      38</span></span>
 <span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> </span>
-<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> </span>
-<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">n</span>() <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>starwars <span class="sc">|&gt;</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">n</span>() <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
 <span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">c</span>(sex, gender, homeworld), n_distinct))</span>
 <span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt; # A tibble: 9 × 4</span></span>
 <span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co">#&gt;   species    sex gender homeworld</span></span>
@@ -398,9 +399,9 @@ later.</p>
 <span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a><span class="co">#&gt; 4 Kaminoan     2      2         1</span></span>
 <span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="co">#&gt; # ℹ 5 more rows</span></span>
 <span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a></span>
-<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> </span>
-<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a>  <span class="fu">group_by</span>(homeworld) <span class="sc">%&gt;%</span> </span>
-<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">n</span>() <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a>starwars <span class="sc">|&gt;</span></span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a>  <span class="fu">group_by</span>(homeworld) <span class="sc">|&gt;</span></span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">n</span>() <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
 <span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), <span class="sc">~</span> <span class="fu">mean</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)))</span>
 <span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a><span class="co">#&gt; # A tibble: 10 × 4</span></span>
 <span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a><span class="co">#&gt;   homeworld height  mass birth_year</span></span>
@@ -414,8 +415,8 @@ later.</p>
 <code>summarise()</code> and <code>mutate()</code>, it doesn’t select
 grouping variables in order to avoid accidentally modifying them:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">g =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">3</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="dv">4</span>, <span class="sc">-</span><span class="dv">9</span>))</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="fu">group_by</span>(g) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="fu">group_by</span>(g) <span class="sc">|&gt;</span></span>
 <span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), sum))</span>
 <span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 3</span></span>
 <span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt;       g     x     y</span></span>
@@ -428,15 +429,15 @@ grouping variables in order to avoid accidentally modifying them:</p>
 supplying a named list of functions or lambda functions in the second
 argument:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>min_max <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="at">min =</span> <span class="sc">~</span><span class="fu">min</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="at">max =</span> <span class="sc">~</span><span class="fu">max</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="at">min =</span> <span class="sc">~</span> <span class="fu">min</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="at">max =</span> <span class="sc">~</span> <span class="fu">max</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>)</span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), min_max))</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>starwars <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), min_max))</span>
 <span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 6</span></span>
 <span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co">#&gt;   height_min height_max mass_min mass_max birth_year_min birth_year_max</span></span>
 <span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt;        &lt;int&gt;      &lt;int&gt;    &lt;dbl&gt;    &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;</span></span>
 <span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#&gt; 1         66        264       15     1358              8            896</span></span>
-<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">c</span>(height, mass, birth_year), min_max))</span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>starwars <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">c</span>(height, mass, birth_year), min_max))</span>
 <span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 6</span></span>
 <span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co">#&gt;   height_min height_max mass_min mass_max birth_year_min birth_year_max</span></span>
 <span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="co">#&gt;        &lt;int&gt;      &lt;int&gt;    &lt;dbl&gt;    &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;</span></span>
@@ -444,26 +445,45 @@ argument:</p>
 <p>Control how the names are created with the <code>.names</code>
 argument which takes a <a href="https://glue.tidyverse.org/">glue</a>
 spec:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), min_max, <span class="at">.names =</span> <span class="st">&quot;{.fn}.{.col}&quot;</span>))</span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 6</span></span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt;   min.height max.height min.mass max.mass min.birth_year max.birth_year</span></span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt;        &lt;int&gt;      &lt;int&gt;    &lt;dbl&gt;    &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;</span></span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt; 1         66        264       15     1358              8            896</span></span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">c</span>(height, mass, birth_year), min_max, <span class="at">.names =</span> <span class="st">&quot;{.fn}.{.col}&quot;</span>))</span>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>starwars <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>    <span class="fu">where</span>(is.numeric),</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>    min_max,</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>    <span class="at">.names =</span> <span class="st">&quot;{.fn}.{.col}&quot;</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>  ))</span>
 <span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 6</span></span>
 <span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt;   min.height max.height min.mass max.mass min.birth_year max.birth_year</span></span>
 <span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt;        &lt;int&gt;      &lt;int&gt;    &lt;dbl&gt;    &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;</span></span>
-<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#&gt; 1         66        264       15     1358              8            896</span></span></code></pre></div>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#&gt; 1         66        264       15     1358              8            896</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>starwars <span class="sc">|&gt;</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(</span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>    <span class="fu">c</span>(height, mass, birth_year),</span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>    min_max,</span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>    <span class="at">.names =</span> <span class="st">&quot;{.fn}.{.col}&quot;</span></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a>  ))</span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 6</span></span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a><span class="co">#&gt;   min.height max.height min.mass max.mass min.birth_year max.birth_year</span></span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a><span class="co">#&gt;        &lt;int&gt;      &lt;int&gt;    &lt;dbl&gt;    &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;</span></span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a><span class="co">#&gt; 1         66        264       15     1358              8            896</span></span></code></pre></div>
 <p>If you’d prefer all summaries with the same function to be grouped
 together, you’ll have to expand the calls yourself:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(</span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="fu">across</span>(<span class="fu">c</span>(height, mass, birth_year), <span class="sc">~</span><span class="fu">min</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.names =</span> <span class="st">&quot;min_{.col}&quot;</span>),</span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  <span class="fu">across</span>(<span class="fu">c</span>(height, mass, birth_year), <span class="sc">~</span><span class="fu">max</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.names =</span> <span class="st">&quot;max_{.col}&quot;</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>)</span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 6</span></span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">#&gt;   min_height min_mass min_birth_year max_height max_mass max_birth_year</span></span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">#&gt;        &lt;int&gt;    &lt;dbl&gt;          &lt;dbl&gt;      &lt;int&gt;    &lt;dbl&gt;          &lt;dbl&gt;</span></span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co">#&gt; 1         66       15              8        264     1358            896</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>starwars <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>    <span class="fu">across</span>(</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>      <span class="fu">c</span>(height, mass, birth_year),</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>      <span class="sc">~</span> <span class="fu">min</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>      <span class="at">.names =</span> <span class="st">&quot;min_{.col}&quot;</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>    ),</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>    <span class="fu">across</span>(</span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>      <span class="fu">c</span>(height, mass, birth_year),</span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>      <span class="sc">~</span> <span class="fu">max</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a>      <span class="at">.names =</span> <span class="st">&quot;max_{.col}&quot;</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>    )</span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>  )</span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 6</span></span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a><span class="co">#&gt;   min_height min_mass min_birth_year max_height max_mass max_birth_year</span></span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a><span class="co">#&gt;        &lt;int&gt;    &lt;dbl&gt;          &lt;dbl&gt;      &lt;int&gt;    &lt;dbl&gt;          &lt;dbl&gt;</span></span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a><span class="co">#&gt; 1         66       15              8        264     1358            896</span></span></code></pre></div>
 <p>(One day this might become an argument to <code>across()</code> but
 we’re not yet sure how it would work.)</p>
 <p>We cannot however use <code>where(is.numeric)</code> in that last
@@ -473,20 +493,21 @@ variables that were newly created (“min_height”, “min_mass” and
 <p>We can work around this by combining both calls to
 <code>across()</code> into a single expression that returns a
 tibble:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(</span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">where</span>(is.numeric), <span class="sc">~</span><span class="fu">min</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.names =</span> <span class="st">&quot;min_{.col}&quot;</span>),</span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">where</span>(is.numeric), <span class="sc">~</span><span class="fu">max</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.names =</span> <span class="st">&quot;max_{.col}&quot;</span>)  </span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>  )</span>
-<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>)</span>
-<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 6</span></span>
-<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="co">#&gt;   min_height min_mass min_birth_year max_height max_mass max_birth_year</span></span>
-<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co">#&gt;        &lt;int&gt;    &lt;dbl&gt;          &lt;dbl&gt;      &lt;int&gt;    &lt;dbl&gt;          &lt;dbl&gt;</span></span>
-<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co">#&gt; 1         66       15              8        264     1358            896</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>starwars <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>    <span class="fu">tibble</span>(</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>      <span class="fu">across</span>(<span class="fu">where</span>(is.numeric), <span class="sc">~</span> <span class="fu">min</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.names =</span> <span class="st">&quot;min_{.col}&quot;</span>),</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>      <span class="fu">across</span>(<span class="fu">where</span>(is.numeric), <span class="sc">~</span> <span class="fu">max</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.names =</span> <span class="st">&quot;max_{.col}&quot;</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>    )</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>  )</span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 6</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co">#&gt;   min_height min_mass min_birth_year max_height max_mass max_birth_year</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co">#&gt;        &lt;int&gt;    &lt;dbl&gt;          &lt;dbl&gt;      &lt;int&gt;    &lt;dbl&gt;          &lt;dbl&gt;</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="co">#&gt; 1         66       15              8        264     1358            896</span></span></code></pre></div>
 <p>Alternatively we could reorganize results with
 <code>relocate()</code>:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> </span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), min_max, <span class="at">.names =</span> <span class="st">&quot;{.fn}.{.col}&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>starwars <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), min_max, <span class="at">.names =</span> <span class="st">&quot;{.fn}.{.col}&quot;</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="fu">relocate</span>(<span class="fu">starts_with</span>(<span class="st">&quot;min&quot;</span>))</span>
 <span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 6</span></span>
 <span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="co">#&gt;   min.height min.mass min.birth_year max.height max.mass max.birth_year</span></span>
@@ -502,13 +523,14 @@ already encoded in a vector:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">y =</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">z =</span> <span class="dv">5</span><span class="sc">:</span><span class="dv">7</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>mult <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="dv">10</span>, <span class="at">z =</span> <span class="dv">100</span>)</span>
 <span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">all_of</span>(<span class="fu">names</span>(mult)), <span class="sc">~</span> .x <span class="sc">*</span> mult[[<span class="fu">cur_column</span>()]]))</span>
-<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 3</span></span>
-<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="co">#&gt;       x     y     z</span></span>
-<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
-<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a><span class="co">#&gt; 1     1    30   500</span></span>
-<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="co">#&gt; 2     2    40   600</span></span>
-<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a><span class="co">#&gt; 3     3    50   700</span></span></code></pre></div>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">all_of</span>(<span class="fu">names</span>(mult)), <span class="sc">~</span> .x <span class="sc">*</span> mult[[<span class="fu">cur_column</span>()]]))</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 3</span></span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a><span class="co">#&gt;       x     y     z</span></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="co">#&gt; 1     1    30   500</span></span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a><span class="co">#&gt; 2     2    40   600</span></span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a><span class="co">#&gt; 3     3    50   700</span></span></code></pre></div>
 </div>
 <div id="gotchas" class="section level3">
 <h3>Gotchas</h3>
@@ -516,7 +538,7 @@ already encoded in a vector:</p>
 <code>where(is.numeric)</code>:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">9</span>))</span>
 <span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
 <span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="fu">across</span>(<span class="fu">where</span>(is.numeric), sd))</span>
 <span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="co">#&gt;    n x        y</span></span>
 <span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="co">#&gt; 1 NA 1 4.041452</span></span></code></pre></div>
@@ -525,24 +547,22 @@ numeric, so the <code>across()</code> computes its standard deviation,
 and the standard deviation of 3 (a constant) is <code>NA</code>. You
 probably want to compute <code>n()</code> last to avoid this
 problem:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
 <span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), sd), <span class="at">n =</span> <span class="fu">n</span>())</span>
 <span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="co">#&gt;   x        y n</span></span>
 <span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co">#&gt; 1 1 4.041452 3</span></span></code></pre></div>
 <p>Alternatively, you could explicitly exclude <code>n</code> from the
 columns to operate on:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="fu">across</span>(<span class="fu">where</span>(is.numeric) <span class="sc">&amp;</span> <span class="sc">!</span>n, sd))</span>
 <span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="co">#&gt;   n x        y</span></span>
 <span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co">#&gt; 1 3 1 4.041452</span></span></code></pre></div>
 <p>Another approach is to combine both the call to <code>n()</code> and
 <code>across()</code> in a single expression that returns a tibble:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>    <span class="fu">tibble</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="fu">across</span>(<span class="fu">where</span>(is.numeric), sd))</span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>  )</span>
-<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="co">#&gt;   n x        y</span></span>
-<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a><span class="co">#&gt; 1 3 1 4.041452</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">tibble</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="fu">across</span>(<span class="fu">where</span>(is.numeric), sd)))</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="co">#&gt;   n x        y</span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="co">#&gt; 1 3 1 4.041452</span></span></code></pre></div>
 </div>
 <div id="other-verbs" class="section level3">
 <h3>Other verbs</h3>
@@ -556,7 +576,7 @@ uses data masking:</p>
 <span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>  (x <span class="sc">-</span> rng[<span class="dv">1</span>]) <span class="sc">/</span> (rng[<span class="dv">2</span>] <span class="sc">-</span> rng[<span class="dv">1</span>])</span>
 <span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>}</span>
 <span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">y =</span> <span class="fu">rnorm</span>(<span class="dv">4</span>))</span>
-<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), rescale01))</span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a>df <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), rescale01))</span>
 <span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 2</span></span>
 <span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a><span class="co">#&gt;       x     y</span></span>
 <span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;</span></span>
@@ -574,7 +594,7 @@ like <code>across()</code> but doesn’t apply any functions and instead
 returns a data frame containing the selected columns.</p>
 <ul>
 <li><p>Find all distinct</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(<span class="fu">pick</span>(<span class="fu">contains</span>(<span class="st">&quot;color&quot;</span>)))</span>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>starwars <span class="sc">|&gt;</span> <span class="fu">distinct</span>(<span class="fu">pick</span>(<span class="fu">contains</span>(<span class="st">&quot;color&quot;</span>)))</span>
 <span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 67 × 3</span></span>
 <span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a><span class="co">#&gt;   hair_color skin_color  eye_color</span></span>
 <span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;    </span></span>
@@ -584,7 +604,7 @@ returns a data frame containing the selected columns.</p>
 <span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a><span class="co">#&gt; 4 none       white       yellow   </span></span>
 <span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a><span class="co">#&gt; # ℹ 63 more rows</span></span></code></pre></div></li>
 <li><p>Count all combinations of variables with a given pattern:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> <span class="fu">count</span>(<span class="fu">pick</span>(<span class="fu">contains</span>(<span class="st">&quot;color&quot;</span>)), <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>starwars <span class="sc">|&gt;</span> <span class="fu">count</span>(<span class="fu">pick</span>(<span class="fu">contains</span>(<span class="st">&quot;color&quot;</span>)), <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 67 × 4</span></span>
 <span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a><span class="co">#&gt;   hair_color skin_color eye_color     n</span></span>
 <span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;     &lt;int&gt;</span></span>
@@ -599,41 +619,43 @@ returns a data frame containing the selected columns.</p>
 you want to transform column names with a function, you can use
 <code>rename_with()</code>.</p>
 </div>
-<div id="filter" class="section level3">
-<h3>filter()</h3>
+<div id="filter-and-filter_out" class="section level3">
+<h3>filter() and filter_out()</h3>
 <p>We cannot directly use <code>across()</code> in <code>filter()</code>
-because we need an extra step to combine the results. To that end,
-<code>filter()</code> has two special purpose companion functions:</p>
+or <code>filter_out()</code> because we need an extra step to combine
+the results into a single logical vector. To that end,
+<code>filter()</code> and <code>filter_out()</code> have two special
+purpose companion functions:</p>
 <ul>
 <li><code>if_any()</code> keeps the rows where the predicate is true for
 <em>at least one</em> selected column:</li>
 </ul>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> </span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_any</span>(<span class="fu">everything</span>(), <span class="sc">~</span> <span class="sc">!</span><span class="fu">is.na</span>(.x)))</span>
-<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 87 × 14</span></span>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>starwars <span class="sc">|&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>  <span class="fu">filter_out</span>(<span class="fu">if_any</span>(<span class="fu">everything</span>(), is.na))</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 29 × 14</span></span>
 <span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a><span class="co">#&gt;   name      height  mass hair_color skin_color eye_color birth_year sex   gender</span></span>
 <span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; </span></span>
 <span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a><span class="co">#&gt; 1 Luke Sky…    172    77 blond      fair       blue            19   male  mascu…</span></span>
-<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a><span class="co">#&gt; 2 C-3PO        167    75 &lt;NA&gt;       gold       yellow         112   none  mascu…</span></span>
-<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a><span class="co">#&gt; 3 R2-D2         96    32 &lt;NA&gt;       white, bl… red             33   none  mascu…</span></span>
-<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a><span class="co">#&gt; 4 Darth Va…    202   136 none       white      yellow          41.9 male  mascu…</span></span>
-<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a><span class="co">#&gt; # ℹ 83 more rows</span></span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a><span class="co">#&gt; 2 Darth Va…    202   136 none       white      yellow          41.9 male  mascu…</span></span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a><span class="co">#&gt; 3 Leia Org…    150    49 brown      light      brown           19   fema… femin…</span></span>
+<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a><span class="co">#&gt; 4 Owen Lars    178   120 brown, gr… light      blue            52   male  mascu…</span></span>
+<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a><span class="co">#&gt; # ℹ 25 more rows</span></span>
 <span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a><span class="co">#&gt; # ℹ 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,</span></span>
 <span id="cb19-12"><a href="#cb19-12" tabindex="-1"></a><span class="co">#&gt; #   vehicles &lt;list&gt;, starships &lt;list&gt;</span></span></code></pre></div>
 <ul>
 <li><code>if_all()</code> keeps the rows where the predicate is true for
 <em>all</em> selected columns:</li>
 </ul>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> </span>
-<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_all</span>(<span class="fu">everything</span>(), <span class="sc">~</span> <span class="sc">!</span><span class="fu">is.na</span>(.x)))</span>
-<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 29 × 14</span></span>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>starwars <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>  <span class="fu">filter_out</span>(<span class="fu">if_all</span>(<span class="fu">everything</span>(), is.na))</span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 87 × 14</span></span>
 <span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="co">#&gt;   name      height  mass hair_color skin_color eye_color birth_year sex   gender</span></span>
 <span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; </span></span>
 <span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a><span class="co">#&gt; 1 Luke Sky…    172    77 blond      fair       blue            19   male  mascu…</span></span>
-<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a><span class="co">#&gt; 2 Darth Va…    202   136 none       white      yellow          41.9 male  mascu…</span></span>
-<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a><span class="co">#&gt; 3 Leia Org…    150    49 brown      light      brown           19   fema… femin…</span></span>
-<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a><span class="co">#&gt; 4 Owen Lars    178   120 brown, gr… light      blue            52   male  mascu…</span></span>
-<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a><span class="co">#&gt; # ℹ 25 more rows</span></span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a><span class="co">#&gt; 2 C-3PO        167    75 &lt;NA&gt;       gold       yellow         112   none  mascu…</span></span>
+<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a><span class="co">#&gt; 3 R2-D2         96    32 &lt;NA&gt;       white, bl… red             33   none  mascu…</span></span>
+<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a><span class="co">#&gt; 4 Darth Va…    202   136 none       white      yellow          41.9 male  mascu…</span></span>
+<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a><span class="co">#&gt; # ℹ 83 more rows</span></span>
 <span id="cb20-11"><a href="#cb20-11" tabindex="-1"></a><span class="co">#&gt; # ℹ 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,</span></span>
 <span id="cb20-12"><a href="#cb20-12" tabindex="-1"></a><span class="co">#&gt; #   vehicles &lt;list&gt;, starships &lt;list&gt;</span></span></code></pre></div>
 </div>
@@ -653,12 +675,12 @@ new features and will only get critical bug fixes.</p>
 <ol style="list-style-type: decimal">
 <li><p><code>across()</code> makes it possible to express useful
 summaries that were previously impossible:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>  <span class="fu">group_by</span>(g1, g2) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>  <span class="fu">group_by</span>(g1, g2) <span class="sc">|&gt;</span></span>
 <span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">where</span>(is.numeric), mean), </span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">where</span>(is.numeric), mean),</span>
 <span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">where</span>(is.factor), nlevels),</span>
-<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(), </span>
+<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
 <span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a>  )</span></code></pre></div></li>
 <li><p><code>across()</code> reduces the number of functions that dplyr
 needs to provide. This makes dplyr easier for you to use (because there
@@ -714,17 +736,17 @@ existing code to use <code>across()</code>:</p>
 <p>The subsequent arguments can be copied as is.</p></li>
 </ul>
 <p>For example:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">mutate_if</span>(is.numeric, <span class="sc">~</span><span class="fu">mean</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>df <span class="sc">|&gt;</span> <span class="fu">mutate_if</span>(is.numeric, <span class="sc">~</span> <span class="fu">mean</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
 <span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="co"># -&gt;</span></span>
-<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), <span class="sc">~</span><span class="fu">mean</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)))</span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a>df <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), <span class="sc">~</span> <span class="fu">mean</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)))</span>
 <span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a></span>
-<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">mutate_at</span>(<span class="fu">vars</span>(<span class="fu">c</span>(x, <span class="fu">starts_with</span>(<span class="st">&quot;y&quot;</span>))), mean)</span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a>df <span class="sc">|&gt;</span> <span class="fu">mutate_at</span>(<span class="fu">vars</span>(<span class="fu">c</span>(x, <span class="fu">starts_with</span>(<span class="st">&quot;y&quot;</span>))), mean)</span>
 <span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a><span class="co"># -&gt;</span></span>
-<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(x, <span class="fu">starts_with</span>(<span class="st">&quot;y&quot;</span>)), mean))</span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a>df <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(x, <span class="fu">starts_with</span>(<span class="st">&quot;y&quot;</span>)), mean))</span>
 <span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a></span>
-<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">mutate_all</span>(mean)</span>
+<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a>df <span class="sc">|&gt;</span> <span class="fu">mutate_all</span>(mean)</span>
 <span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a><span class="co"># -&gt;</span></span>
-<span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), mean))</span></code></pre></div>
+<span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a>df <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), mean))</span></code></pre></div>
 <p>There are a few exceptions to this rule:</p>
 <ul>
 <li><p><code>rename_*()</code> and <code>select_*()</code> follow a
@@ -740,14 +762,14 @@ true for at least one, or all selected columns:</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="at">z =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
 <span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a></span>
 <span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a><span class="co"># Find all rows where EVERY numeric variable is greater than zero</span></span>
-<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">if_all</span>(<span class="fu">where</span>(is.numeric), <span class="sc">~</span> .x <span class="sc">&gt;</span> <span class="dv">0</span>))</span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a>df <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">if_all</span>(<span class="fu">where</span>(is.numeric), <span class="sc">~</span> .x <span class="sc">&gt;</span> <span class="dv">0</span>))</span>
 <span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 3</span></span>
 <span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a><span class="co">#&gt;   x         y     z</span></span>
 <span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
 <span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a><span class="co">#&gt; 1 b         1     1</span></span>
 <span id="cb23-9"><a href="#cb23-9" tabindex="-1"></a></span>
 <span id="cb23-10"><a href="#cb23-10" tabindex="-1"></a><span class="co"># Find all rows where ANY numeric variable is greater than zero</span></span>
-<span id="cb23-11"><a href="#cb23-11" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">if_any</span>(<span class="fu">where</span>(is.numeric), <span class="sc">~</span> .x <span class="sc">&gt;</span> <span class="dv">0</span>))</span>
+<span id="cb23-11"><a href="#cb23-11" tabindex="-1"></a>df <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">if_any</span>(<span class="fu">where</span>(is.numeric), <span class="sc">~</span> .x <span class="sc">&gt;</span> <span class="dv">0</span>))</span>
 <span id="cb23-12"><a href="#cb23-12" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 3</span></span>
 <span id="cb23-13"><a href="#cb23-13" tabindex="-1"></a><span class="co">#&gt;   x         y     z</span></span>
 <span id="cb23-14"><a href="#cb23-14" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
@@ -760,13 +782,13 @@ different to the behaviour of <code>mutate_if()</code>,
 transformations one at a time. We expect that you’ll generally find the
 new behaviour less surprising:</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">2</span>, <span class="at">y =</span> <span class="dv">4</span>, <span class="at">z =</span> <span class="dv">8</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">mutate_all</span>(<span class="sc">~</span> .x <span class="sc">/</span> y)</span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>df <span class="sc">|&gt;</span> <span class="fu">mutate_all</span>(<span class="sc">~</span> .x <span class="sc">/</span> y)</span>
 <span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 3</span></span>
 <span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a><span class="co">#&gt;       x     y     z</span></span>
 <span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
 <span id="cb24-6"><a href="#cb24-6" tabindex="-1"></a><span class="co">#&gt; 1   0.5     1     8</span></span>
 <span id="cb24-7"><a href="#cb24-7" tabindex="-1"></a></span>
-<span id="cb24-8"><a href="#cb24-8" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), <span class="sc">~</span> .x <span class="sc">/</span> y))</span>
+<span id="cb24-8"><a href="#cb24-8" tabindex="-1"></a>df <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), <span class="sc">~</span> .x <span class="sc">/</span> y))</span>
 <span id="cb24-9"><a href="#cb24-9" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 3</span></span>
 <span id="cb24-10"><a href="#cb24-10" tabindex="-1"></a><span class="co">#&gt;       x     y     z</span></span>
 <span id="cb24-11"><a href="#cb24-11" tabindex="-1"></a><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>

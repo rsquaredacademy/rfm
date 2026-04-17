@@ -148,9 +148,9 @@ print_ttest <- function(data) {
   all_l <- paste("Ha: mean <", as.character(data$mu))
   all_u <- paste("Ha: mean >", as.character(data$mu))
   all_t <- paste("Ha: mean ~=", as.character(data$mu))
-  char_p_l <- format(data$p_l, digits = 0, nsmall = 4)
-  char_p_u <- format(data$p_u, digits = 0, nsmall = 4)
-  char_p <- format(data$p, digits = 0, nsmall = 4)
+  char_p_l <- format(round(data$p_l, 5), nsmall = 5, scientific = FALSE)
+  char_p_u <- format(round(data$p_u, 5), nsmall = 5, scientific = FALSE)
+  char_p   <- format(round(data$p, 5), nsmall = 5, scientific = FALSE)
   all_p_l <- paste("P < t =", char_p_l)
   all_p_t <- paste("P > |t| =", char_p)
   all_p_u <- paste("P > t =", char_p_u)
@@ -286,10 +286,9 @@ print_ttest <- function(data) {
 
 
 print_paired_ttest <- function(data) {
-  char_p_u <- format(data$p_upper, digits = 0, nsmall = 3)
-  char_p_l <- format(data$p_lower, digits = 0, nsmall = 3)
-  char_p <- format(data$p_two_tail, digits = 0, nsmall = 3)
-
+  char_p_u     <- format(round(data$p_upper, 3), nsmall = 3, scientific = FALSE)
+  char_p_l     <- format(round(data$p_lower, 3), nsmall = 3, scientific = FALSE)
+  char_p       <- format(round(data$p_two_tail, 3), nsmall = 3, scientific = FALSE)
   # hypothesis heading
   hyp_null <- paste0("Ho: mean(", data$var_names[1], " - ", data$var_names[2], ") = ", "0")
   hyp_lt <- paste0("Ha: mean(", data$var_names[1], " - ", data$var_names[2], ") < ", "0")
@@ -432,12 +431,13 @@ print_paired_ttest <- function(data) {
 
 
 print_two_ttest <- function(data) {
-  char_sig <- format(data$sig, digits = 0, nsmall = 4)
-  char_sig_l <- format(data$sig_l, digits = 0, nsmall = 4)
-  char_sig_u <- format(data$sig_u, digits = 0, nsmall = 4)
-  char_sig_pooled <- format(data$sig_pooled, digits = 0, nsmall = 4)
-  char_sig_pooled_l <- format(data$sig_pooled_l, digits = 0, nsmall = 4)
-  char_sig_pooled_u <- format(data$sig_pooled_u, digits = 0, nsmall = 4)
+
+  char_sig          <- format(round(data$sig, 4), nsmall = 4, scientific = FALSE)
+  char_sig_l        <- format(round(data$sig_l, 4), nsmall = 4, scientific = FALSE)
+  char_sig_u        <- format(round(data$sig_u, 4), nsmall = 4, scientific = FALSE)
+  char_sig_pooled   <- format(round(data$sig_pooled, 4), nsmall = 4, scientific = FALSE)
+  char_sig_pooled_l <- format(round(data$sig_pooled_l, 4), nsmall = 4, scientific = FALSE)
+  char_sig_pooled_u <- format(round(data$sig_pooled_u, 4), nsmall = 4, scientific = FALSE)
 
   # hypothesis heading
   hyp_null <- paste0("Ho: mean(", data$levels[1], ") - mean(", data$levels[2], ") = diff = ", "0")
@@ -737,9 +737,9 @@ print_os_vartest <- function(data) {
   all_l <- paste("Ha: sd <", as.character(data$sd))
   all_u <- paste("Ha: sd >", as.character(data$sd))
   all_t <- paste("Ha: sd !=", as.character(data$sd))
-  char_p_l <- format(data$p_lower, digits = 0, nsmall = 4)
-  char_p_u <- format(data$p_upper, digits = 0, nsmall = 4)
-  char_p <- format(data$p_two, digits = 0, nsmall = 4)
+  char_p_l <- format(round(data$p_lower, 4), nsmall = 4, scientific = FALSE)
+  char_p_u <- format(round(data$p_upper, 4), nsmall = 4, scientific = FALSE)
+  char_p   <- format(round(data$p_two, 4), nsmall = 4, scientific = FALSE)
   all_p_l <- paste("Pr(C < c) =", char_p_l)
   if (data$p_lower < 0.5) {
     all_p_t <- paste("2 * Pr(C < c) =", char_p)
@@ -1185,8 +1185,8 @@ print_var_test <- function(data) {
   nhyp <- "Ho: ratio = 1"
   lhyp <- "Ha: ratio < 1"
   uhyp <- "Ha: ratio > 1"
-  char_p_l <- format(data$lower, digits = 0, nsmall = 4)
-  char_p_u <- format(data$upper, digits = 0, nsmall = 4)
+  char_p_l   <- format(round(data$lower, 4), nsmall = 4, scientific = FALSE)
+  char_p_u   <- format(round(data$upper, 4), nsmall = 4, scientific = FALSE)
   all_p_l <- paste("Pr(F < f) =", char_p_l)
   all_p_u <- paste("Pr(F > f) =", char_p_u)
 

@@ -189,11 +189,3 @@ boxly1 <- function(data = NULL, y = NULL, b_points = "outliers",
   
 }
 
-# p <- boxly1(mtcars, 'mpg', outliers = "suspectedoutliers")
-# p
-# 
-y3 <- c(0.75, 5.25, 5.5, 6, 6.2, 6.6, 6.80, 7.0, 7.2, 7.5, 7.5, 7.75, 8.15,
-        8.15, 8.65, 8.93, 9.2, 9.5, 10, 10.25, 11.5, 12, 16, 20.90, 22.3, 23.25)
-
-p <- boxly1(y = y3, b_points = "suspectedoutliers")
-p

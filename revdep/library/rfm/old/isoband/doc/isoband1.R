@@ -1,4 +1,4 @@
-## ----setup, include = FALSE---------------------------------------------------
+## -----------------------------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -68,5 +68,5 @@ fn_isobands <- function() {
   isobands(1:ncol(volcano), 1:nrow(volcano), volcano, 10*(9:17), 10*(10:18))
 }
 
-microbenchmark::microbenchmark(fn_contourLines(), fn_isolines(), fn_isobands())
+bench::mark(fn_contourLines(), fn_isolines(), fn_isobands(), check = FALSE)
 

@@ -1,4 +1,4 @@
-## ----setup, include = FALSE---------------------------------------------------
+## -----------------------------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -19,6 +19,6 @@ knitr::opts_chunk$set(
 #  
 #  profile
 
-## ---- eval=FALSE, include=FALSE-----------------------------------------------
+## -----------------------------------------------------------------------------
 #  saveRDS(profile, file.path('profilings', paste0(packageVersion('gtable'), '.rds')))
 

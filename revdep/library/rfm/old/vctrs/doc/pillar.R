@@ -6,8 +6,8 @@ library(vctrs)
 library(pillar)
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  usethis::use_package("vctrs")
-#  usethis::use_package("pillar")
+# usethis::use_package("vctrs")
+# usethis::use_package("pillar")
 
 ## -----------------------------------------------------------------------------
 #' @export
@@ -151,5 +151,5 @@ data
 print(data, width = 30)
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  expect_snapshot(pillar_shaft(data$loc))
+# expect_snapshot(pillar_shaft(data$loc))
 

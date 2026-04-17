@@ -1,8 +1,8 @@
 Package: sourcetools
 Type: Package
 Title: Tools for Reading, Tokenizing and Parsing R Code
-Version: 0.1.7-1
-Author: Kevin Ushey
+Version: 0.1.7-2
+Authors@R: person("Kevin", "Ushey", role = c("aut", "cre"), email = "kevinushey@gmail.com")
 Maintainer: Kevin Ushey <kevinushey@gmail.com>
 Description: Tools for the reading and tokenization of R code. The
     'sourcetools' package provides both an R and C++ interface for the tokenization
@@ -15,8 +15,9 @@ RoxygenNote: 5.0.1
 BugReports: https://github.com/kevinushey/sourcetools/issues
 Encoding: UTF-8
 NeedsCompilation: yes
-Packaged: 2023-01-31 18:03:04 UTC; kevin
+Packaged: 2026-03-27 21:33:04 UTC; kevin
+Author: Kevin Ushey [aut, cre]
 Repository: CRAN
-Date/Publication: 2023-02-01 10:10:02 UTC
-Built: R 4.3.2; x86_64-w64-mingw32; 2024-02-11 01:42:55 UTC; windows
+Date/Publication: 2026-03-28 06:10:35 UTC
+Built: R 4.5.3; x86_64-w64-mingw32; 2026-04-14 01:27:58 UTC; windows
 Archs: x64

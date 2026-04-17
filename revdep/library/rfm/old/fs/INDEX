@@ -17,6 +17,7 @@ fs_path                 File paths
 fs_perms                Create, modify and view file permissions
 id                      Lookup Users and Groups on a system
 is_absolute_path        Test if a path is an absolute path
+is_dir_empty            Check if a directory is empty
 is_file                 Functions to test for file types
 link_path               Read the value of a symbolic link
 path                    Construct path to a file or directory
@@ -28,4 +29,6 @@ path_package            Construct a path to a location within an
                         installed or development package
 path_sanitize           Sanitize a filename by removing directory paths
                         and invalid characters
+path_select_components
+                        Select path components by their position/index.
 path_tidy               Tidy paths

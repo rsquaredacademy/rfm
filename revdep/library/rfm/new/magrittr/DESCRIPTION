@@ -1,13 +1,14 @@
 Type: Package
 Package: magrittr
 Title: A Forward-Pipe Operator for R
-Version: 2.0.3
+Version: 2.0.5
 Authors@R: c(
     person("Stefan Milton", "Bache", , "stefan@stefanbache.dk", role = c("aut", "cph"),
            comment = "Original author and creator of magrittr"),
-    person("Hadley", "Wickham", , "hadley@rstudio.com", role = "aut"),
-    person("Lionel", "Henry", , "lionel@rstudio.com", role = "cre"),
-    person("RStudio", role = c("cph", "fnd"))
+    person("Hadley", "Wickham", , "hadley@posit.co", role = "aut"),
+    person("Lionel", "Henry", , "lionel@posit.co", role = "cre"),
+    person("Posit Software, PBC", role = c("cph", "fnd"),
+            comment = c(ROR = "03wc8by49"))
   )
 Description: Provides a mechanism for chaining commands with a new
     forward-pipe operator, %>%. This operator will forward a value, or the
@@ -25,16 +26,16 @@ VignetteBuilder: knitr
 ByteCompile: Yes
 Config/Needs/website: tidyverse/tidytemplate
 Encoding: UTF-8
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.3
 NeedsCompilation: yes
-Packaged: 2022-03-29 09:34:37 UTC; lionel
+Packaged: 2026-04-03 08:09:48 UTC; lionel
 Author: Stefan Milton Bache [aut, cph] (Original author and creator of
     magrittr),
   Hadley Wickham [aut],
   Lionel Henry [cre],
-  RStudio [cph, fnd]
-Maintainer: Lionel Henry <lionel@rstudio.com>
+  Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)
+Maintainer: Lionel Henry <lionel@posit.co>
 Repository: CRAN
-Date/Publication: 2022-03-30 07:30:09 UTC
-Built: R 4.3.2; x86_64-w64-mingw32; 2024-02-11 01:42:55 UTC; windows
+Date/Publication: 2026-04-04 08:00:02 UTC
+Built: R 4.5.3; x86_64-w64-mingw32; 2026-04-14 01:27:55 UTC; windows
 Archs: x64

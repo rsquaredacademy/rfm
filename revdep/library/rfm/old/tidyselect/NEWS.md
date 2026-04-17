@@ -1,3 +1,13 @@
+# tidyselect 1.2.1
+
+* Performance improvements (#337, #338, #339, #341)
+
+* `eval_select()` out-of-bounds errors now use the verb "select" rather than
+  "subset" in the error message for consistency with `dplyr::select()` (#271).
+
+* Fix for CRAN checks.
+
+
 # tidyselect 1.2.0
 
 ## New features
@@ -15,7 +25,7 @@
 
 * Use of `.data` in tidyselect expressions is now deprecated to more cleanly
   separate tidy-select from data-masking. Replace `.data$x` with `"x"` and
-  `.data[[var]]` with `any_of(var)` or `all_of(var)` (#169).
+  `.data[[var]]` with `all_of(var)` (#169).
 
 * Use of bare predicates (not wrapped in `where()`) and indirection (without
   using `all_of()`) have been formally deprecated (#317).

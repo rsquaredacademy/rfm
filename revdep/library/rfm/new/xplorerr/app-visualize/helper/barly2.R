@@ -199,6 +199,4 @@ barly2 <- function(x, y, data, auto_size = TRUE,
     
 }
 
-# test
-barly2('cyl', 'gear', mtcars)
 

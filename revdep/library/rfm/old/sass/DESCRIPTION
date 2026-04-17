@@ -1,6 +1,6 @@
 Type: Package
 Package: sass
-Version: 0.4.8
+Version: 0.4.10
 Title: Syntactically Awesome Style Sheets ('Sass')
 Description: An 'SCSS' compiler, powered by the 'LibSass' library. With this,
     R developers can use variables, inheritance, and functions to generate
@@ -39,7 +39,7 @@ License: MIT + file LICENSE
 URL: https://rstudio.github.io/sass/, https://github.com/rstudio/sass
 BugReports: https://github.com/rstudio/sass/issues
 Encoding: UTF-8
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 SystemRequirements: GNU make
 Imports: fs (>= 1.2.4), rlang (>= 0.4.10), htmltools (>= 0.5.1), R6,
         rappdirs
@@ -47,7 +47,7 @@ Suggests: testthat, knitr, rmarkdown, withr, shiny, curl
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 NeedsCompilation: yes
-Packaged: 2023-12-05 23:19:56 UTC; cpsievert
+Packaged: 2025-04-11 18:34:19 UTC; cpsievert
 Author: Joe Cheng [aut],
   Timothy Mastny [aut],
   Richard Iannone [aut] (<https://orcid.org/0000-0003-3925-190X>),
@@ -65,6 +65,6 @@ Author: Joe Cheng [aut],
   Trifunovic Nemanja [ctb, cph] (utf8.h)
 Maintainer: Carson Sievert <carson@rstudio.com>
 Repository: CRAN
-Date/Publication: 2023-12-06 05:00:02 UTC
-Built: R 4.3.2; x86_64-w64-mingw32; 2024-02-11 03:07:19 UTC; windows
+Date/Publication: 2025-04-11 19:50:02 UTC
+Built: R 4.5.3; x86_64-w64-mingw32; 2026-04-14 02:34:47 UTC; windows
 Archs: x64

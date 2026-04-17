@@ -55,20 +55,20 @@ if (file.exists("test")) {
 }
 
 ## ----eval = require("emo")----------------------------------------------------
-#  emoji_transformer <- function(text, envir) {
-#    if (grepl("[*]$", text)) {
-#      text <- sub("[*]$", "", text)
-#      glue_collapse(ji_find(text)$emoji)
-#    } else {
-#      ji(text)
-#    }
-#  }
-#  
-#  glue_ji <- function(..., .envir = parent.frame()) {
-#    glue(..., .open = ":", .close = ":", .envir = .envir, .transformer = emoji_transformer)
-#  }
-#  glue_ji("one :heart:")
-#  glue_ji("many :heart*:")
+# emoji_transformer <- function(text, envir) {
+#   if (grepl("[*]$", text)) {
+#     text <- sub("[*]$", "", text)
+#     glue_collapse(ji_find(text)$emoji)
+#   } else {
+#     ji(text)
+#   }
+# }
+# 
+# glue_ji <- function(..., .envir = parent.frame()) {
+#   glue(..., .open = ":", .close = ":", .envir = .envir, .transformer = emoji_transformer)
+# }
+# glue_ji("one :heart:")
+# glue_ji("many :heart*:")
 
 ## -----------------------------------------------------------------------------
 sprintf_transformer <- function(text, envir) {

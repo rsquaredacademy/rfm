@@ -1,6 +1,6 @@
 Package: vctrs
 Title: Vector Helpers
-Version: 0.6.5
+Version: 0.7.3
 Authors@R: c(
     person("Hadley", "Wickham", , "hadley@posit.co", role = "aut"),
     person("Lionel", "Henry", , "lionel@posit.co", role = "aut"),
@@ -16,20 +16,23 @@ Description: Defines new notions of prototype and size that are used to
 License: MIT + file LICENSE
 URL: https://vctrs.r-lib.org/, https://github.com/r-lib/vctrs
 BugReports: https://github.com/r-lib/vctrs/issues
-Depends: R (>= 3.5.0)
-Imports: cli (>= 3.4.0), glue, lifecycle (>= 1.0.3), rlang (>= 1.1.0)
+Depends: R (>= 4.0.0)
+Imports: cli (>= 3.4.0), glue, lifecycle (>= 1.0.3), rlang (>= 1.1.7)
 Suggests: bit64, covr, crayon, dplyr (>= 0.8.5), generics, knitr,
         pillar (>= 1.4.4), pkgdown (>= 2.0.1), rmarkdown, testthat (>=
         3.0.0), tibble (>= 3.1.3), waldo (>= 0.2.0), withr, xml2,
         zeallot
 VignetteBuilder: knitr
+Config/build/compilation-database: true
 Config/Needs/website: tidyverse/tidytemplate
 Config/testthat/edition: 3
+Config/testthat/parallel: true
 Encoding: UTF-8
+KeepSource: true
 Language: en-GB
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.3
 NeedsCompilation: yes
-Packaged: 2023-12-01 16:27:12 UTC; davis
+Packaged: 2026-04-10 14:27:17 UTC; davis
 Author: Hadley Wickham [aut],
   Lionel Henry [aut],
   Davis Vaughan [aut, cre],
@@ -38,6 +41,6 @@ Author: Hadley Wickham [aut],
   Posit Software, PBC [cph, fnd]
 Maintainer: Davis Vaughan <davis@posit.co>
 Repository: CRAN
-Date/Publication: 2023-12-01 23:50:02 UTC
-Built: R 4.3.2; x86_64-w64-mingw32; 2024-02-11 02:45:50 UTC; windows
+Date/Publication: 2026-04-11 06:20:03 UTC
+Built: R 4.5.3; x86_64-w64-mingw32; 2026-04-14 02:34:42 UTC; windows
 Archs: x64

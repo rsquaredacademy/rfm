@@ -15,9 +15,8 @@ Rcpp-package            R / C++ interface
 Rcpp.package.skeleton   Create a skeleton for a new package depending
                         on Rcpp
 Rcpp.plugin.maker       Facilitating making package plugins
-RcppUnitTests           Rcpp : unit tests results
+asisWeave               Process pdf vignettes 'asis'
 compileAttributes       Compile Rcpp Attributes for a Package
-compilerCheck           Check for Minimal (g++) Compiler Version
 cppFunction             Define an R Function with a C++ Implementation
 demangle                c++ type information
 dependsAttribute        Rcpp::depends Attribute
@@ -29,7 +28,6 @@ formals<--methods       Set the formal arguments of a C++ function
 getRcppVersion          Export the Rcpp (API) Package Version
 interfacesAttribute     Rcpp::interfaces Attribute
 loadModule              Load an Rcpp Module into a Package
-loadRcppModules         Loads Rcpp modules on package startup
 pluginsAttribute        Rcpp::plugins Attribute
 populate                Populates a namespace or an environment with
                         the content of a module

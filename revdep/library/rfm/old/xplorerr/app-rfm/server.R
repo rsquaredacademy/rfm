@@ -17,7 +17,7 @@ library(forcats)
 library(purrr)
 library(RColorBrewer)
 library(knitr)
-library(kableExtra)
+
 
 shinyServer(function(input, output, session) {
 

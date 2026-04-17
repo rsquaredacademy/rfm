@@ -1,0 +1,5 @@
+hms                     A simple class for storing time-of-day values
+parse_hms               Parsing hms values
+round_hms               Round an hms object
+vec_cast.hms            Casting
+vec_ptype2.hms          Coercion

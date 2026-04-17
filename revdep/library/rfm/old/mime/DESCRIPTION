@@ -1,9 +1,9 @@
 Package: mime
 Type: Package
 Title: Map Filenames to MIME Types
-Version: 0.12
+Version: 0.13
 Authors@R: c(
-    person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
+    person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666", URL = "https://yihui.org")),
     person("Jeffrey", "Horner", role = "ctb"),
     person("Beilei", "Bian", role = "ctb")
     )
@@ -13,15 +13,16 @@ Imports: tools
 License: GPL
 URL: https://github.com/yihui/mime
 BugReports: https://github.com/yihui/mime/issues
-RoxygenNote: 7.1.1
+RoxygenNote: 7.3.2
 Encoding: UTF-8
 NeedsCompilation: yes
-Packaged: 2021-09-28 02:06:04 UTC; yihui
-Author: Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>),
+Packaged: 2025-03-17 19:54:24 UTC; runner
+Author: Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>,
+    https://yihui.org),
   Jeffrey Horner [ctb],
   Beilei Bian [ctb]
 Maintainer: Yihui Xie <xie@yihui.name>
 Repository: CRAN
-Date/Publication: 2021-09-28 05:00:05 UTC
-Built: R 4.3.1; x86_64-w64-mingw32; 2023-10-20 00:51:12 UTC; windows
+Date/Publication: 2025-03-17 20:20:02 UTC
+Built: R 4.5.2; x86_64-w64-mingw32; 2025-11-01 00:30:57 UTC; windows
 Archs: x64

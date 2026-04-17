@@ -1,5 +1,90 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# pillar 1.11.1
+
+## Features
+
+- `glimpse()` also works for stingy duckplyr data frames.
+
+
+# pillar 1.11.0
+
+## Bug fixes
+
+- Fix formatting of numbers of the form 9.99...995 (#785, tidyverse/tibble#1648).
+
+## Features
+
+- Checking `sigfig` argument to be 15 or less (#788).
+
+## Chore
+
+- Refactor and comment formatting routine (#786).
+
+## Testing
+
+- Fix dev ggplot2 compatibility.
+
+
+# pillar 1.10.2
+
+## Bug fixes
+
+- `print()` and `format()` pass on `...` to `tbl_format_setup()` again, as documented (@thothal, #726).
+
+- Show up to 20 rows by default for lazy tables again, regression introduced in pillar 1.10.0 (#727).
+
+## Features
+
+- Add color to commas for `tibble::glimpse()` (@TSchiefer, #658, #734).
+
+## Chore
+
+- Compatibility with upcoming ggplot2 (@teunbrand, tidyverse/ggplot2#6361, #729).
+
+## Documentation
+
+- Fix introductory example in `vignette("extending")` (#732, #736).
+
+
+# pillar 1.10.1
+
+## Documentation
+
+- Define `type_sum.accel()` only in help page to avoid silent errors when loading (#720, #721).
+
+
+# pillar 1.10.0
+
+## Features
+
+- `tbl_format_setup()` gains a `setup` argument that supports printing the header before the data for the body is available, e.g., for remote backends such as databases (#686).
+
+- New `tbl_nrow()` generic to support lazy data frames (#679).
+
+- Show missing values in red in `glimpse()` (@ryanzomorrodi, #662).
+
+- Math operations on `num()` objects now pass additional arguments to the mathematical function (@gvelasq, #659, #660).
+
+## Breaking changes
+
+- Breaking change: Hard-deprecate ellipsis for printing and formatting (#585, #637).
+
+## Bug fixes
+
+- Fix printing of infinite times (#645, #710).
+
+- Fix tibble tests (#665, #709).
+
+## Documentation
+
+- Describe `getOption("width")` (#671, #708).
+
+- Update `_pkgdown.yml` to bring back search bar (@olivroy, #667).
+
+- Avoid displaying deprecated argument in `@inheritDotParams` (@olivroy, #657).
+
+
 # pillar 1.9.0
 
 ## Features

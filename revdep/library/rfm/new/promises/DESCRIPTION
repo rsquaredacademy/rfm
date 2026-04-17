@@ -1,10 +1,17 @@
 Type: Package
 Package: promises
 Title: Abstractions for Promise-Based Asynchronous Programming
-Version: 1.2.1
+Version: 1.5.0
 Authors@R: c(
-    person("Joe", "Cheng", , "joe@posit.co", role = c("aut", "cre")),
-    person("Posit Software, PBC", role = c("cph", "fnd"))
+    person("Joe", "Cheng", , "joe@posit.co", role = "aut"),
+    person("Barret", "Schloerke", , "barret@posit.co", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-9986-114X")),
+    person("Winston", "Chang", , "winston@posit.co", role = "aut",
+           comment = c(ORCID = "0000-0002-1576-2126")),
+    person("Charlie", "Gao", , "charlie.gao@posit.co", role = "aut",
+           comment = c(ORCID = "0000-0002-0750-061X")),
+    person("Posit Software, PBC", role = c("cph", "fnd"),
+           comment = c(ROR = "03wc8by49"))
   )
 Description: Provides fundamental abstractions for doing asynchronous
     programming in R using promises. Asynchronous programming is useful
@@ -16,22 +23,27 @@ License: MIT + file LICENSE
 URL: https://rstudio.github.io/promises/,
         https://github.com/rstudio/promises
 BugReports: https://github.com/rstudio/promises/issues
-Imports: fastmap (>= 1.1.0), later, magrittr (>= 1.5), R6, Rcpp, rlang,
-        stats
-Suggests: future (>= 1.21.0), knitr, purrr, rmarkdown, spelling,
-        testthat, vembedr
-LinkingTo: later, Rcpp
+Depends: R (>= 4.1.0)
+Imports: fastmap (>= 1.1.0), later, lifecycle, magrittr (>= 1.5), otel
+        (>= 0.2.0), R6, rlang
+Suggests: future (>= 1.21.0), knitr, mirai, otelsdk (>= 0.2.0), purrr,
+        Rcpp, rmarkdown, spelling, testthat (>= 3.0.0), vembedr
 VignetteBuilder: knitr
-Config/Needs/website: rsconnect
+Config/Needs/website: rsconnect, tidyverse/tidytemplate
+Config/testthat/edition: 3
+Config/usethis/last-upkeep: 2025-05-27
 Encoding: UTF-8
 Language: en-US
-RoxygenNote: 7.2.3
-NeedsCompilation: yes
-Packaged: 2023-08-09 20:29:25 UTC; garrick
-Author: Joe Cheng [aut, cre],
-  Posit Software, PBC [cph, fnd]
-Maintainer: Joe Cheng <joe@posit.co>
+RoxygenNote: 7.3.3
+NeedsCompilation: no
+Packaged: 2025-10-31 20:26:43 UTC; barret
+Author: Joe Cheng [aut],
+  Barret Schloerke [aut, cre] (ORCID:
+    <https://orcid.org/0000-0001-9986-114X>),
+  Winston Chang [aut] (ORCID: <https://orcid.org/0000-0002-1576-2126>),
+  Charlie Gao [aut] (ORCID: <https://orcid.org/0000-0002-0750-061X>),
+  Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)
+Maintainer: Barret Schloerke <barret@posit.co>
 Repository: CRAN
-Date/Publication: 2023-08-10 16:00:02 UTC
-Built: R 4.3.2; x86_64-w64-mingw32; 2024-02-11 02:45:50 UTC; windows
-Archs: x64
+Date/Publication: 2025-11-01 06:30:02 UTC
+Built: R 4.5.3; ; 2026-04-14 02:34:48 UTC; windows

@@ -1,15 +1,15 @@
-## ----setup, include = FALSE---------------------------------------------------
+## -----------------------------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 library(stringr)
 
-## ----eval = FALSE-------------------------------------------------------------
-#  # The regular call:
-#  str_extract(fruit, "nana")
-#  # Is shorthand for
-#  str_extract(fruit, regex("nana"))
+## -----------------------------------------------------------------------------
+# # The regular call:
+# str_extract(fruit, "nana")
+# # Is shorthand for
+# str_extract(fruit, regex("nana"))
 
 ## -----------------------------------------------------------------------------
 x <- c("apple", "banana", "pear")
@@ -97,6 +97,17 @@ fruit %>%
 ## -----------------------------------------------------------------------------
 str_match(c("grey", "gray"), "gr(e|a)y")
 str_match(c("grey", "gray"), "gr(?:e|a)y")
+
+## -----------------------------------------------------------------------------
+date_string <- "Today's date is 2025-09-19."
+pattern <- "(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})"
+str_match(date_string, pattern)
+
+## -----------------------------------------------------------------------------
+text <- "This is is a test test with duplicates duplicates"
+pattern <- "(?<word>\\b\\w+\\b)\\s+\\k<word>"
+str_subset(text, pattern)
+str_match_all(text, pattern)
 
 ## -----------------------------------------------------------------------------
 x <- c("apple", "banana", "pear")

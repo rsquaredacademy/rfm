@@ -130,8 +130,7 @@ tabPanel('Transaction Data', value = 'tab_rfm_transaction_score',
 
     fluidRow(
       br(),
-      dataTableOutput('rfm_transaction_score_out') %>% 
-          withSpinner()
+      dataTableOutput('rfm_transaction_score_out')
     )
 
 	)

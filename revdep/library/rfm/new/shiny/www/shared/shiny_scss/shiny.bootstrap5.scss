@@ -4,7 +4,7 @@ $shiny-emphasis-color-rgb:          var(--#{$prefix}emphasis-color-rgb, 0,0,0) !
 
 $shiny-disconnected-bg:             RGBA($shiny-emphasis-color-rgb, 0.42) !default;
 $shiny-table-na:                    RGBA($shiny-emphasis-color-rgb, 0.46) !default;
-$shiny-error-color:                 var(--#{$prefix}danger-text-emphasis) !default;
+$shiny-error-color:                 var(--#{$prefix}danger) !default;
 $shiny-error-validated-color:       RGBA($shiny-emphasis-color-rgb, 0.5) !default;
 $shiny-progress-text-bg-color:      RGBA(var(--#{$prefix}primary-rgb, #{to-rgb($primary)}), 0.05) !default;
 
@@ -37,3 +37,16 @@ $notification-content-action-color: RGB(var(--#{$prefix}primary-rgb, #{to-rgb($p
 $datepicker-disabled-color:         $dropdown-link-disabled-color !default;
 
 $shiny-file-active-shadow:          $input-focus-box-shadow !default;
+
+
+.shiny-panel-conditional,
+div:where(.shiny-html-output) {
+  /* uiOutput()/ conditionalPanel() are "pass-through" containers when they have children. */
+  &:has(> *) {
+    display: contents;
+    /* Pass along styles that no longer impact the pass-through container */
+    &.recalculating > * {
+      opacity: var(--_shiny-fade-opacity);
+    }
+  }
+}

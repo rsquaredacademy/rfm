@@ -1,8 +1,8 @@
 Package: viridisLite
 Type: Package
 Title: Colorblind-Friendly Color Maps (Lite Version)
-Version: 0.4.2
-Date: 2023-05-02
+Version: 0.4.3
+Date: 2026-02-03
 Authors@R: c(
       person("Simon", "Garnier", email = "garnier@njit.edu", role = c("aut", "cre")),
       person("Noam", "Ross", email = "noam.ross@gmail.com", role = c("ctb", "cph")),
@@ -26,9 +26,9 @@ Suggests: hexbin (>= 1.27.0), ggplot2 (>= 1.0.1), testthat, covr
 URL: https://sjmgarnier.github.io/viridisLite/,
         https://github.com/sjmgarnier/viridisLite/
 BugReports: https://github.com/sjmgarnier/viridisLite/issues/
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.3
 NeedsCompilation: no
-Packaged: 2023-05-02 21:38:46 UTC; simon
+Packaged: 2026-02-03 20:55:07 UTC; simon
 Author: Simon Garnier [aut, cre],
   Noam Ross [ctb, cph],
   Bob Rudis [ctb, cph],
@@ -36,5 +36,5 @@ Author: Simon Garnier [aut, cre],
   Antônio Pedro Camargo [ctb, cph],
   Cédric Scherer [ctb, cph]
 Repository: CRAN
-Date/Publication: 2023-05-02 23:50:02 UTC
-Built: R 4.3.2; ; 2024-02-11 01:42:56 UTC; windows
+Date/Publication: 2026-02-04 06:40:10 UTC
+Built: R 4.5.3; ; 2026-04-14 01:27:54 UTC; windows

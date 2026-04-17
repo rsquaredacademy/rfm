@@ -1,6 +1,6 @@
 Package: xtable
-Version: 1.8-4
-Date: 2019-04-08
+Version: 1.8-8
+Date: 2026-02-20
 Title: Export Tables to LaTeX or HTML
 Authors@R: c(person("David B.", "Dahl", role="aut"),
              person("David", "Scott", role=c("aut","cre"),
@@ -33,8 +33,8 @@ Authors@R: c(person("David B.", "Dahl", role="aut"),
              person("Sven", "Garbade", role="ctb"),
              person("Uwe", "Ligges", role="ctb"))
 Maintainer: David Scott <d.scott@auckland.ac.nz>
-Imports: stats, utils
-Suggests: knitr, plm, zoo, survival
+Imports: stats, utils, methods
+Suggests: knitr, zoo, survival, glue, tinytex
 VignetteBuilder: knitr
 Description: Coerce data to LaTeX and HTML tables.
 URL: http://xtable.r-forge.r-project.org/
@@ -42,7 +42,7 @@ Depends: R (>= 2.10.0)
 License: GPL (>= 2)
 Repository: CRAN
 NeedsCompilation: no
-Packaged: 2019-04-21 10:56:51 UTC; dsco036
+Packaged: 2026-02-20 02:51:53 UTC; dsco0
 Author: David B. Dahl [aut],
   David Scott [aut, cre],
   Charles Roosen [aut],
@@ -72,5 +72,5 @@ Author: David B. Dahl [aut],
   Stefan Edwards [ctb],
   Sven Garbade [ctb],
   Uwe Ligges [ctb]
-Date/Publication: 2019-04-21 12:20:03 UTC
-Built: R 4.3.2; ; 2024-02-11 01:42:56 UTC; windows
+Date/Publication: 2026-02-22 11:20:02 UTC
+Built: R 4.5.3; ; 2026-04-14 01:27:58 UTC; windows

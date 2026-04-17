@@ -156,7 +156,8 @@ html.autoreload-enabled #shiny-disconnected-overlay.reloading {
 }
 
 .recalculating {
-  opacity: 0.3;
+  --_shiny-fade-opacity: var(--shiny-fade-opacity, 0.3);
+  opacity: var(--_shiny-fade-opacity);
   transition: opacity 250ms ease 500ms;
 }
 
@@ -383,6 +384,14 @@ html.autoreload-enabled #shiny-disconnected-overlay.reloading {
   width: 100%;
 }
 
+/* Styling for textAreaInput(autoresize=TRUE) */
+textarea.textarea-autoresize.form-control {
+  padding: 5px 8px;
+  resize: none;
+  overflow-y: hidden;
+  height: auto;
+}
+
 
 #shiny-notification-panel {
   position: fixed;
@@ -391,6 +400,7 @@ html.autoreload-enabled #shiny-disconnected-overlay.reloading {
   background-color: rgba(0,0,0,0);
   padding: 2px;
   width: 300px;
+  max-width: 100%;
   z-index: 99999;
 }
 
@@ -453,6 +463,14 @@ html.autoreload-enabled #shiny-disconnected-overlay.reloading {
   }
 }
 
+// Add spacing between icon and label for action buttons and links (#4348)
+// Using margin instead of padding so the underline doesn't extend into the gap for links
+.action-button {
+  .action-icon + .action-label {
+    margin-left: 1ch;
+  }
+}
+
 /* Overrides bootstrap-datepicker3.css styling for invalid date ranges.
    See https://github.com/rstudio/shiny/issues/2042 for details. */
 .datepicker table tbody tr td.disabled,
@@ -461,6 +479,13 @@ html.autoreload-enabled #shiny-disconnected-overlay.reloading {
 .datepicker table tbody tr td span.disabled:hover {
   color: $datepicker-disabled-color;
   cursor: not-allowed;
+}
+
+// Selectize's remove_button plugin has a bug that can lead to multiple remove
+// buttons being displayed when options get updated. This prevents that from
+// happening (see #4274 for reprex)
+.shiny-input-select .selectize-input > .item > .remove:not(:first-child) {
+  display: none;
 }
 
 /* Hidden tabPanels */

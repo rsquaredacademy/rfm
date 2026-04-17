@@ -64,5 +64,6 @@ tbl_format_footer	tbl_format_footer
 tbl_format_header	tbl_format_header
 tbl_format_setup	tbl_format_setup
 tbl_format_setup.tbl	tbl_format_setup
+tbl_nrow	tbl_nrow
 tbl_sum	tbl_sum
 type_sum	type_sum

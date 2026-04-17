@@ -35,7 +35,10 @@ data_stringr_base_diff <- tibble::tribble(
 
 # create MD table, arranged alphabetically by stringr fn name
 data_stringr_base_diff %>%
-  dplyr::mutate(dplyr::across(.fns = ~ paste0("`", .x, "`"))) %>%
+  dplyr::mutate(dplyr::across(
+      .cols = everything(),
+      .fns = ~ paste0("`", .x, "`"))
+  ) %>%
   dplyr::arrange(stringr) %>%
   dplyr::rename(`base R` = base_r) %>%
   gt::gt() %>%
@@ -161,8 +164,10 @@ nchar(letters)
 str_length(letters)
 
 ## -----------------------------------------------------------------------------
+try({
 # base
 nchar(factor("abc")) 
+})
 
 ## -----------------------------------------------------------------------------
 # stringr

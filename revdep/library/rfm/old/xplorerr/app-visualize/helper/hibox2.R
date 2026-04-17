@@ -50,5 +50,3 @@ highbox <- function(data, y, x, col = 'blue',
   
 }
 
-mtcars$gear <- as.factor(mtcars$gear)
-highbox(mtcars, 'disp', 'gear')

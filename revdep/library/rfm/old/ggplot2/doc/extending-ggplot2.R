@@ -1,8 +1,10 @@
-## ---- include = FALSE---------------------------------------------------------
-knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 7, fig.height = 7, fig.align = "center")
+## -----------------------------------------------------------------------------
+#| include: false
 library(ggplot2)
 
-## ----ggproto-intro------------------------------------------------------------
+
+## -----------------------------------------------------------------------------
+#| label: ggproto-intro
 A <- ggproto("A", NULL,
   x = 1,
   inc = function(self) {
@@ -16,7 +18,9 @@ A$inc()
 A$inc()
 A$x
 
-## ----chull--------------------------------------------------------------------
+
+## -----------------------------------------------------------------------------
+#| label: chull
 StatChull <- ggproto("StatChull", Stat,
   compute_group = function(data, scales) {
     data[chull(data$x, data$y), , drop = FALSE]
@@ -24,6 +28,7 @@ StatChull <- ggproto("StatChull", Stat,
   
   required_aes = c("x", "y")
 )
+
 
 ## -----------------------------------------------------------------------------
 stat_chull <- function(mapping = NULL, data = NULL, geom = "polygon",
@@ -36,22 +41,44 @@ stat_chull <- function(mapping = NULL, data = NULL, geom = "polygon",
   )
 }
 
+
 ## -----------------------------------------------------------------------------
+stat_chull <- make_constructor(StatChull, geom = "polygon")
+print(stat_chull)
+
+
+## -----------------------------------------------------------------------------
+#| fig.alt: "Scatterplot of engine displacement versus highway miles per
+#|  gallon, for 234 cars. The convex hull of all the points is marked by a 
+#|  polygon with no fill."
 ggplot(mpg, aes(displ, hwy)) + 
   geom_point() + 
   stat_chull(fill = NA, colour = "black")
 
+
 ## -----------------------------------------------------------------------------
+#| fig.alt: "Scatterplot of engine displacement versus highway miles per
+#|  gallon, for 234 cars. The convex hulls of points, grouped and coloured by 
+#|  three types of drive train, are marked by polygons with no fill but the
+#|  outline matches the colours of the points."
 ggplot(mpg, aes(displ, hwy, colour = drv)) + 
   geom_point() + 
   stat_chull(fill = NA)
 
+
 ## -----------------------------------------------------------------------------
+#| fig.alt: "Scatterplot of engine displacement versus highway miles per
+#|  gallon, for 234 cars. The points that are part of the convex hull of all 
+#|  points are marked with a red outline."
 ggplot(mpg, aes(displ, hwy)) + 
   stat_chull(geom = "point", size = 4, colour = "red") +
   geom_point()
 
+
 ## -----------------------------------------------------------------------------
+#| fig.alt: "Scatterplot of engine displacement versus highway miles per
+#|  gallon, for 234 cars. A straight line with a negative slope passes through
+#|  the cloud of points."
 StatLm <- ggproto("StatLm", Stat, 
   required_aes = c("x", "y"),
   
@@ -66,25 +93,22 @@ StatLm <- ggproto("StatLm", Stat,
   }
 )
 
-stat_lm <- function(mapping = NULL, data = NULL, geom = "line",
-                    position = "identity", na.rm = FALSE, show.legend = NA, 
-                    inherit.aes = TRUE, ...) {
-  layer(
-    stat = StatLm, data = data, mapping = mapping, geom = geom, 
-    position = position, show.legend = show.legend, inherit.aes = inherit.aes,
-    params = list(na.rm = na.rm, ...)
-  )
-}
+stat_lm <- make_constructor(StatLm, geom = "line")
 
 ggplot(mpg, aes(displ, hwy)) + 
   geom_point() + 
   stat_lm()
 
+
 ## -----------------------------------------------------------------------------
+#| fig.alt: "Scatterplot of engine displacement versus highway miles per
+#|  gallon, for 234 cars. A wobbly line follows the point cloud over the 
+#|  horizontal direction. 20 points are placed on top of the line with constant
+#|  horizontal intervals."
 StatLm <- ggproto("StatLm", Stat, 
   required_aes = c("x", "y"),
   
-  compute_group = function(data, scales, params, n = 100, formula = y ~ x) {
+  compute_group = function(data, scales, params = list(), n = 100, formula = y ~ x) {
     rng <- range(data$x, na.rm = TRUE)
     grid <- data.frame(x = seq(rng[1], rng[2], length = n))
     
@@ -95,21 +119,13 @@ StatLm <- ggproto("StatLm", Stat,
   }
 )
 
-stat_lm <- function(mapping = NULL, data = NULL, geom = "line",
-                    position = "identity", na.rm = FALSE, show.legend = NA, 
-                    inherit.aes = TRUE, n = 50, formula = y ~ x, 
-                    ...) {
-  layer(
-    stat = StatLm, data = data, mapping = mapping, geom = geom, 
-    position = position, show.legend = show.legend, inherit.aes = inherit.aes,
-    params = list(n = n, formula = formula, na.rm = na.rm, ...)
-  )
-}
+stat_lm <- make_constructor(StatLm, geom = "line")
 
 ggplot(mpg, aes(displ, hwy)) + 
   geom_point() + 
   stat_lm(formula = y ~ poly(x, 10)) + 
   stat_lm(formula = y ~ poly(x, 10), geom = "point", colour = "red", n = 20)
+
 
 ## -----------------------------------------------------------------------------
 #' @export
@@ -129,7 +145,14 @@ stat_lm <- function(mapping = NULL, data = NULL, geom = "line",
 }
 
 
+
 ## -----------------------------------------------------------------------------
+#| fig.alt:
+#| - "A line plot showing three kernel density estimates of engine displacement,
+#|  coloured for three types of drive trains. The lines are a little bit 
+#|  wobbly."
+#| - "A line plot showing three kernel density estimates of engine displacement,
+#|  coloured for three types of drive trains. The lines are fairly smooth."
 StatDensityCommon <- ggproto("StatDensityCommon", Stat, 
   required_aes = "x",
   
@@ -152,16 +175,7 @@ StatDensityCommon <- ggproto("StatDensityCommon", Stat,
   }  
 )
 
-stat_density_common <- function(mapping = NULL, data = NULL, geom = "line",
-                                position = "identity", na.rm = FALSE, show.legend = NA, 
-                                inherit.aes = TRUE, bandwidth = NULL,
-                                ...) {
-  layer(
-    stat = StatDensityCommon, data = data, mapping = mapping, geom = geom, 
-    position = position, show.legend = show.legend, inherit.aes = inherit.aes,
-    params = list(bandwidth = bandwidth, na.rm = na.rm, ...)
-  )
-}
+stat_density_common <- make_constructor(StatDensityCommon, geom = "line")
 
 ggplot(mpg, aes(displ, colour = drv)) + 
   stat_density_common()
@@ -169,10 +183,15 @@ ggplot(mpg, aes(displ, colour = drv)) +
 ggplot(mpg, aes(displ, colour = drv)) + 
   stat_density_common(bandwidth = 0.5)
 
+
 ## -----------------------------------------------------------------------------
+#| fig.alt: "A plot showing the engine displacement versus three types of drive 
+#|  trains. Every drive train is represented by a series of densely packed 
+#|  points that imitate a horizontal line, and their colour intensity indicates
+#|  the kernel density estimate of the displacement."
 StatDensityCommon <- ggproto("StatDensity2", Stat, 
   required_aes = "x",
-  default_aes = aes(y = stat(density)),
+  default_aes = aes(y = after_stat(density)),
 
   compute_group = function(data, scales, bandwidth = 1) {
     d <- density(data$x, bw = bandwidth)
@@ -180,17 +199,32 @@ StatDensityCommon <- ggproto("StatDensity2", Stat,
   }  
 )
 
-ggplot(mpg, aes(displ, drv, colour = stat(density))) + 
+ggplot(mpg, aes(displ, drv, colour = after_stat(density))) + 
   stat_density_common(bandwidth = 1, geom = "point")
 
+
 ## -----------------------------------------------------------------------------
+#| fig.alt: "An area plot showing the kernel density estimates of 
+#|  engine displacement. Three areas are shown that indicate the estimates for
+#|  three types of drive trains separately. All areas are floored to the x-axis
+#|  and overlap one another."
 ggplot(mpg, aes(displ, fill = drv)) + 
   stat_density_common(bandwidth = 1, geom = "area", position = "stack")
 
+
 ## -----------------------------------------------------------------------------
+#| fig.alt:
+#| - "A stacked area plot showing kernel density estimates of engine displacement.
+#|  Three areas are shown that indicate the estimates for three types of drive
+#|  trains separately. The areas are stacked on top of one another and show
+#|  no overlap."
+#| - "A heatmap showing the density of engine displacement for three types of 
+#|  drive trains. The heatmap has three rows for the drive trains, but are
+#|  continuous in the horizontal direction. The fill intensity of the heatmap
+#|  shows the kernel density estimates."   
 StatDensityCommon <- ggproto("StatDensityCommon", Stat, 
   required_aes = "x",
-  default_aes = aes(y = stat(density)),
+  default_aes = aes(y = after_stat(density)),
 
   setup_params = function(data, params) {
     min <- min(data$x) - 3 * params$bandwidth
@@ -212,10 +246,14 @@ StatDensityCommon <- ggproto("StatDensityCommon", Stat,
 
 ggplot(mpg, aes(displ, fill = drv)) + 
   stat_density_common(bandwidth = 1, geom = "area", position = "stack")
-ggplot(mpg, aes(displ, drv, fill = stat(density))) + 
+ggplot(mpg, aes(displ, drv, fill = after_stat(density))) + 
   stat_density_common(bandwidth = 1, geom = "raster")
 
-## ----GeomSimplePoint----------------------------------------------------------
+
+## -----------------------------------------------------------------------------
+#| label: GeomSimplePoint
+#| fig.alt: "Scatterplot of engine displacement versus highway miles per
+#|  gallon, for 234 cars. The points are larger than the default."
 GeomSimplePoint <- ggproto("GeomSimplePoint", Geom,
   required_aes = c("x", "y"),
   default_aes = aes(shape = 19, colour = "black"),
@@ -231,20 +269,18 @@ GeomSimplePoint <- ggproto("GeomSimplePoint", Geom,
   }
 )
 
-geom_simple_point <- function(mapping = NULL, data = NULL, stat = "identity",
-                              position = "identity", na.rm = FALSE, show.legend = NA, 
-                              inherit.aes = TRUE, ...) {
-  layer(
-    geom = GeomSimplePoint, mapping = mapping,  data = data, stat = stat, 
-    position = position, show.legend = show.legend, inherit.aes = inherit.aes,
-    params = list(na.rm = na.rm, ...)
-  )
-}
+# Default stat is `stat_identity()`, no need to specify
+geom_simple_point <- make_constructor(GeomSimplePoint)
 
 ggplot(mpg, aes(displ, hwy)) + 
   geom_simple_point()
 
+
 ## -----------------------------------------------------------------------------
+#| fig.alt: "Scatterplot of engine displacement versus highway miles per
+#|  gallon, for 234 cars. The convex hulls of points, grouped by 7 types of 
+#|  cars, are displayed as multiple polygons with no fill, but the outer line is 
+#|  coloured by the type."
 GeomSimplePolygon <- ggproto("GeomPolygon", Geom,
   required_aes = c("x", "y"),
   
@@ -275,53 +311,49 @@ GeomSimplePolygon <- ggproto("GeomPolygon", Geom,
     )
   }
 )
-geom_simple_polygon <- function(mapping = NULL, data = NULL, stat = "chull",
-                                position = "identity", na.rm = FALSE, show.legend = NA, 
-                                inherit.aes = TRUE, ...) {
-  layer(
-    geom = GeomSimplePolygon, mapping = mapping, data = data, stat = stat, 
-    position = position, show.legend = show.legend, inherit.aes = inherit.aes,
-    params = list(na.rm = na.rm, ...)
-  )
-}
+
+geom_simple_polygon <- make_constructor(GeomSimplePolygon, stat = "chull")
 
 ggplot(mpg, aes(displ, hwy)) + 
   geom_point() + 
   geom_simple_polygon(aes(colour = class), fill = NA)
 
+
 ## -----------------------------------------------------------------------------
+#| fig.alt: "Scatterplot of engine displacement versus highway miles per
+#|  gallon, for 234 cars. The convex hull of all the points is marked by a 
+#|  polygon with no fill."
 GeomPolygonHollow <- ggproto("GeomPolygonHollow", GeomPolygon,
   default_aes = aes(colour = "black", fill = NA, linewidth = 0.5, linetype = 1,
     alpha = NA)
   )
-geom_chull <- function(mapping = NULL, data = NULL, 
-                       position = "identity", na.rm = FALSE, show.legend = NA, 
-                       inherit.aes = TRUE, ...) {
-  layer(
-    stat = StatChull, geom = GeomPolygonHollow, data = data, mapping = mapping,
-    position = position, show.legend = show.legend, inherit.aes = inherit.aes,
-    params = list(na.rm = na.rm, ...)
-  )
-}
+
+geom_chull <- make_constructor(GeomPolygonHollow, stat = "chull")
 
 ggplot(mpg, aes(displ, hwy)) + 
   geom_point() + 
   geom_chull()
 
+
 ## -----------------------------------------------------------------------------
 StatBoxplot$setup_params
+
 
 ## -----------------------------------------------------------------------------
 StatBoxplot$setup_data
 
+
 ## -----------------------------------------------------------------------------
 GeomBoxplot$setup_data
+
 
 ## -----------------------------------------------------------------------------
 GeomBoxplot$required_aes
 
+
 ## -----------------------------------------------------------------------------
 GeomLine$setup_params
+
 
 ## -----------------------------------------------------------------------------
 theme_grey()$legend.key
@@ -329,11 +361,19 @@ theme_grey()$legend.key
 new_theme <- theme_grey() + theme(legend.key = element_rect(colour = "red"))
 new_theme$legend.key
 
+
 ## -----------------------------------------------------------------------------
 new_theme <- theme_grey() %+replace% theme(legend.key = element_rect(colour = "red"))
 new_theme$legend.key
 
-## ----axis-line-ex-------------------------------------------------------------
+
+## -----------------------------------------------------------------------------
+#| label: axis-line-ex
+#| fig.alt:
+#| - "Scatterplot of three observations arranged diagonally. The axis titles 'x' 
+#|  and 'y' are coloured in black"
+#| - "Scatterplot of three observations arranged diagonally. The axis titles 'x' 
+#|  and 'y' are coloured in red"
 df <- data.frame(x = 1:3, y = 1:3)
 base <- ggplot(df, aes(x, y)) + 
   geom_point() + 
@@ -342,10 +382,12 @@ base <- ggplot(df, aes(x, y)) +
 base
 base + theme(text = element_text(colour = "red"))
 
+
 ## -----------------------------------------------------------------------------
 layout <- function(data, params) {
   data.frame(PANEL = c(1L, 2L), SCALE_X = 1L, SCALE_Y = 1L)
 }
+
 
 ## -----------------------------------------------------------------------------
 mapping <- function(data, layout, params) {
@@ -358,6 +400,7 @@ mapping <- function(data, layout, params) {
   )
 }
 
+
 ## -----------------------------------------------------------------------------
 render <- function(panels, layout, x_scales, y_scales, ranges, coord, data,
                    theme, params) {
@@ -368,11 +411,7 @@ render <- function(panels, layout, x_scales, y_scales, ranges, coord, data,
     panel_table <- gtable::gtable_matrix("layout", panels, 
       widths = unit(c(1, 1), "null"), heights = unit(1, "null"), clip = "on")
     # Add spacing according to theme
-    panel_spacing <- if (is.null(theme$panel.spacing.x)) {
-      theme$panel.spacing
-    } else {
-      theme$panel.spacing.x
-    }
+    panel_spacing <- calc_element("panel.spacing.x", theme)
     panel_table <- gtable::gtable_add_col_space(panel_table, panel_spacing)
   } else {
     panels <- matrix(panels, ncol = 1)
@@ -430,6 +469,7 @@ render <- function(panels, layout, x_scales, y_scales, ranges, coord, data,
   panel_table
 }
 
+
 ## -----------------------------------------------------------------------------
 # Constructor: shrink is required to govern whether scales are trained on 
 # Stat-transformed data or not.
@@ -448,10 +488,16 @@ FacetDuplicate <- ggproto("FacetDuplicate", Facet,
   draw_panels = render
 )
 
+
 ## -----------------------------------------------------------------------------
+#| fig.alt:
+#| - "Scatterplot showing horsepower against miles per gallon for 32 cars."
+#| - "Scatterplot with two panels showing horsepower against miles per gallon for 
+#|  32 cars. The left and right panels are identical."
 p <- ggplot(mtcars, aes(x = hp, y = mpg)) + geom_point()
 p
 p + facet_duplicate()
+
 
 ## -----------------------------------------------------------------------------
 library(scales)
@@ -460,7 +506,7 @@ facet_trans <- function(trans, horizontal = TRUE, shrink = TRUE) {
   ggproto(NULL, FacetTrans,
     shrink = shrink,
     params = list(
-      trans = scales::as.trans(trans),
+      trans = scales::as.transform(trans),
       horizontal = horizontal
     )
   )
@@ -535,21 +581,13 @@ FacetTrans <- ggproto("FacetTrans", Facet,
       panel_table <- gtable::gtable_matrix("layout", panels, 
         widths = unit(c(1, 1), "null"), heights = unit(1, "null"), clip = "on")
       # Add spacing according to theme
-      panel_spacing <- if (is.null(theme$panel.spacing.x)) {
-        theme$panel.spacing
-      } else {
-        theme$panel.spacing.x
-      }
+      panel_spacing <- calc_element("panel.spacing.x", theme)
       panel_table <- gtable::gtable_add_col_space(panel_table, panel_spacing)
     } else {
       panels <- matrix(panels, ncol = 1)
       panel_table <- gtable::gtable_matrix("layout", panels, 
         widths = unit(1, "null"), heights = unit(c(1, 1), "null"), clip = "on")
-      panel_spacing <- if (is.null(theme$panel.spacing.y)) {
-        theme$panel.spacing
-      } else {
-        theme$panel.spacing.y
-      }
+      panel_spacing <- calc_element("panel.spacing.y", theme)
       panel_table <- gtable::gtable_add_row_space(panel_table, panel_spacing)
     }
     # Name panel grobs so they can be found later
@@ -637,10 +675,21 @@ FacetTrans <- ggproto("FacetTrans", Facet,
   }
 )
 
-## -----------------------------------------------------------------------------
-ggplot(mtcars, aes(x = hp, y = mpg)) + geom_point() + facet_trans('sqrt')
 
 ## -----------------------------------------------------------------------------
+#| fig.alt: "Scatterplot with two panels showing horsepower against miles per 
+#|  gallon for 32 cars. Both panels show the same datapoints. The left panel is 
+#|  titled 'original' and the right panel is titled 'transformed (sqrt)'. On the 
+#|  right panel, the miles per gallon are displayed on a square root 
+#|  transformed scale."
+ggplot(mtcars, aes(x = hp, y = mpg)) + geom_point() + facet_trans('sqrt')
+
+
+## -----------------------------------------------------------------------------
+#| fig.alt: "Scatterplot with three-by-three panels showing the weight versus
+#|  the price of about 10.000 diamonds in every panel. The panels are titled 1
+#|  to 9 and show different points, but are visually similar."
+
 facet_bootstrap <- function(n = 9, prop = 0.2, nrow = NULL, ncol = NULL, 
   scales = "fixed", shrink = TRUE, strip.position = "top") {
   
@@ -661,11 +710,7 @@ FacetBootstrap <- ggproto("FacetBootstrap", FacetWrap,
     dims <- wrap_dims(params$n, params$nrow, params$ncol)
     layout <- data.frame(PANEL = factor(id))
 
-    if (params$as.table) {
-      layout$ROW <- as.integer((id - 1L) %/% dims[2] + 1L)
-    } else {
-      layout$ROW <- as.integer(dims[1] - (id - 1L) %/% dims[2])
-    }
+    layout$ROW <- as.integer((id - 1L) %/% dims[2] + 1L)
     layout$COL <- as.integer((id - 1L) %% dims[2] + 1L)
 
     layout <- layout[order(layout$PANEL), , drop = FALSE]
@@ -692,4 +737,117 @@ FacetBootstrap <- ggproto("FacetBootstrap", FacetWrap,
 ggplot(diamonds, aes(carat, price)) + 
   geom_point(alpha = 0.1) + 
   facet_bootstrap(n = 9, prop = 0.05)
+
+
+## -----------------------------------------------------------------------------
+p <- ggplot(mpg, aes(displ, hwy, colour = drv)) +
+  geom_point() +
+  scale_colour_discrete(
+    labels = c("4-wheel drive", "front wheel drive", "rear wheel drive")
+  )
+
+get_guide_data(p, "colour")
+
+
+## -----------------------------------------------------------------------------
+GuideKey <- ggproto(
+  "Guide", GuideAxis,
+  
+  # Some parameters are required, so it is easiest to copy the base Guide's
+  # parameters into our new parameters.
+  # We add a new 'key' parameter for our own guide.
+  params = c(GuideAxis$params, list(key = NULL)),
+  
+  # It is important for guides to have a mapped aesthetic with the correct name
+  extract_key = function(scale, aesthetic, key, ...) {
+    key$aesthetic <- scale$map(key$aesthetic)
+    names(key)[names(key) == "aesthetic"] <- aesthetic
+    key
+  }
+)
+
+
+## -----------------------------------------------------------------------------
+guide_key <- function(
+  aesthetic, value = aesthetic, label = as.character(aesthetic),
+  ...,
+  # Standard guide arguments
+  theme = NULL, title = waiver(), order = 0, position = waiver()
+) {
+  
+  key <- data.frame(aesthetic, .value = value, .label = label, ...)
+  
+  new_guide(
+    # Arguments passed on to the GuideKey$params field
+    key = key, theme = theme, title = title, order = order, position = position,
+    # Declare which aesthetics are supported
+    available_aes = c("x", "y"),
+    # Set the guide class
+    super = GuideKey
+  )
+}
+
+
+## -----------------------------------------------------------------------------
+#| label: key_example
+#| fig.alt: >
+#|  Scatterplot of engine displacement versus highway miles per 
+#|  gallon. The x-axis axis ticks are at 2.5, 3.5, 4.5, 5.5 and 6.5.
+
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point() +
+  scale_x_continuous(
+    guide = guide_key(aesthetic = 2:6 + 0.5)
+  )
+
+
+## -----------------------------------------------------------------------------
+#| label: key_ggproto_edit
+# Same as before
+GuideKey <- ggproto(
+  "Guide", GuideAxis,
+  params = c(GuideAxis$params, list(key = NULL)),
+  extract_key = function(scale, aesthetic, key, ...) {
+    key$aesthetic <- scale$map(key$aesthetic)
+    names(key)[names(key) == "aesthetic"] <- aesthetic
+    key
+  },
+  
+  # New method to draw labels
+  build_labels = function(key, elements, params) {
+    position <- params$position
+    # Downstream code expects a list of labels
+    list(element_grob(
+      elements$text,
+      label = key$.label,
+      x = switch(position, left = 1, right = 0, key$x),
+      y = switch(position, top = 0, bottom = 1, key$y),
+      margin_x = position %in% c("left", "right"),
+      margin_y = position %in% c("top", "bottom"),
+      colour = key$colour
+    ))
+  }
+)
+
+
+## -----------------------------------------------------------------------------
+#| label: key_example_2
+#| fig.alt: >
+#|  Scatterplot of engine displacement versus highway miles per 
+#|  gallon. There are two x-axes at the bottom and top of the plot. The bottom
+#|  has labels alternating in red and gray, and the top has red, green and blue
+#|  labels.
+
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point() +
+  guides(
+    x = guide_key(
+      aesthetic = 2:6 + 0.5,
+      colour = c("red", "grey", "red", "grey", "red")
+    ),
+    x.sec = guide_key(
+      aesthetic = c(2, 4, 6), 
+      colour = c("tomato", "limegreen", "dodgerblue")
+    )
+  )
 

@@ -1,4 +1,6 @@
 gtable-package	gtable-package
+as.gtable	as.gtable
+as.gtable.grob	as.gtable
 bind	bind
 cbind.gtable	bind
 gtable	gtable
@@ -23,4 +25,3 @@ gtable_width	gtable_width
 is.gtable	is.gtable
 print.gtable	print.gtable
 rbind.gtable	bind
-_PACKAGE	gtable-package

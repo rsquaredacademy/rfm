@@ -16,7 +16,7 @@ gghist <- function(data, x, bins = 5, fill = 'blue', col = 'black',
                    add_text = FALSE, xloc = NA, yloc = NA, 
                    label = NA, tex_color = NA, tex_size = NA) {
   
-  p <- ggplot(data, aes_string(x)) +
+  p <- ggplot(data, aes(.data[[x]])) +
     geom_histogram(bins = bins, fill = fill, color = col)
   
   if (yaxlimit) {
@@ -78,4 +78,3 @@ gghist <- function(data, x, bins = 5, fill = 'blue', col = 'black',
   
 }
 
-gghist(mtcars, 'mpg')

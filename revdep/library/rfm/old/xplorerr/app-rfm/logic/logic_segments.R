@@ -131,9 +131,11 @@ prep_segment <- eventReactive(input$button_create_segments, {
 	  use_series(rfm)
 
 	for (i in seq_len(input$n_segments)) {
-		rfm_score_table$segment[((rfm_score_table$recency_score %>% between(recency_lower()[i], recency_upper()[i])) &
+		rfm_score_table$segment[(
+			(rfm_score_table$recency_score %>% between(recency_lower()[i], recency_upper()[i])) &
 		  (rfm_score_table$frequency_score %>% between(frequency_lower()[i], frequency_upper()[i])) &
-		  (rfm_score_table$monetary_score %>% between(monetary_lower()[i], monetary_upper()[i])))] <- segment_names()[i]
+		  (rfm_score_table$monetary_score %>% between(monetary_lower()[i], monetary_upper()[i])) &
+			!rfm_score_table$segment %in% segment_names)] <- segment_names()[i]
 	}
 
 	rfm_score_table$segment[is.na(rfm_score_table$segment)] <- "Others"

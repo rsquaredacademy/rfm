@@ -45,7 +45,3 @@ hist_plot <- function(x, bins, title = NA, xlab = NA,
 
 }
 
-# histogram test
-# hist_plot(mtcars$disp, bins = 5, colours = "blue", border = "red")
-
-

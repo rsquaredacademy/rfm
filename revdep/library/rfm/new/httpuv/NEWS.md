@@ -1,3 +1,27 @@
+# httpuv 1.6.17
+
+* Closed #426: Uses native symbol registration for calls into compiled code, resulting in performance gains from not having to perform a lookup on each call. (#427)
+
+* Fixed installation failures on macOS caused by the bundled libuv build trying to regenerate autotools files when only some tools (e.g., automake) are present. (#430)
+
+* Fixed a `-single_module is obsolete` linker warning on macOS with newer Apple toolchains that could surface as a significant warning in `R CMD check`. (#433)
+
+* Tests now gracefully skip when suggested packages (`curl`, `websocket`) are not installed, rather than failing the entire test suite. (#432)
+
+# httpuv 1.6.16
+
+* Added a mime type entry for `.wasm` files, which should be served as `application/wasm`. (#407)
+
+* Updated mime lookup table using mime R package 0.13. (#408)
+
+* Avoid some time-sensitive tests on CRAN. (#412)
+
+# httpuv 1.6.15
+
+* `runStaticServer()` no longer fails if `browse = TRUE` but `utils::browseURL()` is unable to open the server. (#395)
+
+* Improved testing of `runStaticServer()` to accurately test that `runStaticServer()` throws an error when a requested port is not available on FreeBSD. (#396)
+
 # httpuv 1.6.14
 
 * Updated Makevars.ucrt for upcoming release of Rtools (thanks to Tomas Kalibera).

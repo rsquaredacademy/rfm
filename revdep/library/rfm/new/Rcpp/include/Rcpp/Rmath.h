@@ -1,8 +1,7 @@
-// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; indent-tabs-mode: nil; -*-
-//
+
 // Rmath.h: Rcpp R/C++ interface class library -- Wrappers for R's Rmath API
 //
-// Copyright (C) 2012 Dirk Eddelbuettel and Romain Francois
+// Copyright (C) 2012-2025  Dirk Eddelbuettel and Romain Francois
 //
 // This file is part of Rcpp.
 //
@@ -131,12 +130,10 @@ namespace R {
     inline double qnbinom(double p, double sz, double pb, int lt, int lg)	{ return ::Rf_qnbinom(p, sz, pb, lt, lg); }
     inline double rnbinom(double sz, double pb)					{ return ::Rf_rnbinom(sz, pb); }
 
-#if R_VERSION >= R_Version(3, 1, 2)
     inline double dnbinom_mu(double x, double sz, double mu, int lg)		{ return ::Rf_dnbinom_mu(x, sz, mu, lg); }
     inline double pnbinom_mu(double x, double sz, double mu, int lt, int lg)	{ return ::Rf_pnbinom_mu(x, sz, mu, lt, lg); }
     inline double qnbinom_mu(double x, double sz, double mu, int lt, int lg)	{ return ::Rf_qnbinom_mu(x, sz, mu, lt, lg); }
     //inline double rnbinom_mu(double sz, double mu)				{ return ::Rf_rnbinom_mu(sz, mu); }
-#endif
 
     /* Poisson Distribution */
     inline double dpois(double x, double lb, int lg)		{ return ::Rf_dpois(x, lb, lg); }
@@ -160,7 +157,7 @@ namespace R {
     inline double dnbeta(double x, double a, double b, double ncp, int lg)		{ return ::Rf_dnbeta(x, a, b, ncp, lg); }
     inline double pnbeta(double x, double a, double b, double ncp, int lt, int lg)	{ return ::Rf_pnbeta(x, a, b, ncp, lt, lg); }
     inline double qnbeta(double p, double a, double b, double ncp, int lt, int lg)	{ return ::Rf_qnbeta(p, a, b, ncp, lt, lg); }
-    inline double rnbeta(double a, double b, double np)					{ return ::Rf_rnbeta(a, b, np); }
+    //inline double rnbeta(double a, double b, double np)					{ return ::Rf_rnbeta(a, b, np); }
 
     /* Non-central F Distribution */
     inline double dnf(double x, double df1, double df2, double ncp, int lg)		{ return ::Rf_dnf(x, df1, df2, ncp, lg); }

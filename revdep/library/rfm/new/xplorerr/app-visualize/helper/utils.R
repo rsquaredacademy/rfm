@@ -298,29 +298,6 @@ pol_t <- function(l1, l2, df, col) {
 }
 
 
-# ss <- function(x) {
-#     return(x ^ 2)
-# }
-#
-# fl <- function(x, w) {
-#     x <- as.character(x)
-#     ret <- format(x, width = w, justify = "left")
-#     return(ret)
-# }
-#
-# fc <- function(x, w) {
-#     x <- as.character(x)
-#     ret <- format(x, width = w, justify = "centre")
-#     return(ret)
-# }
-# formatrc <- function(x, w) {
-#     x <- as.character(x)
-#     ret <- format(x, width = w, justify = "right")
-#     return(ret)
-# }
-
-
-
 paired_data <- function(x, y) {
   d <- tibble(x = x, y = y) %>%
     mutate(z = x - y) %>%

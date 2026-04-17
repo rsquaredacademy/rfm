@@ -1,23 +1,31 @@
 Package: R6
 Title: Encapsulated Classes with Reference Semantics
-Version: 2.5.1
-Authors@R: person("Winston", "Chang", role = c("aut", "cre"), email = "winston@stdout.org")
-Description: Creates classes with reference semantics, similar to R's built-in
-    reference classes. Compared to reference classes, R6 classes are simpler
-    and lighter-weight, and they are not built on S4 classes so they do not
-    require the methods package. These classes allow public and private
-    members, and they support inheritance, even when the classes are defined in
-    different packages.
-Depends: R (>= 3.0)
-Suggests: testthat, pryr
+Version: 2.6.1
+Authors@R: c(
+    person("Winston", "Chang", , "winston@posit.co", role = c("aut", "cre")),
+    person("Posit Software, PBC", role = c("cph", "fnd"))
+  )
+Description: Creates classes with reference semantics, similar to R's
+    built-in reference classes. Compared to reference classes, R6 classes
+    are simpler and lighter-weight, and they are not built on S4 classes
+    so they do not require the methods package. These classes allow public
+    and private members, and they support inheritance, even when the
+    classes are defined in different packages.
 License: MIT + file LICENSE
-URL: https://r6.r-lib.org, https://github.com/r-lib/R6/
+URL: https://r6.r-lib.org, https://github.com/r-lib/R6
 BugReports: https://github.com/r-lib/R6/issues
-RoxygenNote: 7.1.1
+Depends: R (>= 3.6)
+Suggests: lobstr, testthat (>= 3.0.0)
+Config/Needs/website: tidyverse/tidytemplate, ggplot2, microbenchmark,
+        scales
+Config/testthat/edition: 3
+Encoding: UTF-8
+RoxygenNote: 7.3.2
 NeedsCompilation: no
-Packaged: 2021-08-06 20:18:46 UTC; winston
-Author: Winston Chang [aut, cre]
-Maintainer: Winston Chang <winston@stdout.org>
+Packaged: 2025-02-14 21:15:19 UTC; winston
+Author: Winston Chang [aut, cre],
+  Posit Software, PBC [cph, fnd]
+Maintainer: Winston Chang <winston@posit.co>
 Repository: CRAN
-Date/Publication: 2021-08-19 14:00:05 UTC
-Built: R 4.3.2; ; 2024-02-11 01:42:55 UTC; windows
+Date/Publication: 2025-02-15 00:50:02 UTC
+Built: R 4.5.3; ; 2026-04-14 01:27:54 UTC; windows

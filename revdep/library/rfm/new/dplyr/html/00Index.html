@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head><title>R: A Grammar of Data Manipulation</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-<link rel="stylesheet" type="text/css" href="R.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<link rel="stylesheet" type="text/css" href="R.css">
 </head><body><div class="container">
 <h1> A Grammar of Data Manipulation
-<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]" />
+<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]">
 </h1>
-<hr/>
+<hr>
 <div style="text-align: center;">
-<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
-<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;dplyr&rsquo; version 1.1.4</h2>
+<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]"></a>
+<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]"></a>
+</div><h2>Documentation for package &lsquo;dplyr&rsquo; version 1.2.1</h2>
 
-<ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
+<ul><li><a href="../DESCRIPTION" type="text/plain; charset=utf-8">DESCRIPTION file</a>.</li>
 <li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
-<li><a href="../NEWS">Package NEWS</a>.</li>
+<li><a href="../NEWS.md">Package NEWS</a>.</li>
 </ul>
 
 <h2>Help Pages</h2>
@@ -93,9 +93,9 @@
 <h2><a id="C">-- C --</a></h2>
 
 <table style="width: 100%;">
-<tr><td style="width: 25%;"><a href="case_match.html">case_match</a></td>
-<td>A general vectorised 'switch()'</td></tr>
-<tr><td style="width: 25%;"><a href="case_when.html">case_when</a></td>
+<tr><td style="width: 25%;"><a href="case-and-replace-when.html">case-and-replace-when</a></td>
+<td>A general vectorised if-else</td></tr>
+<tr><td style="width: 25%;"><a href="case-and-replace-when.html">case_when</a></td>
 <td>A general vectorised if-else</td></tr>
 <tr><td style="width: 25%;"><a href="join_by.html">closest</a></td>
 <td>Join specifications</td></tr>
@@ -120,13 +120,13 @@
 <tr><td style="width: 25%;"><a href="cross_join.html">cross_join</a></td>
 <td>Cross join</td></tr>
 <tr><td style="width: 25%;"><a href="cumall.html">cumall</a></td>
-<td>Cumulativate versions of any, all, and mean</td></tr>
+<td>Cumulative versions of any, all, and mean</td></tr>
 <tr><td style="width: 25%;"><a href="cumall.html">cumany</a></td>
-<td>Cumulativate versions of any, all, and mean</td></tr>
+<td>Cumulative versions of any, all, and mean</td></tr>
 <tr><td style="width: 25%;"><a href="percent_rank.html">cume_dist</a></td>
 <td>Proportional ranking functions</td></tr>
 <tr><td style="width: 25%;"><a href="cumall.html">cummean</a></td>
-<td>Cumulativate versions of any, all, and mean</td></tr>
+<td>Cumulative versions of any, all, and mean</td></tr>
 <tr><td style="width: 25%;"><a href="context.html">cur_column</a></td>
 <td>Information about the "current" group or variable</td></tr>
 <tr><td style="width: 25%;"><a href="context.html">cur_group</a></td>
@@ -163,9 +163,11 @@
 
 <table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="filter.html">filter</a></td>
-<td>Keep rows that match a condition</td></tr>
+<td>Keep or drop rows that match a condition</td></tr>
 <tr><td style="width: 25%;"><a href="filter-joins.html">filter-joins</a></td>
 <td>Filtering joins</td></tr>
+<tr><td style="width: 25%;"><a href="filter.html">filter_out</a></td>
+<td>Keep or drop rows that match a condition</td></tr>
 <tr><td style="width: 25%;"><a href="nth.html">first</a></td>
 <td>Extract the first, last, or nth value from a vector</td></tr>
 <tr><td style="width: 25%;"><a href="mutate-joins.html">full_join</a></td>
@@ -301,8 +303,12 @@
 <table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="recode.html">recode</a></td>
 <td>Recode values</td></tr>
+<tr><td style="width: 25%;"><a href="recode-and-replace-values.html">recode-and-replace-values</a></td>
+<td>Recode and replace values</td></tr>
 <tr><td style="width: 25%;"><a href="recode.html">recode_factor</a></td>
 <td>Recode values</td></tr>
+<tr><td style="width: 25%;"><a href="recode-and-replace-values.html">recode_values</a></td>
+<td>Recode and replace values</td></tr>
 <tr><td style="width: 25%;"><a href="reframe.html">reframe</a></td>
 <td>Transform each group to an arbitrary number of rows</td></tr>
 <tr><td style="width: 25%;"><a href="relocate.html">relocate</a></td>
@@ -311,6 +317,10 @@
 <td>Rename columns</td></tr>
 <tr><td style="width: 25%;"><a href="rename.html">rename_with</a></td>
 <td>Rename columns</td></tr>
+<tr><td style="width: 25%;"><a href="recode-and-replace-values.html">replace_values</a></td>
+<td>Recode and replace values</td></tr>
+<tr><td style="width: 25%;"><a href="case-and-replace-when.html">replace_when</a></td>
+<td>A general vectorised if-else</td></tr>
 <tr><td style="width: 25%;"><a href="mutate-joins.html">right_join</a></td>
 <td>Mutating joins</td></tr>
 <tr><td style="width: 25%;"><a href="mutate-joins.html">right_join.data.frame</a></td>
@@ -410,6 +420,12 @@
 <h2><a id="W">-- W --</a></h2>
 
 <table style="width: 100%;">
+<tr><td style="width: 25%;"><a href="when-any-all.html">when-any-all</a></td>
+<td>Elementwise 'any()' and 'all()'</td></tr>
+<tr><td style="width: 25%;"><a href="when-any-all.html">when_all</a></td>
+<td>Elementwise 'any()' and 'all()'</td></tr>
+<tr><td style="width: 25%;"><a href="when-any-all.html">when_any</a></td>
+<td>Elementwise 'any()' and 'all()'</td></tr>
 <tr><td style="width: 25%;"><a href="join_by.html">within</a></td>
 <td>Join specifications</td></tr>
 </table>

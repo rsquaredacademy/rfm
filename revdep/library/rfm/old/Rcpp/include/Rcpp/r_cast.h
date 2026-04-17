@@ -1,8 +1,7 @@
-// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; indent-tabs-mode: nil; -*-
-//
+
 // rcast.h: Rcpp R/C++ interface class library -- cast from one SEXP type to another
 //
-// Copyright (C) 2010 - 2017  Dirk Eddelbuettel and Romain Francois
+// Copyright (C) 2010 - 2026  Dirk Eddelbuettel and Romain Francois
 //
 // This file is part of Rcpp.
 //
@@ -143,14 +142,9 @@ namespace Rcpp {
         }
         template<>
         inline SEXP r_true_cast<LISTSXP>(SEXP x) {
-            switch( TYPEOF(x) ){
-            case LANGSXP:
-                {
-                    Shield<SEXP> y( Rf_duplicate( x ));
-                    SET_TYPEOF(y,LISTSXP);
-                    return y;
-                }
-            default:
+            if (TYPEOF(x) == LANGSXP) {
+                return Rf_cons(CAR(x), CDR(x));
+            } else {
                 return convert_using_rfunction(x, "as.pairlist" );
             }
         }
@@ -161,7 +155,7 @@ namespace Rcpp {
 
     } // namespace internal
 
-    template <int TARGET> SEXP r_cast(SEXP x) {
+    template <int TARGET> SEXP r_cast(SEXP x) {				// #nocov start
         if (TYPEOF(x) == TARGET) {
             return x;
         } else {
@@ -173,7 +167,7 @@ namespace Rcpp {
             );
             return result;
             #else
-            return internal::r_true_cast<TARGET>(x);		// #nocov
+            return internal::r_true_cast<TARGET>(x);		// #nocov end
             #endif
         }
     }

@@ -55,6 +55,8 @@ $gradient: linear-gradient(
 $body-color: $gray-900 !default;
 $body-bg: $white !default;
 
+$prefix: bs- !default;
+
 // Fonts
 $font-family-base: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
 $font-family-monospace: "Source Code Pro", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace	!default;
@@ -67,6 +69,7 @@ $body-font-weight: 400 !default;
 $headings-font-weight: 400 !default;
 
 // Spacing
+$bslib-spacer: 1.5rem !default;
 $hr-margin-y: 2rem !default;
 $navbar-padding-x: 0.66rem !default;
 
@@ -87,6 +90,7 @@ $form-text-color: $gray-600 !default;
 // Borders
 $input-border-color: $gray-500 !default;
 $border-radius: 3px !default;
+$form-check-input-border: var(--#{$prefix}border-width) solid $input-border-color !default;
 // Defaults to $gray700, of which we've set to a blueish-gray, which looks a bit weird...
 // We could go forward with the blue-ish gray, but if we do, we'll want to also make
 // $border-color-translucent-dark a bit more blueish
@@ -103,9 +107,8 @@ $bslib-box-shadow-color-rgb: 29, 31, 33 !default;
 $bslib-box-shadow-color-rgb-dark: 0, 0, 0 !default;
 
 $box-shadow-sm:
-  0px 1px 2px RGBA(var(--bslib-box-shadow-color-rgb), .1),
-  0px 2px 3px RGBA(var(--bslib-box-shadow-color-rgb), 0.1),
-  0px 3px 8px RGBA(var(--bslib-box-shadow-color-rgb), 0.1) !default;
+  0px 0px 2px 0px RGBA(var(--bslib-box-shadow-color-rgb), 0.14),
+  0px 2px 4px 0px RGBA(var(--bslib-box-shadow-color-rgb), 0.16) !default;
 
 $box-shadow:
   0px 1px 2px RGBA(var(--bslib-box-shadow-color-rgb), .1),
@@ -113,9 +116,11 @@ $box-shadow:
   0px 12px 30px RGBA(var(--bslib-box-shadow-color-rgb), .08) !default;
 
 $box-shadow-lg:
-  0px 16px 48px RGBA(var(--bslib-box-shadow-color-rgb), .1),
-  0px 2px 3px RGBA(var(--bslib-box-shadow-color-rgb), 0.1),
-  0px 16px 46px RGBA(var(--bslib-box-shadow-color-rgb), 0.1) !default;
+  0px 4px 10px RGBA(var(--bslib-box-shadow-color-rgb), .1),
+  0px 12px 30px RGBA(var(--bslib-box-shadow-color-rgb), 0.17) !default;
+
+// Popover
+$popover-box-shadow: $box-shadow !default;
 
 // Cards
 $card-border-radius: 8px !default;
@@ -130,7 +135,33 @@ $card-border-radius: 8px !default;
 // * white navbar and title panel
 
 $bslib-dashboard-design: true !default;
-$bslib-enable-shadows: $bslib-dashboard-design !default
+$bslib-enable-shadows: $bslib-dashboard-design !default;
+
+$bslib-sidebar-bg: null !default;
+$bslib-sidebar-fg: null !default;
+
+@if $bslib-sidebar-bg == null {
+  // if sidebar-bg not set by user, default to body background
+  $bslib-sidebar-bg: RGBA(var(--#{$prefix}body-bg-rgb), 0.05);
+} @else if $bslib-sidebar-fg == null and type-of($bslib-sidebar-bg) == "color" {
+  // if sidebar-bg but not -fg set by the user, find a contrasting color
+  $bslib-sidebar-fg: color-contrast($bslib-sidebar-bg);
+}
+
+// From inst/lib/bs5/scss/_variables.scss
+// Repeated here so that we can set navbar light/dark to `--bs-body-bg`
+$navbar-bg:       null !default; // Background color for any navbarPage()
+$navbar-light-bg: $navbar-bg !default; // Background color for navbarPage(inverse = FALSE)
+$navbar-dark-bg:  $navbar-bg !default; // Background color for navbarPage(inverse = TRUE)
+
+@if $bslib-dashboard-design and $navbar-bg == null {
+  @if $navbar-light-bg == null {
+    $navbar-light-bg: var(--#{$prefix}body-bg);
+  }
+  @if $navbar-dark-bg == null {
+    $navbar-dark-bg: var(--#{$prefix}body-bg);
+  }
+}
 
 $border-color-translucent: if($bslib-dashboard-design, rgba(40, 70, 94, 0.1), null) !default;
 $border-color-translucent-dark: if($bslib-dashboard-design, rgba(255, 255, 255, 0.1), null) !default;
@@ -140,6 +171,10 @@ $modal-dialog-margin-y-sm-up: 10% !default;
 $modal-header-border-width: none !default;
 $modal-header-padding: 1.5rem !default;
 $modal-backdrop-bg: #464646 !default;
+
+// Toasts
+$toast-spacing: 0.5rem !default;
+$toast-border-width: 0 !default;
 
 // Shiny: Base shiny.scss variables
 $notification-close-color: currentColor !default;

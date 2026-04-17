@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Classes and objects</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Classes and objects</h1>
+
+
+
+<p>This vignette dives into the details of S7 classes and objects,
+building on the basics discussed in <code>vignette(&quot;S7&quot;)</code>. It will
+cover validators, the finer details of properties, and finally how to
+write your own constructors.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(S7)</span></code></pre></div>
+<div id="validation" class="section level2">
+<h2>Validation</h2>
+<p>S7 classes can have an optional <strong>validator</strong> that
+checks that the values of the properties are OK. A validator is a
+function that takes the object (called <code>self</code>) and returns
+<code>NULL</code> if it’s valid or returns a character vector listing
+the problems.</p>
+<div id="basics" class="section level3">
+<h3>Basics</h3>
+<p>In the following example we create a <code>Range</code> class that
+enforces that <code>@start</code> and <code>@end</code> are single
+numbers, and that <code>@start</code> is less than
+<code>@end</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>Range <span class="ot">&lt;-</span> <span class="fu">new_class</span>(<span class="st">&quot;Range&quot;</span>,</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="at">properties =</span> <span class="fu">list</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>    <span class="at">start =</span> class_double,</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>    <span class="at">end =</span> class_double</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>  ),</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  <span class="at">validator =</span> <span class="cf">function</span>(self) {</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">length</span>(self<span class="sc">@</span>start) <span class="sc">!=</span> <span class="dv">1</span>) {</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>      <span class="st">&quot;@start must be length 1&quot;</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>    } <span class="cf">else</span> <span class="cf">if</span> (<span class="fu">length</span>(self<span class="sc">@</span>end) <span class="sc">!=</span> <span class="dv">1</span>) {</span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>      <span class="st">&quot;@end must be length 1&quot;</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>    } <span class="cf">else</span> <span class="cf">if</span> (self<span class="sc">@</span>end <span class="sc">&lt;</span> self<span class="sc">@</span>start) {</span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>      <span class="fu">sprintf</span>(</span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>        <span class="st">&quot;@end (%i) must be greater than or equal to @start (%i)&quot;</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>        self<span class="sc">@</span>end,</span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>        self<span class="sc">@</span>start</span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>      )</span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>    }</span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a>  }</span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a>)</span></code></pre></div>
+<p>You can typically write a validator as a series of
+<code>if</code>-<code>else</code> statements, but note that the order of
+the statements is important. For example, in the code above, we can’t
+check that <code>self@end &lt; self@start</code> before we’ve checked
+that <code>@start</code> and <code>@end</code> are length 1.</p>
+<p>As we’ll discuss shortly, you can also perform validation on a
+per-property basis, so generally class validators should be reserved for
+interactions between properties.</p>
+</div>
+<div id="when-is-validation-performed" class="section level3">
+<h3>When is validation performed?</h3>
+<p>Objects are validated automatically when constructed and when any
+property is modified:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">Range</span>(<span class="dv">1</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co">#&gt; Error: &lt;Range&gt; object properties are invalid:</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt; - @end must be &lt;double&gt;, not &lt;integer&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">Range</span>(<span class="dv">10</span>, <span class="dv">1</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt; Error: &lt;Range&gt; object is invalid:</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt; - @end (1) must be greater than or equal to @start (10)</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">Range</span>(<span class="dv">1</span>, <span class="dv">10</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>x<span class="sc">@</span>start <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co">#&gt; Error: &lt;Range&gt; object is invalid:</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="co">#&gt; - @end (10) must be greater than or equal to @start (20)</span></span></code></pre></div>
+<p>You can also manually <code>validate()</code> an object if you use a
+low-level R function to bypass the usual checks and balances of
+<code>@</code>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">Range</span>(<span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">attr</span>(x, <span class="st">&quot;start&quot;</span>) <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="fu">validate</span>(x)</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt; Error: &lt;Range&gt; object is invalid:</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; - @end (2) must be greater than or equal to @start (3)</span></span></code></pre></div>
+</div>
+<div id="avoiding-validation" class="section level3">
+<h3>Avoiding validation</h3>
+<p>Imagine you wanted to write a function that would shift a property to
+the left or the right:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>shift <span class="ot">&lt;-</span> <span class="cf">function</span>(x, shift) {</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  x<span class="sc">@</span>start <span class="ot">&lt;-</span> x<span class="sc">@</span>start <span class="sc">+</span> shift</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  x<span class="sc">@</span>end <span class="ot">&lt;-</span> x<span class="sc">@</span>end <span class="sc">+</span> shift</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  x</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>}</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="fu">shift</span>(<span class="fu">Range</span>(<span class="dv">1</span>, <span class="dv">10</span>), <span class="dv">1</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#&gt; &lt;Range&gt;</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#&gt;  @ start: num 2</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co">#&gt;  @ end  : num 11</span></span></code></pre></div>
+<p>There’s a problem if <code>shift</code> is larger than
+<code>@end</code> - <code>@start</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">shift</span>(<span class="fu">Range</span>(<span class="dv">1</span>, <span class="dv">10</span>), <span class="dv">10</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co">#&gt; Error: &lt;Range&gt; object is invalid:</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#&gt; - @end (10) must be greater than or equal to @start (11)</span></span></code></pre></div>
+<p>While the end result of <code>shift()</code> will be valid, an
+intermediate state is not. The easiest way to resolve this problem is to
+set the properties all at once:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>shift <span class="ot">&lt;-</span> <span class="cf">function</span>(x, shift) {</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="fu">props</span>(x) <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>    <span class="at">start =</span> x<span class="sc">@</span>start <span class="sc">+</span> shift,</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>    <span class="at">end =</span> x<span class="sc">@</span>end <span class="sc">+</span> shift</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  )</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>  x</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>}</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="fu">shift</span>(<span class="fu">Range</span>(<span class="dv">1</span>, <span class="dv">10</span>), <span class="dv">10</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt; &lt;Range&gt;</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#&gt;  @ start: num 11</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co">#&gt;  @ end  : num 20</span></span></code></pre></div>
+<p>The object is still validated, but it’s only validated once, after
+all the properties have been modified.</p>
+</div>
+</div>
+<div id="properties" class="section level2">
+<h2>Properties</h2>
+<p>So far we’ve focused on the simplest form of property specification
+where you use a named list to supply the desired type for each property.
+This is a convenient shorthand for a call to
+<code>new_property()</code>. For example, the property definition of
+range above is shorthand for:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>Range <span class="ot">&lt;-</span> <span class="fu">new_class</span>(<span class="st">&quot;Range&quot;</span>,</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="at">properties =</span> <span class="fu">list</span>(</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>    <span class="at">start =</span> <span class="fu">new_property</span>(class_double),</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>    <span class="at">end =</span> <span class="fu">new_property</span>(class_double)</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>  )</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>)</span></code></pre></div>
+<p>Calling <code>new_property()</code> explicitly allows you to control
+aspects of the property other than its type. The following sections show
+you how to add a validator, provide a default value, compute the
+property value on demand, or provide a fully dynamic property.</p>
+<div id="validation-1" class="section level3">
+<h3>Validation</h3>
+<p>You can optionally provide a validator for each property. For
+example, instead of validating the length of <code>start</code> and
+<code>end</code> in the validator of our <code>Range</code> class, we
+could implement those at the property level:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>prop_number <span class="ot">&lt;-</span> <span class="fu">new_property</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="at">class =</span> class_double,</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  <span class="at">validator =</span> <span class="cf">function</span>(value) {</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">length</span>(value) <span class="sc">!=</span> <span class="dv">1</span><span class="dt">L</span>) <span class="st">&quot;must be length 1&quot;</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>  }</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>)</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>Range <span class="ot">&lt;-</span> <span class="fu">new_class</span>(<span class="st">&quot;Range&quot;</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>  <span class="at">properties =</span> <span class="fu">list</span>(</span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a>    <span class="at">start =</span> prop_number,</span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>    <span class="at">end =</span> prop_number</span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a>  ),</span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a>  <span class="at">validator =</span> <span class="cf">function</span>(self) {</span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a>    <span class="cf">if</span> (self<span class="sc">@</span>end <span class="sc">&lt;</span> self<span class="sc">@</span>start) {</span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a>      <span class="fu">sprintf</span>(</span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a>        <span class="st">&quot;@end (%i) must be greater than or equal to @start (%i)&quot;</span>,</span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a>        self<span class="sc">@</span>end,</span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a>        self<span class="sc">@</span>start</span>
+<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a>      )</span>
+<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a>    }</span>
+<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a>  }</span>
+<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a>)</span>
+<span id="cb9-23"><a href="#cb9-23" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" tabindex="-1"></a><span class="fu">Range</span>(<span class="at">start =</span> <span class="fu">c</span>(<span class="fl">1.5</span>, <span class="fl">3.5</span>))</span>
+<span id="cb9-25"><a href="#cb9-25" tabindex="-1"></a><span class="co">#&gt; Error: &lt;Range&gt; object properties are invalid:</span></span>
+<span id="cb9-26"><a href="#cb9-26" tabindex="-1"></a><span class="co">#&gt; - @start must be length 1</span></span>
+<span id="cb9-27"><a href="#cb9-27" tabindex="-1"></a><span class="co">#&gt; - @end must be length 1</span></span>
+<span id="cb9-28"><a href="#cb9-28" tabindex="-1"></a><span class="fu">Range</span>(<span class="at">end =</span> <span class="fu">c</span>(<span class="fl">1.5</span>, <span class="fl">3.5</span>))</span>
+<span id="cb9-29"><a href="#cb9-29" tabindex="-1"></a><span class="co">#&gt; Error: &lt;Range&gt; object properties are invalid:</span></span>
+<span id="cb9-30"><a href="#cb9-30" tabindex="-1"></a><span class="co">#&gt; - @start must be length 1</span></span>
+<span id="cb9-31"><a href="#cb9-31" tabindex="-1"></a><span class="co">#&gt; - @end must be length 1</span></span></code></pre></div>
+<p>Note that property validators shouldn’t include the name of the
+property in validation messages as S7 will add it automatically. This
+makes it possible to use the same property definition for multiple
+properties of the same type, as above.</p>
+</div>
+<div id="default-value" class="section level3">
+<h3>Default value</h3>
+<p>The defaults of <code>new_class()</code> create a class that can be
+constructed with no arguments:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>Empty <span class="ot">&lt;-</span> <span class="fu">new_class</span>(<span class="st">&quot;Empty&quot;</span>,</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="at">properties =</span> <span class="fu">list</span>(</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>    <span class="at">x =</span> class_double,</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>    <span class="at">y =</span> class_character,</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>    <span class="at">z =</span> class_logical</span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>  ))</span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="fu">Empty</span>()</span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co">#&gt; &lt;Empty&gt;</span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co">#&gt;  @ x: num(0) </span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="co">#&gt;  @ y: chr(0) </span></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="co">#&gt;  @ z: logi(0)</span></span></code></pre></div>
+<p>The default values of the properties will be filled in with “empty”
+instances. You can instead provide your own defaults by using the
+<code>default</code> argument:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>Empty <span class="ot">&lt;-</span> <span class="fu">new_class</span>(<span class="st">&quot;Empty&quot;</span>,</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  <span class="at">properties =</span> <span class="fu">list</span>(</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">new_property</span>(class_numeric, <span class="at">default =</span> <span class="dv">0</span>),</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">new_property</span>(class_character, <span class="at">default =</span> <span class="st">&quot;&quot;</span>),</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>    <span class="at">z =</span> <span class="fu">new_property</span>(class_logical, <span class="at">default =</span> <span class="cn">NA</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>  )</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>)</span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a><span class="fu">Empty</span>()</span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="co">#&gt; &lt;Empty&gt;</span></span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a><span class="co">#&gt;  @ x: num 0</span></span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a><span class="co">#&gt;  @ y: chr &quot;&quot;</span></span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a><span class="co">#&gt;  @ z: logi NA</span></span></code></pre></div>
+<p>A quoted call becomes a standard function promise in the default
+constructor, evaluated at the time the object is constructed.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>Stopwatch <span class="ot">&lt;-</span> <span class="fu">new_class</span>(<span class="st">&quot;Stopwatch&quot;</span>, <span class="at">properties =</span> <span class="fu">list</span>(</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="at">start_time =</span> <span class="fu">new_property</span>(</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>    <span class="at">class =</span> class_POSIXct,</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>    <span class="at">default =</span> <span class="fu">quote</span>(<span class="fu">Sys.time</span>())</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>  ),</span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>  <span class="at">elapsed =</span> <span class="fu">new_property</span>(</span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>    <span class="at">getter =</span> <span class="cf">function</span>(self) {</span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>      <span class="fu">difftime</span>(<span class="fu">Sys.time</span>(), self<span class="sc">@</span>start_time, <span class="at">units =</span> <span class="st">&quot;secs&quot;</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a>    }</span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a>  )</span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a>))</span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a><span class="fu">args</span>(Stopwatch)</span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a><span class="co">#&gt; function (start_time = Sys.time()) </span></span>
+<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a><span class="co">#&gt; NULL</span></span>
+<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">Stopwatch</span>()<span class="sc">@</span>elapsed)</span>
+<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a><span class="co">#&gt; Time difference of 0 secs</span></span>
+<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">Stopwatch</span>(<span class="fu">Sys.time</span>() <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">@</span>elapsed)</span>
+<span id="cb12-18"><a href="#cb12-18" tabindex="-1"></a><span class="co">#&gt; Time difference of 1 secs</span></span></code></pre></div>
+</div>
+<div id="computed-properties" class="section level3">
+<h3>Computed properties</h3>
+<p>It’s sometimes useful to have a property that is computed on demand.
+For example, it’d be convenient to pretend that our range has a length,
+which is just the distance between <code>@start</code> and
+<code>@end</code>. You can dynamically compute the value of a property
+by defining a <code>getter</code>:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>Range <span class="ot">&lt;-</span> <span class="fu">new_class</span>(<span class="st">&quot;Range&quot;</span>,</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>  <span class="at">properties =</span> <span class="fu">list</span>(</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>    <span class="at">start =</span> class_double,</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>    <span class="at">end =</span> class_double,</span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>    <span class="at">length =</span> <span class="fu">new_property</span>(</span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>      <span class="at">getter =</span> <span class="cf">function</span>(self) self<span class="sc">@</span>end <span class="sc">-</span> self<span class="sc">@</span>start</span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>    )</span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a>  )</span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a>)</span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">Range</span>(<span class="at">start =</span> <span class="dv">1</span>, <span class="at">end =</span> <span class="dv">10</span>)</span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a>x</span>
+<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a><span class="co">#&gt; &lt;Range&gt;</span></span>
+<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a><span class="co">#&gt;  @ start : num 1</span></span>
+<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a><span class="co">#&gt;  @ end   : num 10</span></span>
+<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a><span class="co">#&gt;  @ length: num 9</span></span></code></pre></div>
+<p>Computed properties are read-only:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>x<span class="sc">@</span>length <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="co">#&gt; Error: Can&#39;t set read-only property &lt;Range&gt;@length</span></span></code></pre></div>
+</div>
+<div id="dynamic-properties" class="section level3">
+<h3>Dynamic properties</h3>
+<p>You can make a computed property fully dynamic so that it can be read
+and written by also supplying a <code>setter</code>.</p>
+<p>A <code>setter</code> is a function with arguments <code>self</code>
+and <code>value</code> that returns a modified object.</p>
+<p>For example, we could extend the previous example to allow the
+<code>@length</code> to be set, by modifying the <code>@end</code> of
+the vector:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>Range <span class="ot">&lt;-</span> <span class="fu">new_class</span>(<span class="st">&quot;Range&quot;</span>,</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>  <span class="at">properties =</span> <span class="fu">list</span>(</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>    <span class="at">start =</span> class_double,</span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>    <span class="at">end =</span> class_double,</span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>    <span class="at">length =</span> <span class="fu">new_property</span>(</span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>      <span class="at">class =</span> class_double,</span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>      <span class="at">getter =</span> <span class="cf">function</span>(self) self<span class="sc">@</span>end <span class="sc">-</span> self<span class="sc">@</span>start,</span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a>      <span class="at">setter =</span> <span class="cf">function</span>(self, value) {</span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a>        <span class="cf">if</span> (<span class="sc">!</span><span class="fu">length</span>(value)) {</span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a>          <span class="co"># Do nothing if called with the constructor default</span></span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a>          <span class="co"># value for this property, a zero-length double vector.</span></span>
+<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a>          <span class="fu">return</span>(self)</span>
+<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a>        }</span>
+<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a>        self<span class="sc">@</span>end <span class="ot">&lt;-</span> self<span class="sc">@</span>start <span class="sc">+</span> value</span>
+<span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a>        self</span>
+<span id="cb15-16"><a href="#cb15-16" tabindex="-1"></a>      }</span>
+<span id="cb15-17"><a href="#cb15-17" tabindex="-1"></a>    )</span>
+<span id="cb15-18"><a href="#cb15-18" tabindex="-1"></a>  )</span>
+<span id="cb15-19"><a href="#cb15-19" tabindex="-1"></a>)</span>
+<span id="cb15-20"><a href="#cb15-20" tabindex="-1"></a></span>
+<span id="cb15-21"><a href="#cb15-21" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">Range</span>(<span class="at">start =</span> <span class="dv">1</span>, <span class="at">end =</span> <span class="dv">10</span>)</span>
+<span id="cb15-22"><a href="#cb15-22" tabindex="-1"></a>x</span>
+<span id="cb15-23"><a href="#cb15-23" tabindex="-1"></a><span class="co">#&gt; &lt;Range&gt;</span></span>
+<span id="cb15-24"><a href="#cb15-24" tabindex="-1"></a><span class="co">#&gt;  @ start : num 1</span></span>
+<span id="cb15-25"><a href="#cb15-25" tabindex="-1"></a><span class="co">#&gt;  @ end   : num 10</span></span>
+<span id="cb15-26"><a href="#cb15-26" tabindex="-1"></a><span class="co">#&gt;  @ length: num 9</span></span>
+<span id="cb15-27"><a href="#cb15-27" tabindex="-1"></a></span>
+<span id="cb15-28"><a href="#cb15-28" tabindex="-1"></a>x<span class="sc">@</span>length <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb15-29"><a href="#cb15-29" tabindex="-1"></a>x</span>
+<span id="cb15-30"><a href="#cb15-30" tabindex="-1"></a><span class="co">#&gt; &lt;Range&gt;</span></span>
+<span id="cb15-31"><a href="#cb15-31" tabindex="-1"></a><span class="co">#&gt;  @ start : num 1</span></span>
+<span id="cb15-32"><a href="#cb15-32" tabindex="-1"></a><span class="co">#&gt;  @ end   : num 6</span></span>
+<span id="cb15-33"><a href="#cb15-33" tabindex="-1"></a><span class="co">#&gt;  @ length: num 5</span></span></code></pre></div>
+</div>
+<div id="common-patterns" class="section level3">
+<h3>Common Patterns</h3>
+<p><code>getter</code>, <code>setter</code>, <code>default</code>, and
+<code>validator</code> can be used to implement many common patterns of
+properties.</p>
+<div id="deprecated-properties" class="section level4">
+<h4>Deprecated properties</h4>
+<p>A <code>setter</code> + <code>getter</code> can be used to to
+deprecate a property:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>Person <span class="ot">&lt;-</span> <span class="fu">new_class</span>(<span class="st">&quot;Person&quot;</span>, <span class="at">properties =</span> <span class="fu">list</span>(</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a> <span class="at">first_name =</span> class_character,</span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a> <span class="at">firstName =</span> <span class="fu">new_property</span>(</span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>    class_character,</span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>    <span class="at">default =</span> <span class="fu">quote</span>(first_name),</span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a>    <span class="at">getter =</span> <span class="cf">function</span>(self) {</span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>      <span class="fu">warning</span>(<span class="st">&quot;@firstName is deprecated; please use @first_name instead&quot;</span>, <span class="at">call. =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a>      self<span class="sc">@</span>first_name</span>
+<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a>    },</span>
+<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a>    <span class="at">setter =</span> <span class="cf">function</span>(self, value) {</span>
+<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a>      <span class="cf">if</span> (<span class="fu">identical</span>(value, self<span class="sc">@</span>first_name)) {</span>
+<span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a>        <span class="fu">return</span>(self)</span>
+<span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a>      }</span>
+<span id="cb16-14"><a href="#cb16-14" tabindex="-1"></a>      <span class="fu">warning</span>(<span class="st">&quot;@firstName is deprecated; please use @first_name instead&quot;</span>, <span class="at">call. =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb16-15"><a href="#cb16-15" tabindex="-1"></a>      self<span class="sc">@</span>first_name <span class="ot">&lt;-</span> value</span>
+<span id="cb16-16"><a href="#cb16-16" tabindex="-1"></a>      self</span>
+<span id="cb16-17"><a href="#cb16-17" tabindex="-1"></a>    }</span>
+<span id="cb16-18"><a href="#cb16-18" tabindex="-1"></a>  )</span>
+<span id="cb16-19"><a href="#cb16-19" tabindex="-1"></a>))</span>
+<span id="cb16-20"><a href="#cb16-20" tabindex="-1"></a></span>
+<span id="cb16-21"><a href="#cb16-21" tabindex="-1"></a><span class="fu">args</span>(Person)</span>
+<span id="cb16-22"><a href="#cb16-22" tabindex="-1"></a><span class="co">#&gt; function (first_name = character(0), firstName = first_name) </span></span>
+<span id="cb16-23"><a href="#cb16-23" tabindex="-1"></a><span class="co">#&gt; NULL</span></span>
+<span id="cb16-24"><a href="#cb16-24" tabindex="-1"></a></span>
+<span id="cb16-25"><a href="#cb16-25" tabindex="-1"></a>hadley <span class="ot">&lt;-</span> <span class="fu">Person</span>(<span class="at">firstName =</span> <span class="st">&quot;Hadley&quot;</span>)</span>
+<span id="cb16-26"><a href="#cb16-26" tabindex="-1"></a><span class="co">#&gt; Warning: @firstName is deprecated; please use @first_name instead</span></span>
+<span id="cb16-27"><a href="#cb16-27" tabindex="-1"></a></span>
+<span id="cb16-28"><a href="#cb16-28" tabindex="-1"></a>hadley <span class="ot">&lt;-</span> <span class="fu">Person</span>(<span class="at">first_name =</span> <span class="st">&quot;Hadley&quot;</span>) <span class="co"># no warning</span></span>
+<span id="cb16-29"><a href="#cb16-29" tabindex="-1"></a></span>
+<span id="cb16-30"><a href="#cb16-30" tabindex="-1"></a>hadley<span class="sc">@</span>firstName</span>
+<span id="cb16-31"><a href="#cb16-31" tabindex="-1"></a><span class="co">#&gt; Warning: @firstName is deprecated; please use @first_name instead</span></span>
+<span id="cb16-32"><a href="#cb16-32" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Hadley&quot;</span></span>
+<span id="cb16-33"><a href="#cb16-33" tabindex="-1"></a></span>
+<span id="cb16-34"><a href="#cb16-34" tabindex="-1"></a>hadley<span class="sc">@</span>firstName <span class="ot">&lt;-</span> <span class="st">&quot;John&quot;</span></span>
+<span id="cb16-35"><a href="#cb16-35" tabindex="-1"></a><span class="co">#&gt; Warning: @firstName is deprecated; please use @first_name instead</span></span>
+<span id="cb16-36"><a href="#cb16-36" tabindex="-1"></a></span>
+<span id="cb16-37"><a href="#cb16-37" tabindex="-1"></a>hadley<span class="sc">@</span>first_name  <span class="co"># no warning</span></span>
+<span id="cb16-38"><a href="#cb16-38" tabindex="-1"></a><span class="co">#&gt; [1] &quot;John&quot;</span></span></code></pre></div>
+</div>
+<div id="required-properties" class="section level4">
+<h4>Required properties</h4>
+<p>You can make a property required by the constructor either by:</p>
+<ul>
+<li>relying on the validator to error with the default value, or by</li>
+<li>setting the property default to a quoted error call.</li>
+</ul>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>Person <span class="ot">&lt;-</span> <span class="fu">new_class</span>(<span class="st">&quot;Person&quot;</span>, <span class="at">properties =</span> <span class="fu">list</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a> <span class="at">name =</span> <span class="fu">new_property</span>(</span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>   class_character,</span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>   <span class="at">validator =</span> <span class="cf">function</span>(value) {</span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>     <span class="cf">if</span> (<span class="fu">length</span>(value) <span class="sc">!=</span> <span class="dv">1</span> <span class="sc">||</span> <span class="fu">is.na</span>(value) <span class="sc">||</span> value <span class="sc">==</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a>       <span class="st">&quot;must be a non-empty string&quot;</span></span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a>   }</span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a> )</span>
+<span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a>))</span>
+<span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a><span class="fu">try</span>(<span class="fu">Person</span>())</span>
+<span id="cb17-12"><a href="#cb17-12" tabindex="-1"></a><span class="co">#&gt; Error : &lt;Person&gt; object properties are invalid:</span></span>
+<span id="cb17-13"><a href="#cb17-13" tabindex="-1"></a><span class="co">#&gt; - @name must be a non-empty string</span></span>
+<span id="cb17-14"><a href="#cb17-14" tabindex="-1"></a></span>
+<span id="cb17-15"><a href="#cb17-15" tabindex="-1"></a><span class="fu">try</span>(<span class="fu">Person</span>(<span class="dv">1</span>)) <span class="co"># class_character$validator() is also checked.</span></span>
+<span id="cb17-16"><a href="#cb17-16" tabindex="-1"></a><span class="co">#&gt; Error : &lt;Person&gt; object properties are invalid:</span></span>
+<span id="cb17-17"><a href="#cb17-17" tabindex="-1"></a><span class="co">#&gt; - @name must be &lt;character&gt;, not &lt;double&gt;</span></span>
+<span id="cb17-18"><a href="#cb17-18" tabindex="-1"></a></span>
+<span id="cb17-19"><a href="#cb17-19" tabindex="-1"></a><span class="fu">Person</span>(<span class="st">&quot;Alice&quot;</span>)</span>
+<span id="cb17-20"><a href="#cb17-20" tabindex="-1"></a><span class="co">#&gt; &lt;Person&gt;</span></span>
+<span id="cb17-21"><a href="#cb17-21" tabindex="-1"></a><span class="co">#&gt;  @ name: chr &quot;Alice&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>Person <span class="ot">&lt;-</span> <span class="fu">new_class</span>(<span class="st">&quot;Person&quot;</span>, <span class="at">properties =</span> <span class="fu">list</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a> <span class="at">name =</span> <span class="fu">new_property</span>(</span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>   class_character,</span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>   <span class="at">default =</span> <span class="fu">quote</span>(<span class="fu">stop</span>(<span class="st">&quot;@name is required&quot;</span>)))</span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>))</span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a><span class="fu">try</span>(<span class="fu">Person</span>())</span>
+<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a><span class="co">#&gt; Error in Person() : @name is required</span></span>
+<span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a><span class="fu">Person</span>(<span class="st">&quot;Alice&quot;</span>)</span>
+<span id="cb18-11"><a href="#cb18-11" tabindex="-1"></a><span class="co">#&gt; &lt;Person&gt;</span></span>
+<span id="cb18-12"><a href="#cb18-12" tabindex="-1"></a><span class="co">#&gt;  @ name: chr &quot;Alice&quot;</span></span></code></pre></div>
+</div>
+<div id="frozen-properties" class="section level4">
+<h4>Frozen properties</h4>
+<p>You can mark a property as read-only after construction by providing
+a custom <code>setter</code>.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>Person <span class="ot">&lt;-</span> <span class="fu">new_class</span>(<span class="st">&quot;Person&quot;</span>, <span class="at">properties =</span> <span class="fu">list</span>(</span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a> <span class="at">birth_date =</span> <span class="fu">new_property</span>(</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>   class_Date,</span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>   <span class="at">setter =</span> <span class="cf">function</span>(self, value) {</span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>     <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.null</span>(self<span class="sc">@</span>birth_date)) {</span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a>       <span class="fu">stop</span>(<span class="st">&quot;@birth_date is read-only&quot;</span>, <span class="at">call. =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a>     }</span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a>     self<span class="sc">@</span>birth_date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(value)</span>
+<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a>     self</span>
+<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a>   }</span>
+<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a>)))</span>
+<span id="cb19-12"><a href="#cb19-12" tabindex="-1"></a></span>
+<span id="cb19-13"><a href="#cb19-13" tabindex="-1"></a>person <span class="ot">&lt;-</span> <span class="fu">Person</span>(<span class="st">&quot;1999-12-31&quot;</span>)</span>
+<span id="cb19-14"><a href="#cb19-14" tabindex="-1"></a></span>
+<span id="cb19-15"><a href="#cb19-15" tabindex="-1"></a><span class="fu">try</span>(person<span class="sc">@</span>birth_date <span class="ot">&lt;-</span> <span class="st">&quot;2000-01-01&quot;</span>)</span>
+<span id="cb19-16"><a href="#cb19-16" tabindex="-1"></a><span class="co">#&gt; Error : @birth_date is read-only</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="constructors" class="section level2">
+<h2>Constructors</h2>
+<p>You can see the source code for a class’s constructor by accessing
+the <code>constructor</code> property:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>Range<span class="sc">@</span>constructor</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="co">#&gt; function (start = numeric(0), end = numeric(0), length = numeric(0)) </span></span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="co">#&gt; {</span></span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="co">#&gt;     start</span></span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a><span class="co">#&gt;     end</span></span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a><span class="co">#&gt;     length</span></span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a><span class="co">#&gt;     S7::new_object(S7::S7_object(), start = start, end = end, </span></span>
+<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a><span class="co">#&gt;         length = length)</span></span>
+<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a><span class="co">#&gt; }</span></span></code></pre></div>
+<p>In most cases, S7’s default constructor will be all you need.
+However, in some cases you might want something custom. For example, for
+our range class, maybe we’d like to construct it from a vector of
+numeric values, automatically computing the min and the max. To
+implement this we could do:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>Range <span class="ot">&lt;-</span> <span class="fu">new_class</span>(<span class="st">&quot;Range&quot;</span>,</span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>  <span class="at">properties =</span> <span class="fu">list</span>(</span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>    <span class="at">start =</span> class_numeric,</span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>    <span class="at">end =</span> class_numeric</span>
+<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a>  ),</span>
+<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a>  <span class="at">constructor =</span> <span class="cf">function</span>(x) {</span>
+<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a>    <span class="fu">new_object</span>(<span class="fu">S7_object</span>(),</span>
+<span id="cb21-8"><a href="#cb21-8" tabindex="-1"></a>               <span class="at">start =</span> <span class="fu">min</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb21-9"><a href="#cb21-9" tabindex="-1"></a>               <span class="at">end =</span> <span class="fu">max</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb21-10"><a href="#cb21-10" tabindex="-1"></a>  }</span>
+<span id="cb21-11"><a href="#cb21-11" tabindex="-1"></a>)</span>
+<span id="cb21-12"><a href="#cb21-12" tabindex="-1"></a></span>
+<span id="cb21-13"><a href="#cb21-13" tabindex="-1"></a><span class="fu">Range</span>(<span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">7</span>))</span>
+<span id="cb21-14"><a href="#cb21-14" tabindex="-1"></a><span class="co">#&gt; &lt;Range&gt;</span></span>
+<span id="cb21-15"><a href="#cb21-15" tabindex="-1"></a><span class="co">#&gt;  @ start: num 0</span></span>
+<span id="cb21-16"><a href="#cb21-16" tabindex="-1"></a><span class="co">#&gt;  @ end  : num 10</span></span></code></pre></div>
+<p>A constructor must always end with a call to
+<code>new_object()</code>. The first argument to
+<code>new_object()</code> should be an object of the <code>parent</code>
+class (if you haven’t specified a <code>parent</code> argument to
+<code>new_class()</code>, then you should use <code>S7_object()</code>
+as the parent here). That argument should be followed by one named
+argument for each property.</p>
+<p>There’s one drawback of custom constructors that you should be aware
+of: any subclass will also require a custom constructor.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>S7 basics</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">S7 basics</h1>
+
+
+
+<p>The S7 package provides a new OOP system designed to be a successor
+to S3 and S4. It has been designed and implemented collaboratively by
+the RConsortium Object-Oriented Programming Working Group, which
+includes representatives from R-Core, BioConductor, RStudio/tidyverse,
+and the wider R community.</p>
+<p>This vignette gives an overview of the most important parts of S7:
+classes and objects, generics and methods, and the basics of method
+dispatch and inheritance.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(S7)</span></code></pre></div>
+<div id="classes-and-objects" class="section level2">
+<h2>Classes and objects</h2>
+<p>S7 classes have a formal definition that you create with
+<code>new_class()</code>. There are two arguments that you’ll use with
+almost every class:</p>
+<ul>
+<li>The <code>name</code> of the class, supplied in the first
+argument.</li>
+<li>The class <code>properties</code>, the data associated with each
+instance of the class. The easiest way to define properties is to supply
+a named list where the values define the valid types of the
+property.</li>
+</ul>
+<p>The following code defines a simple <code>dog</code> class with two
+properties: a character <code>name</code> and a numeric
+<code>age</code>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>Dog <span class="ot">&lt;-</span> <span class="fu">new_class</span>(<span class="st">&quot;Dog&quot;</span>, <span class="at">properties =</span> <span class="fu">list</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="at">name =</span> class_character,</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  <span class="at">age =</span> class_numeric</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>))</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>Dog</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt; &lt;Dog&gt; class</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt; @ parent     : &lt;S7_object&gt;</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt; @ constructor: function(name, age) {...}</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt; @ validator  : &lt;NULL&gt;</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt; @ properties :</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt;  $ name: &lt;character&gt;          </span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt;  $ age : &lt;integer&gt; or &lt;double&gt;</span></span></code></pre></div>
+<p>S7 provides a number of built-in definitions that allow you to refer
+to existing base types that are not S7 classes. You can recognize these
+definitions because they all start with <code>class_</code>.</p>
+<p>Note that I’ve assigned the return value of <code>new_class()</code>
+to an object with the same name as the class. This is important! That
+object represents the class and is what you use to construct instances
+of the class:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>lola <span class="ot">&lt;-</span> <span class="fu">Dog</span>(<span class="at">name =</span> <span class="st">&quot;Lola&quot;</span>, <span class="at">age =</span> <span class="dv">11</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>lola</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt; &lt;Dog&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt;  @ name: chr &quot;Lola&quot;</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt;  @ age : num 11</span></span></code></pre></div>
+<p>Once you have an S7 object, you can get and set properties using
+<code>@</code>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>lola<span class="sc">@</span>age <span class="ot">&lt;-</span> <span class="dv">12</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>lola<span class="sc">@</span>age</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt; [1] 12</span></span></code></pre></div>
+<p>S7 automatically validates the type of the property using the type
+supplied in <code>new_class()</code>:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>lola<span class="sc">@</span>age <span class="ot">&lt;-</span> <span class="st">&quot;twelve&quot;</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co">#&gt; Error: &lt;Dog&gt;@age must be &lt;integer&gt; or &lt;double&gt;, not &lt;character&gt;</span></span></code></pre></div>
+<p>Given an object, you can retrieve its class
+<code>S7_class()</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">S7_class</span>(lola)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co">#&gt; &lt;Dog&gt; class</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#&gt; @ parent     : &lt;S7_object&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#&gt; @ constructor: function(name, age) {...}</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt; @ validator  : &lt;NULL&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#&gt; @ properties :</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co">#&gt;  $ name: &lt;character&gt;          </span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt;  $ age : &lt;integer&gt; or &lt;double&gt;</span></span></code></pre></div>
+<p>S7 objects also have an S3 <code>class()</code>. This is used for
+compatibility with existing S3 generics and you can learn more about it
+in <code>vignette(&quot;compatibility&quot;)</code>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">class</span>(lola)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Dog&quot;       &quot;S7_object&quot;</span></span></code></pre></div>
+<p>If you want to learn more about the details of S7 classes and
+objects, including validation methods and more details of properties,
+please see <code>vignette(&quot;classes-objects&quot;)</code>.</p>
+</div>
+<div id="generics-and-methods" class="section level2">
+<h2>Generics and methods</h2>
+<p>S7, like S3 and S4, is built around the idea of <strong>generic
+functions,</strong> or <strong>generics</strong> for short. A generic
+defines an interface, which uses a different implementation depending on
+the class of one or more arguments. The implementation for a specific
+class is called a <strong>method</strong>, and the generic finds that
+appropriate method by performing <strong>method dispatch</strong>.</p>
+<p>Use <code>new_generic()</code> to create a S7 generic. In its
+simplest form, it only needs two arguments: the name of the generic
+(used in error messages) and the name of the argument used for method
+dispatch:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>speak <span class="ot">&lt;-</span> <span class="fu">new_generic</span>(<span class="st">&quot;speak&quot;</span>, <span class="st">&quot;x&quot;</span>)</span></code></pre></div>
+<p>Like with <code>new_class()</code>, you should always assign the
+result of <code>new_generic()</code> to a variable with the same name as
+the first argument.</p>
+<p>Once you have a generic, you can register methods for specific
+classes with
+<code>method(generic, class) &lt;- implementation</code>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">method</span>(speak, Dog) <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="st">&quot;Woof&quot;</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>}</span></code></pre></div>
+<p>Once the method is registered, the generic will use it when
+appropriate:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">speak</span>(lola)</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Woof&quot;</span></span></code></pre></div>
+<p>Let’s define another class, this one for cats, and define another
+method for <code>speak()</code>:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>Cat <span class="ot">&lt;-</span> <span class="fu">new_class</span>(<span class="st">&quot;Cat&quot;</span>, <span class="at">properties =</span> <span class="fu">list</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  <span class="at">name =</span> class_character,</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>  <span class="at">age =</span> class_double</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>))</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="fu">method</span>(speak, Cat) <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>  <span class="st">&quot;Meow&quot;</span></span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>}</span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>fluffy <span class="ot">&lt;-</span> <span class="fu">Cat</span>(<span class="at">name =</span> <span class="st">&quot;Fluffy&quot;</span>, <span class="at">age =</span> <span class="dv">5</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a><span class="fu">speak</span>(fluffy)</span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Meow&quot;</span></span></code></pre></div>
+<p>You get an error if you call the generic with a class that doesn’t
+have a method:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">speak</span>(<span class="dv">1</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="co">#&gt; Error: Can&#39;t find method for `speak(&lt;double&gt;)`.</span></span></code></pre></div>
+</div>
+<div id="method-dispatch-and-inheritance" class="section level2">
+<h2>Method dispatch and inheritance</h2>
+<p>The <code>cat</code> and <code>dog</code> classes share the same
+properties, so we could use a common parent class to extract out the
+duplicated specification. We first define the parent class:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>Pet <span class="ot">&lt;-</span> <span class="fu">new_class</span>(<span class="st">&quot;Pet&quot;</span>,</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>  <span class="at">properties =</span> <span class="fu">list</span>(</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>    <span class="at">name =</span> class_character,</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>    <span class="at">age =</span> class_numeric</span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>  )</span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>)</span></code></pre></div>
+<p>Then use the <code>parent</code> argument to
+<code>new_class:</code></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>Cat <span class="ot">&lt;-</span> <span class="fu">new_class</span>(<span class="st">&quot;Cat&quot;</span>, <span class="at">parent =</span> Pet)</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>Dog <span class="ot">&lt;-</span> <span class="fu">new_class</span>(<span class="st">&quot;Dog&quot;</span>, <span class="at">parent =</span> Pet)</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>Cat</span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="co">#&gt; &lt;Cat&gt; class</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="co">#&gt; @ parent     : &lt;Pet&gt;</span></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="co">#&gt; @ constructor: function(name, age) {...}</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="co">#&gt; @ validator  : &lt;NULL&gt;</span></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="co">#&gt; @ properties :</span></span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="co">#&gt;  $ name: &lt;character&gt;          </span></span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="co">#&gt;  $ age : &lt;integer&gt; or &lt;double&gt;</span></span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a>Dog</span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a><span class="co">#&gt; &lt;Dog&gt; class</span></span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a><span class="co">#&gt; @ parent     : &lt;Pet&gt;</span></span>
+<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a><span class="co">#&gt; @ constructor: function(name, age) {...}</span></span>
+<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a><span class="co">#&gt; @ validator  : &lt;NULL&gt;</span></span>
+<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a><span class="co">#&gt; @ properties :</span></span>
+<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a><span class="co">#&gt;  $ name: &lt;character&gt;          </span></span>
+<span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a><span class="co">#&gt;  $ age : &lt;integer&gt; or &lt;double&gt;</span></span></code></pre></div>
+<p>Because we have created new classes, we need to recreate the existing
+<code>lola</code> and <code>fluffy</code> objects:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>lola <span class="ot">&lt;-</span> <span class="fu">Dog</span>(<span class="at">name =</span> <span class="st">&quot;Lola&quot;</span>, <span class="at">age =</span> <span class="dv">11</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>fluffy <span class="ot">&lt;-</span> <span class="fu">Cat</span>(<span class="at">name =</span> <span class="st">&quot;Fluffy&quot;</span>, <span class="at">age =</span> <span class="dv">5</span>)</span></code></pre></div>
+<p>Method dispatch takes advantage of the hierarchy of parent classes:
+if a method is not defined for a class, it will try the method for the
+parent class, and so on until it finds a method or gives up with an
+error. This inheritance is a powerful mechanism for sharing code across
+classes.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>describe <span class="ot">&lt;-</span> <span class="fu">new_generic</span>(<span class="st">&quot;describe&quot;</span>, <span class="st">&quot;x&quot;</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="fu">method</span>(describe, Pet) <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>  <span class="fu">paste0</span>(x<span class="sc">@</span>name, <span class="st">&quot; is &quot;</span>, x<span class="sc">@</span>age, <span class="st">&quot; years old&quot;</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>}</span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a><span class="fu">describe</span>(lola)</span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Lola is 11 years old&quot;</span></span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a><span class="fu">describe</span>(fluffy)</span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Fluffy is 5 years old&quot;</span></span>
+<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a><span class="fu">method</span>(describe, Dog) <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a>  <span class="fu">paste0</span>(x<span class="sc">@</span>name, <span class="st">&quot; is a &quot;</span>, x<span class="sc">@</span>age, <span class="st">&quot; year old dog&quot;</span>)</span>
+<span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a>}</span>
+<span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a><span class="fu">describe</span>(lola)</span>
+<span id="cb16-14"><a href="#cb16-14" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Lola is a 11 year old dog&quot;</span></span>
+<span id="cb16-15"><a href="#cb16-15" tabindex="-1"></a><span class="fu">describe</span>(fluffy)</span>
+<span id="cb16-16"><a href="#cb16-16" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Fluffy is 5 years old&quot;</span></span></code></pre></div>
+<p>You can define a fallback method for any S7 object by registering a
+method for <code>S7_object</code>:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">method</span>(describe, S7_object) <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>  <span class="st">&quot;An S7 object&quot;</span></span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>}</span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>Cocktail <span class="ot">&lt;-</span> <span class="fu">new_class</span>(<span class="st">&quot;Cocktail&quot;</span>,</span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a>  <span class="at">properties =</span> <span class="fu">list</span>(</span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a>    <span class="at">ingredients =</span> class_character</span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a>  )</span>
+<span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a>)</span>
+<span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a>martini <span class="ot">&lt;-</span> <span class="fu">Cocktail</span>(<span class="at">ingredients =</span> <span class="fu">c</span>(<span class="st">&quot;gin&quot;</span>, <span class="st">&quot;vermouth&quot;</span>))</span>
+<span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a><span class="fu">describe</span>(martini)</span>
+<span id="cb17-12"><a href="#cb17-12" tabindex="-1"></a><span class="co">#&gt; [1] &quot;An S7 object&quot;</span></span></code></pre></div>
+<p>Printing a generic will show you which methods are currently
+defined:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>describe</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="co">#&gt; &lt;S7_generic&gt; describe(x, ...) with 3 methods:</span></span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a><span class="co">#&gt; 1: method(describe, Dog)</span></span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a><span class="co">#&gt; 2: method(describe, S7_object)</span></span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a><span class="co">#&gt; 3: method(describe, Pet)</span></span></code></pre></div>
+<p>And you can use <code>method()</code> to retrieve the implementation
+of one of those methods:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="fu">method</span>(describe, Pet)</span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="co">#&gt; &lt;S7_method&gt; method(describe, Pet)</span></span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a><span class="co">#&gt; function (x) </span></span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a><span class="co">#&gt; {</span></span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a><span class="co">#&gt;     paste0(x@name, &quot; is &quot;, x@age, &quot; years old&quot;)</span></span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a><span class="co">#&gt; }</span></span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a><span class="co">#&gt; &lt;bytecode: 0x10bbd1248&gt;</span></span></code></pre></div>
+<p>Learn more about method dispatch in
+<code>vignette(&quot;generics-methods&quot;)</code>.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

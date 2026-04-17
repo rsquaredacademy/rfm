@@ -17,22 +17,12 @@ ggline2 <- function(data, x, columns, groups, cols = NULL,
                    add_text = FALSE, xloc = NA, yloc = NA, 
                    label = NA, tex_color = NA, tex_size = NA) {
   
-  # x <- data %>%
-  #   select(x) %>%
-  #   pull(1)
-  # 
-  # column <- data %>%
-  #   select(columns)
-  # 
-  # groupvar <- data %>%
-  #   select(groups)
-
   p <- ggplot(data)
   
   p <- p +
-    geom_line(aes_string(x = x, y = columns, group = groups,
+    geom_line(aes(x = .data[[x]], y = .data[[columns]], group = .data[[groups]],
                         color = cols, linetype = ltypes, 
-                        size = sizes))
+                        linewidth = sizes))
   
   
   if (yaxlimit) {

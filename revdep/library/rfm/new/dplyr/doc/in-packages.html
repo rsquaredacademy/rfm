@@ -48,8 +48,9 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -376,10 +377,10 @@ it is a base package. You can do that easily with
 <p>If you’re writing a package and you have a function that uses data
 masking or tidy selection:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>my_summary_function <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  data <span class="sc">%&gt;%</span> </span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>    <span class="fu">select</span>(grp, x, y) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>    <span class="fu">filter</span>(x <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>    <span class="fu">group_by</span>(grp) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  data <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>    <span class="fu">select</span>(grp, x, y) <span class="sc">|&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>    <span class="fu">filter</span>(x <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>    <span class="fu">group_by</span>(grp) <span class="sc">|&gt;</span></span>
 <span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">y =</span> <span class="fu">mean</span>(y), <span class="at">n =</span> <span class="fu">n</span>())</span>
 <span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>}</span></code></pre></div>
 <p>You’ll get an <code>NOTE</code> because <code>R CMD check</code>
@@ -398,10 +399,10 @@ doesn’t know that dplyr functions use tidy evaluation:</p>
 <p>That yields:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co">#&#39; @importFrom rlang .data</span></span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>my_summary_function <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  data <span class="sc">%&gt;%</span> </span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>    <span class="fu">select</span>(<span class="st">&quot;grp&quot;</span>, <span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>    <span class="fu">filter</span>(.data<span class="sc">$</span>x <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>    <span class="fu">group_by</span>(.data<span class="sc">$</span>grp) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  data <span class="sc">|&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>    <span class="fu">select</span>(<span class="st">&quot;grp&quot;</span>, <span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>    <span class="fu">filter</span>(.data<span class="sc">$</span>x <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>    <span class="fu">group_by</span>(.data<span class="sc">$</span>grp) <span class="sc">|&gt;</span></span>
 <span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">y =</span> <span class="fu">mean</span>(.data<span class="sc">$</span>y), <span class="at">n =</span> <span class="fu">n</span>())</span>
 <span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>}</span></code></pre></div>
 <p>For more about programming with dplyr, see
@@ -508,20 +509,20 @@ which was introduced in dplyr 1.0.0.</p>
 <p>If you used <code>mutate_all()</code> or <code>mutate_each()</code>
 without supplying a selection, you should update to use
 <code>across(everything())</code>:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> <span class="fu">mutate_each</span>(<span class="fu">funs</span>(as.character))</span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> <span class="fu">mutate_all</span>(<span class="fu">funs</span>(as.character))</span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), as.character))</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>starwars <span class="sc">|&gt;</span> <span class="fu">mutate_each</span>(<span class="fu">funs</span>(as.character))</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>starwars <span class="sc">|&gt;</span> <span class="fu">mutate_all</span>(<span class="fu">funs</span>(as.character))</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>starwars <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), as.character))</span></code></pre></div>
 <p>If you provided a selection through <code>mutate_at()</code> or
 <code>mutate_each()</code>, then you can switch to <code>across()</code>
 with a selection:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> <span class="fu">mutate_each</span>(<span class="fu">funs</span>(as.character), height, mass)</span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> <span class="fu">mutate_at</span>(<span class="fu">vars</span>(height, mass), as.character)</span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(height, mass), as.character))</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>starwars <span class="sc">|&gt;</span> <span class="fu">mutate_each</span>(<span class="fu">funs</span>(as.character), height, mass)</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>starwars <span class="sc">|&gt;</span> <span class="fu">mutate_at</span>(<span class="fu">vars</span>(height, mass), as.character)</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>starwars <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(height, mass), as.character))</span></code></pre></div>
 <p>If you used predicates with <code>mutate_if()</code>, you can switch
 to using <code>across()</code> in combination with
 <code>where()</code>:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> <span class="fu">mutate_if</span>(is.factor, as.character)</span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.factor), as.character))</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>starwars <span class="sc">|&gt;</span> <span class="fu">mutate_if</span>(is.factor, as.character)</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>starwars <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.factor), as.character))</span></code></pre></div>
 </div>
 </div>
 <div id="data-frame-subclasses" class="section level2">

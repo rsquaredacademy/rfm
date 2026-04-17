@@ -57,11 +57,10 @@ tabPanel("Home", value = "tab_home_viz",
 			column(1),
 			column(2, align = 'right',
 				img(src = 'highcharts_logo.png', width = '40px', height = '40px'),
-				img(src = 'bokeh_logo.png', width = '40px', height = '40px'),
 				img(src = 'plotly_logo.png', width = '40px', height = '40px')
 			),
 			column(6, align = 'center',
-				h5("Visualize data using plotly, rbokeh or highcharts")
+				h5("Visualize data using plotly or highcharts")
 			),
 			column(2, align = 'left',
 				actionButton(inputId = "click_prh", 

@@ -6,6 +6,6 @@ output$mult1 <- renderPrint({
   } else if (ncol(num_data) < 2) {
     out <- NULL
   } else {
-    ds_oway_tables(final_split$train)  
+    ds_auto_freq_table(final_split$train)  
   }
 })

@@ -208,5 +208,3 @@ histly <- function(data = NULL, y = NULL, hist_orient = 'v',
   
 }
 
-h <- histly(mtcars, 'mpg', hist_orient = "h")
-h

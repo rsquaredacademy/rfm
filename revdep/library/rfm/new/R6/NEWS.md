@@ -1,3 +1,22 @@
+R6 2.6.1
+========
+
+* Closed #298: In `.DollarNames.R6()`, avoid use of `NextMethod()`. This is to work around a compatibility issue with RStudio IDE. (#299)
+
+
+R6 2.6.0
+========
+
+* R6 methods no longer recommends `initialize` or `.__enclos_env__` in autocomplete.
+
+* The deprecated `lock` parameter has been removed.
+
+* `R6Class()` now prints a message when a `finalize` method is public instead of private.
+
+* When a superclass is not cloneable, then subclasses cannot be cloneable (@IndrajeetPatil, #247).
+
+* Fixed #253: Errors could occur when deep cloning if a member object was an environment with a class that had a `$` method. Deep cloning now uses `get0()` instead of `$`. R6 now requires R >= 3.2. (@zeehio, #274)
+
 R6 2.5.1
 ========
 
@@ -111,7 +130,7 @@ R6 2.1.0
 R6 2.0.1
 ========
 
-* A superclass is validated on object instantation, not on class creation.
+* A superclass is validated on object instantiation, not on class creation.
 
 * Added `debug` and `undebug` methods to generator object.
 

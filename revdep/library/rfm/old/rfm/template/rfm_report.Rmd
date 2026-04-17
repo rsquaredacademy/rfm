@@ -1,0 +1,155 @@
+---
+title: "`r params$report_title`"
+author: "`r params$report_author`"
+date: "`r Sys.Date()`"
+output:
+  rmdformats::html_clean:
+    highlight: kate
+    fig_width: 8
+    fig_height: 6
+    thumbnails: FALSE
+params:
+  data: NULL
+  segments: NULL
+  interactive: FALSE
+  report_title: Customer Segmentation Report
+  report_author: NULL
+---
+
+```{css, echo=FALSE}
+#toc {
+  width: 20%;
+  padding: 20px 1px 5px 1px;
+}
+```
+
+```{r setup, include=FALSE}
+## Global options
+library(rfm)
+library(dplyr)
+library(magrittr)
+library(DT)
+knitr::opts_chunk$set(echo = FALSE, width = 75)
+```
+
+# RFM Score
+
+```{r rfm_score}
+data <- params$data
+data %>% 
+  use_series(rfm) %>% 
+  select(customer_id, recency_days, transaction_count, amount, rfm_score) %>% 
+  datatable()
+```
+
+# EDA
+
+## Heatmap
+
+```{r heatmap, fig.align='center'}
+rfm_plot_heatmap(data, interactive = params$interactive)
+```
+
+## Bar Chart
+
+```{r bar_chart, fig.align='center'}
+rfm_plot_bar_chart(data)
+```
+
+## Order Distribution
+
+```{r order_dist, fig.align='center'}
+rfm_plot_order_dist(data, interactive = params$interactive)
+```
+
+## Recency Distribtuion
+
+```{r hist_recency, fig.align='center'}
+rfm_plot_histogram(data, interactive = params$interactive)
+```
+
+## Frequency Distribtuion
+
+```{r hist_frequency, fig.align='center'}
+rfm_plot_histogram(data, "frequency", interactive = params$interactive)
+```
+
+## Monetary Distribtuion
+
+```{r hist_monetary, fig.align='center'}
+rfm_plot_histogram(data, "monetary", interactive = params$interactive)
+```
+
+# Segmentation
+
+## Segments
+
+```{r segments}
+segments <- params$segments
+segments %>% 
+  select(customer_id, segment, rfm_score, transaction_count, recency_days,
+         amount) %>% 
+  datatable()
+```
+
+## Segment Summary
+
+```{r segment_summary}
+segment_overview <- rfm_segment_summary(segments)
+segment_overview %>%
+  datatable()
+```
+
+## Segment Summary Plot
+
+```{r plot_segment_summary, fig.align='center'}
+rfm_plot_segment_summary(segment_overview, interactive = params$interactive)
+```
+
+## Segmentation Plot
+
+```{r plot_segment, fig.align='center'}
+rfm_plot_segment(segment_overview, interactive = params$interactive)
+```
+
+## Revenue Distribution
+
+```{r plot_revenue_dist, fig.align='center'}
+rfm_plot_revenue_dist(segment_overview, interactive = params$interactive)  
+```
+
+## Median Recency
+
+```{r plot_median_recency, fig.align='center'}
+rfm_plot_median_recency(segments, interactive = params$interactive)
+```
+
+## Median Frequency
+
+```{r plot_median_frequency, fig.align='center'}
+rfm_plot_median_frequency(segments, interactive = params$interactive)
+```
+
+## Median Monetary Value
+
+```{r plot_median_monetary, fig.align='center'}
+rfm_plot_median_monetary(segments, interactive = params$interactive)
+```
+
+## Recency vs Monetary Value
+
+```{r plot_recency_monetary, fig.align='center'}
+rfm_plot_segment_scatter(segments, "monetary", "recency", interactive = params$interactive)
+```
+
+## Recency vs Frequency
+
+```{r plot_recency_frequency, fig.align='center'}
+rfm_plot_segment_scatter(segments, "frequency", "recency", interactive = params$interactive)
+```
+
+## Frequency vs Monetary Value
+
+```{r plot_frequency_monetary, fig.align='center'}
+rfm_plot_segment_scatter(segments, "monetary", "frequency", interactive = params$interactive)
+```

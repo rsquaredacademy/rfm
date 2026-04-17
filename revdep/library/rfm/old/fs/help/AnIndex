@@ -37,6 +37,7 @@ group_ids	id
 id	id
 is_absolute_path	is_absolute_path
 is_dir	is_file
+is_dir_empty	is_dir_empty
 is_file	is_file
 is_file_empty	is_file
 is_link	is_file
@@ -67,6 +68,7 @@ path_package	path_package
 path_real	path_math
 path_rel	path_math
 path_sanitize	path_sanitize
+path_select_components	path_select_components
 path_split	path_math
 path_temp	file_temp
 path_tidy	path_tidy

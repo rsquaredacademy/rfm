@@ -1,12 +1,5 @@
 source("helper/ubar_plot.R")
 
-
-
-    # update variable selection for bar plots
-    # observe({
-    #     updateSelectInput(session, 'ubar_select', choices = names(data()))
-    # })
-
     observeEvent(input$finalok, {
 
         f_data <- final_split$train[, sapply(final_split$train, is.factor)]
@@ -165,50 +158,6 @@ source("helper/ubar_plot.R")
         }
         colors
     })
-
-    # # dynamic UI for shading density
-    # output$ui_nbardensity <- renderUI({
-    #     ncol <- as.integer(input$nbardensity)
-
-    #     lapply(1:ncol, function(i) {
-    #         numericInput(paste("n_bardensity_", i),
-    #                   label = paste0("Bar ", i, " Density"),
-    #                   value = 0, min = 0)
-    #     })
-    # })
-
-    # density_bar <- reactive({
-    #     ncol <- as.integer(input$nbardensity)
-
-    #     collect <- list(lapply(1:ncol, function(i) {
-    #                     input[[paste("n_bardensity_", i)]]
-    #                 }))
-
-    #     colors <- unlist(collect)
-
-    # })
-
-    # # dynamic UI for shading angle
-    # output$ui_nbarangle <- renderUI({
-    #     ncol <- as.integer(input$nbarangle)
-
-    #     lapply(1:ncol, function(i) {
-    #         numericInput(paste("n_barangle_", i),
-    #                   label = paste0("Bar ", i, " Angle"),
-    #                   value = 0, min = 0)
-    #     })
-    # })
-
-    # angle_bar <- reactive({
-    #     ncol <- as.integer(input$nbarangle)
-
-    #     collect <- list(lapply(1:ncol, function(i) {
-    #                     input[[paste("n_barangle_", i)]]
-    #                 }))
-
-    #     colors <- unlist(collect)
-
-    # })
 
     # dynamic UI for legend names
     output$ui_legnames <- renderUI({

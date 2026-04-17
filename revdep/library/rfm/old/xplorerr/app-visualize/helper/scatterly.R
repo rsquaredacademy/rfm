@@ -216,11 +216,3 @@ scatterly <- function(data, x, y, name = NA, text = NA,
 
 }
 
-
-# test
-mtcars$cyl <- as.factor(mtcars$cyl)
-scatterly(mtcars, 'disp', 'mpg', text = 'disp, mpg', size = 8, color = 'cyl',
-          title = 'Displacement vs Mileage', axis_range = FALSE,
-          x_min = 0, x_max = 600, y_min = 0, y_max = 50,
-          x_title = 'Displacement', y_title = 'Miles Per Gallon',
-          show_legend = TRUE, x_showgrid = F, fit_line = T)

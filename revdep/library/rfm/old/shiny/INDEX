@@ -1,3 +1,5 @@
+ExtendedTask            Task or computation that proceeds in the
+                        background
 MockShinySession        Mock Shiny Session
 NS                      Namespaced IDs for inputs/outputs
 Progress                Reporting progress (object-oriented API)
@@ -13,6 +15,7 @@ bootstrapPage           Create a Bootstrap page
 brushOpts               Create an object representing brushing options
 brushedPoints           Find rows of data selected on an interactive
                         plot.
+busyIndicatorOptions    Customize busy indicator options
 callModule              Invoke a Shiny module
 checkboxGroupInput      Checkbox Group Input Control
 checkboxInput           Checkbox Input Control
@@ -21,8 +24,6 @@ column                  Create a column within a UI definition
 conditionalPanel        Conditional Panel
 createRenderFunction    Implement custom render functions
 createWebDependency     Create a web dependency
-dataTableOutput         Table output with the JavaScript DataTables
-                        library
 dateInput               Create date input
 dateRangeInput          Create date range input
 debounce                Slow down a reactive expression with
@@ -162,6 +163,7 @@ updateTextAreaInput     Change the value of a textarea input on the
                         client
 updateTextInput         Change the value of a text input on the client
 urlModal                Generate a modal dialog that displays a URL
+useBusyIndicators       Enable/disable busy indication
 validate                Validate input values and other conditions
 varSelectInput          Select variables from a data frame
 verticalLayout          Lay out UI elements vertically
@@ -169,4 +171,6 @@ viewer                  Viewer options
 wellPanel               Create a well panel
 withMathJax             Load the MathJax library and typeset math
                         expressions
+withOtelCollect         Temporarily set OpenTelemetry (OTel) collection
+                        level
 withProgress            Reporting progress (functional API)

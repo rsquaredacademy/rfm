@@ -11,29 +11,29 @@ if (!rlang::is_installed("Lahman")) {
 ## -----------------------------------------------------------------------------
 library(Lahman)
 
-batting <- Lahman::Batting %>%
-  as_tibble() %>%
-  select(playerID, yearID, teamID, G, AB:H) %>%
-  arrange(playerID, yearID, teamID) %>%
+batting <- Lahman::Batting |>
+  as_tibble() |>
+  select(playerID, yearID, teamID, G, AB:H) |>
+  arrange(playerID, yearID, teamID) |>
   semi_join(Lahman::AwardsPlayers, by = "playerID")
 
-players <- batting %>% group_by(playerID)
+players <- batting |> group_by(playerID)
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  # For each player, find the two years with most hits
-#  filter(players, min_rank(desc(H)) <= 2 & H > 0)
-#  # Within each player, rank each year by the number of games played
-#  mutate(players, G_rank = min_rank(G))
-#  
-#  # For each player, find every year that was better than the previous year
-#  filter(players, G > lag(G))
-#  # For each player, compute avg change in games played per year
-#  mutate(players, G_change = (G - lag(G)) / (yearID - lag(yearID)))
-#  
-#  # For each player, find all years where they played more games than they did on average
-#  filter(players, G > mean(G))
-#  # For each, player compute a z score based on number of games played
-#  mutate(players, G_z = (G - mean(G)) / sd(G))
+# # For each player, find the two years with most hits
+# filter(players, min_rank(desc(H)) <= 2 & H > 0)
+# # Within each player, rank each year by the number of games played
+# mutate(players, G_rank = min_rank(G))
+# 
+# # For each player, find every year that was better than the previous year
+# filter(players, G > lag(G))
+# # For each player, compute avg change in games played per year
+# mutate(players, G_change = (G - lag(G)) / (yearID - lag(yearID)))
+# 
+# # For each player, find all years where they played more games than they did on average
+# filter(players, G > mean(G))
+# # For each, player compute a z score based on number of games played
+# mutate(players, G_z = (G - mean(G)) / sd(G))
 
 ## -----------------------------------------------------------------------------
 x <- c(1, 1, 2, 2, 2)
@@ -69,7 +69,7 @@ mutate(players, G_delta = G - lag(G))
 filter(players, teamID != lag(teamID))
 
 ## -----------------------------------------------------------------------------
-df <- data.frame(year = 2000:2005, value = (0:5) ^ 2)
+df <- data.frame(year = 2000:2005, value = (0:5)^2)
 scrambled <- df[sample(nrow(df)), ]
 
 wrong <- mutate(scrambled, prev_value = lag(value))
@@ -79,7 +79,7 @@ right <- mutate(scrambled, prev_value = lag(value, order_by = year))
 arrange(right, year)
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  filter(players, cumany(G > 150))
+# filter(players, cumany(G > 150))
 
 ## -----------------------------------------------------------------------------
 x <- 1:10
@@ -87,11 +87,11 @@ y <- 10:1
 order_by(y, cumsum(x))
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  filter(players, G > mean(G))
-#  filter(players, G < median(G))
+# filter(players, G > mean(G))
+# filter(players, G < median(G))
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  filter(players, ntile(G, 2) == 2)
+# filter(players, ntile(G, 2) == 2)
 
 ## -----------------------------------------------------------------------------
 mutate(players, career_year = yearID - min(yearID) + 1)

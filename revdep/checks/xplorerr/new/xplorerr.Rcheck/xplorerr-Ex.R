@@ -109,7 +109,7 @@ flush(stderr()); flush(stdout())
 ### ** Examples
 
 ## Not run: 
-##D app_descriptive()
+##D app_vistributions()
 ## End(Not run)
 
 

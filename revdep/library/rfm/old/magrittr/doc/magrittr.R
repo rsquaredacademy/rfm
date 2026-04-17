@@ -20,13 +20,13 @@ car_data <-
                       FUN = function(x) round(mean(x), 2)), 
             kpl = mpg*0.4251)
 
-## ---- eval = FALSE------------------------------------------------------------
-#  car_data %>%
-#  (function(x) {
-#    if (nrow(x) > 2)
-#      rbind(head(x, 1), tail(x, 1))
-#    else x
-#  })
+## ----eval = FALSE-------------------------------------------------------------
+# car_data %>%
+# (function(x) {
+#   if (nrow(x) > 2)
+#     rbind(head(x, 1), tail(x, 1))
+#   else x
+# })
 
 ## -----------------------------------------------------------------------------
 car_data %>%
@@ -39,22 +39,22 @@ car_data %>%
 ## -----------------------------------------------------------------------------
 1:10 %>% (substitute(f(), list(f = sum)))
 
-## ---- fig.keep='none'---------------------------------------------------------
+## ----fig.keep='none'----------------------------------------------------------
 rnorm(200) %>%
 matrix(ncol = 2) %T>%
 plot %>% # plot usually does not return anything. 
 colSums
 
-## ---- eval = FALSE------------------------------------------------------------
-#  iris %>%
-#    subset(Sepal.Length > mean(Sepal.Length)) %$%
-#    cor(Sepal.Length, Sepal.Width)
-#  
-#  data.frame(z = rnorm(100)) %$%
-#    ts.plot(z)
+## ----eval = FALSE-------------------------------------------------------------
+# iris %>%
+#   subset(Sepal.Length > mean(Sepal.Length)) %$%
+#   cor(Sepal.Length, Sepal.Width)
+# 
+# data.frame(z = rnorm(100)) %$%
+#   ts.plot(z)
 
-## ---- eval = FALSE------------------------------------------------------------
-#  iris$Sepal.Length %<>% sqrt
+## ----eval = FALSE-------------------------------------------------------------
+# iris$Sepal.Length %<>% sqrt
 
 ## -----------------------------------------------------------------------------
 rnorm(1000)    %>%
@@ -66,7 +66,7 @@ add(5)         %>%
    head(.)
 }
 
-## ---- results = 'hide'--------------------------------------------------------
+## ----results = 'hide'---------------------------------------------------------
 rnorm(100) %>% `*`(5) %>% `+`(5) %>% 
 {
   cat("Mean:", mean(.), "Variance:", var(.),  "\n")

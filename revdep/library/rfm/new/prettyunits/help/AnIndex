@@ -1,0 +1,17 @@
+prettyunits-package	prettyunits
+color_reference	color_reference
+compute_bytes	pretty_bytes
+compute_num	pretty_num
+prettyunits	prettyunits
+pretty_bytes	pretty_bytes
+pretty_color	pretty_color
+pretty_colour	pretty_color
+pretty_dt	pretty_dt
+pretty_ms	pretty_ms
+pretty_num	pretty_num
+pretty_p_value	pretty_p_value
+pretty_round	pretty_round
+pretty_sec	pretty_sec
+pretty_signif	pretty_signif
+time_ago	time_ago
+vague_dt	vague_dt

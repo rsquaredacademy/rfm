@@ -24,6 +24,7 @@ br	reexports
 browserViewer	viewer
 brushedPoints	brushedPoints
 brushOpts	brushOpts
+busyIndicatorOptions	busyIndicatorOptions
 callModule	callModule
 captureStackTraces	stacktrace
 checkboxGroupInput	checkboxGroupInput
@@ -55,6 +56,7 @@ enableBookmarking	enableBookmarking
 eventReactive	observeEvent
 exportTestValues	exportTestValues
 exprToFunction	exprToFunction
+ExtendedTask	ExtendedTask
 fileInput	fileInput
 fillCol	fillRow
 fillPage	fillPage
@@ -118,6 +120,7 @@ knit_print.reactive	knitr_methods
 knit_print.shiny.appobj	knitr_methods
 knit_print.shiny.render.function	knitr_methods
 loadSupport	loadSupport
+localOtelCollect	withOtelCollect
 mainPanel	sidebarLayout
 makeReactiveBinding	makeReactiveBinding
 markdown	markdown
@@ -148,6 +151,7 @@ onRestore	onBookmark
 onRestored	onBookmark
 onSessionEnded	onFlush
 onStop	onStop
+onUnhandledError	onFlush
 outputOptions	outputOptions
 p	reexports
 pageWithSidebar	pageWithSidebar
@@ -173,6 +177,7 @@ reactiveVal	reactiveVal
 reactiveValues	reactiveValues
 reactiveValuesToList	reactiveValuesToList
 reactlog	reactlog
+reactlogAddMark	reactlog
 reactlogReset	reactlog
 reactlogShow	reactlog
 reexports	reexports
@@ -282,6 +287,7 @@ updateTextInput	updateTextInput
 updateVarSelectInput	updateSelectInput
 updateVarSelectizeInput	updateSelectInput
 urlModal	urlModal
+useBusyIndicators	useBusyIndicators
 validate	validate
 validateCssUnit	reexports
 varSelectInput	varSelectInput
@@ -292,6 +298,7 @@ viewer	viewer
 wellPanel	wellPanel
 withLogErrors	stacktrace
 withMathJax	withMathJax
+withOtelCollect	withOtelCollect
 withProgress	withProgress
 withReactiveDomain	domains
 withTags	reexports

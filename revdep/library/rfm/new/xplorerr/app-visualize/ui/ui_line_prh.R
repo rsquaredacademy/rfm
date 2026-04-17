@@ -44,39 +44,6 @@ tabPanel('Line Chart', value = 'tab_line_prh',
 						)
 					),
 
-					tabPanel('rbokeh',
-
-						fluidRow(
-							column(2,
-								selectInput('boline_select_x', 'X Axis: ',
-                              choices = "", selected = ""),
-								numericInput(inputId = "boline_type", label = "Line Type: ",
-									min = 1, max = 5, value = 1, step = 1),
-								numericInput(inputId = "boline_alpha", label = "Alpha: ",
-									min = 0, max = 1, value = 1, step = 0.1),
-								textInput(inputId = "boline_xlabel", label = "X Axes Label: ",
-                  value = "label"),
-								textInput(inputId = "boline_title", label = "Title: ",
-									value = "title")
-							),
-
-							column(2,
-								selectInput('boline_select_y', 'Y Axis: ',
-                              choices = "", selected = ""),
-                textInput(inputId = "boline_color", label = "Color: ",
-                  value = "blue"),
-                numericInput(inputId = "boline_width", label = "Line Width: ",
-									min = 0, value = 1, step = 0.1),
-                textInput(inputId = "boline_ylabel", label = "Y Axes Label: ",
-                  value = "label")
-							),
-
-							column(8, align = 'center',
-                rbokeh::rbokehOutput('boline_plot_1', height = '600px')
-              )
-						)
-					),
-
 					tabPanel('highcharts',
 
 						fluidRow(

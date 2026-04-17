@@ -48,6 +48,7 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -350,13 +351,13 @@ loading the pillar package. As a result, debug strings in pillar’s code
 are replaced with calls to a logging function.</p>
 <p>By default, debugme also shows timestamps. This is disabled to keep
 the output stable.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">DEBUGME =</span> <span class="st">&quot;!!!!pillar&quot;</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">DEBUGME_SHOW_TIMESTAMP =</span> <span class="st">&quot;no&quot;</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pillar)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">b =</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(<span class="at">c =</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">d =</span> <span class="dv">7</span><span class="sc">:</span><span class="dv">9</span>), <span class="at">e =</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">12</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(tbl, <span class="at">width =</span> <span class="dv">23</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">DEBUGME =</span> <span class="st">&quot;!!!!pillar&quot;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">DEBUGME_SHOW_TIMESTAMP =</span> <span class="st">&quot;no&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(pillar)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">b =</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(<span class="at">c =</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">d =</span> <span class="dv">7</span><span class="sc">:</span><span class="dv">9</span>), <span class="at">e =</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">12</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="fu">print</span>(tbl, <span class="at">width =</span> <span class="dv">23</span>)</span></code></pre></div>
 <pre><code>#&gt; #&gt; pillar tbl_format_setup()
 #&gt; #&gt; pillar +-tbl_format_setup.tbl()
 #&gt; #&gt; pillar   +-ctl_colonnade()

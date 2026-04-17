@@ -1,12 +1,13 @@
 Package: glue
 Title: Interpreted String Literals
-Version: 1.7.0
+Version: 1.8.1
 Authors@R: c(
     person("Jim", "Hester", role = "aut",
            comment = c(ORCID = "0000-0002-2739-7082")),
     person("Jennifer", "Bryan", , "jenny@posit.co", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-6983-2759")),
-    person("Posit Software, PBC", role = c("cph", "fnd"))
+    person("Posit Software, PBC", role = c("cph", "fnd"),
+           comment = c(ROR = "03wc8by49"))
   )
 Description: An implementation of interpreted string literals, inspired by
     Python's Literal String Interpolation
@@ -17,25 +18,27 @@ Description: An implementation of interpreted string literals, inspired by
 License: MIT + file LICENSE
 URL: https://glue.tidyverse.org/, https://github.com/tidyverse/glue
 BugReports: https://github.com/tidyverse/glue/issues
-Depends: R (>= 3.6)
+Depends: R (>= 4.1)
 Imports: methods
-Suggests: crayon, DBI (>= 1.2.0), dplyr, knitr, magrittr, rlang,
-        rmarkdown, RSQLite, testthat (>= 3.2.0), vctrs (>= 0.3.0),
-        waldo (>= 0.3.0), withr
+Suggests: crayon, DBI (>= 1.2.0), dplyr, knitr, rlang, rmarkdown,
+        RSQLite, testthat (>= 3.2.0), vctrs (>= 0.3.0), waldo (>=
+        0.5.3), withr
 VignetteBuilder: knitr
 ByteCompile: true
 Config/Needs/website: bench, forcats, ggbeeswarm, ggplot2, R.utils,
         rprintf, tidyr, tidyverse/tidytemplate
 Config/testthat/edition: 3
+Config/usethis/last-upkeep: 2026-04-16
 Encoding: UTF-8
-RoxygenNote: 7.2.3.9000
+RoxygenNote: 7.3.3
 NeedsCompilation: yes
-Packaged: 2024-01-08 16:10:57 UTC; jenny
-Author: Jim Hester [aut] (<https://orcid.org/0000-0002-2739-7082>),
-  Jennifer Bryan [aut, cre] (<https://orcid.org/0000-0002-6983-2759>),
-  Posit Software, PBC [cph, fnd]
+Packaged: 2026-04-16 22:53:02 UTC; jenny
+Author: Jim Hester [aut] (ORCID: <https://orcid.org/0000-0002-2739-7082>),
+  Jennifer Bryan [aut, cre] (ORCID:
+    <https://orcid.org/0000-0002-6983-2759>),
+  Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)
 Maintainer: Jennifer Bryan <jenny@posit.co>
 Repository: CRAN
-Date/Publication: 2024-01-09 23:13:08 UTC
-Built: R 4.3.2; x86_64-w64-mingw32; 2024-02-11 01:42:54 UTC; windows
+Date/Publication: 2026-04-17 05:11:01 UTC
+Built: R 4.5.2; x86_64-w64-mingw32; 2026-04-17 08:48:44 UTC; windows
 Archs: x64

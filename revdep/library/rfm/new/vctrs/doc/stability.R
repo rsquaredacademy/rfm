@@ -38,11 +38,13 @@ c(FALSE, 1L, 2.5)
 vec_c(FALSE, 1L, 2.5)
 
 ## ----error = TRUE-------------------------------------------------------------
+try({
 c(FALSE, "x")
 vec_c(FALSE, "x")
 
 c(FALSE, list(1))
 vec_c(FALSE, list(1))
+})
 
 ## -----------------------------------------------------------------------------
 c(10.5, factor("x"))
@@ -51,14 +53,18 @@ c(10.5, factor("x"))
 c(mean, globalenv())
 
 ## ----error = TRUE-------------------------------------------------------------
+try({
 c(getRversion(), "x")
 
 c("x", getRversion())
+})
 
 ## ----error = TRUE-------------------------------------------------------------
+try({
 vec_c(mean, globalenv())
 
 vec_c(Sys.Date(), factor("x"), "x")
+})
 
 ## -----------------------------------------------------------------------------
 fa <- factor("a")
@@ -125,27 +131,27 @@ c(m, 1)
 vec_c(m, 1)
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  vec_c <- function(...) {
-#    args <- compact(list2(...))
-#  
-#    ptype <- vec_ptype_common(!!!args)
-#    if (is.null(ptype))
-#      return(NULL)
-#  
-#    ns <- map_int(args, vec_size)
-#    out <- vec_init(ptype, sum(ns))
-#  
-#    pos <- 1
-#    for (i in seq_along(ns)) {
-#      n <- ns[[i]]
-#  
-#      x <- vec_cast(args[[i]], to = ptype)
-#      vec_slice(out, pos:(pos + n - 1)) <- x
-#      pos <- pos + n
-#    }
-#  
-#    out
-#  }
+# vec_c <- function(...) {
+#   args <- compact(list2(...))
+# 
+#   ptype <- vec_ptype_common(!!!args)
+#   if (is.null(ptype))
+#     return(NULL)
+# 
+#   ns <- map_int(args, vec_size)
+#   out <- vec_init(ptype, sum(ns))
+# 
+#   pos <- 1
+#   for (i in seq_along(ns)) {
+#     n <- ns[[i]]
+# 
+#     x <- vec_cast(args[[i]], to = ptype)
+#     vec_slice(out, pos:(pos + n - 1)) <- x
+#     pos <- pos + n
+#   }
+# 
+#   out
+# }
 
 ## -----------------------------------------------------------------------------
 if_else <- function(test, yes, no) {

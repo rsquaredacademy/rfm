@@ -1,0 +1,28 @@
+anim_save               Save an animation to a file
+animate                 Render a gganim object
+ease_aes                Control easing of aesthetics
+enter_exit              Define how entering and exiting data behaves
+frame_vars              Access metadata about the frames in an
+                        animation
+renderers               Renderers provided by gganimate
+shadow_mark             Show original data as background marks
+shadow_null             A non-existent shadow
+shadow_trail            A trail of evenly spaced old frames
+shadow_wake             Show preceding frames with gradual falloff
+split_animation         Split an animation into chunks
+transition_components   Transition individual components through their
+                        own lifecycle
+transition_events       Transition individual events in and out
+transition_filter       Transition between different filters
+transition_layers       Build up a plot, layer by layer
+transition_manual       Create an animation by specifying the frame
+                        membership directly
+transition_null         Keep all data constant across the animation
+transition_reveal       Reveal data along a given dimension
+transition_states       Transition between several distinct stages of
+                        the data
+transition_time         Transition through distinct states in time
+view_follow             Let the view follow the data in each frame
+view_static             Keep a fixed view that include all of the data
+view_step               Follow the data in steps
+view_zoom               Pan and zoom smoothly between different states

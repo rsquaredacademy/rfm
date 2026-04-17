@@ -1,4 +1,4 @@
-## ----set, include=FALSE--------------------------------------------------
+## ----set, include=FALSE-------------------------------------------------------
 library(knitr)
 opts_chunk$set(fig.path = 'Figures/other', debug = TRUE, echo = TRUE)
 opts_chunk$set(out.width = '0.9\\textwidth')

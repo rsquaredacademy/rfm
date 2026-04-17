@@ -1,6 +1,5 @@
 library(shiny)
 library(shinyBS)
-library(shinythemes)
 library(descriptr)
 library(dplyr)
 

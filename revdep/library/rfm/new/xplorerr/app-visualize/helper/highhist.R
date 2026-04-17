@@ -4,12 +4,11 @@ highist <- function(data, column, xlab = ' ', color = 'blue') {
     select_(column) %>%
     pull(1) 
   
-  h <- hchist(da, name = xlab)
   
-  h %>%
+  da %>%
+    hchart(name = xlab) %>%
     hc_colors(colors = color) %>%
     hc_yAxis(title = list(text = 'Frequency'))
   
 }
 
-highist(mtcars, 'mpg', xlab = 'Miles Per Gallon', color = 'red')

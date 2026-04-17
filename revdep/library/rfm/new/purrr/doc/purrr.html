@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Get started with purrr</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Get started with purrr</h1>
+
+
+
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>purrr helps you write cleaner, more maintainable R code through
+functional programming concepts. But what is functional programming? At
+its core, it’s an approach to programming that emphasizes using
+functions to transform data, similar to how you might use a series of
+tools to process raw materials into a final product. Instead of writing
+loops and modifying data step by step, functional programming encourages
+you to think about your data transformations as a series of function
+applications. This notion is rather abstract, but we believe mastering
+functional programming makes your code clearer and less prone to errors.
+You’ll hopefully get some sense of that by the end of this vignette!</p>
+<p>This vignette discusses two of the most important parts of purrr: map
+functions and predicate functions.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(purrr)</span></code></pre></div>
+</div>
+<div id="map-a-better-way-to-loop" class="section level2">
+<h2>Map: A better way to loop</h2>
+<p><code>map()</code><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> provides a more compact way to apply
+functions to each element of a vector, returning a list:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>triple <span class="ot">&lt;-</span> <span class="cf">function</span>(x) x <span class="sc">*</span> <span class="dv">3</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">map</span>(x, triple)</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="fu">str</span>(out)</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt; List of 3</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt;  $ : num 3</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt;  $ : num 6</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt;  $ : num 9</span></span></code></pre></div>
+<p>Or written with the pipe:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>x <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="fu">map</span>(triple) <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="fu">str</span>()</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt; List of 3</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt;  $ : num 3</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt;  $ : num 6</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt;  $ : num 9</span></span></code></pre></div>
+<p>This is equivalent to a for loop:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="dv">3</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(x)) {</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  out[[i]] <span class="ot">&lt;-</span> <span class="fu">triple</span>(x[[i]])</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>}</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="fu">str</span>(out)</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt; List of 3</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt;  $ : num 3</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt;  $ : num 6</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt;  $ : num 9</span></span></code></pre></div>
+<p>Even on its own, there are some benefits to <code>map()</code>: once
+you get used to the syntax, it’s a very compact way to express the idea
+of transforming a vector, returning one output element for each input
+element. But there are several other reasons to use <code>map()</code>,
+which we’ll explore in the following sections:</p>
+<ul>
+<li>Progress bars</li>
+<li>Parallel computing</li>
+<li>Output variants</li>
+<li>Input variants</li>
+</ul>
+<div id="progress-bars" class="section level3">
+<h3>Progress bars</h3>
+<p>For long-running jobs, like web scraping, model fitting, or data
+processing, it’s really useful to get a progress bar that helps you
+estimate how long you’ll need to wait. Progress bars are easy to enable
+in purrr: just set <code>.progress = TRUE</code>. It’s hard to
+illustrate progress bars in a vignette, but you can try this example
+interactively:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, \(i) <span class="fu">Sys.sleep</span>(<span class="fl">0.5</span>), <span class="at">.progress =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>Learn more about progress bars in <code>?progress_bars</code>.</p>
+</div>
+<div id="parallel-computing" class="section level3">
+<h3>Parallel computing</h3>
+<p>By default, <code>map()</code> runs only in your current R session.
+But you can easily opt in to spreading your task across multiple R
+sessions, and hence multiple cores with <code>in_parallel()</code>. This
+can give big performance improvements if your task is primarily bound by
+compute performance.</p>
+<p>purrr’s parallelism is powered by mirai, so to begin, you need to
+start up a number of background R sessions, called
+<strong>daemons</strong>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>mirai<span class="sc">::</span><span class="fu">daemons</span>(<span class="dv">6</span>)</span></code></pre></div>
+<p>(You only need to do this once per session.)</p>
+<p>Now you can easily convert your <code>map()</code> call to run in
+parallel:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="fu">in_parallel</span>(\(i) <span class="fu">Sys.sleep</span>(<span class="fl">0.5</span>)))</span></code></pre></div>
+<p>It’s important to realize that this parallelism works by spreading
+computation across clean R sessions. That means that code like this will
+not work, because the worker daemons won’t have a copy of
+<code>my_lm()</code>:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>my_lm <span class="ot">&lt;-</span> <span class="cf">function</span>(formula, data) {</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="fu">Sys.sleep</span>(<span class="fl">0.5</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  <span class="fu">lm</span>(formula, data)</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>}</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>by_cyl <span class="ot">&lt;-</span> <span class="fu">split</span>(mtcars, mtcars<span class="sc">$</span>cyl)</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">map</span>(by_cyl, <span class="fu">in_parallel</span>(\(df) <span class="fu">my_lm</span>(mpg <span class="sc">~</span> disp, <span class="at">data =</span> df)))</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">#&gt; Error in `map()`:</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co">#&gt; ℹ In index: 1.</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co">#&gt; ℹ With name: 4.</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co">#&gt; Caused by error in `my_lm()`:</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="co">#&gt; ! could not find function &quot;my_lm&quot;</span></span></code></pre></div>
+<p>You can resolve this by passing additional data along to
+<code>in_parallel()</code>:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">map</span>(by_cyl, <span class="fu">in_parallel</span>(\(df) <span class="fu">my_lm</span>(mpg <span class="sc">~</span> disp, <span class="at">data =</span> df), <span class="at">my_lm =</span> my_lm))</span></code></pre></div>
+<p>Learn more about parallel computing in <code>?in_parallel</code>.</p>
+</div>
+<div id="output-variants" class="section level3">
+<h3>Output variants</h3>
+<p>purrr functions are type-stable, which means it’s easy to predict
+what type of output they return, e.g., <code>map()</code> always returns
+a list. But what if you want a different type of output? That’s where
+the output variants come into play:</p>
+<ul>
+<li><p>There are four variants for the four most important types of
+atomic vector:</p>
+<ul>
+<li><code>map_lgl()</code> returns a logical vector.</li>
+<li><code>map_int()</code> returns an integer vector.</li>
+<li><code>map_dbl()</code> returns a numeric (double) vector.</li>
+<li><code>map_chr()</code> returns a character vector.</li>
+</ul></li>
+<li><p>For all other types of vector (like dates, date-times, factors,
+etc.), there’s <code>map_vec()</code>. It’s a little harder to precisely
+describe the output type, but if your function returns a length-1 vector
+of type “foo”, then the output of <code>map_vec()</code> will be a
+length-n vector of type “foo”.</p></li>
+<li><p><code>modify()</code> returns output with the same type as the
+input. For example, if the input is a data frame, the output will also
+be a data frame.</p></li>
+<li><p><code>walk()</code> returns the input (invisibly); it’s useful
+when you’re calling a function purely for its side effects, for example,
+generating plots or saving files.</p></li>
+</ul>
+<p>purrr, like many tidyverse functions, is designed to help you solve
+complex problems by stringing together simple pieces. This is
+particularly natural to do with the pipe. For example, the following
+code splits <code>mtcars</code> into one data frame for each value of
+<code>cyl</code>, fits a linear model to each subset, computes the model
+summary, and then extracts the R-squared:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">split</span>(mtcars<span class="sc">$</span>cyl) <span class="sc">|&gt;</span> <span class="co"># from base R</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="fu">map</span>(\(df) <span class="fu">lm</span>(mpg <span class="sc">~</span> wt, <span class="at">data =</span> df)) <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  <span class="fu">map</span>(summary) <span class="sc">|&gt;</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>  <span class="fu">map_dbl</span>(\(x) x<span class="sc">$</span>r.squared)</span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="co">#&gt;         4         6         8 </span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co">#&gt; 0.5086326 0.4645102 0.4229655</span></span></code></pre></div>
+</div>
+<div id="input-variants" class="section level3">
+<h3>Input variants</h3>
+<p><code>map()</code> and friends all iterate over a single list, making
+it poorly suited for some problems. For example, how would you find a
+weighted mean when you have a list of observations and a list of
+weights? Imagine we have the following data:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>xs <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>, <span class="sc">~</span> <span class="fu">runif</span>(<span class="dv">10</span>))</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>xs[[<span class="dv">1</span>]][[<span class="dv">1</span>]] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>ws <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>, <span class="sc">~</span> <span class="fu">rpois</span>(<span class="dv">10</span>, <span class="dv">5</span>) <span class="sc">+</span> <span class="dv">1</span>)</span></code></pre></div>
+<p>We could use <code>map_dbl()</code> to compute unweighted means:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">map_dbl</span>(xs, mean)</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="co">#&gt; [1]        NA 0.3940217 0.6221505 0.4176722 0.4016500 0.5058472 0.5201613</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="co">#&gt; [8] 0.5138508</span></span></code></pre></div>
+<p>But there’s no way to use <code>map()</code> to compute a weighted
+mean because we need to call
+<code>weighted.mean(xs[[1]], ws[[1]])</code>,
+<code>weighted.mean(xs[[2]], ws[[2]])</code>, etc. That’s the job of
+<code>map2()</code>:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">map2_dbl</span>(xs, ws, weighted.mean)</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="co">#&gt; [1]        NA 0.3793082 0.6352953 0.4286744 0.4067268 0.5487410 0.4804650</span></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="co">#&gt; [8] 0.4702240</span></span></code></pre></div>
+<p>Note that the arguments that vary for each call come before the
+function and arguments that are constant come after the function:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">map2_dbl</span>(xs, ws, weighted.mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.5647890 0.3793082 0.6352953 0.4286744 0.4067268 0.5487410 0.4804650</span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="co">#&gt; [8] 0.4702240</span></span></code></pre></div>
+<p>But we generally recommend using an anonymous function instead, as
+this makes it very clear where each argument is going:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">map2_dbl</span>(xs, ws, \(x, w) <span class="fu">weighted.mean</span>(x, w, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<p>There are two important variants of <code>map2()</code>:
+<code>pmap()</code> which can take any number of varying arguments
+(passed as a list), and <code>imap()</code> which iterates over the
+values and indices of a single vector. Learn more in their
+documentation.</p>
+</div>
+<div id="combinatorial-explosion" class="section level3">
+<h3>Combinatorial explosion</h3>
+<p>What makes purrr particularly special is that all of the above
+features (progress bars, parallel computing, output variants, and input
+variants) can be combined any way that you choose. The combination of
+inputs (prefixes) and outputs (suffixes) forms a matrix, and you can use
+<code>.progress</code> or <code>in_parallel()</code> with any of
+them:</p>
+<table>
+<colgroup>
+<col width="23%" />
+<col width="23%" />
+<col width="26%" />
+<col width="27%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Output type</th>
+<th>Single input (<code>.x</code>)</th>
+<th>Two inputs (<code>.x</code>, <code>.y</code>)</th>
+<th>Multiple inputs (<code>.l</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>List</strong></td>
+<td><code>map(.x, .f)</code></td>
+<td><code>map2(.x, .y, .f)</code></td>
+<td><code>pmap(.l, .f)</code></td>
+</tr>
+<tr class="even">
+<td><strong>Logical</strong></td>
+<td><code>map_lgl(.x, .f)</code></td>
+<td><code>map2_lgl(.x, .y, .f)</code></td>
+<td><code>pmap_lgl(.l, .f)</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Integer</strong></td>
+<td><code>map_int(.x, .f)</code></td>
+<td><code>map2_int(.x, .y, .f)</code></td>
+<td><code>pmap_int(.l, .f)</code></td>
+</tr>
+<tr class="even">
+<td><strong>Double</strong></td>
+<td><code>map_dbl(.x, .f)</code></td>
+<td><code>map2_dbl(.x, .y, .f)</code></td>
+<td><code>pmap_dbl(.l, .f)</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Character</strong></td>
+<td><code>map_chr(.x, .f)</code></td>
+<td><code>map2_chr(.x, .y, .f)</code></td>
+<td><code>pmap_chr(.l, .f)</code></td>
+</tr>
+<tr class="even">
+<td><strong>Vector</strong></td>
+<td><code>map_vec(.x, .f)</code></td>
+<td><code>map_vec(.x, .y, .f)</code></td>
+<td><code>map_vec(.l, .f)</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Input</strong></td>
+<td><code>walk(.x, .f)</code></td>
+<td><code>walk2(.x, .y, .f)</code></td>
+<td><code>pwalk(.l, .f)</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="filtering-and-finding-with-predicates" class="section level2">
+<h2>Filtering and finding with predicates</h2>
+<!-- FIXME: Consider providing a more concrete motivating example at the start - perhaps finding the first numeric column in a data frame -->
+<p>purrr provides a number of functions that work with predicate
+functions. Predicate functions take a vector and return either
+<code>TRUE</code> or <code>FALSE</code>, with examples including
+<code>is.character()</code> and <code>\(x) any(is.na(x))</code>. You
+typically use them to filter or find; for example, you could use them to
+locate the first element of a list that’s a character vector, or only
+keep the columns in a data frame that have missing values.</p>
+<p>purrr comes with a bunch of helpers to make predicate functions
+easier to use:</p>
+<ul>
+<li><code>detect(.x, .p)</code> returns the value of the first element
+in <code>.x</code> where <code>.p</code> is <code>TRUE</code>.</li>
+<li><code>detect_index(.x, .p)</code> returns the position of the first
+element in <code>.x</code> where <code>.p</code> is
+<code>TRUE</code>.</li>
+<li><code>keep(.x, .p)</code> returns all elements from <code>.x</code>
+where <code>.p</code> evaluates to <code>TRUE</code>.</li>
+<li><code>discard(.x, .p)</code> returns all elements from
+<code>.x</code> where <code>.p</code> evaluates to
+<code>FALSE</code>.</li>
+<li><code>every(.x, .p)</code> returns <code>TRUE</code> if
+<code>.p</code> returns <code>TRUE</code> for every element in
+<code>.x</code>.</li>
+<li><code>some(.x, .p)</code> returns <code>TRUE</code> if
+<code>.p</code> returns <code>TRUE</code> for at least one element in
+<code>.x</code>.</li>
+<li><code>none(.x, .p)</code> returns <code>TRUE</code> if
+<code>.p</code> returns <code>FALSE</code> for all elements in
+<code>.x</code>.</li>
+<li><code>head_while(.x, .p)</code> returns elements from the beginning
+of <code>.x</code> while <code>.p</code> is <code>TRUE</code>, stopping
+at the first <code>FALSE</code>.</li>
+<li><code>tail_while(.x, .p)</code> returns elements from the end of
+<code>.x</code> while <code>.p</code> is <code>TRUE</code>, stopping at
+the first <code>FALSE</code>.</li>
+</ul>
+<p>You’ll typically use these functions with lists, since you can
+usually rely on vectorization for simpler vectors.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>  <span class="at">a =</span> letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>],</span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>  <span class="at">b =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,</span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>  <span class="at">c =</span> <span class="fu">runif</span>(<span class="dv">15</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>)</span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>x <span class="sc">|&gt;</span> <span class="fu">detect</span>(is.character)</span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot;</span></span>
+<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a>x <span class="sc">|&gt;</span> <span class="fu">detect_index</span>(is.numeric)</span>
+<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a><span class="co">#&gt; [1] 2</span></span>
+<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a>x <span class="sc">|&gt;</span> <span class="fu">keep</span>(is.numeric) <span class="sc">|&gt;</span> <span class="fu">str</span>()</span>
+<span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a><span class="co">#&gt; List of 2</span></span>
+<span id="cb16-14"><a href="#cb16-14" tabindex="-1"></a><span class="co">#&gt;  $ b: int [1:10] 1 2 3 4 5 6 7 8 9 10</span></span>
+<span id="cb16-15"><a href="#cb16-15" tabindex="-1"></a><span class="co">#&gt;  $ c: num [1:15] 0.279 0.215 0.649 0.563 0.772 ...</span></span>
+<span id="cb16-16"><a href="#cb16-16" tabindex="-1"></a>x <span class="sc">|&gt;</span> <span class="fu">discard</span>(is.numeric) <span class="sc">|&gt;</span> <span class="fu">str</span>()</span>
+<span id="cb16-17"><a href="#cb16-17" tabindex="-1"></a><span class="co">#&gt; List of 1</span></span>
+<span id="cb16-18"><a href="#cb16-18" tabindex="-1"></a><span class="co">#&gt;  $ a: chr [1:10] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; ...</span></span>
+<span id="cb16-19"><a href="#cb16-19" tabindex="-1"></a></span>
+<span id="cb16-20"><a href="#cb16-20" tabindex="-1"></a>x <span class="sc">|&gt;</span> <span class="fu">every</span>(\(x) <span class="fu">length</span>(x) <span class="sc">&gt;</span> <span class="dv">10</span>)</span>
+<span id="cb16-21"><a href="#cb16-21" tabindex="-1"></a><span class="co">#&gt; [1] FALSE</span></span>
+<span id="cb16-22"><a href="#cb16-22" tabindex="-1"></a>x <span class="sc">|&gt;</span> <span class="fu">some</span>(\(x) <span class="fu">length</span>(x) <span class="sc">&gt;</span> <span class="dv">10</span>)</span>
+<span id="cb16-23"><a href="#cb16-23" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
+<span id="cb16-24"><a href="#cb16-24" tabindex="-1"></a>x <span class="sc">|&gt;</span> <span class="fu">none</span>(\(x) <span class="fu">length</span>(x) <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb16-25"><a href="#cb16-25" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p>You might wonder why this function is called
+<code>map()</code>. What does it have to do with depicting physical
+features of land or sea 🗺? In fact, the meaning comes from mathematics
+where map refers to “an operation that associates each element of a
+given set with one or more elements of a second set”. This makes sense
+here because <code>map()</code> defines a mapping from one vector to
+another. And “map” also has the nice property of being short, which is
+useful for such a fundamental building block.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

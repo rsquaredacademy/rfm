@@ -16,9 +16,8 @@ tabPanel('Histogram', value = 'tab_rfm_histogram',
 			br(),
 			br(),
 			column(2),
-			column(8, align = 'center', 
-				plotOutput('plot_histogram', height = '500px') %>% 
-				  withSpinner()
+			column(8, align = 'center',
+				plotOutput('plot_histogram', height = '500px')
 			),
 			column(2)
 

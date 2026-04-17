@@ -8,8 +8,7 @@ between                 Detect where values fall in a specified range
 bind_cols               Bind multiple data frames by column
 bind_rows               Bind multiple data frames by row
 c_across                Combine values from multiple columns
-case_match              A general vectorised 'switch()'
-case_when               A general vectorised if-else
+case-and-replace-when   A general vectorised if-else
 coalesce                Find the first non-missing element
 compute                 Force computation of a database query
 consecutive_id          Generate a unique identifier for consecutive
@@ -19,12 +18,12 @@ context                 Information about the "current" group or
 copy_to                 Copy a local data frame to a remote src
 count                   Count the observations in each group
 cross_join              Cross join
-cumall                  Cumulativate versions of any, all, and mean
+cumall                  Cumulative versions of any, all, and mean
 desc                    Descending order
 distinct                Keep distinct/unique rows
 dplyr_by                Per-operation grouping with '.by'/'by'
 explain                 Explain details of a tbl
-filter                  Keep rows that match a condition
+filter                  Keep or drop rows that match a condition
 filter-joins            Filtering joins
 glimpse                 Get a glimpse of your data
 group_by                Group by one or more variables
@@ -50,6 +49,8 @@ percent_rank            Proportional ranking functions
 pick                    Select a subset of columns
 pull                    Extract a single column
 recode                  Recode values
+recode-and-replace-values
+                        Recode and replace values
 reframe                 Transform each group to an arbitrary number of
                         rows
 relocate                Change column order
@@ -68,3 +69,4 @@ storms                  Storm tracks data
 summarise               Summarise each group down to one row
 tbl                     Create a table from a data source
 vars                    Select variables
+when-any-all            Elementwise 'any()' and 'all()'

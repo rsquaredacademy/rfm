@@ -49,6 +49,7 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -380,7 +381,7 @@ chapter</a>,</li>
 </div>
 <div id="data-frame-subclasses" class="section level2">
 <h2>Data frame subclasses</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(tibble)</span></code></pre></div>
 <p>For tibble &gt;= 3.0.0, the <code>&quot;tbl&quot;</code> class is responsible
 for printing, while the <code>&quot;tbl_df&quot;</code> class adds tibble’s sturdy
 subsetting and subset assignment behavior (see
@@ -392,19 +393,19 @@ example is the <code>&quot;tbl_sql&quot;</code> class in the dbplyr package that
 is used to implement lazy database tables.</p>
 <div id="tibble-example" class="section level3">
 <h3>Tibble example</h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>my_tbl_df <span class="ot">&lt;-</span> <span class="fu">new_tibble</span>(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">b =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>),</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">class =</span> <span class="st">&quot;my_tbl_df&quot;</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>tbl_sum.my_tbl_df <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;My custom tibble&quot;</span> <span class="ot">=</span> <span class="st">&quot;Some info about it&quot;</span>,</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">NextMethod</span>()</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>my_tbl_df</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>my_tbl_df <span class="ot">&lt;-</span> <span class="fu">new_tibble</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">b =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>),</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  <span class="at">class =</span> <span class="st">&quot;my_tbl_df&quot;</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>)</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>tbl_sum.my_tbl_df <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>    <span class="st">&quot;My custom tibble&quot;</span> <span class="ot">=</span> <span class="st">&quot;Some info about it&quot;</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>    <span class="fu">NextMethod</span>()</span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>  )</span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>}</span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>my_tbl_df</span></code></pre></div>
 <pre><code>## # My custom tibble: Some info about it
 ## # A tibble:         3 × 2
 ##       a     b
@@ -412,7 +413,7 @@ is used to implement lazy database tables.</p>
 ## 1     1     2
 ## 2     2     3
 ## 3     3     4</code></pre>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>my_tbl_df[, <span class="st">&quot;a&quot;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>my_tbl_df[, <span class="st">&quot;a&quot;</span>]</span></code></pre></div>
 <pre><code>## # My custom tibble: Some info about it
 ## # A tibble:         3 × 1
 ##       a
@@ -423,19 +424,19 @@ is used to implement lazy database tables.</p>
 </div>
 <div id="data-frame-example" class="section level3">
 <h3>Data frame example</h3>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>my_tbl <span class="ot">&lt;-</span> vctrs<span class="sc">::</span><span class="fu">new_data_frame</span>(</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">b =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>),</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">class =</span> <span class="fu">c</span>(<span class="st">&quot;my_tbl&quot;</span>, <span class="st">&quot;tbl&quot;</span>)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>tbl_sum.my_tbl <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;My custom data frame&quot;</span> <span class="ot">=</span> <span class="st">&quot;Some info about it&quot;</span>,</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">NextMethod</span>()</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>my_tbl</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>my_tbl <span class="ot">&lt;-</span> vctrs<span class="sc">::</span><span class="fu">new_data_frame</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">b =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>),</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="at">class =</span> <span class="fu">c</span>(<span class="st">&quot;my_tbl&quot;</span>, <span class="st">&quot;tbl&quot;</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>)</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>tbl_sum.my_tbl <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>    <span class="st">&quot;My custom data frame&quot;</span> <span class="ot">=</span> <span class="st">&quot;Some info about it&quot;</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>    <span class="fu">NextMethod</span>()</span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>  )</span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>}</span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>my_tbl</span></code></pre></div>
 <pre><code>## # My custom data frame: Some info about it
 ## # A data frame:         3 × 2
 ##       a     b
@@ -443,7 +444,7 @@ is used to implement lazy database tables.</p>
 ## 1     1     2
 ## 2     2     3
 ## 3     3     4</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>my_tbl[, <span class="st">&quot;a&quot;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>my_tbl[, <span class="st">&quot;a&quot;</span>]</span></code></pre></div>
 <pre><code>## [1] 1 2 3</code></pre>
 </div>
 </div>

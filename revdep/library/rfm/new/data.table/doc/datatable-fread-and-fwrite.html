@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="generator" content="litedown 0.8">
+<title>Fast Read and Fast Write</title>
+<style type="text/css">
+body {
+  font-family: sans-serif;
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 1.5;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+body, .abstract, code, .footnotes, footer, #refs, .caption { font-size: .9em; }
+li li { font-size: .95em; }
+ul:has(li > input[type="checkbox"]) { list-style: none; padding-left: 1em; }
+*, :before, :after { box-sizing: border-box; }
+a { color: steelblue; }
+pre, img { max-width: 100%; }
+pre { white-space: pre-wrap; word-break: break-word; }
+pre code { display: block; padding: 1em; overflow-x: auto; }
+code { font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace; }
+:not(pre, th) > code, code[class], div > .caption { background: #f8f8f8; }
+pre > code:is(:not([class]), .language-plain, .language-none, .plain), .box, .figure, .table { background: inherit; border: 1px solid #eee; }
+pre > code {
+  &.message { border-color: #9eeaf9; }
+  &.warning { background: #fff3cd; border-color: #fff3cd; }
+  &.error { background: #f8d7da; border-color: #f8d7da; }
+}
+.fenced-chunk { border-left: 1px solid #666; }
+.code-fence {
+  opacity: .4;
+  border: 1px dashed #666;
+  border-left: 2px solid;
+  &:hover { opacity: inherit; }
+}
+.box, .figure, .table, table { margin: 1em auto; }
+div > .caption { padding: 1px 1em; }
+.figure { p:has(img, svg), pre:has(svg) { text-align: center; } }
+.flex-col { display: flex; justify-content: space-between; }
+table {
+  &:only-child:not(.table > *) { margin: auto; }
+  th, td { padding: 5px; font-variant-numeric: tabular-nums; }
+  thead, tfoot, tr:nth-child(even) { background: whitesmoke; }
+  thead th { border-bottom: 1px solid #ddd; }
+  &:not(.datatable-table) {
+    border-top: 1px solid #666;
+    border-bottom: 1px solid #666;
+  }
+}
+blockquote {
+  color: #666;
+  margin: 0;
+  padding: 1px 1em;
+  border-left: .5em solid #eee;
+}
+hr, .footnotes::before { border: 1px dashed #ddd; }
+.frontmatter { text-align: center; }
+#TOC {
+  a { text-decoration: none; }
+  ul { list-style: none; padding-left: 1em; }
+  & > ul { padding: 0; }
+  ul ul { border-left: 1px solid lightsteelblue; }
+}
+.body h2 { border-bottom: 1px solid #666; }
+.body .appendix, .appendix ~ h2 { border-bottom-style: dashed; }
+.main-number::after { content: "."; }
+span[class^="ref-number-"] { font-weight: bold; }
+.ref-number-fig::after, .ref-number-tab::after { content: ":"; }
+.cross-ref-chp::before { content: "Chapter "; }
+.cross-ref-sec::before { content: "Section "; }
+.cross-ref-fig::before, .ref-number-fig::before { content: "Figure "; }
+.cross-ref-tab::before, .ref-number-tab::before { content: "Table "; }
+.cross-ref-eqn::before, .MathJax_ref:has(mjx-mtext > mjx-c + mjx-c)::before { content: "Equation "; }
+.abstract, #refs {
+  &::before { display: block; margin: 1em auto; font-weight: bold; }
+}
+.abstract::before { content: "Abstract"; text-align: center; }
+#refs::before { content: "Bibliography"; font-size: 1.5em; }
+.ref-paren-open::before { content: "("; }
+.ref-paren-close::after { content: ")"; }
+.ref-semicolon::after { content: "; "; }
+.ref-and::after { content: " and "; }
+.ref-et-al::after { content: " et al."; font-style: italic; }
+.footnote-ref a {
+  &::before { content: "["; }
+  &::after { content: "]"; }
+}
+section.footnotes {
+  margin-top: 2em;
+  &::before { content: ""; display: block; max-width: 20em; }
+}
+.fade {
+  background: repeating-linear-gradient(135deg, white, white 30px, #ddd 32px, #ddd 32px);
+  opacity: 0.6;
+}
+
+@media print {
+  body { max-width: 100%; }
+  tr, img { break-inside: avoid; }
+}
+@media only screen and (min-width: 992px) {
+  body:not(.pagesjs) pre:has(.line-numbers):not(:hover) { white-space: pre; }
+}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xiee/utils@1.14.14/css/prism-xcode.min.css">
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+</head>
+<body>
+<div class="frontmatter">
+<div class="title"><h1>Fast Read and Fast Write</h1></div>
+<div class="date"><h3>2026-01-24</h3></div>
+</div>
+<div class="body">
+<p>Translations of this document are available in: en | <a href="https://rdatatable.gitlab.io/data.table/articles/fr/datatable-fread-and-fwrite.html">fr</a></p>
+<p>The <code>fread()</code> and <code>fwrite()</code> functions in the <code>data.table</code> R package are not only optimized for speed on large files, but also offer powerful and convenient features for working with small datasets. This vignette highlights their usability, flexibility, and performance for efficient data import and export.</p>
+<hr />
+<h2 id="sec:1-fread">1. fread()</h2>
+<h3 id="sec:1-1-using-command-line-tools-directly"><strong>1.1 Using command line tools directly</strong></h3>
+<p>The <code>fread()</code> function from <code>data.table</code> can read data piped from shell commands, letting you filter or preprocess data before it even enters R.</p>
+<pre><code class="language-r"># Create a sample file with some unwanted lines
+writeLines(
+'HEADER: Some metadata
+HEADER: More metadata
+1 2.0 3.0
+2 4.5 6.7
+HEADER: Yet more
+3 8.9 0.1
+4 1.2 3.4',
+&quot;example_data.txt&quot;)
+
+library(data.table)
+fread(&quot;grep -v HEADER example_data.txt&quot;)
+#       V1    V2    V3
+#    &lt;int&gt; &lt;num&gt; &lt;num&gt;
+# 1:     1   2.0   3.0
+# 2:     2   4.5   6.7
+# 3:     3   8.9   0.1
+# 4:     4   1.2   3.4
+</code></pre>
+<p>The <code>-v</code> option makes <code>grep</code> return all lines except those containing the string ‘HEADER’.</p>
+<blockquote>
+<p>“Given the number of high quality engineers that have looked at the command tool grep over the years, it is most likely that it is as fast as you can get, as well as being correct, convenient, well documented online, easy to learn and search for solutions for specific tasks. If you need to perform more complex string filtering (e.g., matching strings at the beginning or end of lines), the grep syntax is very powerful. Learning its syntax is a transferable skill for other languages and environments.”</p>
+<p>— Matt Dowle</p>
+</blockquote>
+<p>Look at this <a href="https://stackoverflow.com/questions/36256706/fread-together-with-grepl/36270543#36270543">example</a> for more detail.</p>
+<p>On Windows, command line tools like <code>grep</code> are available through various environments, such as Rtools, Cygwin, or the Windows Subsystem for Linux (WSL). On Linux and macOS, these tools are typically included with the operating system.</p>
+<h4 id="sec:1-1-1-reading-directly-from-a-text-string">1.1.1  Reading directly from a text string</h4>
+<p><code>fread()</code> can read data directly from a character string in R using the <code>text</code> argument. This is particularly handy for creating reproducible examples, testing code snippets, or working with data generated programmatically within your R session. Each line in the string should be separated by a newline character <code>\n</code>.</p>
+<pre><code class="language-r">my_data_string = &quot;colA,colB,colC\n1,apple,TRUE\n2,banana,FALSE\n3,orange,TRUE&quot;
+dt_from_text = fread(text = my_data_string)
+print(dt_from_text)
+#     colA   colB   colC
+#    &lt;int&gt; &lt;char&gt; &lt;lgcl&gt;
+# 1:     1  apple   TRUE
+# 2:     2 banana  FALSE
+# 3:     3 orange   TRUE
+</code></pre>
+<h4 id="sec:1-1-2-reading-from-urls">1.1.2 Reading from URLs</h4>
+<p><code>fread()</code> can read data directly from web URLs by passing the URL as a character string to its <code>file</code> argument.
+This allows you to download and read data from the internet in one step.</p>
+<pre><code class="language-r"># dt = fread(&quot;https://people.sc.fsu.edu/~jburkardt/data/csv/airtravel.csv&quot;)
+# print(dt)
+</code></pre>
+<h4 id="sec:1-1-3-automatic-decompression-of-compressed-files">1.1.3 Automatic decompression of compressed files</h4>
+<p>In many cases, <code>fread()</code> can automatically detect and decompress files with common compression extensions directly, without needing an explicit connection object or shell commands. This works by checking the file extension.</p>
+<p><strong>Supported extensions typically include:</strong></p>
+<ul>
+<li><code>.gz</code> / <code>.bz2</code> (gzip / bzip2): Supported and works out of the box.</li>
+<li><code>.zip</code> / <code>.tar</code>  (ZIP / tar archives, single file): Supported—<code>fread()</code> will read the first file in the archive if only one file is present.</li>
+</ul>
+<p><strong>Note</strong>: If there are multiple files in the archive, <code>fread()</code> will fail with an error.</p>
+<h3 id="sec:1-2-automatic-separator-and-skip-detection">1.2 Automatic separator and skip detection</h3>
+<p><code>fread</code> automates delimiter and header detection, eliminating the need for manual specification in most cases. You simply provide the filename—<code>fread</code> intelligently detects the structure:</p>
+<p><strong>Separator Detection</strong></p>
+<p><code>fread</code> tests common separators (<code>,</code>,<code>\t</code>, <code>|</code>, space, <code>:</code>, <code>;</code>) and selects the one that results in the most consistent number of fields across sampled rows. For non-standard delimiters, you can override this using the <code>sep=</code> parameter.</p>
+<p><strong>Header Detection</strong></p>
+<p>After applying any <code>skip</code> or <code>nrows</code> settings (if specified), the first row with a consistent number of fields is examined:</p>
+<p>If all fields in this line are interpretable as character and the values do not strongly resemble a data row (e.g., a row of purely numeric-looking strings might still be considered data), it is typically used as the header (column names).</p>
+<p>Otherwise (e.g., if the line contains detected numeric types, or character strings that strongly resemble numbers and could be data), it is treated as a data row, and default column names (<code>V1</code>, <code>V2</code>, …) are assigned.</p>
+<p>You can explicitly tell fread whether a header exists using <code>header = TRUE</code> or <code>header = FALSE</code>.</p>
+<p><strong>Skip Detection</strong></p>
+<p>By default (<code>skip=&quot;auto&quot;</code>), <code>fread</code> will automatically skip blank lines and comment lines (e.g., starting with <code>#</code>) before the data header.
+To manually specify a different number of lines to skip, use</p>
+<ul>
+<li><code>skip=n</code> to skip the first <code>n</code> lines.</li>
+<li><code>skip=&quot;string&quot;</code> to search for a line containing a substring (typically from the column names, like <code>skip=&quot;Date&quot;</code>). Reading begins at the first matching line. This is useful for skipping metadata, or selecting sub-tables in multi-table files. This feature is inspired by the <code>read.xls</code> function in the <code>gdata</code> package.</li>
+</ul>
+<h3 id="sec:1-3-high-quality-automatic-column-type-detection">1.3 High-Quality Automatic Column Type Detection</h3>
+<p>Many real-world datasets contain columns that are initially blank, zero-filled, or appear numeric but later contain characters. To handle such inconsistencies, <code>fread()</code> employs a robust column type detection strategy.</p>
+<p>Since v1.10.5, <code>fread()</code> samples rows by reading blocks of contiguous rows from multiple equally spaced points across the file, including the start, middle, and end. The total number of rows sampled is chosen dynamically based on the file size and structure, and is typically around 10,000, but can be smaller or slightly larger. This wide sampling helps detect type changes that occur later in the data (e.g., <code>001</code> to <code>0A0</code> or blanks becoming populated).</p>
+<p><strong>Efficient File Access with mmap</strong></p>
+<p>To implement this sampling efficiently, <code>fread()</code> uses the operating system’s memory-mapped file access (<code>mmap</code>), allowing it to jump to arbitrary positions in the file without sequential scanning. This lazy, on-demand strategy makes sampling nearly instantaneous, even for very large files.</p>
+<p>If a jump lands within a quoted field that includes newlines, <code>fread()</code> tests subsequent lines until it finds 5 consecutive rows with the expected number of fields, ensuring correct parsing even in complex files.</p>
+<p><strong>Accurate and Optimized Type Detection</strong></p>
+<p>The type for each column is inferred based on the lowest required type from the following ordered list:</p>
+<p><code>logical</code> &lt; <code>integer</code> &lt; <code>integer64</code> &lt; <code>double</code> &lt; <code>character</code></p>
+<p>This ensures:</p>
+<ul>
+<li>Single up-front allocation of memory using the correct type</li>
+<li>Avoidance of rereading the file or manually setting <code>colClasses</code></li>
+<li>Improved speed and memory efficiency</li>
+</ul>
+<p><strong>Out-of-Sample Type Exceptions</strong></p>
+<p>If a type change occurs outside the sampled rows, <code>fread()</code> automatically detects it and rereads the file to ensure correct type assignment, without requiring user intervention. For example, a column sampled as integer might later contain <code>00A</code> — triggering an automatic reread as character.</p>
+<p>All detection logic and any rereads are detailed when <code>verbose=TRUE</code> is enabled.</p>
+<h3 id="sec:1-4-early-error-detection-at-end-of-file">1.4 Early Error Detection at End-of-File</h3>
+<p>Because the large sample explicitly includes the very end of the file, critical issues—such as an inconsistent number of columns, a malformed footer, or an opening quote without a matching closing quote—can be detected and reported almost instantly.
+This early error detection avoids the unnecessary overhead of processing the entire file or allocating excessive memory, only to encounter a failure at the final step.
+It ensures faster feedback and more efficient resource usage, especially when working with large datasets.</p>
+<h3 id="sec:1-5-integer64-support">1.5 <code>integer64</code> Support</h3>
+<p>By default, <code>fread</code> detects integers larger than 2<sup>31</sup> and reads them as <code>bit64::integer64</code> to preserve full precision. This behavior can be overridden in three ways:</p>
+<ul>
+<li>
+<p>Per-column: Use the <code>colClasses</code> argument to specify the type for individual columns.</p>
+</li>
+<li>
+<p>Per-call: Use the <code>integer64</code> argument in <code>fread()</code> to set how all detected <code>integer64</code> columns are read.</p>
+</li>
+<li>
+<p>Globally: Set the option <code>datatable.integer64</code> in your R session or <code>.Rprofile</code> file to change the default behavior for all fread calls.</p>
+</li>
+</ul>
+<p>The integer64 argument (and corresponding option) accepts the following values:</p>
+<ul>
+<li>
+<p><code>&quot;integer64&quot;</code> (default): Reads large integers as <code>bit64::integer64</code> with full precision.</p>
+</li>
+<li>
+<p><code>&quot;double&quot;</code> or <code>&quot;numeric&quot;</code>: Reads large integers as double-precision numbers, potentially losing precision silently (similar to <code>utils::read.csv</code> in base R).</p>
+</li>
+<li>
+<p><code>&quot;character&quot;</code>: Reads large integers as character strings.</p>
+</li>
+</ul>
+<p>To check or set the global default, use:</p>
+<pre><code class="language-r"># fread's default behavior is to treat large integers as &quot;integer64&quot;; however, this global setting can be changed:
+options(datatable.integer64 = &quot;double&quot;)   # Example: set globally to &quot;double&quot;
+getOption(&quot;datatable.integer64&quot;) 
+# [1] &quot;double&quot;
+</code></pre>
+<h3 id="sec:1-6-drop-or-select-columns-by-name-or-position">1.6 Drop or Select Columns by Name or Position</h3>
+<p>To save memory and improve performance, use <code>fread()</code>’s <code>select</code> or <code>drop</code> arguments to read only the columns you need.</p>
+<ul>
+<li>If you need only a few columns, use <code>select</code>.</li>
+<li>If you want to exclude just a few, use <code>drop</code>—this avoids listing everything you want to keep.</li>
+</ul>
+<p>Key points:</p>
+<ul>
+<li><code>select</code>: Vector of column names/positions to keep (discards others).</li>
+<li><code>drop</code>: Vector of column names/positions to discard (keeps others).</li>
+<li>Do not use <code>select</code> and <code>drop</code> together—they are mutually exclusive.</li>
+<li><code>fread()</code> will warn you if any specified column is missing in the file.</li>
+</ul>
+<p>For details, see the manual page by running <code>?fread</code> in R.</p>
+<h3 id="sec:1-7-automatic-quote-escape-detection-including-no-escape">1.7 Automatic Quote Escape Detection (Including No-Escape)</h3>
+<p><code>fread</code> automatically detects how quotes are escaped—including doubled (””) or backslash-escaped (&quot;) quotes—without requiring user input. This is determined using a large sample of the data (see point 3), and validated against the entire file.</p>
+<p>Supported Scenarios:</p>
+<ul>
+<li>Unescaped quotes inside quoted fields
+e.g., <code>&quot;This &quot;quote&quot; is invalid, but fread works anyway&quot;</code> — supported as long as column count remains consistent :</li>
+</ul>
+<pre><code class="language-r">data.table::fread(text='x,y\n&quot;This &quot;quote&quot; is invalid, but fread works anyway&quot;,1')
+# Warning in data.table::fread(text = &quot;x,y\n\&quot;This \&quot;quote\&quot; is invalid, but
+# fread works anyway\&quot;,1&quot;): Found and resolved improper quoting in first 100
+# rows. If the fields are not quoted (e.g. field separator does not appear within
+# any field), try quote=&quot;&quot; to avoid this warning.
+#                                                  x     y
+#                                             &lt;char&gt; &lt;int&gt;
+# 1: This &quot;quote&quot; is invalid, but fread works anyway     1
+</code></pre>
+<ul>
+<li>Unquoted fields that begin with quotes
+e.g., <code>Invalid&quot;Field,10,20</code> — recognized correctly as not a quoted field.</li>
+</ul>
+<pre><code class="language-r">data.table::fread(text='x,y\nNot&quot;Valid,1')
+#            x     y
+#       &lt;char&gt; &lt;int&gt;
+# 1: Not&quot;Valid     1
+</code></pre>
+<p>Requirements &amp; Limitations:</p>
+<ul>
+<li>
+<p>Escaping rules and column counts must be consistent throughout the file.</p>
+</li>
+<li>
+<p>Not supported when <code>fill=TRUE</code> — in that case, the file must follow RFC4180-compliant quoting/escaping.</p>
+</li>
+</ul>
+<p>Version-Specific Robustness:
+From v1.10.6, <code>fread</code> resolves ambiguities more reliably across the entire file using full-column-count consistency (default is <code>fill=FALSE</code>). Warnings are issued if parsing fails due to ambiguity.</p>
+<h2 id="sec:2-fwrite">2. fwrite()</h2>
+<p><code>fwrite()</code> is the fast file writer companion to <code>fread()</code>.
+It’s designed for speed, sensible defaults, and ease of use, mirroring many of the conveniences found in <code>fread</code>.</p>
+<h3 id="sec:2-1-intelligent-and-minimalist-quoting-quote-auto">2.1 Intelligent and Minimalist Quoting (quote=“auto”)</h3>
+<p>When data is written as strings (either inherently, like character columns, or by choice, like <code>dateTimeAs=&quot;ISO&quot;</code>), <code>quote=&quot;auto&quot;</code> (default) intelligently quotes fields:</p>
+<p><strong>Contextual Quoting</strong>:Fields are quoted only when necessary. This happens if they contain the delimiter <code>(sep)</code>, a double quote <code>(&quot;)</code>, a newline <code>(\n)</code>, a carriage return <code>(\r)</code>, or if the field is an empty string <code>(&quot;&quot;)</code>. Quoting the empty string is done to distinguish it from an NA value when the file is read.</p>
+<p><strong>Bypassed for Direct Numeric Output</strong>: If specific columns are written as their underlying numeric types (e.g., via <code>dateTimeAs=&quot;epoch&quot;</code> for <code>POSIXct</code>, or if a user pre-converts Date to integer), then quoting logic is naturally bypassed for those numeric fields, contributing to efficiency.</p>
+<pre><code class="language-r">dt_quoting_scenario = data.table(
+  text_field = c(&quot;Contains,a,comma&quot;, &quot;Contains \&quot;a quote\&quot;&quot;, &quot;Clean_text&quot;, &quot;&quot;, NA),
+  numeric_field = 1:5
+)
+temp_quote_adv = tempfile(fileext = &quot;.csv&quot;)
+
+fwrite(dt_quoting_scenario, temp_quote_adv)
+# Note the output: the empty string is quoted (&quot;&quot;), but the NA is not.
+cat(readLines(temp_quote_adv), sep = &quot;\n&quot;)
+# text_field,numeric_field
+# &quot;Contains,a,comma&quot;,1
+# &quot;Contains &quot;&quot;a quote&quot;&quot;&quot;,2
+# Clean_text,3
+# &quot;&quot;,4
+# ,5
+</code></pre>
+<h3 id="sec:2-2-fine-grained-date-time-serialization-datetimeas-argument">2.2 Fine-Grained Date/Time Serialization (<code>dateTimeAs</code> argument)</h3>
+<p>Offers precise control for POSIXct/Date types:</p>
+<ul>
+<li>
+<p><code>dateTimeAs=&quot;ISO&quot;</code> (Default for POSIXct): ISO 8601 format (e.g., YYYY-MM-DDTHH:MM:SS.ffffffZ), preserving sub-second precision for unambiguous interchange.</p>
+</li>
+<li>
+<p><code>dateTimeAs=&quot;epoch&quot;</code>: POSIXct as seconds since epoch (numeric).</p>
+</li>
+</ul>
+<pre><code class="language-r">dt_timestamps = data.table(
+  ts = as.POSIXct(&quot;2023-10-26 14:35:45.123456&quot;, tz = &quot;GMT&quot;),
+  dt = as.Date(&quot;2023-11-15&quot;)
+)
+temp_dt_iso = tempfile(fileext = &quot;.csv&quot;)
+fwrite(dt_timestamps, temp_dt_iso, dateTimeAs = &quot;ISO&quot;)
+cat(readLines(temp_dt_iso), sep = &quot;\n&quot;)
+# ts,dt
+# 2023-10-26T14:35:45.123456Z,2023-11-15
+unlink(temp_dt_iso)
+</code></pre>
+<h3 id="sec:2-3-handling-of-bit64-integer64">2.3 Handling of <code>bit64::integer64</code></h3>
+<p><strong>Full Precision for Large Integers</strong>: <code>fwrite</code> writes <code>bit64::integer64</code> columns by converting them to strings with full precision. This prevents data loss or silent conversion to double that might occur with less specialized writers. This is crucial for IDs or measurements requiring more than R’s standard <code>32-bit</code> integer range or <code>53-bit</code> double precision.</p>
+<p><strong>Direct Handling</strong>: This direct and careful handling of specialized numerics ensures data integrity and efficient I/O, without unnecessary intermediate conversions to less precise types.</p>
+<pre><code class="language-r">if (requireNamespace(&quot;bit64&quot;, quietly = TRUE)) {
+  dt_i64 = data.table(uid = bit64::as.integer64(&quot;1234567890123456789&quot;), val = 100)
+  temp_i64_out = tempfile(fileext = &quot;.csv&quot;)
+  fwrite(dt_i64, temp_i64_out)
+  cat(readLines(temp_i64_out), sep = &quot;\n&quot;)
+  unlink(temp_i64_out)
+}
+# uid,val
+# 1234567890123456789,100
+</code></pre>
+<h3 id="sec:2-4-column-order-and-subset-control">2.4 Column Order and Subset Control</h3>
+<p>To control the order and subset of columns written to file, subset the <code>data.table</code> before calling <code>fwrite()</code>. The <code>col.names</code> argument in <code>fwrite()</code> is a logical (TRUE/FALSE) that controls whether the header row is written, not which columns are written.</p>
+<pre><code class="language-r">dt = data.table(A = 1:3, B = 4:6, C = 7:9)
+
+# Write only columns C and A, in that order
+fwrite(dt[, .(C, A)], &quot;out.csv&quot;)
+cat(readLines(&quot;out.csv&quot;), sep = &quot;\n&quot;)
+# C,A
+# 7,1
+# 8,2
+# 9,3
+file.remove(&quot;out.csv&quot;)
+# [1] TRUE
+</code></pre>
+<h2 id="sec:3-a-note-on-performance">3. A Note on Performance</h2>
+<p>While this vignette focuses on features and usability, the primary motivation for <code>fread</code> and <code>fwrite</code> is speed.</p>
+<p>For users interested in detailed, up-to-date performance comparisons, we recommend these external blog posts which use the <code>atime</code> package for rigorous analysis:</p>
+<ul>
+<li><strong><a href="https://tdhock.github.io/blog/2023/dt-atime-figures/">data.table asymptotic timings</a></strong>: Compares <code>fread</code> and <code>fwrite</code> performance against other popular R packages like <code>readr</code> and <code>arrow</code>.</li>
+<li><strong><a href="https://tdhock.github.io/blog/2024/pandas-dt/">Benchmarking data.table with polars, duckdb, and pandas</a></strong>: Compares <code>data.table</code> I/O and grouping performance against leading Python libraries.</li>
+</ul>
+<p>These benchmarks consistently show that <code>fread</code> and <code>fwrite</code> are highly competitive and often state-of-the-art for performance in the R ecosystem.</p>
+<hr />
+</div>
+</body>
+</html>

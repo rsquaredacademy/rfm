@@ -1,8 +1,7 @@
-// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; indent-tabs-mode: nil; -*-
-//
+
 // Function.h: Rcpp R/C++ interface class library -- functions (also primitives and builtins)
 //
-// Copyright (C) 2010 - 2013  Dirk Eddelbuettel and Romain Francois
+// Copyright (C) 2010 - 2026  Dirk Eddelbuettel and Romain Francois
 //
 // This file is part of Rcpp.
 //
@@ -43,12 +42,12 @@ namespace Rcpp{
             case BUILTINSXP:
                 Storage::set__(x);
                 break;
-            default:
+            default:						// #nocov start
                 const char* fmt = "Cannot convert object to a function: "
                                   "[type=%s; target=CLOSXP, SPECIALSXP, or "
                                   "BUILTINSXP].";
                 throw not_compatible(fmt, Rf_type2char(TYPEOF(x)));
-            }
+            }								// #nocov end
         }
 
         /**
@@ -70,7 +69,11 @@ namespace Rcpp{
         }
 
         Function_Impl(const std::string& name, const std::string& ns) {
+#if R_VERSION < R_Version(4,5,0)
             Shield<SEXP> env(Rf_findVarInFrame(R_NamespaceRegistry, Rf_install(ns.c_str())));
+#else
+            Shield<SEXP> env(R_getVarEx(Rf_install(ns.c_str()), R_NamespaceRegistry, FALSE, R_UnboundValue));
+#endif
             if (env == R_UnboundValue) {
                 stop("there is no namespace called \"%s\"", ns);
             }
@@ -82,7 +85,10 @@ namespace Rcpp{
             return Rcpp_fast_eval(call, R_GlobalEnv);
         }
 
-        #include <Rcpp/generated/Function__operator.h>
+        template <typename... T>
+        SEXP operator()(const T&... args) const {
+            return invoke(pairlist(args...), R_GlobalEnv);
+        }
 
         /**
          * Returns the environment of this function
@@ -92,7 +98,11 @@ namespace Rcpp{
             if( TYPEOF(fun) != CLOSXP ) {
                 throw not_a_closure(Rf_type2char(TYPEOF(fun)));
             }
-            return CLOENV(fun) ;
+            #if (defined(R_VERSION) && R_VERSION >= R_Version(4,5,0))
+            return R_ClosureEnv(fun);
+            #else
+            return CLOENV(fun);
+            #endif
         }
 
         /**

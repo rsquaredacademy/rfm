@@ -1,8 +1,5 @@
 library(ggplot2)
 
-# mtcars$cyl <- as.factor(mtcars$cyl)
-# mtcars$gear <- as.factor(mtcars$gear)
-
 ggbar1 <- function(data, column, bar_col = 'blue', bor_col = 'black', theme = "Default",
                    yaxlimit = FALSE, y1 = NA, y2 = NA, horizontal = FALSE,
                    title = NULL, xlab = NULL, ylab = NULL, sub = NULL,
@@ -21,7 +18,7 @@ ggbar1 <- function(data, column, bar_col = 'blue', bor_col = 'black', theme = "D
                    add_text = FALSE, xloc = NA, yloc = NA, 
                    label = NA, tex_color = NA, tex_size = NA) {
   
-  p <- ggplot(data, aes_string(column)) +
+  p <- ggplot(data, aes(.data[[column]])) +
     geom_bar(fill = bar_col, col = bor_col)
   
   if (yaxlimit) {
@@ -88,4 +85,3 @@ ggbar1 <- function(data, column, bar_col = 'blue', bor_col = 'black', theme = "D
   
 }
 
-ggbar1(mtcars, 'cyl', yaxlimit = TRUE, y1 = 0, y2 = 20, horizontal = TRUE)

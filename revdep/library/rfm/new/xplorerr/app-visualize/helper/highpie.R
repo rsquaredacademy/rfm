@@ -20,4 +20,3 @@ highpie <- function(data, column) {
   
 }
 
-# highpie(mtcars, 'cyl')

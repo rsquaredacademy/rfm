@@ -19,11 +19,14 @@ call_modify             Modify the arguments of a call
 call_name               Extract function name or namespace of a call
 caller_arg              Find the caller argument for error messages
 catch_cnd               Catch a condition
+check_data_frame        Check argument type (data frame)
 check_dots_empty        Check that dots are empty
 check_dots_unnamed      Check that all dots are unnamed
 check_dots_used         Check that all dots have been used
 check_exclusive         Check that arguments are mutually exclusive
 check_required          Check that argument is supplied
+check_type_number       Check argument type (numbers)
+check_type_scalar       Check argument type (scalar)
 cnd_inherits            Does a condition or its ancestors inherit from
                         a class?
 cnd_message             Build an error message from parts
@@ -108,6 +111,7 @@ new_quosures            Create a list of quosures
 new_weakref             Create a weak reference
 on_load                 Run expressions on load
 op-get-attr             Infix attribute accessor and setter
+op-null-continuation    Default value for non-'NULL'
 op-null-default         Default value for 'NULL'
 pairlist2               Collect dynamic dots in a pairlist
 parse_expr              Parse R code
@@ -126,6 +130,7 @@ set_names               Set names of a vector
 splice                  Splice values at dots collection time
 splice-operator         Splice operator !!!
 stack                   Get properties of the current or caller frame
+stop_input_type         Throw a type mismatch error
 sym                     Create a symbol or list of symbols
 trace_back              Capture a backtrace
 try_fetch               Try an expression with condition handlers

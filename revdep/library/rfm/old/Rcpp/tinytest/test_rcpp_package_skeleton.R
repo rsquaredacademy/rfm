@@ -45,10 +45,10 @@ checkTrue( "foo" %in% list.files(path), "pkg path generated as named" )
 
 ## check the DESCRIPTION
 DESCRIPTION <- as.list( read.dcf( file.path(pkg_path, "DESCRIPTION") )[1,] )
-checkTrue( DESCRIPTION["Author"] == "Boo-Boo Bear",
-          "wrote the Author field in DESCRIPTION" )
-checkTrue( DESCRIPTION["Maintainer"] == "Yogi Bear <yogibear@yogimail.com>",
-          "wrote the Maintainer field in DESCRIPTION")
+checkEqual(gsub("\\n", " ", DESCRIPTION["Authors@R"]),  # need to neutralise a line break
+           'person("Boo-Boo", "Bear", role = c("aut", "cre"), email = "yogibear@yogimail.com")',
+           "wrote the Authors@R field in DESCRIPTION" )
+checkTrue( DESCRIPTION["Date"] == format(Sys.Date()), "uses current date in DESCRIPTION")
 checkTrue( DESCRIPTION["License"] == "An Opensource License",
           "wrote the License field in DESCRIPTION" )
 checkTrue( DESCRIPTION["LinkingTo"] == "Rcpp",
@@ -69,7 +69,7 @@ for (file in grep("RcppExports.R", R_files, invert=TRUE, value=TRUE)) {
     code <- readLines(file)
     fn <- eval(parse(text=paste(code, collapse="\n")))
     fn_name <- gsub(".*/(.*)\\.R$", "\\1", file)
-    checkIdentical(fn, get(fn_name),
+    checkIdentical(fn, base::get(fn_name),
                    sprintf("we parsed the function '%s' correctly", fn_name)
                    )
 }
@@ -86,9 +86,9 @@ owd <- getwd()
 setwd(path)
 R <- shQuote( file.path( R.home( component = "bin" ), "R" ))
 system( paste(R, "CMD build", pkg_path) )
-checkTrue( file.exists("foo_1.0.tar.gz"), "can successfully R CMD build the pkg")
+checkTrue( file.exists("foo_0.0.1.tar.gz"), "can successfully R CMD build the pkg")
 dir.create("templib")
-install.packages("foo_1.0.tar.gz", file.path(path, "templib"), repos=NULL, type="source")
+install.packages("foo_0.0.1.tar.gz", file.path(path, "templib"), repos=NULL, type="source")
 require("foo", file.path(path, "templib"), character.only=TRUE)
 
 
@@ -141,7 +141,7 @@ checkTrue(file.exists( file.path(src_path, "rcpp_module.cpp")),
 
 on.exit(unlink(pkg_path, recursive=TRUE))
 on.exit( setwd(owd), add=TRUE )
-on.exit( unlink( file.path(path, "foo_1.0.tar.gz") ), add=TRUE)
+on.exit( unlink( file.path(path, "foo_0.0.1.tar.gz") ), add=TRUE)
 on.exit( unlink( file.path(path, "templib"), recursive=TRUE), add=TRUE )
 on.exit( unlink(pkg_path, recursive=TRUE), add=TRUE )
 on.exit(unlink(pkg_path, recursive=TRUE), add=TRUE)

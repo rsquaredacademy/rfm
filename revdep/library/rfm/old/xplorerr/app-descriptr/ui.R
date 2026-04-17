@@ -1,6 +1,6 @@
 library(shiny)
 library(shinyBS)
-library(shinythemes)
+library(DT)
 
 shinyUI(
 

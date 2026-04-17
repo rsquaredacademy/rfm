@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head><title>R: Seamless R and C++ Integration</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-<link rel="stylesheet" type="text/css" href="R.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<link rel="stylesheet" type="text/css" href="R.css">
 </head><body><div class="container">
 <h1> Seamless R and C++ Integration
-<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]" />
+<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]">
 </h1>
-<hr/>
+<hr>
 <div style="text-align: center;">
-<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
-<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;Rcpp&rsquo; version 1.0.12</h2>
+<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]"></a>
+<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]"></a>
+</div><h2>Documentation for package &lsquo;Rcpp&rsquo; version 1.1.1-1</h2>
 
-<ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
+<ul><li><a href="../DESCRIPTION" type="text/plain; charset=utf-8">DESCRIPTION file</a>.</li>
 <li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
-<li><a href="../NEWS">Package NEWS</a>.</li>
+<li><a href="../NEWS.Rd">Package NEWS</a>.</li>
 </ul>
 
 <h2>Help Pages</h2>
@@ -39,6 +39,10 @@
 <td>completion</td></tr>
 <tr><td style="width: 25%;"><a href="evalCpp.html">areMacrosDefined</a></td>
 <td>Evaluate a C++ Expression</td></tr>
+<tr><td style="width: 25%;"><a href="asisWeave.html">asisTangle</a></td>
+<td>Process pdf vignettes 'asis'</td></tr>
+<tr><td style="width: 25%;"><a href="asisWeave.html">asisWeave</a></td>
+<td>Process pdf vignettes 'asis'</td></tr>
 <tr><td style="width: 25%;"><a href="CppClass-class.html">C++Class-class</a></td>
 <td>Reflection information for an internal c++ class</td></tr>
 <tr><td style="width: 25%;"><a href="CppConstructor-class.html">C++Constructor-class</a></td>
@@ -53,8 +57,6 @@
 <td>Class "C++OverloadedMethods"</td></tr>
 <tr><td style="width: 25%;"><a href="compileAttributes.html">compileAttributes</a></td>
 <td>Compile Rcpp Attributes for a Package</td></tr>
-<tr><td style="width: 25%;"><a href="compilerCheck.html">compilerCheck</a></td>
-<td>Check for Minimal (g++) Compiler Version</td></tr>
 <tr><td style="width: 25%;"><a href="cppFunction.html">cppFunction</a></td>
 <td>Define an R Function with a C++ Implementation</td></tr>
 <tr><td style="width: 25%;"><a href="demangle.html">demangle</a></td>
@@ -83,8 +85,6 @@
 <td>Load an Rcpp Module into a Package</td></tr>
 <tr><td style="width: 25%;"><a href="setRcppClass.html">loadRcppClass</a></td>
 <td>Create a Class Extending a C++ Class</td></tr>
-<tr><td style="width: 25%;"><a href="loadRcppModules-deprecated.html">loadRcppModules</a></td>
-<td>Loads Rcpp modules on package startup</td></tr>
 <tr><td style="width: 25%;"><a href="Module.html">Module</a></td>
 <td>Retrieves an Rcpp module</td></tr>
 <tr><td style="width: 25%;"><a href="Module-class.html">Module-class</a></td>
@@ -109,8 +109,6 @@
 <td>Create a Class Extending a C++ Class</td></tr>
 <tr><td style="width: 25%;"><a href="RcppLdFlags.html">RcppLdFlags</a></td>
 <td>Deprecated Rcpp Linker Flags</td></tr>
-<tr><td style="width: 25%;"><a href="RcppUnitTests.html">RcppUnitTests</a></td>
-<td>Rcpp : unit tests results</td></tr>
 <tr><td style="width: 25%;"><a href="registerPlugin.html">registerPlugin</a></td>
 <td>Register an inline plugin</td></tr>
 <tr><td style="width: 25%;"><a href="setRcppClass.html">setRcppClass</a></td>

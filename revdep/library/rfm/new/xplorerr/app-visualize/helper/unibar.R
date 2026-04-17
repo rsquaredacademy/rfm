@@ -31,6 +31,3 @@ highbar <- function(data, column, title = '', name = '', horizontal = FALSE) {
   
 }
 
-highbar(mtcars, 'cyl', horizontal = TRUE)
-data <- mtcars
-column <- 'cyl'

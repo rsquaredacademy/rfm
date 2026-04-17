@@ -10,12 +10,16 @@ catch	then
 finally	then
 future_promise	future_promise
 future_promise_queue	future_promise
+hybrid_then	hybrid_then
 is.promise	is.promise
 is.promising	is.promise
+local_ospan_promise_domain	promises-deprecated
+local_otel_promise_domain	otel
 new_promise_domain	with_promise_domain
 pipes	pipes
 promise	promise
 promises	promises-package
+promises-deprecated	promises-deprecated
 promise_all	promise_all
 promise_map	promise_map
 promise_race	promise_all
@@ -26,5 +30,9 @@ reexports	reexports
 reject	resolve
 resolve	resolve
 then	then
+with_ospan_async	promises-deprecated
+with_ospan_promise_domain	promises-deprecated
+with_otel_promise_domain	otel
+with_otel_span	otel
 with_promise_domain	with_promise_domain
 WorkQueue	WorkQueue

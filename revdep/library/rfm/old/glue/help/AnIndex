@@ -1,8 +1,8 @@
+glue-package	glue-package
 as_glue	as_glue
 backtick	quoting
 double_quote	quoting
 glue	glue
-glue-deprecated	glue-deprecated
 glue_col	glue_col
 glue_collapse	glue_collapse
 glue_data	glue

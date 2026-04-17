@@ -13,6 +13,7 @@ library(stringr)
 library(rlang)
 library(ggplot2)
 library(forcats)
+library(DT)
 
 
 shinyServer(function(input, output, session) {

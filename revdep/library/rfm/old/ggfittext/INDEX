@@ -1,0 +1,10 @@
+altitudes               Some craft and their altitudes
+animals                 Some animals and their attributes
+animals_rich            Some animals and their attributes, in rich text
+beverages               The compositions of some espresso-based
+                        beverages
+beverages_rich          The compositions of some espresso-based
+                        beverages, in rich text
+geom_bar_text           A 'ggplot2' geom to fit text inside a box
+gold                    Robert Frost's poem _Nothing Gold Can Stay_
+                        (1923)

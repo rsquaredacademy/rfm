@@ -1,4 +1,5 @@
 httpuv-package	httpuv-package
+as.staticPath	as.staticPath
 decodeURI	encodeURI
 decodeURIComponent	encodeURI
 encodeURI	encodeURI

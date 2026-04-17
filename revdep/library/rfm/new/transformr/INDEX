@@ -1,0 +1,7 @@
+simple_shapes           Some different geometries to play with
+st_normalize            Normalise a geometry to fit inside a unit
+                        square
+tween_path              Transition between path data frames
+tween_polygon           Transition between polygon data.frames
+tween_sf                Transition between data.frames containing sfc
+                        columns

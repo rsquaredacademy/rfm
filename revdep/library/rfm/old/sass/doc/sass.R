@@ -10,7 +10,7 @@ knitr::opts_chunk$set(
 )
 
 ## ----eval=FALSE, ref.label='bs_sass'------------------------------------------
-#  NA
+# NA
 
 ## ----echo = FALSE, out.width='50%'--------------------------------------------
 knitr::include_graphics('my-style.png')

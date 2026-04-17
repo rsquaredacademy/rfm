@@ -6,7 +6,7 @@ output$mult2 <- renderPrint({
   } else if (ncol(num_data) < 3) {
     out <- NULL
   } else {
-    ds_tway_tables(final_split$train)  
+    ds_auto_cross_table(final_split$train)  
   }
 })
 

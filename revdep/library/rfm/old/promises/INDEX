@@ -1,4 +1,5 @@
 future_promise_queue    'future' promise
+hybrid_then             Asynchronous or synchronous 'then()'
 is.promise              Coerce to a promise
 pipes                   Promise pipe operators
 promise                 Create a new promise object
@@ -7,4 +8,5 @@ promise_map             Promise-aware lapply/map
 promise_reduce          Promise-aware version of Reduce
 promise_resolve         Create a resolved or rejected promise
 then                    Access the results of a promise
+with_otel_span          OpenTelemetry integration
 with_promise_domain     Promise domains

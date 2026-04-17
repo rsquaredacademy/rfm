@@ -48,8 +48,9 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -355,7 +356,8 @@ precision floating point number”</a>, see also
 <code>double()</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(vctrs)</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(rlang)</span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(zeallot)</span></code></pre></div>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co">#&gt; Warning: package &#39;rlang&#39; was built under R version 4.5.2</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(zeallot)</span></code></pre></div>
 <p>This vignette works through five big topics:</p>
 <ul>
 <li>The basics of creating a new vector class with vctrs.</li>
@@ -656,7 +658,7 @@ exception is when you use <code>c()</code> with a base R class:</p>
 <span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">percent</span>(<span class="fl">0.5</span>), <span class="dv">1</span>)</span>
 <span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a><span class="co">#&gt; [1] 0.5 1.0</span></span>
 <span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">percent</span>(<span class="fl">0.5</span>), <span class="fu">factor</span>(<span class="dv">1</span>))</span>
-<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a><span class="co">#&gt; Error in `vec_c()`:</span></span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a><span class="co">#&gt; Error in `vec_c()` at vctrs/R/type-vctr.R:178:3:</span></span>
 <span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a><span class="co">#&gt; ! Can&#39;t combine `..1` &lt;vctrs_percent&gt; and `..2` &lt;factor&lt;25c7e&gt;&gt;.</span></span>
 <span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a></span>
 <span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a><span class="co"># Incorrect</span></span>
@@ -953,11 +955,11 @@ and <code>fields()</code>:</p>
 new rational vector <code>x</code> yet. Printing causes an error:</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a>x</span>
 <span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a><span class="co">#&gt; &lt;vctrs_rational[10]&gt;</span></span>
-<span id="cb38-3"><a href="#cb38-3" tabindex="-1"></a><span class="co">#&gt; Error in `format()`:</span></span>
+<span id="cb38-3"><a href="#cb38-3" tabindex="-1"></a><span class="co">#&gt; Error in `format()` at vctrs/R/print-str.R:45:3:</span></span>
 <span id="cb38-4"><a href="#cb38-4" tabindex="-1"></a><span class="co">#&gt; ! `format.vctrs_rational()` not implemented.</span></span>
 <span id="cb38-5"><a href="#cb38-5" tabindex="-1"></a></span>
 <span id="cb38-6"><a href="#cb38-6" tabindex="-1"></a><span class="fu">str</span>(x)</span>
-<span id="cb38-7"><a href="#cb38-7" tabindex="-1"></a><span class="co">#&gt; Error in `format()`:</span></span>
+<span id="cb38-7"><a href="#cb38-7" tabindex="-1"></a><span class="co">#&gt; Error in `format()` at vctrs/R/print-str.R:126:3:</span></span>
 <span id="cb38-8"><a href="#cb38-8" tabindex="-1"></a><span class="co">#&gt; ! `format.vctrs_rational()` not implemented.</span></span></code></pre></div>
 <p>This is because we haven’t defined how our class can be printed from
 the underlying data. Note that if you want to look under the hood during
@@ -1424,13 +1426,13 @@ mathematic operations work:</p>
 <span id="cb65-6"><a href="#cb65-6" tabindex="-1"></a><span class="co">#&gt; [1] 5.5 m</span></span></code></pre></div>
 <p>But we can’t do arithmetic:</p>
 <div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" tabindex="-1"></a>x <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb66-2"><a href="#cb66-2" tabindex="-1"></a><span class="co">#&gt; Error in `vec_arith()`:</span></span>
+<span id="cb66-2"><a href="#cb66-2" tabindex="-1"></a><span class="co">#&gt; Error in `vec_arith()` at vctrs/R/type-vctr.R:657:5:</span></span>
 <span id="cb66-3"><a href="#cb66-3" tabindex="-1"></a><span class="co">#&gt; ! &lt;vctrs_meter&gt; + &lt;double&gt; is not permitted</span></span>
 <span id="cb66-4"><a href="#cb66-4" tabindex="-1"></a><span class="fu">meter</span>(<span class="dv">10</span>) <span class="sc">+</span> <span class="fu">meter</span>(<span class="dv">1</span>)</span>
-<span id="cb66-5"><a href="#cb66-5" tabindex="-1"></a><span class="co">#&gt; Error in `vec_arith()`:</span></span>
+<span id="cb66-5"><a href="#cb66-5" tabindex="-1"></a><span class="co">#&gt; Error in `vec_arith()` at vctrs/R/type-vctr.R:657:5:</span></span>
 <span id="cb66-6"><a href="#cb66-6" tabindex="-1"></a><span class="co">#&gt; ! &lt;vctrs_meter&gt; + &lt;vctrs_meter&gt; is not permitted</span></span>
 <span id="cb66-7"><a href="#cb66-7" tabindex="-1"></a><span class="fu">meter</span>(<span class="dv">10</span>) <span class="sc">*</span> <span class="dv">3</span></span>
-<span id="cb66-8"><a href="#cb66-8" tabindex="-1"></a><span class="co">#&gt; Error in `vec_arith()`:</span></span>
+<span id="cb66-8"><a href="#cb66-8" tabindex="-1"></a><span class="co">#&gt; Error in `vec_arith()` at vctrs/R/type-vctr.R:672:3:</span></span>
 <span id="cb66-9"><a href="#cb66-9" tabindex="-1"></a><span class="co">#&gt; ! &lt;vctrs_meter&gt; * &lt;double&gt; is not permitted</span></span></code></pre></div>
 <p>To allow these infix functions to work, we’ll need to provide
 <code>vec_arith()</code> generic. But before we do that, let’s think
@@ -1476,7 +1478,7 @@ message for everything else.</p>
 <span id="cb68-17"><a href="#cb68-17" tabindex="-1"></a><span class="fu">meter</span>(<span class="dv">10</span>) <span class="sc">/</span> <span class="fu">meter</span>(<span class="dv">1</span>)</span>
 <span id="cb68-18"><a href="#cb68-18" tabindex="-1"></a><span class="co">#&gt; [1] 10</span></span>
 <span id="cb68-19"><a href="#cb68-19" tabindex="-1"></a><span class="fu">meter</span>(<span class="dv">10</span>) <span class="sc">*</span> <span class="fu">meter</span>(<span class="dv">1</span>)</span>
-<span id="cb68-20"><a href="#cb68-20" tabindex="-1"></a><span class="co">#&gt; Error in `vec_arith()`:</span></span>
+<span id="cb68-20"><a href="#cb68-20" tabindex="-1"></a><span class="co">#&gt; Error in `vec_arith()` at vctrs/R/type-vctr.R:672:3:</span></span>
 <span id="cb68-21"><a href="#cb68-21" tabindex="-1"></a><span class="co">#&gt; ! &lt;vctrs_meter&gt; * &lt;vctrs_meter&gt; is not permitted</span></span></code></pre></div>
 <p>Next we write the pair of methods for arithmetic with a meter and a
 number. These are almost identical, but while <code>meter(10) / 2</code>
@@ -1513,10 +1515,10 @@ operands, we dispatch over <code>numeric</code> here instead of
 <span id="cb69-27"><a href="#cb69-27" tabindex="-1"></a><span class="co">#&gt; &lt;vctrs_meter[1]&gt;</span></span>
 <span id="cb69-28"><a href="#cb69-28" tabindex="-1"></a><span class="co">#&gt; [1] 2 m</span></span>
 <span id="cb69-29"><a href="#cb69-29" tabindex="-1"></a><span class="dv">10</span> <span class="sc">/</span> <span class="fu">meter</span>(<span class="dv">20</span>)</span>
-<span id="cb69-30"><a href="#cb69-30" tabindex="-1"></a><span class="co">#&gt; Error in `vec_arith()`:</span></span>
+<span id="cb69-30"><a href="#cb69-30" tabindex="-1"></a><span class="co">#&gt; Error in `vec_arith()` at vctrs/R/type-vctr.R:677:3:</span></span>
 <span id="cb69-31"><a href="#cb69-31" tabindex="-1"></a><span class="co">#&gt; ! &lt;double&gt; / &lt;vctrs_meter&gt; is not permitted</span></span>
 <span id="cb69-32"><a href="#cb69-32" tabindex="-1"></a><span class="fu">meter</span>(<span class="dv">20</span>) <span class="sc">+</span> <span class="dv">10</span></span>
-<span id="cb69-33"><a href="#cb69-33" tabindex="-1"></a><span class="co">#&gt; Error in `vec_arith()`:</span></span>
+<span id="cb69-33"><a href="#cb69-33" tabindex="-1"></a><span class="co">#&gt; Error in `vec_arith()` at vctrs/R/type-vctr.R:657:5:</span></span>
 <span id="cb69-34"><a href="#cb69-34" tabindex="-1"></a><span class="co">#&gt; ! &lt;vctrs_meter&gt; + &lt;double&gt; is not permitted</span></span></code></pre></div>
 <p>For completeness, we also need
 <code>vec_arith.vctrs_meter.MISSING</code> for the unary <code>+</code>
@@ -1745,7 +1747,7 @@ values.</p></li>
 method. Customised printing is often a primary motivation for creating
 your own S3 class in the first place, so this will alert you to
 unexpected changes in your printed output. Read more about
-<code>verify_output()</code> in the <a href="https://www.tidyverse.org/blog/2019/11/testthat-2-3-0/">testthat
+<code>verify_output()</code> in the <a href="https://tidyverse.org/blog/2019/11/testthat-2-3-0/">testthat
 v2.3.0 blog post</a>; it’s an example of a so-called <a href="https://ro-che.info/articles/2017-12-04-golden-tests">golden
 test</a>.</p></li>
 <li><p>Check for method symmetry; use <code>expect_s3_class()</code>,

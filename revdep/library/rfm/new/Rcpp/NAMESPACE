@@ -16,7 +16,6 @@ exportMethods(prompt, show, .DollarNames, initialize, "formals<-")
 export(Module,
        Rcpp.package.skeleton,
        populate,
-       loadRcppModules,  # deprecated since Rcpp 0.12.5 released May 2016
        setRcppClass,
        loadRcppClass,
        loadModule,
@@ -33,8 +32,7 @@ export(Module,
        cpp_object_initializer,
        cpp_object_dummy,
        Rcpp.plugin.maker,
-       getRcppVersion
-       )
+       getRcppVersion)
 S3method(print, bytes)
 S3method(format, Rcpp_stack_trace)
 S3method(str, Rcpp_stack_trace)

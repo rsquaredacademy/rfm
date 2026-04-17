@@ -1,9 +1,8 @@
-// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; indent-tabs-mode: nil; -*-
-//
+
 // Environment.h: Rcpp R/C++ interface class library -- access R environments
 //
 // Copyright (C) 2009 - 2013  Dirk Eddelbuettel and Romain Francois
-// Copyright (C) 2014 - 2020  Dirk Eddelbuettel, Romain Francois and Kevin Ushey
+// Copyright (C) 2014 - 2025  Dirk Eddelbuettel, Romain Francois and Kevin Ushey
 //
 // This file is part of Rcpp.
 //
@@ -84,12 +83,7 @@ namespace Rcpp{
          */
         SEXP ls(bool all) const {
             SEXP env = Storage::get__() ;
-            if( is_user_database() ){
-                R_ObjectTable *tb = (R_ObjectTable*) R_ExternalPtrAddr(HASHTAB(env));
-                return tb->objects(tb) ;
-            } else {
-                return R_lsInternal( env, all ? TRUE : FALSE ) ;
-            }
+            return R_lsInternal3(env, all ? TRUE : FALSE, TRUE);
             return R_NilValue ;
         }
 
@@ -101,17 +95,8 @@ namespace Rcpp{
          * @return a SEXP (possibly R_NilValue)
          */
         SEXP get(const std::string& name) const {
-            SEXP env = Storage::get__() ;
-            SEXP nameSym = Rf_install(name.c_str());
-            SEXP res = Rf_findVarInFrame( env, nameSym ) ;
-
-            if( res == R_UnboundValue ) return R_NilValue ;
-
-            /* We need to evaluate if it is a promise */
-            if( TYPEOF(res) == PROMSXP){
-                res = internal::Rcpp_eval_impl( res, env ) ;
-            }
-            return res ;
+            Symbol nameSym = Rf_install(name.c_str());
+            return get(nameSym);
         }
 
         /**
@@ -123,14 +108,14 @@ namespace Rcpp{
         */
         SEXP get(Symbol name) const {
             SEXP env = Storage::get__() ;
+#if R_VERSION < R_Version(4,5,0)
             SEXP res = Rf_findVarInFrame( env, name ) ;
-
-            if( res == R_UnboundValue ) return R_NilValue ;
-
-            /* We need to evaluate if it is a promise */
-            if( TYPEOF(res) == PROMSXP){
-                res = internal::Rcpp_eval_impl( res, env ) ;
-            }
+            if (res == R_UnboundValue) return R_NilValue;
+            if (TYPEOF(res) == PROMSXP)
+                res = internal::Rcpp_eval_impl(res, env);
+#else
+            SEXP res = R_getVarEx(name, env, FALSE, R_NilValue);
+#endif
             return res ;
         }
 
@@ -143,17 +128,8 @@ namespace Rcpp{
          *
          */
         SEXP find( const std::string& name) const{
-            SEXP env = Storage::get__() ;
-            SEXP nameSym = Rf_install(name.c_str());
-            SEXP res = Rf_findVar( nameSym, env ) ;
-
-            if( res == R_UnboundValue ) throw binding_not_found(name) ;
-
-            /* We need to evaluate if it is a promise */
-            if( TYPEOF(res) == PROMSXP){
-                res = internal::Rcpp_eval_impl( res, env ) ;
-            }
-            return res ;
+            Symbol nameSym = Rf_install(name.c_str());
+            return find(nameSym);
         }
 
         /**
@@ -164,18 +140,15 @@ namespace Rcpp{
         */
         SEXP find(Symbol name) const{
             SEXP env = Storage::get__() ;
+#if R_VERSION < R_Version(4,5,0)
             SEXP res = Rf_findVar( name, env ) ;
-
-            if( res == R_UnboundValue ) {
-                // Pass on the const char* to the RCPP_EXCEPTION_CLASS's
-                // const std::string& requirement
-                throw binding_not_found(name.c_str()) ;
-            }
-
-            /* We need to evaluate if it is a promise */
-            if( TYPEOF(res) == PROMSXP){
-                res = internal::Rcpp_eval_impl( res, env ) ;
-            }
+            if (res == R_UnboundValue) throw binding_not_found(name.c_str());
+            if (TYPEOF(res) == PROMSXP)
+                res = internal::Rcpp_eval_impl(res, env);
+#else
+            SEXP res = R_getVarEx(name, env, TRUE, NULL);
+            if (res == NULL) throw binding_not_found(name.c_str());
+#endif
             return res ;
         }
 
@@ -189,8 +162,13 @@ namespace Rcpp{
          */
         bool exists( const std::string& name ) const {
             SEXP nameSym = Rf_install(name.c_str());
+#if R_VERSION < R_Version(4,5,0)
             SEXP res = Rf_findVarInFrame( Storage::get__() , nameSym  ) ;
-            return res != R_UnboundValue ;
+            return res != R_UnboundValue;
+#else
+            SEXP res = R_getVarEx(nameSym, Storage::get__(), FALSE, NULL);
+            return res != NULL;
+#endif
         }
 
         /**
@@ -319,14 +297,6 @@ namespace Rcpp{
         }
 
         /**
-         * Indicates if this is a user defined database.
-         */
-        bool is_user_database() const {
-            SEXP env = Storage::get__() ;
-            return OBJECT(env) && Rf_inherits(env, "UserDefinedDatabase") ;
-        }
-
-        /**
          * @return the global environment. See ?globalenv
          */
         static Environment_Impl global_env(){
@@ -385,7 +355,11 @@ namespace Rcpp{
          * The parent environment of this environment
          */
         Environment_Impl parent() const {
+#if R_VERSION < R_Version(4,5,0)
             return Environment_Impl( ENCLOS(Storage::get__()) ) ;
+#else
+            return Environment_Impl(R_ParentEnv(Storage::get__()));
+#endif
         }
 
         /**

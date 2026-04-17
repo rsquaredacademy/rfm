@@ -1,26 +1,25 @@
 * using log directory 'F:/R/Packages/statistics/rfm/revdep/checks/xplorerr/old/xplorerr.Rcheck'
-* using R version 4.3.2 (2023-10-31 ucrt)
-* using platform: x86_64-w64-mingw32 (64-bit)
+* using R version 4.5.2 (2025-10-31 ucrt)
+* using platform: x86_64-w64-mingw32
 * R was compiled by
-    gcc.exe (GCC) 12.3.0
-    GNU Fortran (GCC) 12.3.0
+    gcc.exe (GCC) 14.3.0
+    GNU Fortran (GCC) 14.3.0
 * running under: Windows 10 x64 (build 19045)
 * using session charset: UTF-8
 * using options '--no-manual --no-build-vignettes'
 * checking for file 'xplorerr/DESCRIPTION' ... OK
 * checking extension type ... Package
-* this is package 'xplorerr' version '0.1.2'
+* this is package 'xplorerr' version '0.2.0'
 * package encoding: UTF-8
 * checking package namespace information ... OK
-* checking package dependencies ... NOTE
-Package suggested but not available for checking: 'rbokeh'
+* checking package dependencies ... OK
 * checking if this is a source package ... OK
 * checking if there is a namespace ... OK
 * checking for executable files ... OK
 * checking for hidden files and directories ... OK
 * checking for portable file names ... OK
 * checking whether package 'xplorerr' can be installed ... OK
-* used C++ compiler: 'G__~1.EXE (GCC) 12.3.0'
+* used C++ compiler: 'G__~1.EXE (GCC) 14.3.0'
 * checking installed package size ... OK
 * checking package directory ... OK
 * checking DESCRIPTION meta-information ... OK
@@ -28,7 +27,7 @@ Package suggested but not available for checking: 'rbokeh'
 * checking for left-over files ... OK
 * checking index information ... OK
 * checking package subdirectories ... OK
-* checking R files for non-ASCII characters ... OK
+* checking code files for non-ASCII characters ... OK
 * checking R files for syntax errors ... OK
 * checking whether the package can be loaded ... OK
 * checking whether the package can be loaded with stated dependencies ... OK
@@ -36,7 +35,7 @@ Package suggested but not available for checking: 'rbokeh'
 * checking whether the namespace can be loaded with stated dependencies ... OK
 * checking whether the namespace can be unloaded cleanly ... OK
 * checking loading without being on the library search path ... OK
-* checking startup messages can be suppressed ... OK
+* checking whether startup messages can be suppressed ... OK
 * checking dependencies in R code ... OK
 * checking S3 generic/method consistency ... OK
 * checking replacement functions ... OK
@@ -58,4 +57,4 @@ Package suggested but not available for checking: 'rbokeh'
 * checking compiled code ... OK
 * checking examples ... OK
 * DONE
-Status: 1 NOTE
+Status: OK

@@ -204,7 +204,7 @@ print.xtableList(xList, colnames.format = "multiple",
                  sanitize.rownames.function = italic,
                  sanitize.colnames.function = large,
                  sanitize.subheadings.function = bold,
-                 sanitize.message.function = red,                 
+                 sanitize.message.function = red,
                  booktabs = TRUE)
 @ %def
 

@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head><title>R: Vector Helpers</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-<link rel="stylesheet" type="text/css" href="R.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<link rel="stylesheet" type="text/css" href="R.css">
 </head><body><div class="container">
 <h1> Vector Helpers
-<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]" />
+<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]">
 </h1>
-<hr/>
+<hr>
 <div style="text-align: center;">
-<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
-<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;vctrs&rsquo; version 0.6.5</h2>
+<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]"></a>
+<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]"></a>
+</div><h2>Documentation for package &lsquo;vctrs&rsquo; version 0.7.3</h2>
 
-<ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
+<ul><li><a href="../DESCRIPTION" type="text/plain; charset=utf-8">DESCRIPTION file</a>.</li>
 <li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
-<li><a href="../NEWS">Package NEWS</a>.</li>
+<li><a href="../NEWS.md">Package NEWS</a>.</li>
 </ul>
 
 <h2>Help Pages</h2>
@@ -32,6 +32,7 @@
 <a href="#M">M</a>
 <a href="#N">N</a>
 <a href="#O">O</a>
+<a href="#P">P</a>
 <a href="#R">R</a>
 <a href="#T">T</a>
 <a href="#V">V</a>
@@ -43,7 +44,7 @@
 
 <table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="list_of.html">as_list_of</a></td>
-<td>'list_of' S3 class for homogenous lists</td></tr>
+<td>Construct a list of homogenous vectors</td></tr>
 </table>
 
 <h2><a id="D">-- D --</a></h2>
@@ -68,6 +69,8 @@
 <td>FAQ - Error/Warning: Some attributes are incompatible</td></tr>
 <tr><td style="width: 25%;"><a href="faq-error-scalar-type.html">faq-error-scalar-type</a></td>
 <td>FAQ - Error: Input must be a vector</td></tr>
+<tr><td style="width: 25%;"><a href="faq-error-scalar-type.html">faq_error_scalar_type</a></td>
+<td>FAQ - Error: Input must be a vector</td></tr>
 </table>
 
 <h2><a id="H">-- H --</a></h2>
@@ -79,6 +82,8 @@
 <td>FAQ - How to implement ptype2 and cast methods? (Data frames)</td></tr>
 <tr><td style="width: 25%;"><a href="howto-faq-fix-scalar-type-error.html">howto-faq-fix-scalar-type-error</a></td>
 <td>FAQ - Why isn't my class treated as a vector?</td></tr>
+<tr><td style="width: 25%;"><a href="howto-faq-fix-scalar-type-error.html">howto_faq_fix_scalar_type_error</a></td>
+<td>FAQ - Why isn't my class treated as a vector?</td></tr>
 </table>
 
 <h2><a id="I">-- I --</a></h2>
@@ -89,28 +94,40 @@
 <tr><td style="width: 25%;"><a href="internal-faq-ptype2-identity.html">internal-faq-ptype2-identity</a></td>
 <td>Internal FAQ - 'vec_ptype2()', 'NULL', and unspecified vectors</td></tr>
 <tr><td style="width: 25%;"><a href="list_of.html">is_list_of</a></td>
-<td>'list_of' S3 class for homogenous lists</td></tr>
+<td>Construct a list of homogenous vectors</td></tr>
 </table>
 
 <h2><a id="L">-- L --</a></h2>
 
 <table style="width: 100%;">
+<tr><td style="width: 25%;"><a href="list-of-attributes.html">list-of-attributes</a></td>
+<td>'list_of' attributes</td></tr>
+<tr><td style="width: 25%;"><a href="obj_is_list.html">list_all_recyclable</a></td>
+<td>List checks</td></tr>
 <tr><td style="width: 25%;"><a href="obj_is_list.html">list_all_size</a></td>
 <td>List checks</td></tr>
 <tr><td style="width: 25%;"><a href="obj_is_list.html">list_all_vectors</a></td>
+<td>List checks</td></tr>
+<tr><td style="width: 25%;"><a href="obj_is_list.html">list_check_all_recyclable</a></td>
 <td>List checks</td></tr>
 <tr><td style="width: 25%;"><a href="obj_is_list.html">list_check_all_size</a></td>
 <td>List checks</td></tr>
 <tr><td style="width: 25%;"><a href="obj_is_list.html">list_check_all_vectors</a></td>
 <td>List checks</td></tr>
+<tr><td style="width: 25%;"><a href="list_combine.html">list_combine</a></td>
+<td>Combine a list of vectors</td></tr>
 <tr><td style="width: 25%;"><a href="list_drop_empty.html">list_drop_empty</a></td>
 <td>Drop empty elements from a list</td></tr>
 <tr><td style="width: 25%;"><a href="list_of.html">list_of</a></td>
-<td>'list_of' S3 class for homogenous lists</td></tr>
+<td>Construct a list of homogenous vectors</td></tr>
+<tr><td style="width: 25%;"><a href="list-of-attributes.html">list_of_ptype</a></td>
+<td>'list_of' attributes</td></tr>
+<tr><td style="width: 25%;"><a href="list-of-attributes.html">list_of_size</a></td>
+<td>'list_of' attributes</td></tr>
+<tr><td style="width: 25%;"><a href="list_of_transpose.html">list_of_transpose</a></td>
+<td>Transpose a list of homogenous vectors</td></tr>
 <tr><td style="width: 25%;"><a href="vec_size.html">list_sizes</a></td>
 <td>Number of observations</td></tr>
-<tr><td style="width: 25%;"><a href="vec_chop.html">list_unchop</a></td>
-<td>Chopping</td></tr>
 </table>
 
 <h2><a id="M">-- M --</a></h2>
@@ -142,6 +159,13 @@
 <td>Vector checks</td></tr>
 </table>
 
+<h2><a id="P">-- P --</a></h2>
+
+<table style="width: 100%;">
+<tr><td style="width: 25%;"><a href="parallel-operators.html">parallel-operators</a></td>
+<td>Parallel 'any()' and 'all()'</td></tr>
+</table>
+
 <h2><a id="R">-- R --</a></h2>
 
 <table style="width: 100%;">
@@ -167,6 +191,10 @@
 <h2><a id="V">-- V --</a></h2>
 
 <table style="width: 100%;">
+<tr><td style="width: 25%;"><a href="vec-case-and-replace.html">vec-case-and-replace</a></td>
+<td>Recode and replace using logical conditions</td></tr>
+<tr><td style="width: 25%;"><a href="vec-recode-and-replace.html">vec-recode-and-replace</a></td>
+<td>Recode and replace values</td></tr>
 <tr><td style="width: 25%;"><a href="vec-rep.html">vec-rep</a></td>
 <td>Repeat a vector</td></tr>
 <tr><td style="width: 25%;"><a href="vec-set.html">vec-set</a></td>
@@ -183,6 +211,8 @@
 <td>Combine many data frames into one data frame</td></tr>
 <tr><td style="width: 25%;"><a href="vec_c.html">vec_c</a></td>
 <td>Combine many vectors into one vector</td></tr>
+<tr><td style="width: 25%;"><a href="vec-case-and-replace.html">vec_case_when</a></td>
+<td>Recode and replace using logical conditions</td></tr>
 <tr><td style="width: 25%;"><a href="vec_cast.html">vec_cast</a></td>
 <td>Cast a vector to a specified type</td></tr>
 <tr><td style="width: 25%;"><a href="vec_cast.html">vec_cast.character</a></td>
@@ -200,11 +230,13 @@
 <tr><td style="width: 25%;"><a href="vec_cast.html">vec_cast.raw</a></td>
 <td>Cast a vector to a specified type</td></tr>
 <tr><td style="width: 25%;"><a href="list_of.html">vec_cast.vctrs_list_of</a></td>
-<td>'list_of' S3 class for homogenous lists</td></tr>
+<td>Construct a list of homogenous vectors</td></tr>
 <tr><td style="width: 25%;"><a href="vec_cast.html">vec_cast_common</a></td>
 <td>Cast a vector to a specified type</td></tr>
 <tr><td style="width: 25%;"><a href="vec_bind.html">vec_cbind</a></td>
 <td>Combine many data frames into one data frame</td></tr>
+<tr><td style="width: 25%;"><a href="vector-checks.html">vec_check_recyclable</a></td>
+<td>Vector checks</td></tr>
 <tr><td style="width: 25%;"><a href="vector-checks.html">vec_check_size</a></td>
 <td>Vector checks</td></tr>
 <tr><td style="width: 25%;"><a href="vec_chop.html">vec_chop</a></td>
@@ -233,6 +265,8 @@
 <td>Fill in missing values with the previous or following value</td></tr>
 <tr><td style="width: 25%;"><a href="runs.html">vec_identify_runs</a></td>
 <td>Runs</td></tr>
+<tr><td style="width: 25%;"><a href="vec_if_else.html">vec_if_else</a></td>
+<td>Vectorized if-else</td></tr>
 <tr><td style="width: 25%;"><a href="vec_match.html">vec_in</a></td>
 <td>Find matching observations across vectors</td></tr>
 <tr><td style="width: 25%;"><a href="vec_init.html">vec_init</a></td>
@@ -253,6 +287,10 @@
 <td>Get or set the names of a vector</td></tr>
 <tr><td style="width: 25%;"><a href="vec_order.html">vec_order</a></td>
 <td>Order and sort vectors</td></tr>
+<tr><td style="width: 25%;"><a href="parallel-operators.html">vec_pall</a></td>
+<td>Parallel 'any()' and 'all()'</td></tr>
+<tr><td style="width: 25%;"><a href="parallel-operators.html">vec_pany</a></td>
+<td>Parallel 'any()' and 'all()'</td></tr>
 <tr><td style="width: 25%;"><a href="vec_ptype.html">vec_ptype</a></td>
 <td>Find the prototype of a set of vectors</td></tr>
 <tr><td style="width: 25%;"><a href="vec_ptype2.html">vec_ptype2</a></td>
@@ -272,7 +310,7 @@
 <tr><td style="width: 25%;"><a href="vec_ptype2.html">vec_ptype2.raw</a></td>
 <td>Find the common type for a pair of vectors</td></tr>
 <tr><td style="width: 25%;"><a href="list_of.html">vec_ptype2.vctrs_list_of</a></td>
-<td>'list_of' S3 class for homogenous lists</td></tr>
+<td>Construct a list of homogenous vectors</td></tr>
 <tr><td style="width: 25%;"><a href="vec_ptype.html">vec_ptype_common</a></td>
 <td>Find the prototype of a set of vectors</td></tr>
 <tr><td style="width: 25%;"><a href="vec_ptype.html">vec_ptype_show</a></td>
@@ -281,12 +319,18 @@
 <td>Compute ranks</td></tr>
 <tr><td style="width: 25%;"><a href="vec_bind.html">vec_rbind</a></td>
 <td>Combine many data frames into one data frame</td></tr>
+<tr><td style="width: 25%;"><a href="vec-recode-and-replace.html">vec_recode_values</a></td>
+<td>Recode and replace values</td></tr>
 <tr><td style="width: 25%;"><a href="vec_recycle.html">vec_recycle</a></td>
 <td>Vector recycling</td></tr>
 <tr><td style="width: 25%;"><a href="vec_recycle.html">vec_recycle_common</a></td>
 <td>Vector recycling</td></tr>
 <tr><td style="width: 25%;"><a href="vec-rep.html">vec_rep</a></td>
 <td>Repeat a vector</td></tr>
+<tr><td style="width: 25%;"><a href="vec-recode-and-replace.html">vec_replace_values</a></td>
+<td>Recode and replace values</td></tr>
+<tr><td style="width: 25%;"><a href="vec-case-and-replace.html">vec_replace_when</a></td>
+<td>Recode and replace using logical conditions</td></tr>
 <tr><td style="width: 25%;"><a href="vec-rep.html">vec_rep_each</a></td>
 <td>Repeat a vector</td></tr>
 <tr><td style="width: 25%;"><a href="runs.html">vec_run_sizes</a></td>

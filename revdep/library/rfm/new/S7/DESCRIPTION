@@ -1,0 +1,58 @@
+Package: S7
+Title: An Object Oriented System Meant to Become a Successor to S3 and
+        S4
+Version: 0.2.1
+Authors@R: c(
+    person("Object-Oriented Programming Working Group", role = "cph"),
+    person("Davis", "Vaughan", role = "aut"),
+    person("Jim", "Hester", role = "aut",
+           comment = c(ORCID = "0000-0002-2739-7082")),
+    person("Tomasz", "Kalinowski", role = "aut"),
+    person("Will", "Landau", role = "aut"),
+    person("Michael", "Lawrence", role = "aut"),
+    person("Martin", "Maechler", role = "aut",
+           comment = c(ORCID = "0000-0002-8685-9910")),
+    person("Luke", "Tierney", role = "aut"),
+    person("Hadley", "Wickham", , "hadley@posit.co", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0003-4757-117X"))
+  )
+Description: A new object oriented programming system designed to be a
+    successor to S3 and S4. It includes formal class, generic, and method
+    specification, and a limited form of multiple dispatch. It has been
+    designed and implemented collaboratively by the R Consortium
+    Object-Oriented Programming Working Group, which includes
+    representatives from R-Core, 'Bioconductor', 'Posit'/'tidyverse', and
+    the wider R community.
+License: MIT + file LICENSE
+URL: https://rconsortium.github.io/S7/,
+        https://github.com/RConsortium/S7
+BugReports: https://github.com/RConsortium/S7/issues
+Depends: R (>= 3.5.0)
+Imports: utils
+Suggests: bench, callr, covr, knitr, methods, rmarkdown, testthat (>=
+        3.2.0), tibble
+VignetteBuilder: knitr
+Config/build/compilation-database: true
+Config/Needs/website: sloop
+Config/testthat/edition: 3
+Config/testthat/parallel: TRUE
+Config/testthat/start-first: external-generic
+Encoding: UTF-8
+RoxygenNote: 7.3.3
+NeedsCompilation: yes
+Packaged: 2025-11-14 13:45:25 UTC; hadleywickham
+Author: Object-Oriented Programming Working Group [cph],
+  Davis Vaughan [aut],
+  Jim Hester [aut] (ORCID: <https://orcid.org/0000-0002-2739-7082>),
+  Tomasz Kalinowski [aut],
+  Will Landau [aut],
+  Michael Lawrence [aut],
+  Martin Maechler [aut] (ORCID: <https://orcid.org/0000-0002-8685-9910>),
+  Luke Tierney [aut],
+  Hadley Wickham [aut, cre] (ORCID:
+    <https://orcid.org/0000-0003-4757-117X>)
+Maintainer: Hadley Wickham <hadley@posit.co>
+Repository: CRAN
+Date/Publication: 2025-11-14 19:50:02 UTC
+Built: R 4.5.3; x86_64-w64-mingw32; 2026-04-14 01:27:54 UTC; windows
+Archs: x64

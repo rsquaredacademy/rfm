@@ -2,7 +2,7 @@
 //
 // DataFrame.h: Rcpp R/C++ interface class library -- data frames
 //
-// Copyright (C) 2010 - 2021  Dirk Eddelbuettel and Romain Francois
+// Copyright (C) 2010 - 2025  Dirk Eddelbuettel and Romain Francois
 //
 // This file is part of Rcpp.
 //
@@ -61,29 +61,17 @@ namespace Rcpp{
         }
 
         // By definition, the number of rows in a data.frame is contained
-        // in its row.names attribute. If it has row names of the form 1:n,
-        // they will be stored as {NA_INTEGER, -<nrow>}. Unfortunately,
-        // getAttrib(df, R_RowNamesSymbol) will force an expansion of that
-        // compact form thereby allocating a huge vector when we just want
-        // the row.names. Hence this workaround.
-        inline int nrow() const {
-            SEXP rn = R_NilValue ;
-            SEXP att = ATTRIB( Parent::get__() )  ;
-            while( att != R_NilValue ){
-                if( TAG(att) == R_RowNamesSymbol ) {
-                    rn = CAR(att) ;
-                    break ;
-                }
-                att = CDR(att) ;
-            }
-            if (Rf_isNull(rn))
-                return 0;
-            if (TYPEOF(rn) == INTSXP && LENGTH(rn) == 2 && INTEGER(rn)[0] == NA_INTEGER)
-                return std::abs(INTEGER(rn)[1]);
-            return LENGTH(rn);
+        // in its row.names attribute. Since R 3.5.0 this is returned as a
+        // compact sequence from which we can just take the (x)length
+        // But as this makes an allocation an even simpler check on length as
+        // discussed in #1430 is also possible and preferable. We also switch
+        // to returning R_xlen_t which as upcast from int is safe
+        inline R_xlen_t nrow() const {
+            Shield<SEXP> rn{Rf_getAttrib(Parent::get__(), R_RowNamesSymbol)};
+            return Rf_xlength(rn);
         }
 
-	template <typename T>
+        template <typename T>
         void push_back( const T& object){
             Parent::push_back(object);
             set_type_after_push();
@@ -108,8 +96,8 @@ namespace Rcpp{
         }
 
         // Offer multiple variants to accomodate both old interface here and signatures in other classes
-        inline int nrows() const { return DataFrame_Impl::nrow(); }
-        inline int rows()  const { return DataFrame_Impl::nrow(); }
+        inline R_xlen_t nrows() const { return DataFrame_Impl::nrow(); }
+        inline R_xlen_t rows()  const { return DataFrame_Impl::nrow(); }
 
         inline R_xlen_t ncol()  const { return DataFrame_Impl::length(); }
         inline R_xlen_t cols()  const { return DataFrame_Impl::length(); }
@@ -117,8 +105,10 @@ namespace Rcpp{
         static DataFrame_Impl create(){
             return DataFrame_Impl() ;
         }
-
-        #include <Rcpp/generated/DataFrame_generated.h>
+        template <typename... T>
+        static DataFrame_Impl create(const T&... args) {
+            return DataFrame_Impl::from_list(Parent::create(args...));
+        }
 
     private:
         void set__(SEXP x){
@@ -131,7 +121,7 @@ namespace Rcpp{
         }
 
         void set_type_after_push(){
-            int max_rows = 0;
+            R_xlen_t max_rows = 0;
             bool invalid_column_size = false;
             List::iterator it;
             // Get the maximum number of rows

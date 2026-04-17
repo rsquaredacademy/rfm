@@ -35,10 +35,10 @@ data2 <- reactive({
         ext <- tools::file_ext(inFile2()$name)
 
         file.rename(inFile2()$datapath,
-                    paste(inFile2()$datapath, ext, sep="."))
+                    paste(inFile2()$datapath, ext, sep = "."))
 
         readxl::read_excel(
-          path = paste(inFile2()$datapath, ext, sep="."),
+          path = paste(inFile2()$datapath, ext, sep = "."),
           sheet = input$sheet_n
         )
     }

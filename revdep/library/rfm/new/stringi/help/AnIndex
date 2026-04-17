@@ -1,4 +1,4 @@
-stringi-package	about_stringi
+stringi-package	stringi-package
 %s!=%	operator_compare
 %s!==%	operator_compare
 %s$%	operator_dollar
@@ -30,7 +30,6 @@ about_search_charclass	about_search_charclass
 about_search_coll	about_search_coll
 about_search_fixed	about_search_fixed
 about_search_regex	about_search_regex
-about_stringi	about_stringi
 arguments	about_arguments
 encoding	about_encoding
 locale	about_locale
@@ -50,7 +49,7 @@ search_charclass	about_search_charclass
 search_coll	about_search_coll
 search_fixed	about_search_fixed
 search_regex	about_search_regex
-stringi	about_stringi
+stringi	stringi-package
 stringi-arguments	about_arguments
 stringi-encoding	about_encoding
 stringi-locale	about_locale

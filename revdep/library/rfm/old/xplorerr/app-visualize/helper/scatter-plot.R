@@ -37,10 +37,3 @@ scatter_plot <- function(x, y, title = NA, sub = NA, xlab = NA,
 
 }
 
-# scatter plot test
-# scatter_plot(mtcars$disp, mtcars$mpg, 
-# 	title = "Scatter Plot", sub = "Fuck", xlab = "Boobs", ylab ="Tits",
-# 	xlim_min = 0, xlim_max = 600, ylim_min = 0, ylim_max = 50, colours = "red", 
-# 	m_text = "Fuck You", m_side = 3, m_line = 0.5, m_adj = 1)
-
-

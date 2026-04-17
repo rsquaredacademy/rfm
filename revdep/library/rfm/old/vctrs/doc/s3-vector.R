@@ -67,9 +67,11 @@ tibble::tibble(x)
 str(x)
 
 ## ----error = TRUE-------------------------------------------------------------
+try({
 vec_ptype2("bogus", percent())
 vec_ptype2(percent(), NA)
 vec_ptype2(NA, percent())
+})
 
 ## -----------------------------------------------------------------------------
 vec_ptype2(percent(), percent())
@@ -96,6 +98,7 @@ vec_cast(0.5, percent())
 vec_cast(percent(0.5), double())
 
 ## ----error = TRUE-------------------------------------------------------------
+try({
 vec_c(percent(0.5), 1)
 vec_c(NA, percent(0.5))
 # but
@@ -105,14 +108,17 @@ x <- percent(c(0.5, 1, 2))
 x[1:2] <- 2:1
 x[[3]] <- 0.5
 x
+})
 
 ## ----error = TRUE-------------------------------------------------------------
+try({
 # Correct
 c(percent(0.5), 1)
 c(percent(0.5), factor(1))
 
 # Incorrect
 c(factor(1), percent(0.5))
+})
 
 ## -----------------------------------------------------------------------------
 as_percent <- function(x) {
@@ -198,9 +204,11 @@ vec_c(decimal(1, digits = 1), pi)
 vec_c(pi, decimal(1, digits = 1))
 
 ## ----error = TRUE-------------------------------------------------------------
+try({
 vec_cast(c(1, 2, 10), to = integer())
 
 vec_cast(c(1.5, 2, 10.5), to = integer())
+})
 
 ## -----------------------------------------------------------------------------
 new_cached_sum <- function(x = double(), sum = 0L) {
@@ -291,9 +299,11 @@ fields(x)
 field(x, "n")
 
 ## ----error = TRUE-------------------------------------------------------------
+try({
 x
 
 str(x)
+})
 
 ## -----------------------------------------------------------------------------
 vec_data(x)
@@ -478,7 +488,9 @@ p[[2]]
 p == poly(c(1, 0, 1))
 
 ## ----error = TRUE-------------------------------------------------------------
+try({
 p < p[2]
+})
 
 ## -----------------------------------------------------------------------------
 vec_proxy_compare.vctrs_poly <- function(x, ...) {
@@ -548,9 +560,11 @@ sum(x)
 mean(x)
 
 ## ----error = TRUE-------------------------------------------------------------
+try({
 x + 1
 meter(10) + meter(1)
 meter(10) * 3
+})
 
 ## -----------------------------------------------------------------------------
 vec_arith.vctrs_meter <- function(op, x, y, ...) {
@@ -561,6 +575,7 @@ vec_arith.vctrs_meter.default <- function(op, x, y, ...) {
 }
 
 ## ----error = TRUE-------------------------------------------------------------
+try({
 vec_arith.vctrs_meter.vctrs_meter <- function(op, x, y, ...) {
   switch(
     op,
@@ -575,8 +590,10 @@ meter(10) + meter(1)
 meter(10) - meter(1)
 meter(10) / meter(1)
 meter(10) * meter(1)
+})
 
 ## ----error = TRUE-------------------------------------------------------------
+try({
 vec_arith.vctrs_meter.numeric <- function(op, x, y, ...) {
   switch(
     op,
@@ -599,6 +616,7 @@ meter(2) * as.integer(10)
 meter(20) / 10
 10 / meter(20)
 meter(20) + 10
+})
 
 ## -----------------------------------------------------------------------------
 vec_arith.vctrs_meter.MISSING <- function(op, x, y, ...) {
@@ -612,12 +630,12 @@ vec_arith.vctrs_meter.MISSING <- function(op, x, y, ...) {
 +meter(1)
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  #' Internal vctrs methods
-#  #'
-#  #' @import vctrs
-#  #' @keywords internal
-#  #' @name pizza-vctrs
-#  NULL
+# #' Internal vctrs methods
+# #'
+# #' @import vctrs
+# #' @keywords internal
+# #' @name pizza-vctrs
+# NULL
 
 ## -----------------------------------------------------------------------------
 new_percent <- function(x = double()) {
@@ -660,58 +678,58 @@ is_percent <- function(x) {
 #'  * For `is_percent()`: An object to test.
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  #' @export
-#  format.pizza_percent <- function(x, ...) {
-#    out <- formatC(signif(vec_data(x) * 100, 3))
-#    out[is.na(x)] <- NA
-#    out[!is.na(x)] <- paste0(out[!is.na(x)], "%")
-#    out
-#  }
-#  
-#  #' @export
-#  vec_ptype_abbr.pizza_percent <- function(x, ...) {
-#    "prcnt"
-#  }
+# #' @export
+# format.pizza_percent <- function(x, ...) {
+#   out <- formatC(signif(vec_data(x) * 100, 3))
+#   out[is.na(x)] <- NA
+#   out[!is.na(x)] <- paste0(out[!is.na(x)], "%")
+#   out
+# }
+# 
+# #' @export
+# vec_ptype_abbr.pizza_percent <- function(x, ...) {
+#   "prcnt"
+# }
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  #' @export
-#  vec_ptype2.vctrs_percent.vctrs_percent <- function(x, y, ...) new_percent()
-#  #' @export
-#  vec_ptype2.double.vctrs_percent <- function(x, y, ...) double()
-#  
-#  #' @export
-#  vec_cast.pizza_percent.pizza_percent <- function(x, to, ...) x
-#  #' @export
-#  vec_cast.pizza_percent.double <- function(x, to, ...) percent(x)
-#  #' @export
-#  vec_cast.double.pizza_percent <- function(x, to, ...) vec_data(x)
+# #' @export
+# vec_ptype2.vctrs_percent.vctrs_percent <- function(x, y, ...) new_percent()
+# #' @export
+# vec_ptype2.double.vctrs_percent <- function(x, y, ...) double()
+# 
+# #' @export
+# vec_cast.pizza_percent.pizza_percent <- function(x, to, ...) x
+# #' @export
+# vec_cast.pizza_percent.double <- function(x, to, ...) percent(x)
+# #' @export
+# vec_cast.double.pizza_percent <- function(x, to, ...) vec_data(x)
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  #' @export
-#  #' @method vec_arith my_type
-#  vec_arith.my_type <- function(op, x, y, ...) {
-#    UseMethod("vec_arith.my_type", y)
-#  }
+# #' @export
+# #' @method vec_arith my_type
+# vec_arith.my_type <- function(op, x, y, ...) {
+#   UseMethod("vec_arith.my_type", y)
+# }
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  #' @export
-#  #' @method vec_arith.my_type my_type
-#  vec_arith.my_type.my_type <- function(op, x, y, ...) {
-#    # implementation here
-#  }
-#  
-#  #' @export
-#  #' @method vec_arith.my_type integer
-#  vec_arith.my_type.integer <- function(op, x, y, ...) {
-#    # implementation here
-#  }
-#  
-#  #' @export
-#  #' @method vec_arith.integer my_type
-#  vec_arith.integer.my_type <- function(op, x, y, ...) {
-#    # implementation here
-#  }
+# #' @export
+# #' @method vec_arith.my_type my_type
+# vec_arith.my_type.my_type <- function(op, x, y, ...) {
+#   # implementation here
+# }
+# 
+# #' @export
+# #' @method vec_arith.my_type integer
+# vec_arith.my_type.integer <- function(op, x, y, ...) {
+#   # implementation here
+# }
+# 
+# #' @export
+# #' @method vec_arith.integer my_type
+# vec_arith.integer.my_type <- function(op, x, y, ...) {
+#   # implementation here
+# }
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  expect_error(vec_c(1, "a"), class = "vctrs_error_incompatible_type")
+# expect_error(vec_c(1, "a"), class = "vctrs_error_incompatible_type")
 

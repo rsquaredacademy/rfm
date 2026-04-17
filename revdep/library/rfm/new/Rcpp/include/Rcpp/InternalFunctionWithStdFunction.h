@@ -1,9 +1,8 @@
-// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; indent-tabs-mode: nil; -*-
 //
 // InternalFunction_with_std_function.h: Rcpp R/C++ interface class library -- exposing C++ std::function's
 //
-// Copyright (C) 2014  Christian Authmann
-// Copyright (C) 2015  Romain Francois and Dirk Eddelbuettel
+// Copyright (C) 2014 - 2025  Christian Authmann
+// Copyright (C) 2015 - 2025  Romain Francois and Dirk Eddelbuettel
 //
 // This file is part of Rcpp.
 //
@@ -23,13 +22,12 @@
 #ifndef Rcpp_InternalFunctionWithStdFunction_h
 #define Rcpp_InternalFunctionWithStdFunction_h
 
+#include <Rcpp/internal/call.h>
 #include <functional>
 
 namespace Rcpp {
 
     namespace InternalFunctionWithStdFunction {
-
-        #include <Rcpp/generated/InternalFunctionWithStdFunction_call.h>
 
         template <typename RESULT_TYPE, typename... Args>
         class CppFunctionBaseFromStdFunction : public CppFunctionBase {
@@ -39,29 +37,12 @@ namespace Rcpp {
 
                 SEXP operator()(SEXP* args) {
                     BEGIN_RCPP
-                    auto result = call<RESULT_TYPE, Args...>(fun, args);
-                    return Rcpp::module_wrap<RESULT_TYPE>(result);
+                    return call<decltype(fun), RESULT_TYPE, Args...>(fun, args);
                     END_RCPP
                 }
 
             private:
                 const std::function<RESULT_TYPE(Args...)> fun;
-        };
-
-        template <typename... Args>
-        class CppFunctionBaseFromStdFunction<void, Args...> : public CppFunctionBase {
-             public:
-                 CppFunctionBaseFromStdFunction(const std::function<void(Args...)> &fun) : fun(fun) {}
-                 virtual ~CppFunctionBaseFromStdFunction() {}
-
-                 SEXP operator()(SEXP* args) {
-                     BEGIN_RCPP
-                     call<void, Args...>(fun, args);
-                     END_RCPP
-                 }
-
-            private:
-                 const std::function<void(Args...)> fun;
         };
 
     } // namespace InternalFunctionWithStdFunction

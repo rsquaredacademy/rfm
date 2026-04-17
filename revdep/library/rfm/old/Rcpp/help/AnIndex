@@ -8,6 +8,8 @@ $<-,C++Object-method	CppObject-class
 .DollarNames,Module-method	DollarNames-methods
 .DollarNames-methods	DollarNames-methods
 areMacrosDefined	evalCpp
+asisTangle	asisWeave
+asisWeave	asisWeave
 C++Class-class	CppClass-class
 C++Constructor-class	CppConstructor-class
 C++Field-class	CppField-class
@@ -15,7 +17,6 @@ C++Function-class	CppFunction-class
 C++Object-class	CppObject-class
 C++OverloadedMethods-class	CppOverloadedMethods-class
 compileAttributes	compileAttributes
-compilerCheck	compilerCheck
 cppFunction	cppFunction
 cpp_object_dummy	Rcpp-internal
 cpp_object_initializer	Rcpp-internal
@@ -32,7 +33,6 @@ interfacesAttribute	interfacesAttribute
 LdFlags	RcppLdFlags
 loadModule	loadModule
 loadRcppClass	setRcppClass
-loadRcppModules	loadRcppModules-deprecated
 Module	Module
 Module-class	Module-class
 pluginsAttribute	pluginsAttribute
@@ -46,7 +46,6 @@ Rcpp.package.skeleton	Rcpp.package.skeleton
 Rcpp.plugin.maker	Rcpp.plugin.maker
 RcppClass-class	setRcppClass
 RcppLdFlags	RcppLdFlags
-RcppUnitTests	RcppUnitTests
 registerPlugin	registerPlugin
 setRcppClass	setRcppClass
 show,C++Class-method	CppClass-class

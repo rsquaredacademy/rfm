@@ -27,6 +27,26 @@ document.addEventListener('DOMContentLoaded', function(e) {
   }
 });
 </script>
+<style type="text/css">@layer htmltools {
+.html-fill-container {
+display: flex;
+flex-direction: column;
+
+min-height: 0;
+min-width: 0;
+}
+.html-fill-container > .html-fill-item {
+
+flex: 1 1 auto;
+min-height: 0;
+min-width: 0;
+}
+.html-fill-container > :not(.html-fill-item) {
+
+flex: 0 0 auto;
+}
+}
+</style>
 <script>(function() {
   // If window.HTMLWidgets is already defined, then use it; otherwise create a
   // new object. This allows preceding code to set options that affect the
@@ -2590,6 +2610,7 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -2883,7 +2904,7 @@ flow</h1>
 
 
 
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pillar)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(pillar)</span></code></pre></div>
 <p>What happens when a tibble is printed? This vignette documents the
 control flow and the data flow, explains the design choices, and shows
 the default implementation for the <code>&quot;tbl&quot;</code> class. It is
@@ -2926,8 +2947,8 @@ characters printed, and be “fast enough”.</p></li>
 below. Boxes are functions and methods. Solid lines are function calls.
 Dotted lines represent information that a function obtains via argument
 or (in the case of options) queries actively.</p>
-<div class="DiagrammeR html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-5fd2e10ab2f1ad167f97" style="width:288px;height:288px;"></div>
-<script type="application/json" data-for="htmlwidget-5fd2e10ab2f1ad167f97">{"x":{"diagram":"graph TD\n  print.tbl[\"print.tbl()\"] --> format.tbl[\"format.tbl()\"]\n  format.tbl --> tbl_format_setup[\"tbl_format_setup()\"]\n  options(Options: n and n_extra) -.-> tbl_format_setup\n  format.tbl --> tbl_format_header[\"tbl_format_header()\"]\n  format.tbl --> tbl_format_body[\"tbl_format_body()\"]\n  format.tbl --> tbl_format_footer[\"tbl_format_footer()\"]\n  tbl_format_setup -.-> tbl_sum[\"tbl_sum()\"]\n  tbl_sum -.-> setup(Setup object)\n  tbl_format_setup -.-> ctl_new_compound_pillar[\"ctl_new_compound_pillar()\"]\n  ctl_new_compound_pillar -.-> ctl_new_pillar[\"ctl_new_pillar()\"]\n  ctl_new_pillar -.-> setup(Setup object)\n  setup -.-> tbl_format_header\n  setup -.-> tbl_format_body\n  setup -.-> tbl_format_footer\n  tbl_format_header -.-> print(Printed output)\n  tbl_format_body -.-> print\n  tbl_format_footer -.-> print"},"evals":[],"jsHooks":[]}</script>
+<div class="DiagrammeR html-widget html-fill-item" id="htmlwidget-5001318936506b4c1307" style="width:288px;height:288px;"></div>
+<script type="application/json" data-for="htmlwidget-5001318936506b4c1307">{"x":{"diagram":"graph TD\n  print.tbl[\"print.tbl()\"] --> format.tbl[\"format.tbl()\"]\n  format.tbl --> tbl_format_setup[\"tbl_format_setup()\"]\n  options(Options: n and n_extra) -.-> tbl_format_setup\n  format.tbl --> tbl_format_header[\"tbl_format_header()\"]\n  format.tbl --> tbl_format_body[\"tbl_format_body()\"]\n  format.tbl --> tbl_format_footer[\"tbl_format_footer()\"]\n  tbl_format_setup -.-> tbl_sum[\"tbl_sum()\"]\n  tbl_sum -.-> setup(Setup object)\n  tbl_format_setup -.-> ctl_new_compound_pillar[\"ctl_new_compound_pillar()\"]\n  ctl_new_compound_pillar -.-> ctl_new_pillar[\"ctl_new_pillar()\"]\n  ctl_new_pillar -.-> setup(Setup object)\n  setup -.-> tbl_format_header\n  setup -.-> tbl_format_body\n  setup -.-> tbl_format_footer\n  tbl_format_header -.-> print(Printed output)\n  tbl_format_body -.-> print\n  tbl_format_footer -.-> print"},"evals":[],"jsHooks":[]}</script>
 <p>The pillar package uses debugme for debugging. Activating debugging
 for pillar is another way to track the control flow, see
 <code>vignette(&quot;debugme&quot;)</code> for details.</p>
@@ -2939,33 +2960,33 @@ for pillar is another way to track the control flow, see
 table-like objects such as lazy tables. The <code>print.tbl()</code>
 method calls <code>format()</code> for the object and prints the
 output.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">b =</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(<span class="at">c =</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">d =</span> <span class="dv">7</span><span class="sc">:</span><span class="dv">9</span>), <span class="at">e =</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">12</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(tbl, <span class="at">width =</span> <span class="dv">23</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 3</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       a   b$c     e</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt;</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     1     4    10</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2     2     5    11</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     3     6    12</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 1 more variable:</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   b$d &lt;int&gt;</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(tbl)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; tibble [3 × 3] (S3: tbl_df/tbl/data.frame)</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ a: int [1:3] 1 2 3</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ b: tibble [3 × 2] (S3: tbl_df/tbl/data.frame)</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ..$ c: int [1:3] 4 5 6</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ..$ d: int [1:3] 7 8 9</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ e: int [1:3] 10 11 12</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">b =</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(<span class="at">c =</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">d =</span> <span class="dv">7</span><span class="sc">:</span><span class="dv">9</span>), <span class="at">e =</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">12</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">print</span>(tbl, <span class="at">width =</span> <span class="dv">23</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 3</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt;       a   b$c     e</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt; 1     1     4    10</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt; 2     2     5    11</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt; 3     3     6    12</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt; # ℹ 1 more variable:</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt; #   b$d &lt;int&gt;</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="fu">str</span>(tbl)</span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt; tibble [3 × 3] (S3: tbl_df/tbl/data.frame)</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt;  $ a: int [1:3] 1 2 3</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt;  $ b: tibble [3 × 2] (S3: tbl_df/tbl/data.frame)</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt;   ..$ c: int [1:3] 4 5 6</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt;   ..$ d: int [1:3] 7 8 9</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="co">#&gt;  $ e: int [1:3] 10 11 12</span></span></code></pre></div>
 <details>
 <summary>
 Source code of <code>pillar:::print.tbl()</code>
 </summary>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>print.tbl <span class="ot">&lt;-</span> <span class="cf">function</span> (x, <span class="at">width =</span> <span class="cn">NULL</span>, ..., <span class="at">n =</span> <span class="cn">NULL</span>, <span class="at">max_extra_cols =</span> <span class="cn">NULL</span>, </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_footer_lines =</span> <span class="cn">NULL</span>) </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print_tbl</span>(x, width, ..., <span class="at">n =</span> n, <span class="at">max_extra_cols =</span> max_extra_cols, </span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">max_footer_lines =</span> max_footer_lines)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>print.tbl <span class="ot">&lt;-</span> <span class="cf">function</span> (x, <span class="at">width =</span> <span class="cn">NULL</span>, ..., <span class="at">n =</span> <span class="cn">NULL</span>, <span class="at">max_extra_cols =</span> <span class="cn">NULL</span>, </span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>    <span class="at">max_footer_lines =</span> <span class="cn">NULL</span>) </span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>{</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>    <span class="fu">print_tbl</span>(x, width, ..., <span class="at">n =</span> n, <span class="at">max_extra_cols =</span> max_extra_cols, </span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>        <span class="at">max_footer_lines =</span> max_footer_lines)</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>}</span></code></pre></div>
 </details>
 <p>The <code>format.tbl()</code> method creates a setup object, and uses
 that object to format header, body and footer.</p>
@@ -2973,12 +2994,12 @@ that object to format header, body and footer.</p>
 <summary>
 Source code of <code>pillar:::format.tbl()</code>
 </summary>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>format.tbl <span class="ot">&lt;-</span> <span class="cf">function</span> (x, <span class="at">width =</span> <span class="cn">NULL</span>, ..., <span class="at">n =</span> <span class="cn">NULL</span>, <span class="at">max_extra_cols =</span> <span class="cn">NULL</span>, </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_footer_lines =</span> <span class="cn">NULL</span>) </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">format_tbl</span>(x, width, ..., <span class="at">n =</span> n, <span class="at">max_extra_cols =</span> max_extra_cols, </span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">max_footer_lines =</span> max_footer_lines)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>format.tbl <span class="ot">&lt;-</span> <span class="cf">function</span> (x, <span class="at">width =</span> <span class="cn">NULL</span>, ..., <span class="at">n =</span> <span class="cn">NULL</span>, <span class="at">max_extra_cols =</span> <span class="cn">NULL</span>, </span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>    <span class="at">max_footer_lines =</span> <span class="cn">NULL</span>) </span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>{</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>    <span class="fu">format_tbl</span>(x, width, ..., <span class="at">n =</span> n, <span class="at">max_extra_cols =</span> max_extra_cols, </span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>        <span class="at">max_footer_lines =</span> max_footer_lines)</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>}</span></code></pre></div>
 </details>
 <p>While it’s possible to extend or override these methods for your
 <code>&quot;tbl&quot;</code> subclass, often overriding the more specialized
@@ -2991,20 +3012,20 @@ methods shown below is sufficient.</p>
 the setup object and must be available when calling. Setup objects print
 like a tibble but with a clear separation of header, body, and
 footer.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>setup <span class="ot">&lt;-</span> <span class="fu">tbl_format_setup</span>(tbl, <span class="at">width =</span> <span class="dv">24</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>setup</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;pillar_tbl_format_setup&gt;</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;tbl_format_header(setup)&gt;</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 3</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;tbl_format_body(setup)&gt;</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       a   b$c     e</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt;</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     1     4    10</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2     2     5    11</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     3     6    12</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;tbl_format_footer(setup)&gt;</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 1 more variable:</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   b$d &lt;int&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>setup <span class="ot">&lt;-</span> <span class="fu">tbl_format_setup</span>(tbl, <span class="at">width =</span> <span class="dv">24</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>setup</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co">#&gt; &lt;pillar_tbl_format_setup&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt; &lt;tbl_format_header(setup)&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 3</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt; &lt;tbl_format_body(setup)&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#&gt;       a   b$c     e</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt;</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co">#&gt; 1     1     4    10</span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co">#&gt; 2     2     5    11</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt; 3     3     6    12</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co">#&gt; &lt;tbl_format_footer(setup)&gt;</span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co">#&gt; # ℹ 1 more variable:</span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="co">#&gt; #   b$d &lt;int&gt;</span></span></code></pre></div>
 <p>A setup object is required here to avoid computing information twice.
 For instance, the dimensions shown in the header or the extra columns
 displayed in the footer are available only after the body has been
@@ -3016,19 +3037,21 @@ arguments before passing them on to the method.</p>
 <summary>
 Source code of <code>tbl_format_setup()</code>
 </summary>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>tbl_format_setup <span class="ot">&lt;-</span> <span class="cf">function</span> (x, <span class="at">width =</span> <span class="cn">NULL</span>, ..., <span class="at">n =</span> <span class="cn">NULL</span>, <span class="at">max_extra_cols =</span> <span class="cn">NULL</span>, </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_footer_lines =</span> <span class="cn">NULL</span>, <span class="at">focus =</span> <span class="cn">NULL</span>) </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;!!!!DEBUG tbl_format_setup()&quot;</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    width <span class="ot">&lt;-</span> <span class="fu">get_width_print</span>(width)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    n <span class="ot">&lt;-</span> <span class="fu">get_n_print</span>(n, <span class="fu">nrow</span>(x))</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    max_extra_cols <span class="ot">&lt;-</span> <span class="fu">get_max_extra_cols</span>(max_extra_cols)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    max_footer_lines <span class="ot">&lt;-</span> <span class="fu">get_max_footer_lines</span>(max_footer_lines)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    out <span class="ot">&lt;-</span> <span class="fu">tbl_format_setup_dispatch</span>(x, width, ..., <span class="at">n =</span> n, <span class="at">max_extra_cols =</span> max_extra_cols, </span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">max_footer_lines =</span> max_footer_lines, <span class="at">focus =</span> focus)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(out)</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">UseMethod</span>(<span class="st">&quot;tbl_format_setup&quot;</span>)</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>tbl_format_setup <span class="ot">&lt;-</span> <span class="cf">function</span> (x, <span class="at">width =</span> <span class="cn">NULL</span>, ..., <span class="at">setup =</span> <span class="fu">list</span>(<span class="at">tbl_sum =</span> <span class="fu">tbl_sum</span>(x)), </span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>    <span class="at">n =</span> <span class="cn">NULL</span>, <span class="at">max_extra_cols =</span> <span class="cn">NULL</span>, <span class="at">max_footer_lines =</span> <span class="cn">NULL</span>, </span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>    <span class="at">focus =</span> <span class="cn">NULL</span>) </span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>{</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>    <span class="st">&quot;!!!!DEBUG tbl_format_setup()&quot;</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>    width <span class="ot">&lt;-</span> <span class="fu">get_width_print</span>(width)</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>    n <span class="ot">&lt;-</span> <span class="fu">get_n_print</span>(n, <span class="fu">tbl_nrow</span>(x))</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>    max_extra_cols <span class="ot">&lt;-</span> <span class="fu">get_max_extra_cols</span>(max_extra_cols)</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>    max_footer_lines <span class="ot">&lt;-</span> <span class="fu">get_max_footer_lines</span>(max_footer_lines)</span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>    out <span class="ot">&lt;-</span> <span class="fu">tbl_format_setup_dispatch</span>(x, width, ..., <span class="at">setup =</span> setup, </span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>        <span class="at">n =</span> n, <span class="at">max_extra_cols =</span> max_extra_cols, <span class="at">max_footer_lines =</span> max_footer_lines, </span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>        <span class="at">focus =</span> focus)</span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>    <span class="fu">return</span>(out)</span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a>    <span class="fu">UseMethod</span>(<span class="st">&quot;tbl_format_setup&quot;</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a>}</span></code></pre></div>
 </details>
 <p>The default implementation converts the input to a data frame via
 <code>as.data.frame(head(x))</code>, and returns an object constructed
@@ -3040,53 +3063,62 @@ object, but you should not overwrite existing items.</p>
 <summary>
 Source code of <code>pillar:::tbl_format_setup.tbl()</code>
 </summary>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tbl_format_setup.tbl <span class="ot">&lt;-</span> <span class="cf">function</span> (x, width, ..., n, max_extra_cols, max_footer_lines, </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    focus) </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;!!!!DEBUG tbl_format_setup.tbl()&quot;</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    rows <span class="ot">&lt;-</span> <span class="fu">nrow</span>(x)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.na</span>(rows)) {</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        df <span class="ot">&lt;-</span> <span class="fu">df_head</span>(x, n <span class="sc">+</span> <span class="dv">1</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">nrow</span>(df) <span class="sc">&lt;=</span> n) {</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>            rows <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span> {</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>            df <span class="ot">&lt;-</span> <span class="fu">vec_head</span>(df, n)</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> {</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>        df <span class="ot">&lt;-</span> <span class="fu">df_head</span>(x, n)</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.na</span>(rows)) {</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>        needs_dots <span class="ot">&lt;-</span> (<span class="fu">nrow</span>(df) <span class="sc">&gt;=</span> n)</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> {</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>        needs_dots <span class="ot">&lt;-</span> (rows <span class="sc">&gt;</span> n)</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (needs_dots) {</span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>        rows_missing <span class="ot">&lt;-</span> rows <span class="sc">-</span> n</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> {</span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>        rows_missing <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>    tbl_sum <span class="ot">&lt;-</span> <span class="fu">tbl_sum</span>(x)</span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rownames</span>(df) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>    colonnade <span class="ot">&lt;-</span> <span class="fu">ctl_colonnade</span>(df, <span class="at">has_row_id =</span> <span class="cf">if</span> (<span class="fu">.row_names_info</span>(x) <span class="sc">&gt;</span> </span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>        <span class="dv">0</span>) </span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;*&quot;</span></span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cn">TRUE</span>, <span class="at">width =</span> width, <span class="at">controller =</span> x, <span class="at">focus =</span> focus)</span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>    body <span class="ot">&lt;-</span> colonnade<span class="sc">$</span>body</span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>    extra_cols <span class="ot">&lt;-</span> colonnade<span class="sc">$</span>extra_cols</span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>    extra_cols_total <span class="ot">&lt;-</span> <span class="fu">length</span>(extra_cols)</span>
-<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (extra_cols_total <span class="sc">&gt;</span> max_extra_cols) {</span>
-<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>        <span class="fu">length</span>(extra_cols) <span class="ot">&lt;-</span> max_extra_cols</span>
-<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>    abbrev_cols <span class="ot">&lt;-</span> colonnade<span class="sc">$</span>abbrev_cols</span>
-<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>    <span class="fu">new_tbl_format_setup</span>(<span class="at">x =</span> x, <span class="at">df =</span> df, <span class="at">width =</span> width, <span class="at">tbl_sum =</span> tbl_sum, </span>
-<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>        <span class="at">body =</span> body, <span class="at">rows_missing =</span> rows_missing, <span class="at">rows_total =</span> rows, </span>
-<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>        <span class="at">extra_cols =</span> extra_cols, <span class="at">extra_cols_total =</span> extra_cols_total, </span>
-<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>        <span class="at">max_footer_lines =</span> max_footer_lines, <span class="at">abbrev_cols =</span> abbrev_cols)</span>
-<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>tbl_format_setup.tbl <span class="ot">&lt;-</span> <span class="cf">function</span> (x, width, ..., setup, n, max_extra_cols, max_footer_lines, </span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>    focus) </span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>{</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>    <span class="st">&quot;!!!!DEBUG tbl_format_setup.tbl()&quot;</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.null</span>(setup)) {</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>        tbl_sum <span class="ot">&lt;-</span> <span class="fu">tbl_sum</span>(x)</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>        <span class="fu">return</span>(<span class="fu">new_tbl_format_setup</span>(width, tbl_sum, <span class="at">rows_total =</span> <span class="cn">NA</span>))</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>    }</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>    <span class="cf">else</span> {</span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>        tbl_sum <span class="ot">&lt;-</span> setup<span class="sc">$</span>tbl_sum</span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>    }</span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>    rows <span class="ot">&lt;-</span> <span class="fu">tbl_nrow</span>(x)</span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>    lazy <span class="ot">&lt;-</span> <span class="fu">is.na</span>(rows)</span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>    <span class="cf">if</span> (lazy) {</span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>        max <span class="ot">&lt;-</span> <span class="fu">attr</span>(n, <span class="st">&quot;max&quot;</span>) <span class="sc">%||%</span> n</span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a>        df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">head</span>(x, max <span class="sc">+</span> <span class="dv">1</span>))</span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">nrow</span>(df) <span class="sc">&lt;=</span> max) {</span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a>            rows <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a>            n <span class="ot">&lt;-</span> rows</span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a>        }</span>
+<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a>        <span class="cf">else</span> {</span>
+<span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a>            df <span class="ot">&lt;-</span> <span class="fu">vec_head</span>(df, n)</span>
+<span id="cb7-23"><a href="#cb7-23" tabindex="-1"></a>        }</span>
+<span id="cb7-24"><a href="#cb7-24" tabindex="-1"></a>    }</span>
+<span id="cb7-25"><a href="#cb7-25" tabindex="-1"></a>    <span class="cf">else</span> {</span>
+<span id="cb7-26"><a href="#cb7-26" tabindex="-1"></a>        df <span class="ot">&lt;-</span> <span class="fu">df_head</span>(x, n)</span>
+<span id="cb7-27"><a href="#cb7-27" tabindex="-1"></a>    }</span>
+<span id="cb7-28"><a href="#cb7-28" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.na</span>(rows)) {</span>
+<span id="cb7-29"><a href="#cb7-29" tabindex="-1"></a>        needs_dots <span class="ot">&lt;-</span> (<span class="fu">nrow</span>(df) <span class="sc">&gt;=</span> n)</span>
+<span id="cb7-30"><a href="#cb7-30" tabindex="-1"></a>    }</span>
+<span id="cb7-31"><a href="#cb7-31" tabindex="-1"></a>    <span class="cf">else</span> {</span>
+<span id="cb7-32"><a href="#cb7-32" tabindex="-1"></a>        needs_dots <span class="ot">&lt;-</span> (rows <span class="sc">&gt;</span> n)</span>
+<span id="cb7-33"><a href="#cb7-33" tabindex="-1"></a>    }</span>
+<span id="cb7-34"><a href="#cb7-34" tabindex="-1"></a>    <span class="cf">if</span> (needs_dots) {</span>
+<span id="cb7-35"><a href="#cb7-35" tabindex="-1"></a>        rows_missing <span class="ot">&lt;-</span> rows <span class="sc">-</span> n</span>
+<span id="cb7-36"><a href="#cb7-36" tabindex="-1"></a>    }</span>
+<span id="cb7-37"><a href="#cb7-37" tabindex="-1"></a>    <span class="cf">else</span> {</span>
+<span id="cb7-38"><a href="#cb7-38" tabindex="-1"></a>        rows_missing <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb7-39"><a href="#cb7-39" tabindex="-1"></a>    }</span>
+<span id="cb7-40"><a href="#cb7-40" tabindex="-1"></a>    <span class="fu">rownames</span>(df) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb7-41"><a href="#cb7-41" tabindex="-1"></a>    colonnade <span class="ot">&lt;-</span> <span class="fu">ctl_colonnade</span>(df, <span class="at">has_row_id =</span> <span class="cf">if</span> (<span class="sc">!</span>lazy <span class="sc">&amp;&amp;</span> </span>
+<span id="cb7-42"><a href="#cb7-42" tabindex="-1"></a>        <span class="fu">.row_names_info</span>(x) <span class="sc">&gt;</span> <span class="dv">0</span>) </span>
+<span id="cb7-43"><a href="#cb7-43" tabindex="-1"></a>        <span class="st">&quot;*&quot;</span></span>
+<span id="cb7-44"><a href="#cb7-44" tabindex="-1"></a>    <span class="cf">else</span> <span class="cn">TRUE</span>, <span class="at">width =</span> width, <span class="at">controller =</span> x, <span class="at">focus =</span> focus)</span>
+<span id="cb7-45"><a href="#cb7-45" tabindex="-1"></a>    body <span class="ot">&lt;-</span> colonnade<span class="sc">$</span>body</span>
+<span id="cb7-46"><a href="#cb7-46" tabindex="-1"></a>    extra_cols <span class="ot">&lt;-</span> colonnade<span class="sc">$</span>extra_cols</span>
+<span id="cb7-47"><a href="#cb7-47" tabindex="-1"></a>    extra_cols_total <span class="ot">&lt;-</span> <span class="fu">length</span>(extra_cols)</span>
+<span id="cb7-48"><a href="#cb7-48" tabindex="-1"></a>    <span class="cf">if</span> (extra_cols_total <span class="sc">&gt;</span> max_extra_cols) {</span>
+<span id="cb7-49"><a href="#cb7-49" tabindex="-1"></a>        <span class="fu">length</span>(extra_cols) <span class="ot">&lt;-</span> max_extra_cols</span>
+<span id="cb7-50"><a href="#cb7-50" tabindex="-1"></a>    }</span>
+<span id="cb7-51"><a href="#cb7-51" tabindex="-1"></a>    abbrev_cols <span class="ot">&lt;-</span> colonnade<span class="sc">$</span>abbrev_cols</span>
+<span id="cb7-52"><a href="#cb7-52" tabindex="-1"></a>    <span class="fu">new_tbl_format_setup</span>(<span class="at">x =</span> x, <span class="at">df =</span> df, <span class="at">width =</span> width, <span class="at">tbl_sum =</span> tbl_sum, </span>
+<span id="cb7-53"><a href="#cb7-53" tabindex="-1"></a>        <span class="at">body =</span> body, <span class="at">rows_missing =</span> rows_missing, <span class="at">rows_total =</span> rows, </span>
+<span id="cb7-54"><a href="#cb7-54" tabindex="-1"></a>        <span class="at">extra_cols =</span> extra_cols, <span class="at">extra_cols_total =</span> extra_cols_total, </span>
+<span id="cb7-55"><a href="#cb7-55" tabindex="-1"></a>        <span class="at">max_footer_lines =</span> max_footer_lines, <span class="at">abbrev_cols =</span> abbrev_cols)</span>
+<span id="cb7-56"><a href="#cb7-56" tabindex="-1"></a>}</span></code></pre></div>
 </details>
 <p>At the core, the internal function <code>ctl_colonnade()</code>
 composes the body. Its functionality and the customization points it
@@ -3099,22 +3131,22 @@ offers are detailed in the “Colonnade” section below.</p>
 container to allow extension or overrides. They return a character
 vector, with one element per line printed. The setup object is
 required.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_format_header</span>(tbl, setup)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;# A tibble: 3 × 3&quot;</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_format_body</span>(tbl, setup)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       a   b$c     e</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt;</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     1     4    10</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2     2     5    11</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     3     6    12</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_format_footer</span>(tbl, setup)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;# ℹ 1 more variable:&quot; &quot;#   b$d &lt;int&gt;&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">tbl_format_header</span>(tbl, setup)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;# A tibble: 3 × 3&quot;</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="fu">tbl_format_body</span>(tbl, setup)</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co">#&gt;       a   b$c     e</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co">#&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt;</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">#&gt; 1     1     4    10</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">#&gt; 2     2     5    11</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co">#&gt; 3     3     6    12</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="fu">tbl_format_footer</span>(tbl, setup)</span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co">#&gt; [1] &quot;# ℹ 1 more variable:&quot; &quot;#   b$d &lt;int&gt;&quot;</span></span></code></pre></div>
 <p>(The body is returned as a classed object with a <code>print()</code>
 method, it is still a <code>character()</code> under the hood.)</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="fu">tbl_format_body</span>(tbl, setup))</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;glue&quot;      &quot;character&quot;</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(<span class="fu">tbl_format_body</span>(tbl, setup))</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;character&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">class</span>(<span class="fu">tbl_format_body</span>(tbl, setup))</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;glue&quot;      &quot;character&quot;</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="fu">typeof</span>(<span class="fu">tbl_format_body</span>(tbl, setup))</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="co">#&gt; [1] &quot;character&quot;</span></span></code></pre></div>
 <p>Since most of the work already has been carried out in
 <code>tbl_format_setup()</code>, the default implementations mostly
 consist of code that styles and wraps the output.</p>
@@ -3122,46 +3154,46 @@ consist of code that styles and wraps the output.</p>
 <summary>
 Source code of <code>pillar:::tbl_format_header.tbl()</code>
 </summary>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>tbl_format_header.tbl <span class="ot">&lt;-</span> <span class="cf">function</span> (x, setup, ...) </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    named_header <span class="ot">&lt;-</span> setup<span class="sc">$</span>tbl_sum</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    focus <span class="ot">&lt;-</span> <span class="fu">attr</span>(x, <span class="st">&quot;pillar_focus&quot;</span>)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(focus)) {</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        named_header <span class="ot">&lt;-</span> <span class="fu">c</span>(named_header, <span class="st">`</span><span class="at">Focus columns</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collapse</span>(<span class="fu">tick_if_needed</span>(focus)))</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">all</span>(<span class="fu">names2</span>(named_header) <span class="sc">==</span> <span class="st">&quot;&quot;</span>)) {</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        header <span class="ot">&lt;-</span> named_header</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> {</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>        header <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">align</span>(<span class="fu">paste0</span>(<span class="fu">names2</span>(named_header), <span class="st">&quot;:&quot;</span>), </span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">space =</span> NBSP), <span class="st">&quot; &quot;</span>, named_header)</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">style_subtle</span>(<span class="fu">format_comment</span>(header, <span class="at">width =</span> setup<span class="sc">$</span>width))</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>tbl_format_header.tbl <span class="ot">&lt;-</span> <span class="cf">function</span> (x, setup, ...) </span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>{</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>    named_header <span class="ot">&lt;-</span> setup<span class="sc">$</span>tbl_sum</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>    focus <span class="ot">&lt;-</span> <span class="fu">attr</span>(x, <span class="st">&quot;pillar_focus&quot;</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(focus)) {</span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>        named_header <span class="ot">&lt;-</span> <span class="fu">c</span>(named_header, <span class="st">`</span><span class="at">Focus columns</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collapse</span>(<span class="fu">tick_if_needed</span>(focus)))</span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>    }</span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">all</span>(<span class="fu">names2</span>(named_header) <span class="sc">==</span> <span class="st">&quot;&quot;</span>)) {</span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>        header <span class="ot">&lt;-</span> named_header</span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a>    }</span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a>    <span class="cf">else</span> {</span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a>        header <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">align</span>(<span class="fu">paste0</span>(<span class="fu">names2</span>(named_header), <span class="st">&quot;:&quot;</span>), </span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a>            <span class="at">space =</span> NBSP), <span class="st">&quot; &quot;</span>, named_header)</span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a>    }</span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a>    <span class="fu">style_subtle</span>(<span class="fu">format_comment</span>(header, <span class="at">width =</span> setup<span class="sc">$</span>width))</span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a>}</span></code></pre></div>
 </details>
 <details>
 <summary>
 Source code of <code>pillar:::tbl_format_body.tbl()</code>
 </summary>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>tbl_format_body.tbl <span class="ot">&lt;-</span> <span class="cf">function</span> (x, setup, ...) </span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">force</span>(setup)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    setup<span class="sc">$</span>body</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>tbl_format_body.tbl <span class="ot">&lt;-</span> <span class="cf">function</span> (x, setup, ...) </span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>{</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>    <span class="fu">force</span>(setup)</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>    setup<span class="sc">$</span>body</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>}</span></code></pre></div>
 </details>
 <details>
 <summary>
 Source code of <code>pillar:::tbl_format_footer.tbl()</code>
 </summary>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>tbl_format_footer.tbl <span class="ot">&lt;-</span> <span class="cf">function</span> (x, setup, ...) </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    footer <span class="ot">&lt;-</span> <span class="fu">format_footer</span>(x, setup)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    footer_comment <span class="ot">&lt;-</span> <span class="fu">wrap_footer_bullet</span>(footer, setup)</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    footer_advice <span class="ot">&lt;-</span> <span class="fu">format_footer_advice</span>(x, setup)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    footer_advice_comment <span class="ot">&lt;-</span> <span class="fu">wrap_footer_bullet</span>(footer_advice, </span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        setup, <span class="at">lines =</span> <span class="dv">1</span>, <span class="at">ellipsis =</span> <span class="cn">FALSE</span>, <span class="at">bullet =</span> symbol<span class="sc">$</span>info)</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">style_subtle</span>(<span class="fu">c</span>(footer_comment, footer_advice_comment))</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>tbl_format_footer.tbl <span class="ot">&lt;-</span> <span class="cf">function</span> (x, setup, ...) </span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>{</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>    footer <span class="ot">&lt;-</span> <span class="fu">format_footer</span>(x, setup)</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>    footer_comment <span class="ot">&lt;-</span> <span class="fu">wrap_footer_bullet</span>(footer, setup)</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>    footer_advice <span class="ot">&lt;-</span> <span class="fu">format_footer_advice</span>(x, setup)</span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>    footer_advice_comment <span class="ot">&lt;-</span> <span class="fu">wrap_footer_bullet</span>(footer_advice, </span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>        setup, <span class="at">lines =</span> <span class="dv">1</span>, <span class="at">ellipsis =</span> <span class="cn">FALSE</span>, <span class="at">bullet =</span> symbol<span class="sc">$</span>info)</span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>    <span class="fu">style_subtle</span>(<span class="fu">c</span>(footer_comment, footer_advice_comment))</span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a>}</span></code></pre></div>
 </details>
 </div>
 <div id="colonnade" class="section level2">
@@ -3195,41 +3227,41 @@ considering the minimum width.</p>
 <h3>Pillar lists</h3>
 <p>The <code>ctl_new_pillar_list()</code> generic dispatches on the
 container:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ctl_new_pillar_list</span>(tbl, tbl<span class="sc">$</span>a, <span class="at">width =</span> <span class="dv">20</span>)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;pillar&gt;</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;int&gt;</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     1</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     2</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     3</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;remaining_width&quot;)</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 14</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;simple&quot;)</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ctl_new_pillar_list</span>(tbl, tbl<span class="sc">$</span>b, <span class="at">width =</span> <span class="dv">20</span>)</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;pillar&gt;</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     c</span></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;int&gt;</span></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     4</span></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     5</span></span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     6</span></span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;pillar&gt;</span></span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     d</span></span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;int&gt;</span></span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     7</span></span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     8</span></span>
-<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     9</span></span>
-<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;extra&quot;)</span></span>
-<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; character(0)</span></span>
-<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;remaining_width&quot;)</span></span>
-<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 8</span></span>
-<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;simple&quot;)</span></span>
-<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] FALSE</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">ctl_new_pillar_list</span>(tbl, tbl<span class="sc">$</span>a, <span class="at">width =</span> <span class="dv">20</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="co">#&gt; &lt;pillar&gt;</span></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co">#&gt; &lt;int&gt;</span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a><span class="co">#&gt;     1</span></span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a><span class="co">#&gt;     2</span></span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a><span class="co">#&gt;     3</span></span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;remaining_width&quot;)</span></span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a><span class="co">#&gt; [1] 14</span></span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;simple&quot;)</span></span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
+<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a><span class="fu">ctl_new_pillar_list</span>(tbl, tbl<span class="sc">$</span>b, <span class="at">width =</span> <span class="dv">20</span>)</span>
+<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a><span class="co">#&gt; &lt;pillar&gt;</span></span>
+<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a><span class="co">#&gt;     c</span></span>
+<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a><span class="co">#&gt; &lt;int&gt;</span></span>
+<span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a><span class="co">#&gt;     4</span></span>
+<span id="cb13-19"><a href="#cb13-19" tabindex="-1"></a><span class="co">#&gt;     5</span></span>
+<span id="cb13-20"><a href="#cb13-20" tabindex="-1"></a><span class="co">#&gt;     6</span></span>
+<span id="cb13-21"><a href="#cb13-21" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-22"><a href="#cb13-22" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
+<span id="cb13-23"><a href="#cb13-23" tabindex="-1"></a><span class="co">#&gt; &lt;pillar&gt;</span></span>
+<span id="cb13-24"><a href="#cb13-24" tabindex="-1"></a><span class="co">#&gt;     d</span></span>
+<span id="cb13-25"><a href="#cb13-25" tabindex="-1"></a><span class="co">#&gt; &lt;int&gt;</span></span>
+<span id="cb13-26"><a href="#cb13-26" tabindex="-1"></a><span class="co">#&gt;     7</span></span>
+<span id="cb13-27"><a href="#cb13-27" tabindex="-1"></a><span class="co">#&gt;     8</span></span>
+<span id="cb13-28"><a href="#cb13-28" tabindex="-1"></a><span class="co">#&gt;     9</span></span>
+<span id="cb13-29"><a href="#cb13-29" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-30"><a href="#cb13-30" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;extra&quot;)</span></span>
+<span id="cb13-31"><a href="#cb13-31" tabindex="-1"></a><span class="co">#&gt; character(0)</span></span>
+<span id="cb13-32"><a href="#cb13-32" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;remaining_width&quot;)</span></span>
+<span id="cb13-33"><a href="#cb13-33" tabindex="-1"></a><span class="co">#&gt; [1] 8</span></span>
+<span id="cb13-34"><a href="#cb13-34" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;simple&quot;)</span></span>
+<span id="cb13-35"><a href="#cb13-35" tabindex="-1"></a><span class="co">#&gt; [1] FALSE</span></span></code></pre></div>
 <p>In a tibble, each column can be a data frame, matrix, or even array
 itself, such columns are called <em>compound columns</em>. Such columns
 are decomposed into sub-pillars and returned as a list of pillars.
@@ -3241,29 +3273,29 @@ method.</p>
 <summary>
 Source code of <code>pillar:::ctl_new_pillar_list.tbl()</code>
 </summary>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ctl_new_pillar_list.tbl <span class="ot">&lt;-</span> <span class="cf">function</span> (controller, x, width, ..., <span class="at">title =</span> <span class="cn">NULL</span>, <span class="at">first_pillar =</span> <span class="cn">NULL</span>) </span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;!!!!DEBUG ctl_new_pillar_list.tbl(`v(width)`, `v(title)`)&quot;</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.data.frame</span>(x)) {</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">new_data_frame_pillar_list</span>(x, controller, width, <span class="at">title =</span> title, </span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">first_pillar =</span> first_pillar)</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span> (<span class="fu">is.matrix</span>(x) <span class="sc">&amp;&amp;</span> <span class="sc">!</span><span class="fu">inherits</span>(x, <span class="fu">c</span>(<span class="st">&quot;Surv&quot;</span>, <span class="st">&quot;Surv2&quot;</span>))) {</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">new_matrix_pillar_list</span>(x, controller, width, <span class="at">title =</span> title, </span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">first_pillar =</span> first_pillar)</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span> (<span class="fu">is.array</span>(x) <span class="sc">&amp;&amp;</span> <span class="fu">length</span>(<span class="fu">dim</span>(x)) <span class="sc">&gt;</span> <span class="dv">2</span>) {</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>        <span class="fu">new_array_pillar_list</span>(x, controller, width, <span class="at">title =</span> title, </span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>            <span class="at">first_pillar =</span> first_pillar)</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> {</span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">is.null</span>(first_pillar)) {</span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>            first_pillar <span class="ot">&lt;-</span> <span class="fu">ctl_new_pillar</span>(controller, x, width, </span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>                ..., <span class="at">title =</span> <span class="fu">prepare_title</span>(title))</span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>        <span class="fu">new_single_pillar_list</span>(first_pillar, width)</span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>ctl_new_pillar_list.tbl <span class="ot">&lt;-</span> <span class="cf">function</span> (controller, x, width, ..., <span class="at">title =</span> <span class="cn">NULL</span>, <span class="at">first_pillar =</span> <span class="cn">NULL</span>) </span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>{</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>    <span class="st">&quot;!!!!DEBUG ctl_new_pillar_list.tbl(`v(width)`, `v(title)`)&quot;</span></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.data.frame</span>(x)) {</span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>        <span class="fu">new_data_frame_pillar_list</span>(x, controller, width, <span class="at">title =</span> title, </span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>            <span class="at">first_pillar =</span> first_pillar)</span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>    }</span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span> (<span class="fu">is.matrix</span>(x) <span class="sc">&amp;&amp;</span> <span class="sc">!</span><span class="fu">inherits</span>(x, <span class="fu">c</span>(<span class="st">&quot;Surv&quot;</span>, <span class="st">&quot;Surv2&quot;</span>))) {</span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a>        <span class="fu">new_matrix_pillar_list</span>(x, controller, width, <span class="at">title =</span> title, </span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a>            <span class="at">first_pillar =</span> first_pillar)</span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a>    }</span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span> (<span class="fu">is.array</span>(x) <span class="sc">&amp;&amp;</span> <span class="fu">length</span>(<span class="fu">dim</span>(x)) <span class="sc">&gt;</span> <span class="dv">2</span>) {</span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a>        <span class="fu">new_array_pillar_list</span>(x, controller, width, <span class="at">title =</span> title, </span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a>            <span class="at">first_pillar =</span> first_pillar)</span>
+<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a>    }</span>
+<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a>    <span class="cf">else</span> {</span>
+<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">is.null</span>(first_pillar)) {</span>
+<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a>            first_pillar <span class="ot">&lt;-</span> <span class="fu">ctl_new_pillar</span>(controller, x, width, </span>
+<span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a>                ..., <span class="at">title =</span> <span class="fu">prepare_title</span>(title))</span>
+<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a>        }</span>
+<span id="cb14-21"><a href="#cb14-21" tabindex="-1"></a>        <span class="fu">new_single_pillar_list</span>(first_pillar, width)</span>
+<span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a>    }</span>
+<span id="cb14-23"><a href="#cb14-23" tabindex="-1"></a>}</span></code></pre></div>
 </details>
 </div>
 <div id="simple-pillars" class="section level3">
@@ -3271,22 +3303,22 @@ Source code of <code>pillar:::ctl_new_pillar_list.tbl()</code>
 <p>The <code>ctl_new_pillar()</code> method is called for columns that
 are not data frames or arrays, and also dispatches over the
 container.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ctl_new_pillar</span>(tbl, tbl<span class="sc">$</span>a, <span class="at">width =</span> <span class="dv">20</span>)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;pillar&gt;</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;int&gt;</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     1</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     2</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     3</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">ctl_new_pillar</span>(tbl, tbl<span class="sc">$</span>a, <span class="at">width =</span> <span class="dv">20</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="co">#&gt; &lt;pillar&gt;</span></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="co">#&gt; &lt;int&gt;</span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="co">#&gt;     1</span></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="co">#&gt;     2</span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a><span class="co">#&gt;     3</span></span></code></pre></div>
 <details>
 <summary>
 Source code of <code>pillar:::ctl_new_pillar.tbl()</code>
 </summary>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>ctl_new_pillar.tbl <span class="ot">&lt;-</span> <span class="cf">function</span> (controller, x, width, ..., <span class="at">title =</span> <span class="cn">NULL</span>) </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;!!!!DEBUG ctl_new_pillar.tbl(`v(width)`, `v(title)`)&quot;</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pillar</span>(x, title, <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(width)) </span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">max0</span>(width))</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>ctl_new_pillar.tbl <span class="ot">&lt;-</span> <span class="cf">function</span> (controller, x, width, ..., <span class="at">title =</span> <span class="cn">NULL</span>) </span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>{</span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>    <span class="st">&quot;!!!!DEBUG ctl_new_pillar.tbl(`v(width)`, `v(title)`)&quot;</span></span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>    <span class="fu">pillar</span>(x, title, <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(width)) </span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>        <span class="fu">max0</span>(width))</span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a>}</span></code></pre></div>
 </details>
 <p>The default method calls <code>pillar()</code> directly, passing the
 maximum width available.</p>
@@ -3294,12 +3326,12 @@ maximum width available.</p>
 <summary>
 Source code of <code>pillar()</code>
 </summary>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pillar <span class="ot">&lt;-</span> <span class="cf">function</span> (x, <span class="at">title =</span> <span class="cn">NULL</span>, <span class="at">width =</span> <span class="cn">NULL</span>, ...) </span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;!!!!DEBUG pillar(`v(class(x))`, `v(title)`, `v(width)`)&quot;</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pillar_from_shaft</span>(<span class="fu">new_pillar_title</span>(title), <span class="fu">new_pillar_type</span>(x), </span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">pillar_shaft</span>(x, ...), width)</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>pillar <span class="ot">&lt;-</span> <span class="cf">function</span> (x, <span class="at">title =</span> <span class="cn">NULL</span>, <span class="at">width =</span> <span class="cn">NULL</span>, ...) </span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>{</span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>    <span class="st">&quot;!!!!DEBUG pillar(`v(class(x))`, `v(title)`, `v(width)`)&quot;</span></span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>    <span class="fu">pillar_from_shaft</span>(<span class="fu">new_pillar_title</span>(title), <span class="fu">new_pillar_type</span>(x), </span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>        <span class="fu">pillar_shaft</span>(x, ...), width)</span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a>}</span></code></pre></div>
 </details>
 <p>Formatting for title and type is provided by
 <code>new_pillar_title()</code> and <code>new_pillar_type()</code>. The
@@ -3320,18 +3352,18 @@ constructed with <code>new_pillar()</code>.</p>
 <summary>
 Source code of <code>new_pillar()</code>
 </summary>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>new_pillar <span class="ot">&lt;-</span> <span class="cf">function</span> (components, ..., <span class="at">width =</span> <span class="cn">NULL</span>, <span class="at">class =</span> <span class="cn">NULL</span>, <span class="at">extra =</span> <span class="fu">deprecated</span>()) </span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;!!!!DEBUG new_pillar(`v(width)`, `v(class)`)&quot;</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is_present</span>(extra)) {</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">deprecate_warn</span>(<span class="st">&quot;1.7.0&quot;</span>, <span class="st">&quot;pillar::new_pillar(extra = )&quot;</span>)</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">check_dots_empty</span>()</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">length</span>(components) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> <span class="sc">!</span><span class="fu">is_named</span>(components)) {</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">abort</span>(<span class="st">&quot;All components must have names.&quot;</span>)</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">structure</span>(components, <span class="at">width =</span> width, <span class="at">class =</span> <span class="fu">c</span>(class, <span class="st">&quot;pillar&quot;</span>))</span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>new_pillar <span class="ot">&lt;-</span> <span class="cf">function</span> (components, ..., <span class="at">width =</span> <span class="cn">NULL</span>, <span class="at">class =</span> <span class="cn">NULL</span>, <span class="at">extra =</span> <span class="fu">deprecated</span>()) </span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>{</span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>    <span class="st">&quot;!!!!DEBUG new_pillar(`v(width)`, `v(class)`)&quot;</span></span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is_present</span>(extra)) {</span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>        <span class="fu">deprecate_warn</span>(<span class="st">&quot;1.7.0&quot;</span>, <span class="st">&quot;pillar::new_pillar(extra = )&quot;</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a>    }</span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a>    <span class="fu">check_dots_empty</span>()</span>
+<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">length</span>(components) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> <span class="sc">!</span><span class="fu">is_named</span>(components)) {</span>
+<span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a>        <span class="fu">abort</span>(<span class="st">&quot;All components must have names.&quot;</span>)</span>
+<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a>    }</span>
+<span id="cb18-11"><a href="#cb18-11" tabindex="-1"></a>    <span class="fu">structure</span>(components, <span class="at">width =</span> width, <span class="at">class =</span> <span class="fu">c</span>(class, <span class="st">&quot;pillar&quot;</span>))</span>
+<span id="cb18-12"><a href="#cb18-12" tabindex="-1"></a>}</span></code></pre></div>
 </details>
 <p>A pillar is stored as a list of components. Each pillar represents
 only one simple (atomic) column, compound columns are always represented
@@ -3349,16 +3381,16 @@ width if empty:</p>
 <summary>
 Source code of <code>pillar:::format.pillar()</code>
 </summary>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>format.pillar <span class="ot">&lt;-</span> <span class="cf">function</span> (x, <span class="at">width =</span> <span class="cn">NULL</span>, ...) </span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.null</span>(width)) {</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>        width <span class="ot">&lt;-</span> <span class="fu">get_width</span>(x)</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.null</span>(width)) {</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>        width <span class="ot">&lt;-</span> <span class="fu">pillar_get_width</span>(x)</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_glue</span>(<span class="fu">pillar_format_parts_2</span>(x, width)<span class="sc">$</span>aligned)</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>format.pillar <span class="ot">&lt;-</span> <span class="cf">function</span> (x, <span class="at">width =</span> <span class="cn">NULL</span>, ...) </span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>{</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.null</span>(width)) {</span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>        width <span class="ot">&lt;-</span> <span class="fu">get_width</span>(x)</span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>    }</span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.null</span>(width)) {</span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a>        width <span class="ot">&lt;-</span> <span class="fu">pillar_get_width</span>(x)</span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a>    }</span>
+<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a>    <span class="fu">as_glue</span>(<span class="fu">pillar_format_parts_2</span>(x, width)<span class="sc">$</span>aligned)</span>
+<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a>}</span></code></pre></div>
 </details>
 </div>
 

@@ -44,9 +44,7 @@ tabPanel("Segmentation", value = "tab_rfm_segments",
 
       column(12, align = 'center',
         br(),
-        actionButton(inputId="button_create_segments", label="Generate Segments", icon = icon('thumbs-up')),
-        bsTooltip("button_create_segments", "Click here to generate segments.",
-          "top", options = list(container = "body")),
+        actionButton(inputId = "button_create_segments", label = "Generate Segments", icon = icon('thumbs-up')),
         br(),
         br()
       )

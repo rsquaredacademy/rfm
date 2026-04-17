@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head><title>R: Functions for Base Types and Core R and 'Tidyverse' Features</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-<link rel="stylesheet" type="text/css" href="R.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<link rel="stylesheet" type="text/css" href="R.css">
 </head><body><div class="container">
 <h1> Functions for Base Types and Core R and 'Tidyverse' Features
-<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]" />
+<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]">
 </h1>
-<hr/>
+<hr>
 <div style="text-align: center;">
-<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
-<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;rlang&rsquo; version 1.1.3</h2>
+<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]"></a>
+<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]"></a>
+</div><h2>Documentation for package &lsquo;rlang&rsquo; version 1.2.0</h2>
 
-<ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
-<li><a href="../NEWS">Package NEWS</a>.</li>
+<ul><li><a href="../DESCRIPTION" type="text/plain; charset=utf-8">DESCRIPTION file</a>.</li>
+<li><a href="../NEWS.md">Package NEWS</a>.</li>
 </ul>
 
 <h2>Help Pages</h2>
@@ -131,6 +131,10 @@
 <td>Extract function name or namespace of a call</td></tr>
 <tr><td style="width: 25%;"><a href="catch_cnd.html">catch_cnd</a></td>
 <td>Catch a condition</td></tr>
+<tr><td style="width: 25%;"><a href="check_type_scalar.html">check_bool</a></td>
+<td>Check argument type (scalar)</td></tr>
+<tr><td style="width: 25%;"><a href="check_data_frame.html">check_data_frame</a></td>
+<td>Check argument type (data frame)</td></tr>
 <tr><td style="width: 25%;"><a href="check_dots_empty.html">check_dots_empty</a></td>
 <td>Check that dots are empty</td></tr>
 <tr><td style="width: 25%;"><a href="check_dots_unnamed.html">check_dots_unnamed</a></td>
@@ -141,8 +145,18 @@
 <td>Check that arguments are mutually exclusive</td></tr>
 <tr><td style="width: 25%;"><a href="is_installed.html">check_installed</a></td>
 <td>Are packages installed in any of the libraries?</td></tr>
+<tr><td style="width: 25%;"><a href="check_type_number.html">check_number_decimal</a></td>
+<td>Check argument type (numbers)</td></tr>
+<tr><td style="width: 25%;"><a href="check_type_number.html">check_number_whole</a></td>
+<td>Check argument type (numbers)</td></tr>
 <tr><td style="width: 25%;"><a href="check_required.html">check_required</a></td>
 <td>Check that argument is supplied</td></tr>
+<tr><td style="width: 25%;"><a href="check_type_scalar.html">check_string</a></td>
+<td>Check argument type (scalar)</td></tr>
+<tr><td style="width: 25%;"><a href="check_type_number.html">check_type_number</a></td>
+<td>Check argument type (numbers)</td></tr>
+<tr><td style="width: 25%;"><a href="check_type_scalar.html">check_type_scalar</a></td>
+<td>Check argument type (scalar)</td></tr>
 <tr><td style="width: 25%;"><a href="vector-construction.html">chr</a></td>
 <td>Create vectors</td></tr>
 <tr><td style="width: 25%;"><a href="cnd_message.html">cnd_body</a></td>
@@ -579,6 +593,8 @@
 <td>Run expressions on load</td></tr>
 <tr><td style="width: 25%;"><a href="op-get-attr.html">op-get-attr</a></td>
 <td>Infix attribute accessor and setter</td></tr>
+<tr><td style="width: 25%;"><a href="op-null-continuation.html">op-null-continuation</a></td>
+<td>Default value for non-'NULL'</td></tr>
 <tr><td style="width: 25%;"><a href="op-null-default.html">op-null-default</a></td>
 <td>Default value for 'NULL'</td></tr>
 </table>
@@ -683,6 +699,8 @@
 <td>Splice operator !!!</td></tr>
 <tr><td style="width: 25%;"><a href="stack.html">stack</a></td>
 <td>Get properties of the current or caller frame</td></tr>
+<tr><td style="width: 25%;"><a href="stop_input_type.html">stop_input_type</a></td>
+<td>Throw a type mismatch error</td></tr>
 <tr><td style="width: 25%;"><a href="sym.html">sym</a></td>
 <td>Create a symbol or list of symbols</td></tr>
 <tr><td style="width: 25%;"><a href="sym.html">syms</a></td>
@@ -753,6 +771,8 @@
 <td>Injection operator !!</td></tr>
 <tr><td style="width: 25%;"><a href="splice-operator.html">!!!</a></td>
 <td>Splice operator !!!</td></tr>
+<tr><td style="width: 25%;"><a href="op-null-continuation.html">%&amp;&amp;%</a></td>
+<td>Default value for non-'NULL'</td></tr>
 <tr><td style="width: 25%;"><a href="env_bind.html">%&lt;~%</a></td>
 <td>Bind symbols to objects in an environment</td></tr>
 <tr><td style="width: 25%;"><a href="op-get-attr.html">%@%</a></td>

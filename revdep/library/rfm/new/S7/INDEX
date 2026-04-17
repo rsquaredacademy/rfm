@@ -1,0 +1,24 @@
+S4_register             Register an S7 class with S4
+S7_class                Retrieve the S7 class of an object
+S7_data                 Get/set underlying "base" data
+S7_inherits             Does this object inherit from an S7 class?
+base_classes            S7 wrappers for base types
+base_s3_classes         S7 wrappers for key S3 classes
+class_any               Dispatch on any class
+class_missing           Dispatch on a missing argument
+convert                 Convert an object from one type to another
+method                  Find a method for an S7 generic
+method<-                Register an S7 method for a generic
+method_explain          Explain method dispatch
+methods_register        Register methods in a package
+new_S3_class            Declare an S3 class
+new_class               Define a new S7 class
+new_external_generic    Generics in other packages
+new_generic             Define a new generic
+new_property            Define a new property
+new_union               Define a class union
+prop                    Get/set a property
+prop_names              Property introspection
+props                   Get/set multiple properties
+super                   Force method dispatch to use a superclass
+validate                Validate an S7 object

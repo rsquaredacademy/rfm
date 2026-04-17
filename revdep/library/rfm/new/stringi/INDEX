@@ -14,8 +14,6 @@ about_search_coll       Locale-Sensitive Text Searching in 'stringi'
 about_search_fixed      Locale-Insensitive Fixed Pattern Matching in
                         'stringi'
 about_search_regex      Regular Expressions in 'stringi'
-about_stringi           Fast and Portable Character String Processing
-                        in R
 stri_compare            Compare Strings with or without Collation
 stri_count              Count the Number of Pattern Occurrences
 stri_count_boundaries   Count the Number of Text Boundaries
@@ -119,3 +117,5 @@ stri_unique             Extract Unique Elements
 stri_width              Determine the Width of Code Points
 stri_wrap               Word Wrap Text to Format Paragraphs
 stri_write_lines        Write Text Lines to a Text File
+stringi-package         Fast and Portable Character String Processing
+                        in R

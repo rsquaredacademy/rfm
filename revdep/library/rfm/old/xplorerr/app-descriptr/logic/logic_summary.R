@@ -6,7 +6,7 @@ observeEvent(input$finalok, {
         numdata <- tibble::as_data_frame(num_data)
         colnames(numdata) <- j
         updateSelectInput(session, inputId = "var_summary",
-            choices = names(numdata), selected = names(numdata))
+            choices = names(numdata), selected = names(numdata)[1])
         updateSliderInput(session = session,
                         inputId = 'filter_summary',
                         min = min(numdata),
@@ -22,7 +22,7 @@ observeEvent(input$finalok, {
                         value = '')
       } else {
           updateSelectInput(session, 'var_summary',
-            choices = names(num_data), selected = names(num_data))
+            choices = names(num_data), selected = names(num_data)[1])
           updateSliderInput(session = session,
                         inputId = 'filter_summary',
                         min = min(num_data),
@@ -43,13 +43,13 @@ observeEvent(input$submit_part_train_per, {
         numdata <- tibble::as_data_frame(num_data)
         colnames(numdata) <- j
         updateSelectInput(session, inputId = "var_summary",
-            choices = names(numdata), selected = names(numdata))
+            choices = names(numdata), selected = names(numdata)[1])
       } else if (ncol(num_data) < 1) {
         updateSelectInput(session, inputId = "var_summary",
             choices = '', selected = '')
       } else {
           updateSelectInput(session, 'var_summary',
-            choices = names(num_data), selected = names(num_data))
+            choices = names(num_data), selected = names(num_data)[1])
       }
 
 })

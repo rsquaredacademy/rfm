@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -8,7 +8,7 @@ knitr::opts_chunk$set(
 library(tidyselect)
 library(magrittr)
 
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 # For better printing
 mtcars <- tibble::as_tibble(mtcars)
 iris <- tibble::as_tibble(iris)
@@ -18,14 +18,14 @@ options(
   tibble.print_max = 4
 )
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  mtcars %>% dplyr::select(mpg, cyl)
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  mtcars %>% pivot_longer(c(mpg, cyl))
 #  mtcars %>% pivot_longer(mpg | cyl)
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  # Passing dots
 #  toupper_dots <- function(data, ...) {
 #    sel <- dplyr::select(data, ...)
@@ -80,7 +80,7 @@ with_data <- function(data, x) {
   rlang::eval_tidy(expr, data = data)
 }
 
-## ---- error = TRUE------------------------------------------------------------
+## ----error = TRUE-------------------------------------------------------------
 NULL %>% with_data(mean(cyl) * 10)
 
 mtcars %>% with_data(mean(cyl) * 10)
@@ -120,7 +120,7 @@ eval_select(rlang::expr(c(foo = mpg)), mtcars)
 
 eval_rename(rlang::expr(c(foo = mpg)), mtcars)
 
-## ---- error = TRUE------------------------------------------------------------
+## ----error = TRUE-------------------------------------------------------------
 eval_rename(rlang::expr(mpg), mtcars)
 
 eval_rename(rlang::expr(c(mpg)), mtcars)
@@ -166,7 +166,7 @@ if_width <- function(n, vars = peek_vars(fn = "if_width")) {
 
 mtcars %>% select(if_width(2))
 
-## ---- error = TRUE------------------------------------------------------------
+## ----error = TRUE-------------------------------------------------------------
 mtcars[if_width(2)]
 
 ## -----------------------------------------------------------------------------
@@ -182,7 +182,7 @@ if_width <- function(n, vars = peek_vars(fn = "if_width")) {
   which(nchar(vars) == n)
 }
 
-## ---- error = TRUE------------------------------------------------------------
+## ----error = TRUE-------------------------------------------------------------
 dups %>% select(if_width(3))
 
 ## -----------------------------------------------------------------------------

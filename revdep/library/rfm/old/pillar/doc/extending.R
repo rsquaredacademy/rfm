@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -8,7 +8,7 @@ knitr::opts_chunk$set(
 library(pillar)
 
 ## -----------------------------------------------------------------------------
-example_tbl <- function(class) {
+example_tbl <- function(class = NULL) {
   vctrs::new_data_frame(
     list(
       a = letters[1:3],
@@ -19,7 +19,7 @@ example_tbl <- function(class) {
 }
 
 ## -----------------------------------------------------------------------------
-example_tbl("default")
+example_tbl()
 
 ## -----------------------------------------------------------------------------
 tbl_sum.default_header_extend <- function(x, ...) {

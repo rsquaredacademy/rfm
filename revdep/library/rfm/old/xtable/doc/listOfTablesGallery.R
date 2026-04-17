@@ -1,4 +1,4 @@
-## ----set, include=FALSE--------------------------------------------------
+## ----set, include=FALSE-----------------------------------
 library(knitr)
 opts_chunk$set(fig.path='Figures/list', debug=TRUE, echo=TRUE)
 opts_chunk$set(out.width='0.9\\textwidth')
@@ -104,7 +104,7 @@ print.xtableList(xList, colnames.format = "multiple",
                  sanitize.rownames.function = italic,
                  sanitize.colnames.function = large,
                  sanitize.subheadings.function = bold,
-                 sanitize.message.function = red,                 
+                 sanitize.message.function = red,
                  booktabs = TRUE)
 
 ## ----multiplecaption, results='asis'----------------------

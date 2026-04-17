@@ -20,8 +20,7 @@ tabPanel('Heat Map', value = 'tab_rfm_heatmap',
 			br(),
 			column(2),
 			column(8, align = 'center', 
-				plotOutput('plot_heatmap', height = '500px') %>% 
-					withSpinner()
+				plotOutput('plot_heatmap', height = '500px')
 			),
 			column(2)
 

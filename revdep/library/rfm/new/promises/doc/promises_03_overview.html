@@ -436,9 +436,9 @@ That promise is what lets you know:</p>
 <p>So if a regular, synchronous function call generally looks like
 this:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>value <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;http://example.com/data/data.csv&quot;</span>)</span></code></pre></div>
-<p>An asynchronous function call (which uses <a href="promises_04_futures.html">the future package</a> via <a href="promises_05_future_promise.html"><code>future_promise()</code></a>)
-will look instead like:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>promise <span class="ot">&lt;-</span> <span class="fu">future_promise</span>(<span class="fu">read.csv</span>(<span class="st">&quot;http://example.com/data/data.csv&quot;</span>))</span></code></pre></div>
+<p>An asynchronous function call (which uses <a href="promises_04_mirai.html">the mirai package</a>) will look instead
+like:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>promise <span class="ot">&lt;-</span> <span class="fu">as.promise</span>(<span class="fu">mirai</span>(<span class="fu">read.csv</span>(<span class="st">&quot;http://example.com/data/data.csv&quot;</span>)))</span></code></pre></div>
 <p>While the regular function call returns a data frame, the async call
 returns a promise, which is most definitely not a data frame. You cannot
 ask the promise how many rows it has, or the names of its columns. You
@@ -453,7 +453,7 @@ everything is based on a function called <code>then</code>.</p>
 <p>The <code>promises::then</code> function is what ultimately makes
 promise objects useful. It is used to register success and failure
 handlers on a promise. Its signature looks like:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">then</span>(promise, <span class="at">onFulfilled =</span> <span class="cn">NULL</span>, <span class="at">onRejected =</span> <span class="cn">NULL</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">then</span>(promise, <span class="at">onFulfilled =</span> <span class="cn">NULL</span>, <span class="at">onRejected =</span> <span class="cn">NULL</span>, ..., <span class="at">tee =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <p>In promise terminology, “fulfilled” (and equivalently, “resolved”)
 means success and “rejected” means failure. You can pass functions with
 single arguments to <code>onFulfilled</code> and <code>onRejected</code>
@@ -472,117 +472,64 @@ the <a href="#error-handling">Error Handling</a> section below.</p>
 <p>The following example shows a simple example of printing out a
 success message and the value.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">then</span>(promise,</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="cf">function</span>(value) {</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  \(value) {</span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">&quot;The operation completed!</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>    <span class="fu">print</span>(value)</span>
 <span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  })</span></code></pre></div>
-<p>If this code looks ugly to you, don’t worry — you’ll rarely write
-promise code that looks like this. As we go, we’ll introduce several
-types of syntactic sugar to make working with promises more pleasant. To
-start with, we can use the <a href="https://r4ds.had.co.nz/pipes.html">magrittr pipe operator</a>,
-which gives us a pretty marginal benefit right now but will pay
-dividends shortly:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>promise <span class="sc">%&gt;%</span></span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="fu">then</span>(<span class="cf">function</span>(value) {</span>
+<p>In the example above, we used the anonymous function shorthand
+(<code>\(x) { }</code>) to write an anonymous function.
+<code>function(x) { }</code> would behave just the same.</p>
+<p>To help reduce the amount of in/out reading, we can use the R pipe
+operator (<code>|&gt;</code>):</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>promise <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="fu">then</span>(\(value) {</span>
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">&quot;The operation completed!</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
 <span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>    <span class="fu">print</span>(value)</span>
 <span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>  })</span></code></pre></div>
-<p>Note that the call to <code>then()</code> always returns immediately,
-without invoking the callback function. The callback function will be
-invoked sometime in the future—it could be very soon, or it could be
-hours, depending mostly on how long it takes the async operation to
-complete.</p>
-</div>
-<div id="using-formulas" class="section level2">
-<h2>Using formulas</h2>
-<p>You don’t have to use anonymous functions as callbacks; you can use
-named functions as well. So <code>promise %&gt;% then(print)</code>
-works, if you just want to print a value.</p>
-<p>If you don’t have a named function that does what you want, though,
-you still have an alternative to using anonymous functions, which can be
-a little verbose: you can use formulas to save a few keystrokes. These
-use <a href="https://r4ds.had.co.nz/iteration.html">purrr’s “lambda
-formula” style</a>; if you’re not familiar with purrr, for now just know
-that you can access the value (or error) using <code>.</code> as a
-variable name.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>promise <span class="sc">%&gt;%</span></span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="fu">then</span>(<span class="sc">~</span>{</span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">&quot;The operation completed!&quot;</span>)</span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>    <span class="fu">print</span>(.)</span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>  })</span></code></pre></div>
-<p>(Yes, you can have entire blocks of code as formulas!)</p>
-</div>
-<div id="using-pipes" class="section level2">
-<h2>Using pipes</h2>
-<p>We can take the syntactic sugar a step further by using the
-<em>promise pipe</em>, a promise-aware version of <code>%&gt;%</code>
-(the magrittr pipe operator). The promise pipe looks like
-<code>%...&gt;%</code> and performs most of the same tricks as
-<code>%&gt;%</code>, but adds the functionality of
-<code>then</code>.</p>
-<p>The following two blocks of code are equivalent:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># Without promise pipe</span></span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>promise <span class="sc">%&gt;%</span></span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  <span class="fu">then</span>(<span class="sc">~</span>{</span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>    <span class="fu">filter</span>(., state <span class="sc">==</span> <span class="st">&quot;NY&quot;</span>)</span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  })</span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co"># Using promise pipe</span></span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>promise <span class="sc">%...&gt;%</span></span>
-<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="st">&quot;NY&quot;</span>)</span></code></pre></div>
-<p>(Note that the <code>%...&gt;%</code> operator only supports the
-<code>onFulfilled</code> part of <code>then()</code>, so it’s not useful
-for handling errors; there’s a separate <code>%...!%</code> operator for
-that. We’ll cover this below in the section on <a href="#error-handling">Error Handling</a>.)</p>
-<p>Like magrittr’s pipe, the promise pipe lets you chain together
-operations using a variety of syntaxes. You can use code blocks, which
-can come in handy if you have multiple lines of code to execute that
-don’t necessarily match the pipe paradigm:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>promise <span class="sc">%...&gt;%</span> {</span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="fu">filter</span>(., state <span class="sc">==</span> <span class="st">&quot;NY&quot;</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>}</span></code></pre></div>
-<p>You can use anonymous functions (which you must wrap in parentheses),
-which helps if you prefer to give the promise result object an explicit
-name (in this case, <code>df</code>):</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>promise <span class="sc">%...&gt;%</span> (<span class="cf">function</span>(df) {</span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">filter</span>(df, state <span class="sc">==</span> <span class="st">&quot;NY&quot;</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>})</span></code></pre></div>
+<p>Note that the call to <code>then()</code> <strong>always returns
+immediately</strong>, without invoking the callback function. The
+callback function will be invoked sometime in the future—it could be
+very soon, or it could be hours, depending mostly on how long it takes
+the async operation to complete.</p>
 </div>
 <div id="promise-chaining" class="section level2">
 <h2>Promise chaining</h2>
-<p>The <code>then</code> function has an important function beyond
+<p>The <code>then()</code> function has an important function beyond
 registering callbacks. It also returns a promise—not the promise it
 takes as an argument, but a new, distinct promise. This new promise gets
 fulfilled after the input promise has resolved and the callback
-registered by <code>then</code> has run; the return value of the
+registered by <code>then()</code> has run; the return value of the
 callback is used to fulfill the new promise.</p>
 <p>For example:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>promise2 <span class="ot">&lt;-</span> promise <span class="sc">%&gt;%</span></span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">then</span>(nrow)</span></code></pre></div>
-<p>In this case, after <code>promise</code> is fulfilled with a data
-frame, <code>promise2</code> will be fulfilled with the number of rows
-of that data frame.</p>
-<p>Because <code>then</code> uses promises for both input and output,
-you can chain multiple <code>then</code> calls together directly:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>promise <span class="sc">%&gt;%</span></span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  <span class="fu">then</span>(<span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2006</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>  <span class="fu">then</span>(<span class="fu">group_by</span>(state)) <span class="sc">%&gt;%</span></span>
-<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>  <span class="fu">then</span>(<span class="fu">summarise</span>(<span class="at">pop =</span> <span class="fu">sum</span>(population))) <span class="sc">%&gt;%</span></span>
-<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>  <span class="fu">then</span>(<span class="fu">arrange</span>(<span class="fu">desc</span>(pop)))</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">promise_resolve</span>(palmerpenguins<span class="sc">::</span>penguins)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> p <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="fu">then</span>(nrow)</span></code></pre></div>
+<p>In this case, after <code>p</code> is fulfilled with a data frame,
+<code>p2</code> will be fulfilled with the number of rows of that data
+frame.</p>
+<p>Because <code>then()</code> uses promises for both input and output,
+you can chain multiple <code>then()</code> calls together directly:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>p <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="fu">then</span>(\(df) <span class="fu">filter</span>(df, year <span class="sc">==</span> <span class="dv">2008</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  <span class="fu">then</span>(\(df) <span class="fu">group_by</span>(df, species)) <span class="sc">|&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>  <span class="fu">then</span>(\(df) <span class="fu">summarise</span>(df, <span class="at">mean_bill =</span> <span class="fu">mean</span>(bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  <span class="fu">then</span>(\(df) <span class="fu">arrange</span>(df, <span class="fu">desc</span>(mean_bill))) <span class="sc">|&gt;</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>  <span class="fu">then</span>(print)</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 2</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt;   species   mean_bill</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt;   &lt;fct&gt;         &lt;dbl&gt;</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#&gt; 1 Chinstrap      48.7</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co">#&gt; 2 Gentoo         46.9</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="co">#&gt; 3 Adelie         38.6</span></span></code></pre></div>
 <p>Or, equivalently:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>promise <span class="sc">%...&gt;%</span></span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2006</span>) <span class="sc">%...&gt;%</span></span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>  <span class="fu">group_by</span>(state) <span class="sc">%...&gt;%</span></span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">pop =</span> <span class="fu">sum</span>(population)) <span class="sc">%...&gt;%</span></span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(pop))</span></code></pre></div>
-<p>Or, a third way:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>promise <span class="sc">%...&gt;%</span> (<span class="cf">function</span>(df) {</span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>  df <span class="sc">%&gt;%</span></span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>    <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2006</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>    <span class="fu">group_by</span>(state) <span class="sc">%&gt;%</span></span>
-<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">pop =</span> <span class="fu">sum</span>(population)) <span class="sc">%&gt;%</span></span>
-<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(pop))</span>
-<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>})</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>p <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="fu">then</span>(\(df) {</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>    df <span class="sc">|&gt;</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>      <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2008</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>      <span class="fu">group_by</span>(state) <span class="sc">|&gt;</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>      <span class="fu">summarise</span>(<span class="at">pop =</span> <span class="fu">sum</span>(population)) <span class="sc">|&gt;</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>      <span class="fu">arrange</span>(<span class="fu">desc</span>(pop))</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>  })</span></code></pre></div>
 <p>Evaluating this expression results in a promise that will eventually
 resolve to the filtered, summarized, and ordered data.</p>
 </div>
@@ -592,34 +539,37 @@ resolve to the filtered, summarized, and ordered data.</p>
 have a stage that performs an action but does not modify the value
 presented to downstream stages. For example, you may want to log the
 number of rows in a data frame for diagnostic purposes:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="co"># Incorrect!</span></span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>promise <span class="sc">%...&gt;%</span></span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2006</span>) <span class="sc">%...&gt;%</span></span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">nrow</span>(.)) <span class="sc">%...&gt;%</span></span>
-<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>  <span class="fu">group_by</span>(state) <span class="sc">%...&gt;%</span></span>
-<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">pop =</span> <span class="fu">sum</span>(population)) <span class="sc">%...&gt;%</span></span>
-<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(pop))</span></code></pre></div>
-<p>This is not correct, as the <code>print(nrow(.))</code> stage will
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># Incorrect!</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>promise <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  <span class="fu">then</span>(\(df) df <span class="sc">|&gt;</span> <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2008</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>  <span class="fu">then</span>(\(df) <span class="fu">print</span>(<span class="fu">nrow</span>(df))) <span class="sc">|&gt;</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>  <span class="fu">then</span>(\(df) df <span class="sc">|&gt;</span> <span class="fu">group_by</span>(state)) <span class="sc">|&gt;</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>  <span class="fu">then</span>(\(df) df <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="at">pop =</span> <span class="fu">sum</span>(population))) <span class="sc">|&gt;</span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>  <span class="fu">then</span>(\(df) df <span class="sc">|&gt;</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(pop))) <span class="sc">|&gt;</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>  <span class="fu">then</span>(print)</span></code></pre></div>
+<p>This is not correct, as the <code>print(nrow(df))</code> stage will
 not only print the desired value, but pass the return value of
 <code>print(nrow(.))</code>, which is just
-<code>invisible(nrow(.))</code>, to the next stage.</p>
-<p>For synchronous code, magrittr offers the <code>%T&gt;%</code>
-(pronounced “tee”) operator, which operates like a regular
-<code>%&gt;%</code> except that, after executing its right-hand side, it
-returns its left-hand side value.</p>
+<code>invisible(nrow(df))</code>, to the next stage.</p>
+<p>For synchronous code, the <a href="https://magrittr.tidyverse.org/reference/tee.html"><code>{magrittr}</code>
+package offered the <code>%T&gt;%</code> (pronounced “tee”)
+operator</a>, which operates like a regular <code>|&gt;</code> except
+that, after executing its right-hand side, it returns its left-hand side
+value.</p>
 <p>Similarly, for asynchronous code, you can use the
-<code>%...T&gt;%</code> operator, which is like <code>%...&gt;%</code>
+<code>then(tee = TRUE)</code> method, which is like <code>then()</code>
 except that after execution it resolves using its input promise. The
 only difference in the corrected code below is the operator immediately
-preceding <code>print(nrow(.))</code> has changed from
-<code>%...&gt;%</code> to <code>%...T&gt;%</code>.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="co"># Correct.</span></span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>promise <span class="sc">%...&gt;%</span></span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2006</span>) <span class="sc">%...T&gt;%</span></span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">nrow</span>(.)) <span class="sc">%...&gt;%</span></span>
-<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>  <span class="fu">group_by</span>(state) <span class="sc">%...&gt;%</span></span>
-<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">pop =</span> <span class="fu">sum</span>(population)) <span class="sc">%...&gt;%</span></span>
-<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(pop))</span></code></pre></div>
+preceding <code>print(nrow(df))</code> has changed from
+<code>then()</code> to <code>then(tee = TRUE)</code>.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co"># Correct.</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>promise <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="fu">then</span>(\(df) df <span class="sc">|&gt;</span> <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2008</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  <span class="fu">then</span>(<span class="at">tee =</span> <span class="cn">TRUE</span>, \(df) <span class="fu">print</span>(<span class="fu">nrow</span>(df))) <span class="sc">|&gt;</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>  <span class="fu">then</span>(\(df) df <span class="sc">|&gt;</span> <span class="fu">group_by</span>(state)) <span class="sc">|&gt;</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>  <span class="fu">then</span>(\(df) df <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="at">pop =</span> <span class="fu">sum</span>(population))) <span class="sc">|&gt;</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>  <span class="fu">then</span>(\(df) df <span class="sc">|&gt;</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(pop))) <span class="sc">|&gt;</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>  <span class="fu">then</span>(print)</span></code></pre></div>
 </div>
 <div id="error-handling" class="section level2">
 <h2>Error handling</h2>
@@ -639,15 +589,15 @@ succeeds, the <code>onFulfilled</code> callback (if provided) will be
 invoked. If the input promise’s operation fails, then
 <code>onRejected</code> (if provided) will be invoked with an error
 object.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>promise2 <span class="ot">&lt;-</span> promise1 <span class="sc">%&gt;%</span></span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>  <span class="fu">then</span>(</span>
-<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>    <span class="at">onFulfilled =</span> <span class="cf">function</span>(value) {</span>
-<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>      <span class="co"># Getting here means promise1 succeeded</span></span>
-<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>    },</span>
-<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a>    <span class="at">onRejected =</span> <span class="cf">function</span>(err) {</span>
-<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>      <span class="co"># Getting here means promise1 failed</span></span>
-<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a>    }</span>
-<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>promise2 <span class="ot">&lt;-</span> promise1 <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  <span class="fu">then</span>(</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>    <span class="at">onFulfilled =</span> \(value) {</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>      <span class="co"># Getting here means promise1 succeeded</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>    },</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>    <span class="at">onRejected =</span> \(err) {</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>      <span class="co"># Getting here means promise1 failed</span></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>    }</span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>  )</span></code></pre></div>
 <p>In the code above, you can see that the success or failure of
 <code>promise1</code> is what will determine which of the two callbacks
 is invoked.</p>
@@ -674,21 +624,21 @@ output promise will be rejected/fail.</p>
 to propagate, unless you go out of your way to do so by re-throwing it
 using <code>stop(err)</code>.</p>
 <p>So the equivalent to this (synchronous) code:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>value <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(</span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>  <span class="fu">operation</span>(),</span>
-<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>  <span class="at">error =</span> <span class="cf">function</span>(err) {</span>
-<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>    <span class="fu">warning</span>(<span class="st">&quot;An error occurred: &quot;</span>, err)</span>
-<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>    <span class="fu">warning</span>(<span class="st">&quot;Using default value of 0 instead&quot;</span>)</span>
-<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a>    <span class="dv">0</span></span>
-<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a>  }</span>
-<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>value <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  somepkg<span class="sc">::</span><span class="fu">operation</span>(),</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>  <span class="at">error =</span> \(err) {</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>    <span class="fu">warning</span>(<span class="st">&quot;An error occurred: &quot;</span>, err)</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>    <span class="fu">warning</span>(<span class="st">&quot;Using default value of 0 instead&quot;</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>    <span class="dv">0</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>  }</span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>)</span></code></pre></div>
 <p>would be this, when the operation is performed asynchronously:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>promise <span class="ot">&lt;-</span> <span class="fu">future_promise</span>(<span class="fu">operation</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>  <span class="fu">then</span>(<span class="at">onRejected =</span> <span class="cf">function</span>(err) {</span>
-<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>    <span class="fu">warning</span>(<span class="st">&quot;An error occurred: &quot;</span>, err)</span>
-<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>    <span class="fu">warning</span>(<span class="st">&quot;Using default value of 0 instead&quot;</span>)</span>
-<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>    <span class="dv">0</span></span>
-<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a>  }</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>promise <span class="ot">&lt;-</span> <span class="fu">mirai</span>(somepkg<span class="sc">::</span><span class="fu">operation</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>  <span class="fu">then</span>(<span class="at">onRejected =</span> \(err) {</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>    <span class="fu">warning</span>(<span class="st">&quot;An error occurred: &quot;</span>, err)</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>    <span class="fu">warning</span>(<span class="st">&quot;Using default value of 0 instead&quot;</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>    <span class="dv">0</span></span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>  })</span></code></pre></div>
 <p>In the synchronous case, an error in <code>operation()</code> will
 result in the error being logged as a warning, and <code>0</code> being
 assigned to <code>value</code>. In the asynchronous case, the same
@@ -703,15 +653,15 @@ is caught, dealt with, and turned into a non-error.</p>
 behavior of <code>then</code> if its input promise is rejected with an
 error, but the caller has not provided an explicit
 <code>onRejected</code> callback?</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>promise2 <span class="ot">&lt;-</span> promise1 <span class="sc">%&gt;%</span></span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>  <span class="fu">then</span>(head) <span class="sc">%&gt;%</span></span>
-<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>  <span class="fu">then</span>(print)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>promise2 <span class="ot">&lt;-</span> promise1 <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>  <span class="fu">then</span>(head) <span class="sc">|&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>  <span class="fu">then</span>(print)</span></code></pre></div>
 <p>Well, <code>then</code> has its own default version of
 <code>onRejected</code>. It’s <em>not</em> an empty
-<code>onRejected = function(err) { }</code>, as you might think. Even
-though this function has no code in its body, it still returns normally,
-and thus would cause any errors to be caught and swallowed. That’s not
-the behavior we want; in the code above, we want a failure in
+<code>onRejected = \(err) { }</code>, as you might think. Even though
+this function has no code in its body, it still returns normally, and
+thus would cause any errors to be caught and swallowed. That’s not the
+behavior we want; in the code above, we want a failure in
 <code>promise1</code> to cause <code>promise2</code> to be rejected so
 we know that something went wrong. So the default callback actually
 looks like: <code>onRejected = stop</code>, meaning, do nothing but
@@ -728,20 +678,14 @@ promise.)</p>
 <h3>Syntactic sugar for onRejected</h3>
 <p>The same syntactic sugar that is offered for non-error cases, is
 available for error handling code as well. You can use formulas in
-<code>onRejected</code>:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">future_promise</span>(<span class="fu">operation</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>  <span class="fu">then</span>(<span class="at">onRejected =</span> <span class="sc">~</span><span class="fu">warning</span>(.))</span></code></pre></div>
-<p>There’s an error handling pipe operator <code>%...!%</code>, that
-works similar to <code>%...&gt;%</code> but it binds to
-<code>then(onRejected)</code> instead of
-<code>then(onFulfilled)</code>:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="fu">future_promise</span>(<span class="fu">operation</span>()) <span class="sc">%...!%</span></span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>  <span class="fu">warning</span>()</span></code></pre></div>
-<p>There’s also a <code>catch()</code> function that is just a shorthand
-for <code>then(onRejected)</code>. It saves a little typing, but more
+<code>onRejected()</code>:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">mirai</span>(somepkg<span class="sc">::</span><span class="fu">operation</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>  <span class="fu">then</span>(<span class="at">onRejected =</span> \(err) <span class="fu">warning</span>(err))</span></code></pre></div>
+<p>There’s a <code>catch()</code> function that is just a shorthand for
+<code>then(onRejected)</code>. It saves a little typing, but more
 importantly, is easier to read:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="fu">future_promise</span>(<span class="fu">operation</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>  <span class="fu">catch</span>(warning)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">mirai</span>(somepkg<span class="sc">::</span><span class="fu">operation</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>  <span class="fu">catch</span>(warning)</span></code></pre></div>
 </div>
 <div id="error-tee" class="section level3">
 <h3>Error tee</h3>
@@ -749,20 +693,19 @@ importantly, is easier to read:</p>
 without stopping it from propagating (such as logging), there are a
 couple of additional shorthands for doing so without having to
 explicitly call <code>stop(err)</code>. For example:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>promise <span class="sc">%...!%</span> <span class="fu">print</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>promise <span class="sc">|&gt;</span> <span class="fu">catch</span>(print)</span></code></pre></div>
 <p>will print the error, but also eat it. To print the error without
 eating it, you’d have to do this:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>promise <span class="sc">%...!%</span> <span class="cf">function</span>(err) {</span>
-<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>  <span class="fu">print</span>(err)</span>
-<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a>  <span class="fu">stop</span>(err)</span>
-<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>promise <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>  <span class="fu">catch</span>(\(err) {</span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>    <span class="fu">print</span>(err)</span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>    <span class="fu">stop</span>(err)</span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>  })</span></code></pre></div>
 <p>That’s a fair amount of boilerplate. Instead, you can either add
-<code>tee = TRUE</code> to your <code>catch</code> call, or
-equivalently, use the <code>%...T!%</code> operator. These two lines are
-equivalent to each other, and to the previous code chunk:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>promise <span class="sc">%&gt;%</span> <span class="fu">catch</span>(print, <span class="at">tee =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>promise <span class="sc">%...T!%</span> <span class="fu">print</span>()</span></code></pre></div>
+<code>tee = TRUE</code> to your <code>catch</code> call. These two lines
+are equivalent to the previous code chunk:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>promise <span class="sc">|&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>  <span class="fu">catch</span>(print, <span class="at">tee =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 </div>
 </div>
 <div id="cleaning-up-with-finally" class="section level2">
@@ -772,26 +715,29 @@ either<code>tryCatch(expr, finally = ...)</code> or
 <code>on.exit(...)</code> to perform tasks (usually relating to freeing
 resources or reverting temporary changes) regardless of whether the main
 logic succeeds or fails (throws an error). When programming with
-promises, you can use the <code>finally</code> function to do the same.
-The <code>finally</code> function is similar to <code>then</code> but it
-only takes a single callback that executes on both success and failure,
-and its return value is ignored.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">&quot;.png&quot;</span>)</span>
-<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>png_bytes <span class="ot">&lt;-</span></span>
-<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>  <span class="fu">future_promise</span>({</span>
-<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a>    <span class="fu">png</span>(file_path)</span>
-<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a>    <span class="fu">plot</span>(cars)</span>
-<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a>    <span class="fu">dev.off</span>()</span>
-<span id="cb26-7"><a href="#cb26-7" tabindex="-1"></a>    file_path</span>
-<span id="cb26-8"><a href="#cb26-8" tabindex="-1"></a>  }) <span class="sc">%...&gt;%</span></span>
-<span id="cb26-9"><a href="#cb26-9" tabindex="-1"></a>  <span class="fu">readBin</span>(<span class="fu">raw</span>(), <span class="at">size =</span> <span class="fu">file.info</span>(file_path)<span class="sc">$</span>size) <span class="sc">%&gt;%</span></span>
-<span id="cb26-10"><a href="#cb26-10" tabindex="-1"></a>  <span class="fu">finally</span>(<span class="sc">~</span><span class="fu">unlink</span>(file_path))</span></code></pre></div>
+promises, you can use the <code>finally()</code> call to do the same.
+The <code>finally()</code> function is similar to <code>then()</code>
+but it only takes a single callback that executes on both success and
+failure, and its return value is ignored.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">&quot;.png&quot;</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>png_bytes_promise <span class="ot">&lt;-</span></span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>  <span class="fu">mirai</span>(</span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a>    {</span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a>      <span class="fu">png</span>(file_path)</span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a>      <span class="fu">plot</span>(cars)</span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a>      <span class="fu">dev.off</span>()</span>
+<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a>      file_path</span>
+<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a>    },</span>
+<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a>    <span class="at">file_path =</span> file_path</span>
+<span id="cb20-11"><a href="#cb20-11" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb20-12"><a href="#cb20-12" tabindex="-1"></a>  <span class="fu">then</span>(\() brio<span class="sc">::</span><span class="fu">read_file_raw</span>(file_path)) <span class="sc">|&gt;</span></span>
+<span id="cb20-13"><a href="#cb20-13" tabindex="-1"></a>  <span class="fu">finally</span>(\() <span class="fu">unlink</span>(file_path))</span></code></pre></div>
 <p>In this example, we need a temp file for the duration of the
-pipeline. Our <code>finally</code> makes sure the temp file is deleted
-when the operation is done, regardless of whether it succeeded or
-failed.</p>
+pipeline. Our <code>finally()</code> code expression makes sure the temp
+file is deleted when the operation is done, regardless of whether it
+succeeded or failed.</p>
 <div style="font-size: 20px; margin-top: 40px; text-align: right;">
-<p>Next: <a href="promises_04_futures.html">Launching tasks</a></p>
+<p>Next: <a href="promises_04_mirai.html">Launching tasks</a></p>
 </div>
 </div>
 

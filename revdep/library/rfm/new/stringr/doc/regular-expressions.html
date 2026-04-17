@@ -48,8 +48,9 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -576,7 +577,7 @@ will pick between one or more possible matches. For example,
 <span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;gre&quot; &quot;ay&quot;</span></span>
 <span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a><span class="fu">str_extract</span>(<span class="fu">c</span>(<span class="st">&quot;grey&quot;</span>, <span class="st">&quot;gray&quot;</span>), <span class="st">&quot;gr(e|a)y&quot;</span>)</span>
 <span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a><span class="co">#&gt; [1] &quot;grey&quot; &quot;gray&quot;</span></span></code></pre></div>
-<p>Parenthesis also define “groups” that you can refer to with
+<p>Parentheses also define “groups” that you can refer to with
 <strong>backreferences</strong>, like <code>\1</code>, <code>\2</code>
 etc, and can be extracted with <code>str_match()</code>. For example,
 the following regular expression finds all fruits that have a repeated
@@ -604,6 +605,31 @@ slightly more efficient than capturing parentheses.</p>
 <span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a><span class="co">#&gt; [2,] &quot;gray&quot;</span></span></code></pre></div>
 <p>This is most useful for more complex cases where you need to capture
 matches and control precedence independently.</p>
+<p>You can use <code>(?&lt;name&gt;...)</code>, the named capture group,
+to provide a reference to the matched text. This is more readable and
+maintainable, especially with complex regular expressions, because you
+can reference the matched text by name instead of a potentially
+confusing numerical index.</p>
+<p><em>Note: <code>&lt;name&gt;</code> should not include an underscore
+because they are not supported.</em></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>date_string <span class="ot">&lt;-</span> <span class="st">&quot;Today&#39;s date is 2025-09-19.&quot;</span></span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>pattern <span class="ot">&lt;-</span> <span class="st">&quot;(?&lt;year&gt;</span><span class="sc">\\</span><span class="st">d{4})-(?&lt;month&gt;</span><span class="sc">\\</span><span class="st">d{2})-(?&lt;day&gt;</span><span class="sc">\\</span><span class="st">d{2})&quot;</span></span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="fu">str_match</span>(date_string, pattern)</span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="co">#&gt;                   year   month day </span></span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a><span class="co">#&gt; [1,] &quot;2025-09-19&quot; &quot;2025&quot; &quot;09&quot;  &quot;19&quot;</span></span></code></pre></div>
+<p>You can then use <code>\k&lt;name&gt;</code> to backreference the
+previously captured named group. It is an alternative to the standard
+numbered backreferences like <code>\1</code> or <code>\2</code>.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>text <span class="ot">&lt;-</span> <span class="st">&quot;This is is a test test with duplicates duplicates&quot;</span></span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>pattern <span class="ot">&lt;-</span> <span class="st">&quot;(?&lt;word&gt;</span><span class="sc">\\</span><span class="st">b</span><span class="sc">\\</span><span class="st">w+</span><span class="sc">\\</span><span class="st">b)</span><span class="sc">\\</span><span class="st">s+</span><span class="sc">\\</span><span class="st">k&lt;word&gt;&quot;</span></span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a><span class="fu">str_subset</span>(text, pattern)</span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a><span class="co">#&gt; [1] &quot;This is is a test test with duplicates duplicates&quot;</span></span>
+<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a><span class="fu">str_match_all</span>(text, pattern)</span>
+<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a><span class="co">#&gt;                              word        </span></span>
+<span id="cb21-8"><a href="#cb21-8" tabindex="-1"></a><span class="co">#&gt; [1,] &quot;is is&quot;                 &quot;is&quot;        </span></span>
+<span id="cb21-9"><a href="#cb21-9" tabindex="-1"></a><span class="co">#&gt; [2,] &quot;test test&quot;             &quot;test&quot;      </span></span>
+<span id="cb21-10"><a href="#cb21-10" tabindex="-1"></a><span class="co">#&gt; [3,] &quot;duplicates duplicates&quot; &quot;duplicates&quot;</span></span></code></pre></div>
 </div>
 <div id="anchors" class="section level2">
 <h2>Anchors</h2>
@@ -614,11 +640,11 @@ it matches from the start or end of the string:</p>
 <li><code>^</code> matches the start of string.</li>
 <li><code>$</code> matches the end of the string.</li>
 </ul>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;banana&quot;</span>, <span class="st">&quot;pear&quot;</span>)</span>
-<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">&quot;^a&quot;</span>)</span>
-<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;a&quot; NA  NA</span></span>
-<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">&quot;a$&quot;</span>)</span>
-<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a><span class="co">#&gt; [1] NA  &quot;a&quot; NA</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;banana&quot;</span>, <span class="st">&quot;pear&quot;</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">&quot;^a&quot;</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;a&quot; NA  NA</span></span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">&quot;a$&quot;</span>)</span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a><span class="co">#&gt; [1] NA  &quot;a&quot; NA</span></span></code></pre></div>
 <p>To match a literal “$” or “^”, you need to escape them,
 <code>\$</code>, and <code>\^</code>.</p>
 <p>For multiline strings, you can use
@@ -633,13 +659,13 @@ operators:</p>
 <li><p><code>\Z</code> matches the end of the input, but before the
 final line terminator, if it exists.</p></li>
 </ul>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="st">&quot;Line 1</span><span class="sc">\n</span><span class="st">Line 2</span><span class="sc">\n</span><span class="st">Line 3</span><span class="sc">\n</span><span class="st">&quot;</span></span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="fu">str_extract_all</span>(x, <span class="st">&quot;^Line..&quot;</span>)[[<span class="dv">1</span>]]</span>
-<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Line 1&quot;</span></span>
-<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a><span class="fu">str_extract_all</span>(x, <span class="fu">regex</span>(<span class="st">&quot;^Line..&quot;</span>, <span class="at">multiline =</span> <span class="cn">TRUE</span>))[[<span class="dv">1</span>]]</span>
-<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Line 1&quot; &quot;Line 2&quot; &quot;Line 3&quot;</span></span>
-<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a><span class="fu">str_extract_all</span>(x, <span class="fu">regex</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">ALine..&quot;</span>, <span class="at">multiline =</span> <span class="cn">TRUE</span>))[[<span class="dv">1</span>]]</span>
-<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Line 1&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="st">&quot;Line 1</span><span class="sc">\n</span><span class="st">Line 2</span><span class="sc">\n</span><span class="st">Line 3</span><span class="sc">\n</span><span class="st">&quot;</span></span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="fu">str_extract_all</span>(x, <span class="st">&quot;^Line..&quot;</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Line 1&quot;</span></span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a><span class="fu">str_extract_all</span>(x, <span class="fu">regex</span>(<span class="st">&quot;^Line..&quot;</span>, <span class="at">multiline =</span> <span class="cn">TRUE</span>))[[<span class="dv">1</span>]]</span>
+<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Line 1&quot; &quot;Line 2&quot; &quot;Line 3&quot;</span></span>
+<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a><span class="fu">str_extract_all</span>(x, <span class="fu">regex</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">ALine..&quot;</span>, <span class="at">multiline =</span> <span class="cn">TRUE</span>))[[<span class="dv">1</span>]]</span>
+<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Line 1&quot;</span></span></code></pre></div>
 </div>
 <div id="repetition" class="section level2">
 <h2>Repetition</h2>
@@ -650,13 +676,13 @@ operators:</p>
 <li><code>+</code>: 1 or more.</li>
 <li><code>*</code>: 0 or more.</li>
 </ul>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="st">&quot;1888 is the longest year in Roman numerals: MDCCCLXXXVIII&quot;</span></span>
-<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">&quot;CC?&quot;</span>)</span>
-<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;CC&quot;</span></span>
-<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">&quot;CC+&quot;</span>)</span>
-<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a><span class="co">#&gt; [1] &quot;CCC&quot;</span></span>
-<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">&#39;C[LX]+&#39;</span>)</span>
-<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a><span class="co">#&gt; [1] &quot;CLXXX&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="st">&quot;1888 is the longest year in Roman numerals: MDCCCLXXXVIII&quot;</span></span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">&quot;CC?&quot;</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;CC&quot;</span></span>
+<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">&quot;CC+&quot;</span>)</span>
+<span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a><span class="co">#&gt; [1] &quot;CCC&quot;</span></span>
+<span id="cb24-6"><a href="#cb24-6" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">&#39;C[LX]+&#39;</span>)</span>
+<span id="cb24-7"><a href="#cb24-7" tabindex="-1"></a><span class="co">#&gt; [1] &quot;CLXXX&quot;</span></span></code></pre></div>
 <p>Note that the precedence of these operators is high, so you can
 write: <code>colou?r</code> to match either American or British
 spellings. That means most uses will need parentheses, like
@@ -667,12 +693,12 @@ spellings. That means most uses will need parentheses, like
 <li><code>{n,}</code>: n or more</li>
 <li><code>{n,m}</code>: between n and m</li>
 </ul>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">&quot;C{2}&quot;</span>)</span>
-<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;CC&quot;</span></span>
-<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">&quot;C{2,}&quot;</span>)</span>
-<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a><span class="co">#&gt; [1] &quot;CCC&quot;</span></span>
-<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">&quot;C{2,3}&quot;</span>)</span>
-<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a><span class="co">#&gt; [1] &quot;CCC&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">&quot;C{2}&quot;</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;CC&quot;</span></span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">&quot;C{2,}&quot;</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a><span class="co">#&gt; [1] &quot;CCC&quot;</span></span>
+<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">&quot;C{2,3}&quot;</span>)</span>
+<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a><span class="co">#&gt; [1] &quot;CCC&quot;</span></span></code></pre></div>
 <p>By default these matches are “greedy”: they will match the longest
 string possible. You can make them “lazy”, matching the shortest string
 possible by putting a <code>?</code> after them:</p>
@@ -684,10 +710,10 @@ possible by putting a <code>?</code> after them:</p>
 <li><code>{n,m}?</code>: between n and m, , match as few times as
 possible, but at least n.</li>
 </ul>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="fu">c</span>(<span class="st">&quot;C{2,3}&quot;</span>, <span class="st">&quot;C{2,3}?&quot;</span>))</span>
-<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;CCC&quot; &quot;CC&quot;</span></span>
-<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="fu">c</span>(<span class="st">&quot;C[LX]+&quot;</span>, <span class="st">&quot;C[LX]+?&quot;</span>))</span>
-<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a><span class="co">#&gt; [1] &quot;CLXXX&quot; &quot;CL&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="fu">c</span>(<span class="st">&quot;C{2,3}&quot;</span>, <span class="st">&quot;C{2,3}?&quot;</span>))</span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;CCC&quot; &quot;CC&quot;</span></span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="fu">c</span>(<span class="st">&quot;C[LX]+&quot;</span>, <span class="st">&quot;C[LX]+?&quot;</span>))</span>
+<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a><span class="co">#&gt; [1] &quot;CLXXX&quot; &quot;CL&quot;</span></span></code></pre></div>
 <p>You can also make the matches possessive by putting a <code>+</code>
 after them, which means that if later parts of the match fail, the
 repetition will not be re-tried with a smaller number of characters.
@@ -705,10 +731,10 @@ scenarios (called “catastrophic backtracking”).</p>
 <code>(?&gt;...)</code>. If a later match fails and the engine needs to
 back-track, an atomic match is kept as is: it succeeds or fails as a
 whole. Compare the following two regular expressions:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="fu">str_detect</span>(<span class="st">&quot;ABC&quot;</span>, <span class="st">&quot;(?&gt;A|.B)C&quot;</span>)</span>
-<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a><span class="co">#&gt; [1] FALSE</span></span>
-<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a><span class="fu">str_detect</span>(<span class="st">&quot;ABC&quot;</span>, <span class="st">&quot;(?:A|.B)C&quot;</span>)</span>
-<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">str_detect</span>(<span class="st">&quot;ABC&quot;</span>, <span class="st">&quot;(?&gt;A|.B)C&quot;</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a><span class="co">#&gt; [1] FALSE</span></span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a><span class="fu">str_detect</span>(<span class="st">&quot;ABC&quot;</span>, <span class="st">&quot;(?:A|.B)C&quot;</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 <p>The atomic match fails because it matches A, and then the next
 character is a C so it fails. The regular match succeeds because it
 matches A, but then C doesn’t match, so it back-tracks and tries B
@@ -736,39 +762,39 @@ current position. Length must be bounded<br />
 </ul>
 <p>These are useful when you want to check that a pattern exists, but
 you don’t want to include it in the result:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;1 piece&quot;</span>, <span class="st">&quot;2 pieces&quot;</span>, <span class="st">&quot;3&quot;</span>)</span>
-<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">d+(?= pieces?)&quot;</span>)</span>
-<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;1&quot; &quot;2&quot; NA</span></span>
-<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a></span>
-<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;100&quot;</span>, <span class="st">&quot;$400&quot;</span>)</span>
-<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a><span class="fu">str_extract</span>(y, <span class="st">&quot;(?&lt;=</span><span class="sc">\\</span><span class="st">$)</span><span class="sc">\\</span><span class="st">d+&quot;</span>)</span>
-<span id="cb26-7"><a href="#cb26-7" tabindex="-1"></a><span class="co">#&gt; [1] NA    &quot;400&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;1 piece&quot;</span>, <span class="st">&quot;2 pieces&quot;</span>, <span class="st">&quot;3&quot;</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">d+(?= pieces?)&quot;</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;1&quot; &quot;2&quot; NA</span></span>
+<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;100&quot;</span>, <span class="st">&quot;$400&quot;</span>)</span>
+<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a><span class="fu">str_extract</span>(y, <span class="st">&quot;(?&lt;=</span><span class="sc">\\</span><span class="st">$)</span><span class="sc">\\</span><span class="st">d+&quot;</span>)</span>
+<span id="cb28-7"><a href="#cb28-7" tabindex="-1"></a><span class="co">#&gt; [1] NA    &quot;400&quot;</span></span></code></pre></div>
 </div>
 <div id="comments" class="section level2">
 <h2>Comments</h2>
 <p>There are two ways to include comments in a regular expression. The
 first is with <code>(?#...)</code>:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">str_detect</span>(<span class="st">&quot;xyz&quot;</span>, <span class="st">&quot;x(?#this is a comment)&quot;</span>)</span>
-<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="fu">str_detect</span>(<span class="st">&quot;xyz&quot;</span>, <span class="st">&quot;x(?#this is a comment)&quot;</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 <p>The second is to use <code>regex(comments = TRUE)</code>. This form
 ignores spaces and newlines, and anything everything after
 <code>#</code>. To match a literal space, you’ll need to escape it:
 <code>&quot;\\ &quot;</code>. This is a useful way of describing complex regular
 expressions:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>phone <span class="ot">&lt;-</span> <span class="fu">regex</span>(<span class="st">&quot;</span></span>
-<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="st">  </span><span class="sc">\\</span><span class="st">(?       # optional opening parens</span></span>
-<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a><span class="st">  (</span><span class="sc">\\</span><span class="st">d{3})   # area code</span></span>
-<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a><span class="st">  </span><span class="sc">\\</span><span class="st">)?       # optional closing parens</span></span>
-<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a><span class="st">  (?:-|</span><span class="sc">\\</span><span class="st"> )? # optional dash or space</span></span>
-<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a><span class="st">  (</span><span class="sc">\\</span><span class="st">d{3})   # another three numbers</span></span>
-<span id="cb28-7"><a href="#cb28-7" tabindex="-1"></a><span class="st">  (?:-|</span><span class="sc">\\</span><span class="st"> )? # optional dash or space</span></span>
-<span id="cb28-8"><a href="#cb28-8" tabindex="-1"></a><span class="st">  (</span><span class="sc">\\</span><span class="st">d{3})   # three more numbers</span></span>
-<span id="cb28-9"><a href="#cb28-9" tabindex="-1"></a><span class="st">  &quot;</span>, <span class="at">comments =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb28-10"><a href="#cb28-10" tabindex="-1"></a></span>
-<span id="cb28-11"><a href="#cb28-11" tabindex="-1"></a><span class="fu">str_match</span>(<span class="fu">c</span>(<span class="st">&quot;514-791-8141&quot;</span>, <span class="st">&quot;(514) 791 8141&quot;</span>), phone)</span>
-<span id="cb28-12"><a href="#cb28-12" tabindex="-1"></a><span class="co">#&gt;      [,1]            [,2]  [,3]  [,4] </span></span>
-<span id="cb28-13"><a href="#cb28-13" tabindex="-1"></a><span class="co">#&gt; [1,] &quot;514-791-814&quot;   &quot;514&quot; &quot;791&quot; &quot;814&quot;</span></span>
-<span id="cb28-14"><a href="#cb28-14" tabindex="-1"></a><span class="co">#&gt; [2,] &quot;(514) 791 814&quot; &quot;514&quot; &quot;791&quot; &quot;814&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>phone <span class="ot">&lt;-</span> <span class="fu">regex</span>(<span class="st">&quot;</span></span>
+<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a><span class="st">  </span><span class="sc">\\</span><span class="st">(?       # optional opening parens</span></span>
+<span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a><span class="st">  (</span><span class="sc">\\</span><span class="st">d{3})   # area code</span></span>
+<span id="cb30-4"><a href="#cb30-4" tabindex="-1"></a><span class="st">  </span><span class="sc">\\</span><span class="st">)?       # optional closing parens</span></span>
+<span id="cb30-5"><a href="#cb30-5" tabindex="-1"></a><span class="st">  (?:-|</span><span class="sc">\\</span><span class="st"> )? # optional dash or space</span></span>
+<span id="cb30-6"><a href="#cb30-6" tabindex="-1"></a><span class="st">  (</span><span class="sc">\\</span><span class="st">d{3})   # another three numbers</span></span>
+<span id="cb30-7"><a href="#cb30-7" tabindex="-1"></a><span class="st">  (?:-|</span><span class="sc">\\</span><span class="st"> )? # optional dash or space</span></span>
+<span id="cb30-8"><a href="#cb30-8" tabindex="-1"></a><span class="st">  (</span><span class="sc">\\</span><span class="st">d{3})   # three more numbers</span></span>
+<span id="cb30-9"><a href="#cb30-9" tabindex="-1"></a><span class="st">  &quot;</span>, <span class="at">comments =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb30-10"><a href="#cb30-10" tabindex="-1"></a></span>
+<span id="cb30-11"><a href="#cb30-11" tabindex="-1"></a><span class="fu">str_match</span>(<span class="fu">c</span>(<span class="st">&quot;514-791-8141&quot;</span>, <span class="st">&quot;(514) 791 8141&quot;</span>), phone)</span>
+<span id="cb30-12"><a href="#cb30-12" tabindex="-1"></a><span class="co">#&gt;      [,1]            [,2]  [,3]  [,4] </span></span>
+<span id="cb30-13"><a href="#cb30-13" tabindex="-1"></a><span class="co">#&gt; [1,] &quot;514-791-814&quot;   &quot;514&quot; &quot;791&quot; &quot;814&quot;</span></span>
+<span id="cb30-14"><a href="#cb30-14" tabindex="-1"></a><span class="co">#&gt; [2,] &quot;(514) 791 814&quot; &quot;514&quot; &quot;791&quot; &quot;814&quot;</span></span></code></pre></div>
 </div>
 
 

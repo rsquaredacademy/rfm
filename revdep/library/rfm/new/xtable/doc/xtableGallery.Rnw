@@ -695,6 +695,24 @@ align(x.width) <- "|l|X|l|l|l|"
 print(x.width, tabular.environment = "tabularx", width = "\\textwidth")
 @
 
+\subsection{Using \texttt{glue} to create captions}
+First make the package \textsf{glue} available and create the desired caption
+
+<<loadglue, message=FALSE, warning=FALSE>>=
+library(glue)
+now <- format(as.Date(Sys.Date()), "%d %B, %Y" )
+caption <- glue("Printed on {now}")
+@ %def
+
+Then this caption will be printed.
+
+<<printglue, results = 'asis'>>=
+print(xtable(Cohort, caption = caption),
+      floating = TRUE, latex.environments = "center")
+@ %def
+
+
+\newpage
 \section{Suppressing printing}
 By default the \code{print} method will print the \LaTeX\ or HTML to
 standard output and also return the character strings invisibly.  The

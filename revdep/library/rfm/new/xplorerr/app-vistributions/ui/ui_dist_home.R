@@ -1,6 +1,6 @@
 tabPanel('Distributions', value = 'tab_dist_home',
 
-	fluidPage(theme = shinytheme('cerulean'),
+	fluidPage(
 
 		includeCSS("mystyle.css"),
 

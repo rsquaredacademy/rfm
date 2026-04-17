@@ -1,9 +1,9 @@
 Package: fastmap
 Title: Fast Data Structures
-Version: 1.1.1
+Version: 1.2.0
 Authors@R: c(
-    person("Winston", "Chang", email = "winston@rstudio.com", role = c("aut", "cre")),
-    person(given = "RStudio", role = c("cph", "fnd")),
+    person("Winston", "Chang", email = "winston@posit.co", role = c("aut", "cre")),
+    person(given = "Posit Software, PBC", role = c("cph", "fnd")),
     person(given = "Tessil", role = "cph", comment = "hopscotch_map library")
     )
 Description: Fast implementation of data structures, including a key-value
@@ -19,12 +19,12 @@ Suggests: testthat (>= 2.1.1)
 URL: https://r-lib.github.io/fastmap/, https://github.com/r-lib/fastmap
 BugReports: https://github.com/r-lib/fastmap/issues
 NeedsCompilation: yes
-Packaged: 2023-02-24 16:01:27 UTC; winston
+Packaged: 2024-05-14 17:54:13 UTC; winston
 Author: Winston Chang [aut, cre],
-  RStudio [cph, fnd],
+  Posit Software, PBC [cph, fnd],
   Tessil [cph] (hopscotch_map library)
-Maintainer: Winston Chang <winston@rstudio.com>
+Maintainer: Winston Chang <winston@posit.co>
 Repository: CRAN
-Date/Publication: 2023-02-24 16:30:02 UTC
-Built: R 4.3.2; x86_64-w64-mingw32; 2024-02-11 01:42:55 UTC; windows
+Date/Publication: 2024-05-15 09:00:07 UTC
+Built: R 4.5.3; x86_64-w64-mingw32; 2026-04-14 01:27:58 UTC; windows
 Archs: x64

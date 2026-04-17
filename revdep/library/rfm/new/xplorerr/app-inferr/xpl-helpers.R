@@ -1282,7 +1282,6 @@ paired_comp <- function(x, y, confint, var_names) {
   corsig    <- cor_sig(corr, n)
 
   alpha     <- 1 - confint
-  
   confint1  <- conf_int_t(b[[1, 1]], b[[1, 2]], n, alpha = alpha) %>% round(2)
   confint2  <- conf_int_t(b[[2, 1]], b[[2, 2]], n, alpha = alpha) %>% round(2)
   confint3  <- conf_int_t(b[[3, 1]], b[[3, 2]], n, alpha = alpha) %>% round(2)
@@ -1336,14 +1335,14 @@ cor_sig <- function(corr, n) {
 }
 
 conf_int_t <- function(u, s, n, alpha = 0.05) {
-  
+
   a     <- alpha / 2
   df    <- n - 1
   error <- round(stats::qt(a, df), 3) * -1
   lower <- u - (error * samp_err(s, n))
   upper <- u + (error * samp_err(s, n))
   c(lower, upper)
-  
+
 }
 
 samp_err <- function(sigma, n) {
@@ -1707,7 +1706,7 @@ tbl_stats <- function(data, y) {
 
   dat <- data[[y]]
   c(length(dat), mean(dat), sd(dat), (sd(dat) / sqrt(length(dat))))
-             
+
 }
 
 # binomial test

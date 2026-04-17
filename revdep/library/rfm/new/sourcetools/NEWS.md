@@ -1,4 +1,8 @@
 
+# sourcetools 0.1.7-2
+
+- Use Authors@R to resolve NOTE on CRAN.
+
 # sourcetools 0.1.7-1
 
 - Use `std::snprintf()` instead of `std::sprintf()`.

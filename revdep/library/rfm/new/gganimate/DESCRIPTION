@@ -1,0 +1,54 @@
+Type: Package
+Package: gganimate
+Title: A Grammar of Animated Graphics
+Version: 1.0.11
+Authors@R: c(
+    person("Thomas Lin", "Pedersen", , "thomasp85@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-5147-4711")),
+    person("David", "Robinson", , "admiral.david@gmail.com", role = "aut"),
+    person("Posit, PBC", role = c("cph", "fnd"))
+  )
+Maintainer: Thomas Lin Pedersen <thomasp85@gmail.com>
+Description: The grammar of graphics as implemented in the 'ggplot2'
+    package has been successful in providing a powerful API for creating
+    static visualisation. In order to extend the API for animated graphics
+    this package provides a completely new set of grammar, fully
+    compatible with 'ggplot2' for specifying transitions and animations in
+    a flexible and extensible way.
+License: MIT + file LICENSE
+URL: https://gganimate.com, https://github.com/thomasp85/gganimate
+BugReports: https://github.com/thomasp85/gganimate/issues
+Depends: ggplot2 (>= 3.5.2)
+Imports: cli, glue, grDevices, grid, lifecycle, progress, rlang,
+        scales, stringi, transformr (>= 0.1.5), tweenr (>= 2.0.3),
+        utils, vctrs
+Suggests: av, base64enc, covr, gifski (>= 1.4.3), htmltools, knitr,
+        magick, ragg, rmarkdown, sf, svglite, testthat
+VignetteBuilder: knitr
+Encoding: UTF-8
+RoxygenNote: 7.3.2
+Collate: 'aaa.R' 'anim_save.R' 'animate.R' 'animation_store.R'
+        'ease-aes.R' 'gganim.R' 'gganimate-ggproto.R'
+        'gganimate-package.r' 'ggplot2_reimpl.R' 'group_column.R'
+        'import-standalone-obj-type.R'
+        'import-standalone-types-check.R' 'layer_type.R'
+        'match_shapes.R' 'plot-build.R' 'post_process.R' 'renderers.R'
+        'scene.R' 'shadow-.R' 'shadow-mark.R' 'shadow-null.R'
+        'shadow-trail.R' 'shadow-wake.R' 'transformr.R' 'transition-.R'
+        'transition-components.R' 'transition-events.R'
+        'transition-filter.R' 'transition-manual.R'
+        'transition-layers.R' 'transition-null.R' 'transition-states.R'
+        'transition-time.R' 'transition_reveal.R' 'transmute-.R'
+        'transmute-enter.R' 'transmute-exit.R' 'transmuters.R'
+        'tween_before_stat.R' 'view-.R' 'view-follow.R' 'view-static.R'
+        'view-step.R' 'view-step-manual.R' 'view-zoom.R'
+        'view-zoom-manual.R' 'zzz.R'
+NeedsCompilation: no
+Packaged: 2025-09-04 10:17:29 UTC; thomas
+Author: Thomas Lin Pedersen [aut, cre] (ORCID:
+    <https://orcid.org/0000-0002-5147-4711>),
+  David Robinson [aut],
+  Posit, PBC [cph, fnd]
+Repository: CRAN
+Date/Publication: 2025-09-04 10:50:03 UTC
+Built: R 4.5.3; ; 2026-04-14 03:33:02 UTC; windows

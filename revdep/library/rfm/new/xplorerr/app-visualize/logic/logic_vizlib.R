@@ -3,12 +3,9 @@ bar_libopt <- eventReactive(input$click_bar, {
 	fluidRow(
 
 		fluidRow(
-			column(1),
+			column(2),
 			column(2, align = 'center',
 				h5("Base R")
-			),
-			column(2, align = 'center',
-				h5("rbokeh")
 			),
 			column(2, align = 'center',
 				h5("plotly")
@@ -19,11 +16,11 @@ bar_libopt <- eventReactive(input$click_bar, {
 			column(2, align = 'center',
 				h5("ggplot2")
 			),
-			column(1)
+			column(2)
 		),
 
 		fluidRow(
-			column(1),
+			column(2),
 			column(2, align = 'center',
 				hr()
 			),
@@ -36,19 +33,13 @@ bar_libopt <- eventReactive(input$click_bar, {
 			column(2, align = 'center',
 				hr()
 			),
-			column(2, align = 'center',
-				hr()
-			),
-			column(1)
+			column(2)
 		),
 
 		fluidRow(
-			column(1),
+			column(2),
 			column(2, align = 'center',
 				img(src = 'Rlogonew.png', width = '100px', height = '100px')
-			),
-			column(2, align = 'center',
-				img(src = 'bokeh_logo.png', width = '100px', height = '100px')
 			),
 			column(2, align = 'center',
 				img(src = 'plotly_logo.png', width = '100px', height = '100px')
@@ -59,11 +50,11 @@ bar_libopt <- eventReactive(input$click_bar, {
 			column(2, align = 'center',
 				img(src = 'ggplot2_logo.png', width = '100px', height = '100px')
 			),
-			column(1)
+			column(2)
 		),
 
 		fluidRow(
-			column(1),
+			column(2),
 			column(2, align = 'center',
 				hr()
 			),
@@ -76,10 +67,7 @@ bar_libopt <- eventReactive(input$click_bar, {
 			column(2, align = 'center',
 				hr()
 			),
-			column(2, align = 'center',
-				hr()
-			),
-			column(1)
+			column(2)
 		)
 
 	)

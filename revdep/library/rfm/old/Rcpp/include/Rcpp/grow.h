@@ -2,7 +2,7 @@
 //
 // grow.h: Rcpp R/C++ interface class library -- grow a pairlist
 //
-// Copyright (C) 2010 - 2013 Dirk Eddelbuettel and Romain Francois
+// Copyright (C) 2010 - 2025 Dirk Eddelbuettel and Romain Francois
 //
 // This file is part of Rcpp.
 //
@@ -70,7 +70,15 @@ namespace Rcpp {
         return grow(Rf_mkString(head), y);
     }
 
-    #include <Rcpp/generated/grow__pairlist.h>
+    template <typename T1>
+    SEXP pairlist(const T1& t1) {
+        return grow( t1, R_NilValue ) ;
+    }
+
+    template <typename T, typename... TArgs>
+    SEXP pairlist(const T& t1, const TArgs&... args) {
+        return grow(t1, pairlist(args...));
+    }
 
 } // namespace Rcpp
 

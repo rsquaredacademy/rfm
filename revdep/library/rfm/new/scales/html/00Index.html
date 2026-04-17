@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head><title>R: Scale Functions for Visualization</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-<link rel="stylesheet" type="text/css" href="R.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<link rel="stylesheet" type="text/css" href="R.css">
 </head><body><div class="container">
 <h1> Scale Functions for Visualization
-<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]" />
+<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]">
 </h1>
-<hr/>
+<hr>
 <div style="text-align: center;">
-<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
-<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;scales&rsquo; version 1.3.0</h2>
+<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]"></a>
+<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]"></a>
+</div><h2>Documentation for package &lsquo;scales&rsquo; version 1.4.0</h2>
 
-<ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
-<li><a href="../NEWS">Package NEWS</a>.</li>
+<ul><li><a href="../DESCRIPTION" type="text/plain; charset=utf-8">DESCRIPTION file</a>.</li>
+<li><a href="../NEWS.md">Package NEWS</a>.</li>
 </ul>
 
 <h2>Help Pages</h2>
@@ -27,11 +27,13 @@
 <a href="#C">C</a>
 <a href="#D">D</a>
 <a href="#E">E</a>
+<a href="#F">F</a>
 <a href="#G">G</a>
 <a href="#H">H</a>
 <a href="#I">I</a>
 <a href="#L">L</a>
 <a href="#M">M</a>
+<a href="#N">N</a>
 <a href="#O">O</a>
 <a href="#P">P</a>
 <a href="#R">R</a>
@@ -56,6 +58,10 @@
 <td>Inverse Hyperbolic Sine transformation</td></tr>
 <tr><td style="width: 25%;"><a href="transform_asn.html">asn_trans</a></td>
 <td>Arc-sin square root transformation</td></tr>
+<tr><td style="width: 25%;"><a href="new_continuous_palette.html">as_continuous_pal</a></td>
+<td>Constructors for palettes</td></tr>
+<tr><td style="width: 25%;"><a href="new_continuous_palette.html">as_discrete_pal</a></td>
+<td>Constructors for palettes</td></tr>
 <tr><td style="width: 25%;"><a href="transform_atanh.html">atanh_trans</a></td>
 <td>Arc-tangent transformation</td></tr>
 </table>
@@ -65,6 +71,8 @@
 <table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="transform_boxcox.html">boxcox_trans</a></td>
 <td>Box-Cox &amp; modulus transformations</td></tr>
+<tr><td style="width: 25%;"><a href="breaks_exp.html">breaks_exp</a></td>
+<td>Breaks for exponentially transformed data</td></tr>
 <tr><td style="width: 25%;"><a href="breaks_extended.html">breaks_extended</a></td>
 <td>Automatic breaks for numeric axes</td></tr>
 <tr><td style="width: 25%;"><a href="breaks_log.html">breaks_log</a></td>
@@ -86,16 +94,30 @@
 <td>Out of bounds handling</td></tr>
 <tr><td style="width: 25%;"><a href="col2hcl.html">col2hcl</a></td>
 <td>Modify standard R colour in hcl colour space.</td></tr>
+<tr><td style="width: 25%;"><a href="colour_manip.html">colour_manip</a></td>
+<td>Colour manipulation</td></tr>
 <tr><td style="width: 25%;"><a href="colour_ramp.html">colour_ramp</a></td>
 <td>Fast colour interpolation</td></tr>
 <tr><td style="width: 25%;"><a href="col_numeric.html">col_bin</a></td>
 <td>Colour mapping</td></tr>
+<tr><td style="width: 25%;"><a href="colour_manip.html">col_darker</a></td>
+<td>Colour manipulation</td></tr>
 <tr><td style="width: 25%;"><a href="col_numeric.html">col_factor</a></td>
 <td>Colour mapping</td></tr>
+<tr><td style="width: 25%;"><a href="colour_manip.html">col_lighter</a></td>
+<td>Colour manipulation</td></tr>
+<tr><td style="width: 25%;"><a href="col_mix.html">col_mix</a></td>
+<td>Mix colours</td></tr>
 <tr><td style="width: 25%;"><a href="col_numeric.html">col_numeric</a></td>
 <td>Colour mapping</td></tr>
 <tr><td style="width: 25%;"><a href="col_numeric.html">col_quantile</a></td>
 <td>Colour mapping</td></tr>
+<tr><td style="width: 25%;"><a href="colour_manip.html">col_saturate</a></td>
+<td>Colour manipulation</td></tr>
+<tr><td style="width: 25%;"><a href="colour_manip.html">col_shift</a></td>
+<td>Colour manipulation</td></tr>
+<tr><td style="width: 25%;"><a href="compose_label.html">compose_label</a></td>
+<td>Compose two or more label formatters together</td></tr>
 <tr><td style="width: 25%;"><a href="transform_compose.html">compose_trans</a></td>
 <td>Compose two or more transformations together</td></tr>
 <tr><td style="width: 25%;"><a href="Range.html">ContinuousRange</a></td>
@@ -132,6 +154,13 @@
 <td>Automatic breaks for numeric axes</td></tr>
 </table>
 
+<h2><a id="F">-- F --</a></h2>
+
+<table style="width: 100%;">
+<tr><td style="width: 25%;"><a href="label_log.html">format_log</a></td>
+<td>Label numbers in log format (10^3, 10^6, etc)</td></tr>
+</table>
+
 <h2><a id="G">-- G --</a></h2>
 
 <table style="width: 100%;">
@@ -157,6 +186,16 @@
 <td>Identity palette</td></tr>
 <tr><td style="width: 25%;"><a href="transform_identity.html">identity_trans</a></td>
 <td>Identity transformation (do nothing)</td></tr>
+<tr><td style="width: 25%;"><a href="new_continuous_palette.html">is_colour_pal</a></td>
+<td>Constructors for palettes</td></tr>
+<tr><td style="width: 25%;"><a href="new_continuous_palette.html">is_continuous_pal</a></td>
+<td>Constructors for palettes</td></tr>
+<tr><td style="width: 25%;"><a href="new_continuous_palette.html">is_discrete_pal</a></td>
+<td>Constructors for palettes</td></tr>
+<tr><td style="width: 25%;"><a href="new_continuous_palette.html">is_numeric_pal</a></td>
+<td>Constructors for palettes</td></tr>
+<tr><td style="width: 25%;"><a href="new_continuous_palette.html">is_pal</a></td>
+<td>Constructors for palettes</td></tr>
 </table>
 
 <h2><a id="L">-- L --</a></h2>
@@ -172,6 +211,10 @@
 <td>Label date/times</td></tr>
 <tr><td style="width: 25%;"><a href="label_date.html">label_date_short</a></td>
 <td>Label date/times</td></tr>
+<tr><td style="width: 25%;"><a href="label_dictionary.html">label_dictionary</a></td>
+<td>Labels from lookup tables</td></tr>
+<tr><td style="width: 25%;"><a href="label_glue.html">label_glue</a></td>
+<td>Interpolated labels</td></tr>
 <tr><td style="width: 25%;"><a href="label_log.html">label_log</a></td>
 <td>Label numbers in log format (10^3, 10^6, etc)</td></tr>
 <tr><td style="width: 25%;"><a href="label_parse.html">label_math</a></td>
@@ -217,6 +260,8 @@
 <table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="pal_manual.html">manual_pal</a></td>
 <td>Manual palette (discrete)</td></tr>
+<tr><td style="width: 25%;"><a href="minor_breaks_log.html">minor_breaks_log</a></td>
+<td>Minor breaks for log-10 axes</td></tr>
 <tr><td style="width: 25%;"><a href="minor_breaks_width.html">minor_breaks_n</a></td>
 <td>Minor breaks</td></tr>
 <tr><td style="width: 25%;"><a href="minor_breaks_width.html">minor_breaks_width</a></td>
@@ -225,6 +270,17 @@
 <td>Box-Cox &amp; modulus transformations</td></tr>
 <tr><td style="width: 25%;"><a href="muted.html">muted</a></td>
 <td>Mute standard colour</td></tr>
+</table>
+
+<h2><a id="N">-- N --</a></h2>
+
+<table style="width: 100%;">
+<tr><td style="width: 25%;"><a href="new_continuous_palette.html">new_continuous_palette</a></td>
+<td>Constructors for palettes</td></tr>
+<tr><td style="width: 25%;"><a href="new_continuous_palette.html">new_discrete_palette</a></td>
+<td>Constructors for palettes</td></tr>
+<tr><td style="width: 25%;"><a href="number_options.html">number_options</a></td>
+<td>Number options</td></tr>
 </table>
 
 <h2><a id="O">-- O --</a></h2>
@@ -257,6 +313,14 @@
 <h2><a id="P">-- P --</a></h2>
 
 <table style="width: 100%;">
+<tr><td style="width: 25%;"><a href="palette-recommendations.html">palette-recommendations</a></td>
+<td>Recommendations for colour palettes</td></tr>
+<tr><td style="width: 25%;"><a href="new_continuous_palette.html">palette_na_safe</a></td>
+<td>Constructors for palettes</td></tr>
+<tr><td style="width: 25%;"><a href="new_continuous_palette.html">palette_nlevels</a></td>
+<td>Constructors for palettes</td></tr>
+<tr><td style="width: 25%;"><a href="new_continuous_palette.html">palette_type</a></td>
+<td>Constructors for palettes</td></tr>
 <tr><td style="width: 25%;"><a href="pal_area.html">pal_area</a></td>
 <td>Area palettes (continuous)</td></tr>
 <tr><td style="width: 25%;"><a href="pal_brewer.html">pal_brewer</a></td>

@@ -1,3 +1,4 @@
+as.gtable               Convert to a gtable
 bind                    Row and column binding for gtables.
 gtable                  Create a new grob table.
 gtable_add_cols         Add new columns in specified position.

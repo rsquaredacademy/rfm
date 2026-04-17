@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head><title>R: Web Application Framework for R</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-<link rel="stylesheet" type="text/css" href="R.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<link rel="stylesheet" type="text/css" href="R.css">
 </head><body><div class="container">
 <h1> Web Application Framework for R
-<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]" />
+<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]">
 </h1>
-<hr/>
+<hr>
 <div style="text-align: center;">
-<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
-<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;shiny&rsquo; version 1.8.0</h2>
+<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]"></a>
+<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]"></a>
+</div><h2>Documentation for package &lsquo;shiny&rsquo; version 1.13.0</h2>
 
-<ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
-<li><a href="../NEWS">Package NEWS</a>.</li>
+<ul><li><a href="../DESCRIPTION" type="text/plain; charset=utf-8">DESCRIPTION file</a>.</li>
+<li><a href="../NEWS.md">Package NEWS</a>.</li>
 </ul>
 
 <h2>Help Pages</h2>
@@ -89,6 +89,8 @@
 <td>Find rows of data selected on an interactive plot.</td></tr>
 <tr><td style="width: 25%;"><a href="brushOpts.html">brushOpts</a></td>
 <td>Create an object representing brushing options</td></tr>
+<tr><td style="width: 25%;"><a href="busyIndicatorOptions.html">busyIndicatorOptions</a></td>
+<td>Customize busy indicator options</td></tr>
 </table>
 
 <h2><a id="C">-- C --</a></h2>
@@ -115,8 +117,6 @@
 <h2><a id="D">-- D --</a></h2>
 
 <table style="width: 100%;">
-<tr><td style="width: 25%;"><a href="renderDataTable.html">dataTableOutput</a></td>
-<td>Table output with the JavaScript DataTables library</td></tr>
 <tr><td style="width: 25%;"><a href="dateInput.html">dateInput</a></td>
 <td>Create date input</td></tr>
 <tr><td style="width: 25%;"><a href="dateRangeInput.html">dateRangeInput</a></td>
@@ -150,6 +150,8 @@
 <td>Event handler</td></tr>
 <tr><td style="width: 25%;"><a href="exportTestValues.html">exportTestValues</a></td>
 <td>Register expressions for export in test mode</td></tr>
+<tr><td style="width: 25%;"><a href="ExtendedTask.html">ExtendedTask</a></td>
+<td>Task or computation that proceeds in the background</td></tr>
 </table>
 
 <h2><a id="F">-- F --</a></h2>
@@ -249,6 +251,8 @@
 <table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="loadSupport.html">loadSupport</a></td>
 <td>Load an app's supporting R files</td></tr>
+<tr><td style="width: 25%;"><a href="withOtelCollect.html">localOtelCollect</a></td>
+<td>Temporarily set OpenTelemetry (OTel) collection level</td></tr>
 </table>
 
 <h2><a id="M">-- M --</a></h2>
@@ -318,6 +322,8 @@
 <td>Add callbacks for Shiny session events</td></tr>
 <tr><td style="width: 25%;"><a href="onStop.html">onStop</a></td>
 <td>Run code after an application or session ends</td></tr>
+<tr><td style="width: 25%;"><a href="onFlush.html">onUnhandledError</a></td>
+<td>Add callbacks for Shiny session events</td></tr>
 <tr><td style="width: 25%;"><a href="outputOptions.html">outputOptions</a></td>
 <td>Set options for an output object.</td></tr>
 </table>
@@ -369,6 +375,8 @@
 <td>Convert a reactivevalues object to a list</td></tr>
 <tr><td style="width: 25%;"><a href="reactlog.html">reactlog</a></td>
 <td>Reactive Log Visualizer</td></tr>
+<tr><td style="width: 25%;"><a href="reactlog.html">reactlogAddMark</a></td>
+<td>Reactive Log Visualizer</td></tr>
 <tr><td style="width: 25%;"><a href="reactlog.html">reactlogReset</a></td>
 <td>Reactive Log Visualizer</td></tr>
 <tr><td style="width: 25%;"><a href="reactlog.html">reactlogShow</a></td>
@@ -391,8 +399,6 @@
 <td>Insert and remove UI objects</td></tr>
 <tr><td style="width: 25%;"><a href="renderCachedPlot.html">renderCachedPlot</a></td>
 <td>Plot output with cached images</td></tr>
-<tr><td style="width: 25%;"><a href="renderDataTable.html">renderDataTable</a></td>
-<td>Table output with the JavaScript DataTables library</td></tr>
 <tr><td style="width: 25%;"><a href="renderImage.html">renderImage</a></td>
 <td>Image file output</td></tr>
 <tr><td style="width: 25%;"><a href="renderPlot.html">renderPlot</a></td>
@@ -562,6 +568,8 @@
 <td>Change the value of a select input on the client</td></tr>
 <tr><td style="width: 25%;"><a href="urlModal.html">urlModal</a></td>
 <td>Generate a modal dialog that displays a URL</td></tr>
+<tr><td style="width: 25%;"><a href="useBusyIndicators.html">useBusyIndicators</a></td>
+<td>Enable/disable busy indication</td></tr>
 </table>
 
 <h2><a id="V">-- V --</a></h2>
@@ -588,6 +596,8 @@
 <td>Create a well panel</td></tr>
 <tr><td style="width: 25%;"><a href="withMathJax.html">withMathJax</a></td>
 <td>Load the MathJax library and typeset math expressions</td></tr>
+<tr><td style="width: 25%;"><a href="withOtelCollect.html">withOtelCollect</a></td>
+<td>Temporarily set OpenTelemetry (OTel) collection level</td></tr>
 <tr><td style="width: 25%;"><a href="withProgress.html">withProgress</a></td>
 <td>Reporting progress (functional API)</td></tr>
 <tr><td style="width: 25%;"><a href="domains.html">withReactiveDomain</a></td>

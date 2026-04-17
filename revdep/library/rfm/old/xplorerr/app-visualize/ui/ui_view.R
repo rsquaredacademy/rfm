@@ -15,7 +15,7 @@ tabPanel('View', value = 'tab_view',
 		hr(),
 
 		fluidRow(
-			dataTableOutput(outputId = "table")
+			DTOutput(outputId = "table")
 			)
 		)
 )

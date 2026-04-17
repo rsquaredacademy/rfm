@@ -1,3 +1,22 @@
+2.0.0
+  - Output for toJSON(x, pretty = p) where p is a number has changed: now uses
+    the same r-based indent system as for pretty = TRUE. To get the old format,
+    run json output through prettify().
+  - Both toJSON() and prettify() support now can use tabs instead of spaces by
+    setting a negative number as indent/pretty argument.
+  - Fix an ubsan warning in prettify/minify in libyajl
+  - Reformatted code with air
+
+1.9.1
+  - Fix a unit test in R 4.5 due to the new 'penguins_raw' dataset
+
+1.9.0
+  - Remove legacy modp_stdint.h which breaks in C23 on Windows (R-4.5)
+
+1.8.9
+  - Fix memory leak in base64 decoder
+  - Update maintainer email address
+
 1.8.8
   - Apply libyajl patches for CVE-2022-24795, CVE-2022-24795, CVE-2023-33460
   - Fix printf warnings for cran

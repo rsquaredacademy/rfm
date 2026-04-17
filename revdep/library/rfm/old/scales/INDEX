@@ -1,13 +1,17 @@
 Range                   Mutable ranges
 alpha                   Modify colour transparency
+breaks_exp              Breaks for exponentially transformed data
 breaks_extended         Automatic breaks for numeric axes
 breaks_log              Breaks for log axes
 breaks_pretty           Pretty breaks for date/times
 breaks_timespan         Breaks for timespan data
 breaks_width            Equally spaced breaks
 col2hcl                 Modify standard R colour in hcl colour space.
+col_mix                 Mix colours
 col_numeric             Colour mapping
+colour_manip            Colour manipulation
 colour_ramp             Fast colour interpolation
+compose_label           Compose two or more label formatters together
 cscale                  Continuous scale
 dscale                  Discrete scale
 expand_range            Expand a range with a multiplicative or
@@ -15,6 +19,8 @@ expand_range            Expand a range with a multiplicative or
 label_bytes             Label bytes (1 kB, 2 MB, etc)
 label_currency          Label currencies ($100, €2.50, etc)
 label_date              Label date/times
+label_dictionary        Labels from lookup tables
+label_glue              Interpolated labels
 label_log               Label numbers in log format (10^3, 10^6, etc)
 label_number            Label numbers in decimal format (e.g. 0.12,
                         1,234)
@@ -27,8 +33,12 @@ label_pvalue            Label p-values (e.g. <0.001, 0.25, p >= 0.99)
 label_scientific        Label numbers with scientific notation (e.g.
                         1e05, 1.5e-02)
 label_wrap              Label strings by wrapping across multiple lines
+minor_breaks_log        Minor breaks for log-10 axes
 minor_breaks_width      Minor breaks
 muted                   Mute standard colour
+new_continuous_palette
+                        Constructors for palettes
+number_options          Number options
 oob                     Out of bounds handling
 pal_area                Area palettes (continuous)
 pal_brewer              Colour Brewer palette (discrete)
@@ -44,6 +54,8 @@ pal_rescale             Rescale palette (continuous)
 pal_seq_gradient        Sequential colour gradient palette (continuous)
 pal_shape               Shape palette (discrete)
 pal_viridis             Viridis palette
+palette-recommendations
+                        Recommendations for colour palettes
 rescale                 Rescale continuous vector to have specified
                         minimum and maximum
 rescale_max             Rescale numeric vector to have specified

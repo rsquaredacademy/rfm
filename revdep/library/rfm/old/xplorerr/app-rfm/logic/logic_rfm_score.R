@@ -126,15 +126,15 @@ observeEvent(input$submit_rfm_customer_score_2, {
 rfm_heatmap_generate <- reactiveValues(a = NULL)
 
 observeEvent(input$submit_rfm_transaction_score, {
-  rfm_heatmap_generate$a <- rfm_heatmap(rfm_final_score$a)
+  rfm_heatmap_generate$a <- rfm_plot_heatmap(rfm_final_score$a)
 })
 
 observeEvent(input$submit_rfm_customer_score, {
-  rfm_heatmap_generate$a <- rfm_heatmap(rfm_final_score$a)
+  rfm_heatmap_generate$a <- rfm_plot_heatmap(rfm_final_score$a)
 })
 
 observeEvent(input$submit_rfm_customer_score_2, {
-  rfm_heatmap_generate$a <- rfm_heatmap(rfm_final_score$a)
+  rfm_heatmap_generate$a <- rfm_plot_heatmap(rfm_final_score$a)
 })
 
 output$plot_heatmap <- renderPlot({
@@ -144,15 +144,15 @@ output$plot_heatmap <- renderPlot({
 rfm_barchart_generate <- reactiveValues(a = NULL)
 
 observeEvent(input$submit_rfm_transaction_score, {
-  rfm_barchart_generate$a <- rfm_bar_chart(rfm_final_score$a)
+  rfm_barchart_generate$a <- rfm_plot_bar_chart(rfm_final_score$a)
 })
 
 observeEvent(input$submit_rfm_customer_score, {
-  rfm_barchart_generate$a <- rfm_bar_chart(rfm_final_score$a)
+  rfm_barchart_generate$a <- rfm_plot_bar_chart(rfm_final_score$a)
 })
 
 observeEvent(input$submit_rfm_customer_score_2, {
-  rfm_barchart_generate$a <- rfm_bar_chart(rfm_final_score$a)
+  rfm_barchart_generate$a <- rfm_plot_bar_chart(rfm_final_score$a)
 })
 
 output$plot_barchart <- renderPlot({
@@ -162,73 +162,17 @@ output$plot_barchart <- renderPlot({
 rfm_histogram_generate <- reactiveValues(a = NULL)
 
 observeEvent(input$submit_rfm_transaction_score, {
-  rfm_histogram_generate$a <- rfm_histograms(rfm_final_score$a)
+  rfm_histogram_generate$a <- rfm_plot_histogram(rfm_final_score$a)
 })
 
 observeEvent(input$submit_rfm_customer_score, {
-  rfm_histogram_generate$a <- rfm_histograms(rfm_final_score$a)
+  rfm_histogram_generate$a <- rfm_plot_histogram(rfm_final_score$a)
 })
 
 observeEvent(input$submit_rfm_customer_score_2, {
-  rfm_histogram_generate$a <- rfm_histograms(rfm_final_score$a)
+  rfm_histogram_generate$a <- rfm_plot_histogram(rfm_final_score$a)
 })
 
 output$plot_histogram <- renderPlot({
   print(rfm_histogram_generate$a)
 })
-
-rfm_scatter_1_generate <- reactiveValues(a = NULL)
-
-observeEvent(input$submit_rfm_transaction_score, {
-  rfm_scatter_1_generate$a <- rfm_rm_plot(rfm_final_score$a)
-})
-
-observeEvent(input$submit_rfm_customer_score, {
-  rfm_scatter_1_generate$a <- rfm_rm_plot(rfm_final_score$a)
-})
-
-observeEvent(input$submit_rfm_customer_score_2, {
-  rfm_scatter_1_generate$a <- rfm_rm_plot(rfm_final_score$a)
-})
-
-output$plot_scatter_1 <- renderPlot({
-  print(rfm_scatter_1_generate$a)
-})
-
-rfm_scatter_2_generate <- reactiveValues(a = NULL)
-
-observeEvent(input$submit_rfm_transaction_score, {
-  rfm_scatter_2_generate$a <- rfm_fm_plot(rfm_final_score$a)
-})
-
-observeEvent(input$submit_rfm_customer_score, {
-  rfm_scatter_2_generate$a <- rfm_fm_plot(rfm_final_score$a)
-})
-
-observeEvent(input$submit_rfm_customer_score_2, {
-  rfm_scatter_2_generate$a <- rfm_fm_plot(rfm_final_score$a)
-})
-
-output$plot_scatter_2 <- renderPlot({
-  print(rfm_scatter_2_generate$a)
-})
-
-rfm_scatter_3_generate <- reactiveValues(a = NULL)
-
-observeEvent(input$submit_rfm_transaction_score, {
-  rfm_scatter_3_generate$a <- rfm_rf_plot(rfm_final_score$a)
-})
-
-observeEvent(input$submit_rfm_customer_score, {
-  rfm_scatter_3_generate$a <- rfm_rf_plot(rfm_final_score$a)
-})
-
-observeEvent(input$submit_rfm_customer_score_2, {
-  rfm_scatter_3_generate$a <- rfm_rf_plot(rfm_final_score$a)
-})
-
-output$plot_scatter_3 <- renderPlot({
-  print(rfm_scatter_3_generate$a)
-})
-
-

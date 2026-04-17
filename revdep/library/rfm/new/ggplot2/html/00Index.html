@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head><title>R: Create Elegant Data Visualisations Using the Grammar of Graphics</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-<link rel="stylesheet" type="text/css" href="R.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<link rel="stylesheet" type="text/css" href="R.css">
 </head><body><div class="container">
 <h1> Create Elegant Data Visualisations Using the Grammar of Graphics
-<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]" />
+<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]">
 </h1>
-<hr/>
+<hr>
 <div style="text-align: center;">
-<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
-<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;ggplot2&rsquo; version 3.4.4</h2>
+<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]"></a>
+<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]"></a>
+</div><h2>Documentation for package &lsquo;ggplot2&rsquo; version 4.0.2</h2>
 
-<ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
+<ul><li><a href="../DESCRIPTION" type="text/plain; charset=utf-8">DESCRIPTION file</a>.</li>
 <li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
-<li><a href="../NEWS">Package NEWS</a>.</li>
+<li><a href="../NEWS.md">Package NEWS</a>.</li>
 </ul>
 
 <h2>Help Pages</h2>
@@ -31,7 +31,6 @@
 <a href="#F">F</a>
 <a href="#G">G</a>
 <a href="#H">H</a>
-<a href="#I">I</a>
 <a href="#L">L</a>
 <a href="#M">M</a>
 <a href="#P">P</a>
@@ -39,6 +38,7 @@
 <a href="#R">R</a>
 <a href="#S">S</a>
 <a href="#T">T</a>
+<a href="#U">U</a>
 <a href="#V">V</a>
 <a href="#X">X</a>
 <a href="#Y">Y</a>
@@ -49,6 +49,8 @@
 <h2><a id="A">-- A --</a></h2>
 
 <table style="width: 100%;">
+<tr><td style="width: 25%;"><a href="gg-add.html">add_gg</a></td>
+<td>Add components to a plot</td></tr>
 <tr><td style="width: 25%;"><a href="aes.html">aes</a></td>
 <td>Construct aesthetic mappings</td></tr>
 <tr><td style="width: 25%;"><a href="aes_colour_fill_alpha.html">aes_colour_fill_alpha</a></td>
@@ -69,6 +71,8 @@
 <td>Extract alt text from a plot</td></tr>
 <tr><td style="width: 25%;"><a href="annotate.html">annotate</a></td>
 <td>Create an annotation layer</td></tr>
+<tr><td style="width: 25%;"><a href="annotation_borders.html">annotation_borders</a></td>
+<td>Create a layer of map borders</td></tr>
 <tr><td style="width: 25%;"><a href="annotation_custom.html">annotation_custom</a></td>
 <td>Annotation: Custom grob</td></tr>
 <tr><td style="width: 25%;"><a href="annotation_logticks.html">annotation_logticks</a></td>
@@ -79,6 +83,8 @@
 <td>Annotation: high-performance rectangular tiling</td></tr>
 <tr><td style="width: 25%;"><a href="autolayer.html">autolayer</a></td>
 <td>Create a ggplot layer appropriate to a particular data type</td></tr>
+<tr><td style="width: 25%;"><a href="automatic_plotting.html">automatic_plotting</a></td>
+<td>Tailoring plots to particular data types</td></tr>
 <tr><td style="width: 25%;"><a href="autoplot.html">autoplot</a></td>
 <td>Create a complete ggplot appropriate to a particular data type</td></tr>
 </table>
@@ -86,7 +92,7 @@
 <h2><a id="B">-- B --</a></h2>
 
 <table style="width: 100%;">
-<tr><td style="width: 25%;"><a href="borders.html">borders</a></td>
+<tr><td style="width: 25%;"><a href="annotation_borders.html">borders</a></td>
 <td>Create a layer of map borders</td></tr>
 </table>
 
@@ -109,13 +115,17 @@
 <td>Cartesian coordinates with x and y flipped</td></tr>
 <tr><td style="width: 25%;"><a href="coord_map.html">coord_map</a></td>
 <td>Map projections</td></tr>
-<tr><td style="width: 25%;"><a href="coord_polar.html">coord_polar</a></td>
+<tr><td style="width: 25%;"><a href="coord_radial.html">coord_polar</a></td>
 <td>Polar coordinates</td></tr>
 <tr><td style="width: 25%;"><a href="coord_map.html">coord_quickmap</a></td>
 <td>Map projections</td></tr>
+<tr><td style="width: 25%;"><a href="coord_radial.html">coord_radial</a></td>
+<td>Polar coordinates</td></tr>
 <tr><td style="width: 25%;"><a href="ggsf.html">coord_sf</a></td>
 <td>Visualise sf objects</td></tr>
-<tr><td style="width: 25%;"><a href="coord_trans.html">coord_trans</a></td>
+<tr><td style="width: 25%;"><a href="coord_transform.html">coord_trans</a></td>
+<td>Transformed Cartesian coordinate system</td></tr>
+<tr><td style="width: 25%;"><a href="coord_transform.html">coord_transform</a></td>
 <td>Transformed Cartesian coordinate system</td></tr>
 <tr><td style="width: 25%;"><a href="cut_interval.html">cut_interval</a></td>
 <td>Discretise numeric data into categorical</td></tr>
@@ -179,9 +189,17 @@
 <td>US economic time series</td></tr>
 <tr><td style="width: 25%;"><a href="economics.html">economics_long</a></td>
 <td>US economic time series</td></tr>
+<tr><td style="width: 25%;"><a href="element.html">element</a></td>
+<td>Theme elements</td></tr>
 <tr><td style="width: 25%;"><a href="element.html">element_blank</a></td>
 <td>Theme elements</td></tr>
+<tr><td style="width: 25%;"><a href="element.html">element_geom</a></td>
+<td>Theme elements</td></tr>
 <tr><td style="width: 25%;"><a href="element.html">element_line</a></td>
+<td>Theme elements</td></tr>
+<tr><td style="width: 25%;"><a href="element.html">element_point</a></td>
+<td>Theme elements</td></tr>
+<tr><td style="width: 25%;"><a href="element.html">element_polygon</a></td>
 <td>Theme elements</td></tr>
 <tr><td style="width: 25%;"><a href="element.html">element_rect</a></td>
 <td>Theme elements</td></tr>
@@ -210,6 +228,8 @@
 <td>Format or print a ggproto object</td></tr>
 <tr><td style="width: 25%;"><a href="fortify.html">fortify</a></td>
 <td>Fortify a model with data.</td></tr>
+<tr><td style="width: 25%;"><a href="aes_eval.html">from_theme</a></td>
+<td>Control aesthetic evaluation</td></tr>
 </table>
 
 <h2><a id="G">-- G --</a></h2>
@@ -257,8 +277,8 @@
 <td>Dot plot</td></tr>
 <tr><td style="width: 25%;"><a href="geom_linerange.html">geom_errorbar</a></td>
 <td>Vertical intervals: lines, crossbars &amp; errorbars</td></tr>
-<tr><td style="width: 25%;"><a href="geom_errorbarh.html">geom_errorbarh</a></td>
-<td>Horizontal error bars</td></tr>
+<tr><td style="width: 25%;"><a href="geom_linerange.html">geom_errorbarh</a></td>
+<td>Vertical intervals: lines, crossbars &amp; errorbars</td></tr>
 <tr><td style="width: 25%;"><a href="geom_histogram.html">geom_freqpoly</a></td>
 <td>Histograms and frequency polygons</td></tr>
 <tr><td style="width: 25%;"><a href="geom_function.html">geom_function</a></td>
@@ -325,6 +345,10 @@
 <td>Reference lines: horizontal, vertical, and diagonal</td></tr>
 <tr><td style="width: 25%;"><a href="get_alt_text.html">get_alt_text</a></td>
 <td>Extract alt text from a plot</td></tr>
+<tr><td style="width: 25%;"><a href="labs.html">get_labs</a></td>
+<td>Modify axis, legend, and plot labels</td></tr>
+<tr><td style="width: 25%;"><a href="get_theme.html">get_theme</a></td>
+<td>Get, set, and modify the active theme</td></tr>
 <tr><td style="width: 25%;"><a href="ggplot.html">ggplot</a></td>
 <td>Create a new ggplot</td></tr>
 <tr><td style="width: 25%;"><a href="ggproto.html">ggproto</a></td>
@@ -343,6 +367,12 @@
 <td>Set guides for each scale</td></tr>
 <tr><td style="width: 25%;"><a href="guide_axis.html">guide_axis</a></td>
 <td>Axis guide</td></tr>
+<tr><td style="width: 25%;"><a href="guide_axis_logticks.html">guide_axis_logticks</a></td>
+<td>Axis with logarithmic tick marks</td></tr>
+<tr><td style="width: 25%;"><a href="guide_axis_stack.html">guide_axis_stack</a></td>
+<td>Stacked axis guides</td></tr>
+<tr><td style="width: 25%;"><a href="guide_axis_theta.html">guide_axis_theta</a></td>
+<td>Angle axis guide</td></tr>
 <tr><td style="width: 25%;"><a href="guide_bins.html">guide_bins</a></td>
 <td>A binned version of guide_legend</td></tr>
 <tr><td style="width: 25%;"><a href="guide_colourbar.html">guide_colorbar</a></td>
@@ -353,6 +383,8 @@
 <td>Continuous colour bar guide</td></tr>
 <tr><td style="width: 25%;"><a href="guide_coloursteps.html">guide_coloursteps</a></td>
 <td>Discretized colourbar guide</td></tr>
+<tr><td style="width: 25%;"><a href="guide_custom.html">guide_custom</a></td>
+<td>Custom guides</td></tr>
 <tr><td style="width: 25%;"><a href="guide_legend.html">guide_legend</a></td>
 <td>Legend guide</td></tr>
 <tr><td style="width: 25%;"><a href="guide_none.html">guide_none</a></td>
@@ -364,13 +396,6 @@
 <table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="hmisc.html">hmisc</a></td>
 <td>A selection of summary functions from Hmisc</td></tr>
-</table>
-
-<h2><a id="I">-- I --</a></h2>
-
-<table style="width: 100%;">
-<tr><td style="width: 25%;"><a href="ggproto.html">is.ggproto</a></td>
-<td>Create a new ggproto object</td></tr>
 </table>
 
 <h2><a id="L">-- L --</a></h2>
@@ -394,6 +419,12 @@
 <td>Useful labeller functions</td></tr>
 <tr><td style="width: 25%;"><a href="labs.html">labs</a></td>
 <td>Modify axis, legend, and plot labels</td></tr>
+<tr><td style="width: 25%;"><a href="layer_geoms.html">layer_geoms</a></td>
+<td>Layer geometry display</td></tr>
+<tr><td style="width: 25%;"><a href="layer_positions.html">layer_positions</a></td>
+<td>Layer position adjustments</td></tr>
+<tr><td style="width: 25%;"><a href="layer_stats.html">layer_stats</a></td>
+<td>Layer statistical transformations</td></tr>
 <tr><td style="width: 25%;"><a href="lims.html">lims</a></td>
 <td>Set scale limits</td></tr>
 <tr><td style="width: 25%;"><a href="aes_linetype_size_shape.html">linetype</a></td>
@@ -406,6 +437,10 @@
 
 <table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="element.html">margin</a></td>
+<td>Theme elements</td></tr>
+<tr><td style="width: 25%;"><a href="element.html">margin_auto</a></td>
+<td>Theme elements</td></tr>
+<tr><td style="width: 25%;"><a href="element.html">margin_part</a></td>
 <td>Theme elements</td></tr>
 <tr><td style="width: 25%;"><a href="hmisc.html">mean_cl_boot</a></td>
 <td>A selection of summary functions from Hmisc</td></tr>
@@ -468,6 +503,8 @@
 <table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="element.html">rel</a></td>
 <td>Theme elements</td></tr>
+<tr><td style="width: 25%;"><a href="get_theme.html">replace_theme</a></td>
+<td>Get, set, and modify the active theme</td></tr>
 <tr><td style="width: 25%;"><a href="resolution.html">resolution</a></td>
 <td>Compute the "resolution" of a numeric vector</td></tr>
 </table>
@@ -739,6 +776,8 @@
 <td>Vector field of seal movements</td></tr>
 <tr><td style="width: 25%;"><a href="sec_axis.html">sec_axis</a></td>
 <td>Specify a secondary axis</td></tr>
+<tr><td style="width: 25%;"><a href="get_theme.html">set_theme</a></td>
+<td>Get, set, and modify the active theme</td></tr>
 <tr><td style="width: 25%;"><a href="aes_linetype_size_shape.html">shape</a></td>
 <td>Differentiation related aesthetics: linetype, size, shape</td></tr>
 <tr><td style="width: 25%;"><a href="aes_linetype_size_shape.html">size</a></td>
@@ -765,6 +804,8 @@
 <td>Hexagonal heatmap of 2d bin counts</td></tr>
 <tr><td style="width: 25%;"><a href="geom_boxplot.html">stat_boxplot</a></td>
 <td>A box and whiskers plot (in the style of Tukey)</td></tr>
+<tr><td style="width: 25%;"><a href="stat_connect.html">stat_connect</a></td>
+<td>Connect observations</td></tr>
 <tr><td style="width: 25%;"><a href="geom_contour.html">stat_contour</a></td>
 <td>2D contours of a 3D surface</td></tr>
 <tr><td style="width: 25%;"><a href="geom_contour.html">stat_contour_filled</a></td>
@@ -789,6 +830,8 @@
 <td>Draw a function as a continuous curve</td></tr>
 <tr><td style="width: 25%;"><a href="stat_identity.html">stat_identity</a></td>
 <td>Leave data as is</td></tr>
+<tr><td style="width: 25%;"><a href="stat_manual.html">stat_manual</a></td>
+<td>Manually compute transformations</td></tr>
 <tr><td style="width: 25%;"><a href="geom_qq.html">stat_qq</a></td>
 <td>A quantile-quantile plot</td></tr>
 <tr><td style="width: 25%;"><a href="geom_qq.html">stat_qq_line</a></td>
@@ -819,6 +862,8 @@
 <td>Remove duplicates</td></tr>
 <tr><td style="width: 25%;"><a href="geom_violin.html">stat_ydensity</a></td>
 <td>Violin plot</td></tr>
+<tr><td style="width: 25%;"><a href="subtheme.html">subtheme</a></td>
+<td>Shortcuts for theme settings</td></tr>
 </table>
 
 <h2><a id="T">-- T --</a></h2>
@@ -832,7 +877,7 @@
 <td>Complete themes</td></tr>
 <tr><td style="width: 25%;"><a href="ggtheme.html">theme_dark</a></td>
 <td>Complete themes</td></tr>
-<tr><td style="width: 25%;"><a href="theme_get.html">theme_get</a></td>
+<tr><td style="width: 25%;"><a href="get_theme.html">theme_get</a></td>
 <td>Get, set, and modify the active theme</td></tr>
 <tr><td style="width: 25%;"><a href="ggtheme.html">theme_gray</a></td>
 <td>Complete themes</td></tr>
@@ -844,18 +889,47 @@
 <td>Complete themes</td></tr>
 <tr><td style="width: 25%;"><a href="ggtheme.html">theme_minimal</a></td>
 <td>Complete themes</td></tr>
-<tr><td style="width: 25%;"><a href="theme_get.html">theme_replace</a></td>
+<tr><td style="width: 25%;"><a href="get_theme.html">theme_replace</a></td>
 <td>Get, set, and modify the active theme</td></tr>
-<tr><td style="width: 25%;"><a href="theme_get.html">theme_set</a></td>
+<tr><td style="width: 25%;"><a href="get_theme.html">theme_set</a></td>
 <td>Get, set, and modify the active theme</td></tr>
+<tr><td style="width: 25%;"><a href="subtheme.html">theme_sub_axis</a></td>
+<td>Shortcuts for theme settings</td></tr>
+<tr><td style="width: 25%;"><a href="subtheme.html">theme_sub_axis_bottom</a></td>
+<td>Shortcuts for theme settings</td></tr>
+<tr><td style="width: 25%;"><a href="subtheme.html">theme_sub_axis_left</a></td>
+<td>Shortcuts for theme settings</td></tr>
+<tr><td style="width: 25%;"><a href="subtheme.html">theme_sub_axis_right</a></td>
+<td>Shortcuts for theme settings</td></tr>
+<tr><td style="width: 25%;"><a href="subtheme.html">theme_sub_axis_top</a></td>
+<td>Shortcuts for theme settings</td></tr>
+<tr><td style="width: 25%;"><a href="subtheme.html">theme_sub_axis_x</a></td>
+<td>Shortcuts for theme settings</td></tr>
+<tr><td style="width: 25%;"><a href="subtheme.html">theme_sub_axis_y</a></td>
+<td>Shortcuts for theme settings</td></tr>
+<tr><td style="width: 25%;"><a href="subtheme.html">theme_sub_legend</a></td>
+<td>Shortcuts for theme settings</td></tr>
+<tr><td style="width: 25%;"><a href="subtheme.html">theme_sub_panel</a></td>
+<td>Shortcuts for theme settings</td></tr>
+<tr><td style="width: 25%;"><a href="subtheme.html">theme_sub_plot</a></td>
+<td>Shortcuts for theme settings</td></tr>
+<tr><td style="width: 25%;"><a href="subtheme.html">theme_sub_strip</a></td>
+<td>Shortcuts for theme settings</td></tr>
 <tr><td style="width: 25%;"><a href="ggtheme.html">theme_test</a></td>
 <td>Complete themes</td></tr>
-<tr><td style="width: 25%;"><a href="theme_get.html">theme_update</a></td>
+<tr><td style="width: 25%;"><a href="get_theme.html">theme_update</a></td>
 <td>Get, set, and modify the active theme</td></tr>
 <tr><td style="width: 25%;"><a href="ggtheme.html">theme_void</a></td>
 <td>Complete themes</td></tr>
 <tr><td style="width: 25%;"><a href="txhousing.html">txhousing</a></td>
 <td>Housing sales in TX</td></tr>
+</table>
+
+<h2><a id="U">-- U --</a></h2>
+
+<table style="width: 100%;">
+<tr><td style="width: 25%;"><a href="get_theme.html">update_theme</a></td>
+<td>Get, set, and modify the active theme</td></tr>
 </table>
 
 <h2><a id="V">-- V --</a></h2>
@@ -904,7 +978,7 @@
 <table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="gg-add.html">%+%</a></td>
 <td>Add components to a plot</td></tr>
-<tr><td style="width: 25%;"><a href="theme_get.html">%+replace%</a></td>
+<tr><td style="width: 25%;"><a href="get_theme.html">%+replace%</a></td>
 <td>Get, set, and modify the active theme</td></tr>
 <tr><td style="width: 25%;"><a href="gg-add.html">+.gg</a></td>
 <td>Add components to a plot</td></tr>

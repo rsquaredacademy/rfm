@@ -1,5 +1,59 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# tibble 3.3.1
+
+## Chore
+
+- Remove deprecated `vctrs::partial_factor()` and `vctrs::partial_frame()` references (#1678, #1680).
+
+- Avoid use of `SET_OBJECT()`, `ATTRIB()` and `SET_ATTRIB()` (#1671).
+
+- Spring Cleaning (@Layalchristine24, #1643, #1644).
+
+- Use Quarto-style formatting in vignettes.
+
+## Documentation
+
+- Posit as copyright holder.
+
+
+# tibble 3.3.0
+
+## Bug fixes
+
+- Subset tibble with `"0"` for row index (@eitsupi, #1636, #1637).
+
+- `new_tibble()` and `as_tibble()` support attributes named `"n"` and `"x"` (#1573, #1574).
+
+## Features
+
+- Support new vctrs `.name_repair` options: `unique_quiet`, `universal_quiet` (@andreranza, #1549, #1625).
+
+- Rework `view()` to better work with RStudio and Positron (@DavisVaughan, #1551, #1603).
+
+- `as_tibble()` calls `as.data.frame()` for objects that are not subclasses of `"tbl_df"` (@TimTaylor, #1556, #1557).
+
+## Documentation
+
+- Update comparison between tibble and data.frame (@olivroy, #1567).
+
+- Use pak for installing dev version in README (@luisDVA, #1600).
+
+- Document that `...` must be empty in `print.tbl_df()`.
+
+- Request to not edit `NEWS.md`.
+
+- Fix rendering if suggested packages are missing.
+
+- Alt text (@maelle, #1528, #1539).
+
+## Testing
+
+- Skip tests if packages are missing.
+
+- Override `::` to avoid failures in tests without suggested packages.
+
+
 # tibble 3.2.1
 
 ## Internal
@@ -20,13 +74,13 @@
 - Deprecated functions and arguments where we could not detect usage by other CRAN packages (#1515):
 
     - `data_frame_()`, `lst_()`, `frame_data()`
-    
+
     - `as_tibble(validate = )`, `as_tibble(NULL)`, `new_tibble(subclass = )`
-    
+
     - `add_row()` and `add_column()` for non-data-frame input
-    
+
     - `add_column()` for input with non-unique names
-    
+
     - corner cases for `tbl[[x]]`
 
 - Breaking change: Remove `knit_print.trunc_mat()` method (#1516).
@@ -138,7 +192,7 @@
 
 ## Bug fixes
 
-- `tbl[row, col] <- rhs` treats an all-`NA` logical vector as a missing value both for existing data (#773) and for the right-hand side value (#868). This means that a column initialized with `NA` (of type `logical`) will change its type when a row is updated to a value of a different type. 
+- `tbl[row, col] <- rhs` treats an all-`NA` logical vector as a missing value both for existing data (#773) and for the right-hand side value (#868). This means that a column initialized with `NA` (of type `logical`) will change its type when a row is updated to a value of a different type.
 - `[[<-()` supports symbols (#893).
 
 ## Features

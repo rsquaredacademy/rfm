@@ -7,18 +7,25 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r}
+#| include: false
 knitr::opts_chunk$set(
   collapse = TRUE,
+  eval = rlang::is_installed(c("dplyr", "tidyr", "purrr")),
   comment = "#>"
 )
+```
+
+```{r}
+#| include: false
 library(dplyr)
 library(tidyr)
 library(purrr)
 requireNamespace("hms", quietly = TRUE)
 ```
 
-```{r setup}
+```{r}
+#| label: setup
 library(tibble)
 ```
 
@@ -27,7 +34,10 @@ library(tibble)
 This vignette shows an overview of known data types and their abbreviations, and their origin.
 For example, `<int>` in the header of a column indicates an integer column, and `<chr>` denotes a character column.
 
-```{r howto, echo = FALSE, eval = FALSE}
+```{r}
+#| label: howto
+#| echo: false
+#| eval: false
 library(tidyverse)
 library(tidymodels)
 library(vctrs)
@@ -47,8 +57,10 @@ set_names(rep_along(all_methods, list("")), all_methods) %>%
 
 
 
-```{r data, echo = FALSE}
-data <- list(
+```{r}
+#| label: data
+#| echo: false
+data <- compact(list(
   "Atomic" = rlang::quos(
     logical = TRUE,
     integer = 1L,
@@ -68,7 +80,7 @@ data <- list(
     difftime = vctrs::new_duration(1)
   ),
 
-  "Objects from other packages" = rlang::quos(
+  "Objects from other packages" = if (rlang::is_installed(c("bit64", "blob", "hms"))) rlang::quos(
     hms = hms::hms(1),
     integer64 = bit64::as.integer64(1e10),
     blob = blob::blob(raw(1))
@@ -87,10 +99,7 @@ data <- list(
     unspecified = vctrs::unspecified(1),
 
     vctrs_list_of = vctrs::list_of(c(1L)),
-    vctrs_vctr = vctrs::new_vctr(1L),
-
-    vctrs_partial_factor = vctrs::partial_factor(letters),
-    vctrs_partial_frame = vctrs::partial_frame(a = 1)
+    vctrs_vctr = vctrs::new_vctr(1L)
   ),
 
   "Language objects" = rlang::quos(
@@ -99,10 +108,12 @@ data <- list(
     expression = parse(text = "a <- 1\nb<- 2"),
     quosures = rlang::quos(a = 1)
   )
-)
+))
 ```
 
-```{r table, echo = FALSE}
+```{r}
+#| label: table
+#| echo: false
 tbl <-
   data %>%
   map(unclass) %>%
@@ -116,7 +127,9 @@ tbl <-
   mutate("Column header" = map_chr(Value, type_sum))
 ```
 
-```{r kable, echo = FALSE}
+```{r}
+#| label: kable
+#| echo: false
 tbl %>%
   select(-Value) %>%
   mutate(Example = paste0("`", Example, "`")) %>%
@@ -127,7 +140,9 @@ tbl %>%
 
 The following overview contains example values for each type:
 
-```{r glimpse, echo = FALSE}
+```{r}
+#| label: glimpse
+#| echo: false
 tbl %>%
   select(`Data type`, `Value`) %>%
   filter(map_lgl(Value, vctrs::vec_is)) %>%
@@ -143,6 +158,8 @@ The column header is obtained by calling `pillar::type_sum()` on the column.
 This is an S3 method that can be overridden,
 but most of the time it is more useful to override `vctrs::vec_ptype_abbr()`:
 
-```{r type_sum_default, results = if (Sys.getenv("IN_GALLEY") != "") "hide" else "markup"}
+```{r}
+#| label: type_sum_default
+#| results: !expr if (Sys.getenv("IN_GALLEY") != "") "hide" else "markup"
 pillar:::type_sum.default
 ```

@@ -25,6 +25,7 @@ str_flatten	str_flatten
 str_flatten_comma	str_flatten
 str_glue	str_glue
 str_glue_data	str_glue
+str_ilike	str_like
 str_interp	str_interp
 str_length	str_length
 str_like	str_like
@@ -51,8 +52,11 @@ str_sub	str_sub
 str_sub<-	str_sub
 str_subset	str_subset
 str_sub_all	str_sub
+str_to_camel	str_to_camel
+str_to_kebab	str_to_camel
 str_to_lower	case
 str_to_sentence	case
+str_to_snake	str_to_camel
 str_to_title	case
 str_to_upper	case
 str_trim	str_trim

@@ -1,6 +1,7 @@
 rlang-package	rlang-package
 !!	injection-operator
 !!!	splice-operator
+%&&%	op-null-continuation
 %<~%	env_bind
 %@%	op-get-attr
 %@%<-	op-get-attr
@@ -60,13 +61,20 @@ call_name	call_name
 call_ns	call_name
 call_standardise	call_standardise
 catch_cnd	catch_cnd
+check_bool	check_type_scalar
+check_data_frame	check_data_frame
 check_dots_empty	check_dots_empty
 check_dots_empty0	check_dots_empty0
 check_dots_unnamed	check_dots_unnamed
 check_dots_used	check_dots_used
 check_exclusive	check_exclusive
 check_installed	is_installed
+check_number_decimal	check_type_number
+check_number_whole	check_type_number
 check_required	check_required
+check_string	check_type_scalar
+check_type_number	check_type_number
+check_type_scalar	check_type_scalar
 child_env	child_env
 chr	vector-construction
 chr_unserialise_unicode	chr_unserialise_unicode
@@ -382,6 +390,7 @@ on_load	on_load
 on_package_load	on_load
 op-get-attr	op-get-attr
 op-na-default	op-na-default
+op-null-continuation	op-null-continuation
 op-null-default	op-null-default
 pairlist2	pairlist2
 parse_bytes	bytes-class
@@ -456,6 +465,7 @@ squash_lgl	flatten
 squash_raw	flatten
 stack	stack
 stack-deprecated	stack-deprecated
+stop_input_type	stop_input_type
 string	string
 switch_class	switch_type
 switch_type	switch_type

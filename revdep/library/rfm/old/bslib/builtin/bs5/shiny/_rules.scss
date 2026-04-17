@@ -81,14 +81,27 @@ $bslib-checkbox-radio-margin-right: 0.35em !default;
 
 
 @if ($bslib-enable-shadows) {
+  // These shadows are disabled because we use `enable-shadows: false` in the
+  // theme to avoid enabling *all* shadows. This is why we can't use the
+  // built-in `@include box-shadow()` mixin.
+
   // Add box-shadow & remove border from 'top-level' card()/layout_sidebar()
   .bslib-card {
     // BS doesn't include a box-shadow rule for .card when `enable-shadows: false`
-    box-shadow: var(--bslib-card-box-shadow, #{$box-shadow});
+    box-shadow: var(--bslib-card-box-shadow, #{$box-shadow-sm});
+    border-color: var(--bslib-card-border-color, transparent);
+    &.bslib-value-box.default {
+      --bslib-value-box-border-color-default: var(--bslib-card-border-color, transparent);
+    }
 
-    // Shadows on top-level cards, not in nested components
+    // Restore borders without shadows for nested cards/value boxes
     .bslib-card {
       --bslib-card-box-shadow: ; // unset our shadow
+      --bslib-card-border-color: var(--#{$prefix}card-border-color);
+
+      &.bslib-value-box.default {
+        --bslib-value-box-border-color-default: var(--#{$prefix}card-border-color, #{$card-border-color});
+      }
     }
   }
 
@@ -103,6 +116,12 @@ $bslib-checkbox-radio-margin-right: 0.35em !default;
   }
   .bslib-card-box-shadow-none {
     --bslib-card-box-shadow: none;
+    --bslib-card-border-color: var(--#{$prefix}card-border-color);
+  }
+
+  .popover {
+    --#{$prefix}popover-shadow: #{$popover-box-shadow};
+    box-shadow: var(--#{$prefix}popover-shadow);
   }
 }
 
@@ -111,12 +130,9 @@ $bslib-checkbox-radio-margin-right: 0.35em !default;
 @if $bslib-dashboard-design {
 
   :root {
-    --bslib-dashboard-sidebar-bg: var(--#{$prefix}body-bg);
-    --bslib-dashboard-sidebar-main-bg: var(--#{$prefix}body-bg);
     --bslib-dashboard-main-bg: rgb(247, 247, 247);
     --#{$prefix}card-border-color: var(--bslib-dashboard-border-color-translucent, var(--#{$prefix}border-color-translucent));
-    --bslib-sidebar-bg: var(--#{$prefix}body-bg);
-    --bslib-sidebar-fg: var(--#{$prefix}color);
+    --bslib-dashboard-card-header-font-weight: #{$font-weight-semibold};
   }
 
   @include color-mode(dark) {
@@ -124,29 +140,48 @@ $bslib-checkbox-radio-margin-right: 0.35em !default;
   }
 
   .bslib-card {
-    .card-header, .card-footer {
-      background-color: transparent;
+    // We don't want to get in the way of $card-cap-bg, which is used by the shiny preset
+    // when the dashboard design is disabled. This next line disables the default background
+    // color of the card header, giving us the white card headers we want, without also
+    // blocking inheritence via `.text-bg-{theme}` classes or others.
+    --#{$prefix}card-cap-bg: ;
+
+    .card-header,
+    .card-footer {
       font-size: 0.9rem;
     }
+
     .card-header {
-      font-weight: $font-weight-semibold;
+      font-weight: var(--bslib-dashboard-card-header-font-weight);
       line-height: 1.375rem;
     }
   }
 
-  // Set the background color of page dashboard class...
-  .bslib-page-dashboard,
-  // or of global main content area in a page_navbar() with a global sidebar
-  .main:has(.tab-content > .bslib-page-dashboard.active) {
+  // Set the background color of page dashboard class with a sidebar layout...
+  .bslib-sidebar-layout {
+    &:has(> .bslib-page-dashboard),
+    // or of global main content area in a page_navbar() with a global sidebar
+    &:has(.tab-content > .bslib-page-dashboard.active) {
+      // or of main area of a page_sidebar()
+      --_main-bg: var(--bslib-dashboard-main-bg);
+      ;
+    }
+  }
+
+  // ... or `page_navbar(nav_panel(class = "bslib-page-dashboard"), sidebar = NULL)`
+  .bslib-page-navbar .tab-content > .bslib-page-dashboard.active {
     background-color: var(--bslib-dashboard-main-bg);
-    // or of main area of a page_sidebar()
-    --_main-bg: var(--bslib-dashboard-main-bg);
+  }
+
+  .navbar {
+    // Add border-bottom for general navbars (primarily in non-bslib contexts)
+    border-bottom: $card-border-width solid $card-border-color;
   }
 
   .bslib-page-navbar, .bslib-page-dashboard {
-    > .navbar {
-      --bslib-navbar-default-bg: var(--#{$prefix}body-bg);
-      --bslib-navbar-inverse-bg: var(--#{$prefix}body-color);
+    // Inside bslib we only add the border on the top-level navbar
+    .navbar {
+      border-bottom: none;
     }
 
     > .navbar + div {
@@ -163,8 +198,10 @@ $bslib-checkbox-radio-margin-right: 0.35em !default;
   }
 
   .bslib-page-sidebar {
-    --bslib-page-sidebar-title-bg: var(--#{$prefix}body-bg);
-    --bslib-page-sidebar-title-color: var(--#{$prefix}body-color);
+    @if not $navbar-bg {
+      --bslib-page-sidebar-title-bg: var(--#{$prefix}body-bg);
+      --bslib-page-sidebar-title-color: var(--#{$prefix}body-color);
+    }
 
     .bslib-page-title {
       border-color: var(--#{$prefix}border-color-translucent);
@@ -179,7 +216,7 @@ $bslib-checkbox-radio-margin-right: 0.35em !default;
   --#{$prefix}link-hover-color: rgba(var(--bs-body-color-rgb), 0.8);
   --#{$prefix}nav-link-font-size: 0.875rem;
 
-  .nav-link {
+  .nav-link:not(:empty) {
     padding-left: 5px !important;
     padding-right: 5px !important;
 
@@ -265,6 +302,7 @@ $icon-classes: ("bi", "fa", "fas", "far", "fab", "material-icons") !default;
 #shiny-modal-wrapper:has( ~ .modal-backdrop) .modal {
   // Blur the background when the modal has a backdrop
   backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
 }
 
 // Progress Bars & Notifications
@@ -285,7 +323,7 @@ $icon-classes: ("bi", "fa", "fas", "far", "fab", "material-icons") !default;
 .shiny-notification.shiny-notification {
   position: relative;
   opacity: 0.96;
-  padding: calc(var(--bslib-spacer, 1rem) * 2);
+  padding: 2rem;
   margin: var(--bslib-spacer, 1rem);
   border: $border-width solid var(--#{$prefix}border-color-translucent);
   border-radius: $card-border-radius;

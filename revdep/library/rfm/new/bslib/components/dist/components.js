@@ -1,4 +1,4 @@
-/*! bslib 0.6.1 | (c) 2012-2023 RStudio, PBC. | License: MIT + file LICENSE */
+/*! bslib 0.10.0 | (c) 2012-2026 RStudio, PBC. | License: MIT + file LICENSE */
 "use strict";
 (() => {
   var __getOwnPropNames = Object.getOwnPropertyNames;
@@ -7,6 +7,23 @@
   };
   var __commonJS = (cb, mod) => function __require() {
     return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+  };
+  var __accessCheck = (obj, member, msg) => {
+    if (!member.has(obj))
+      throw TypeError("Cannot " + msg);
+  };
+  var __privateGet = (obj, member, getter) => {
+    __accessCheck(obj, member, "read from private field");
+    return getter ? getter.call(obj) : member.get(obj);
+  };
+  var __privateAdd = (obj, member, value) => {
+    if (member.has(obj))
+      throw TypeError("Cannot add the same private member more than once");
+    member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
+  };
+  var __privateMethod = (obj, member, method) => {
+    __accessCheck(obj, member, "access private method");
+    return method;
   };
   var __async = (__this, __arguments, generator) => {
     return new Promise((resolve, reject) => {
@@ -31,9 +48,30 @@
 
   // srcts/src/components/_utils.ts
   function registerBinding(inputBindingClass, name) {
-    if (window.Shiny) {
+    if (Shiny) {
       Shiny.inputBindings.register(new inputBindingClass(), "bslib." + name);
     }
+  }
+  function registerBslibGlobal(name, value) {
+    window.bslib = window.bslib || {};
+    if (!window.bslib[name]) {
+      window.bslib[name] = value;
+    } else {
+      console.error(
+        `[bslib] Global window.bslib.${name} was already defined, using previous definition.`
+      );
+    }
+  }
+  function showShinyClientMessage({
+    headline = "",
+    message,
+    status = "warning"
+  }) {
+    document.dispatchEvent(
+      new CustomEvent("shiny:client-message", {
+        detail: { headline, message, status }
+      })
+    );
   }
   function hasDefinedProperty(obj, prop) {
     return Object.prototype.hasOwnProperty.call(obj, prop) && obj[prop] !== void 0;
@@ -60,7 +98,7 @@
   }
   function shinyRenderContent(...args) {
     return __async(this, null, function* () {
-      if (!window.Shiny) {
+      if (!Shiny) {
         throw new Error("This function must be called in a Shiny app.");
       }
       if (Shiny.renderContentAsync) {
@@ -70,11 +108,33 @@
       }
     });
   }
-  var InputBinding;
+  function updateLabel(labelContent, labelNode) {
+    return __async(this, null, function* () {
+      if (typeof labelContent === "undefined")
+        return;
+      if (labelNode.length !== 1) {
+        throw new Error("labelNode must be of length 1");
+      }
+      if (typeof labelContent === "string") {
+        labelContent = {
+          html: labelContent,
+          deps: []
+        };
+      }
+      if (labelContent.html === "") {
+        labelNode.addClass("shiny-label-null");
+      } else {
+        yield shinyRenderContent(labelNode, labelContent);
+        labelNode.removeClass("shiny-label-null");
+      }
+    });
+  }
+  var Shiny, InputBinding;
   var init_utils = __esm({
     "srcts/src/components/_utils.ts"() {
       "use strict";
-      InputBinding = window.Shiny ? Shiny.InputBinding : class {
+      Shiny = window.Shiny;
+      InputBinding = Shiny ? Shiny.InputBinding : class {
       };
     }
   });
@@ -172,10 +232,11 @@
           });
         }
         _removeItem(el, data) {
+          var _a;
           const targetItems = this._getItemInfo(el).filter(
             (x) => data.target.indexOf(x.value) > -1
           );
-          const unbindAll = Shiny == null ? void 0 : Shiny.unbindAll;
+          const unbindAll = (_a = window.Shiny) == null ? void 0 : _a.unbindAll;
           targetItems.forEach((x) => {
             if (unbindAll)
               unbindAll(x.item);
@@ -363,6 +424,115 @@
     }
   });
 
+  // srcts/src/components/_shinyRemovedObserver.ts
+  var ShinyRemovedObserver;
+  var init_shinyRemovedObserver = __esm({
+    "srcts/src/components/_shinyRemovedObserver.ts"() {
+      "use strict";
+      ShinyRemovedObserver = class {
+        /**
+         * Creates a new instance of the `ShinyRemovedObserver` class to watch for the
+         * removal of specific elements from part of the DOM.
+         *
+         * @param selector A CSS selector to identify elements to watch for removal.
+         * @param callback The function to be called on a matching element when it
+         * is removed.
+         */
+        constructor(selector, callback) {
+          this.watching = /* @__PURE__ */ new Set();
+          this.observer = new MutationObserver((mutations) => {
+            const found = /* @__PURE__ */ new Set();
+            for (const { type, removedNodes } of mutations) {
+              if (type !== "childList")
+                continue;
+              if (removedNodes.length === 0)
+                continue;
+              for (const node of removedNodes) {
+                if (!(node instanceof HTMLElement))
+                  continue;
+                if (node.matches(selector)) {
+                  found.add(node);
+                }
+                if (node.querySelector(selector)) {
+                  node.querySelectorAll(selector).forEach((el) => found.add(el));
+                }
+              }
+            }
+            if (found.size === 0)
+              return;
+            for (const el of found) {
+              try {
+                callback(el);
+              } catch (e) {
+                console.error(e);
+              }
+            }
+          });
+        }
+        /**
+         * Starts observing the specified element for removal of its children. If the
+         * element is already being observed, no change is made to the mutation
+         * observer.
+         * @param el The element to observe.
+         */
+        observe(el) {
+          const changed = this._flush();
+          if (this.watching.has(el)) {
+            if (!changed)
+              return;
+          } else {
+            this.watching.add(el);
+          }
+          if (changed) {
+            this._restartObserver();
+          } else {
+            this.observer.observe(el, { childList: true, subtree: true });
+          }
+        }
+        /**
+         * Stops observing the specified element for removal.
+         * @param el The element to unobserve.
+         */
+        unobserve(el) {
+          if (!this.watching.has(el))
+            return;
+          this.watching.delete(el);
+          this._flush();
+          this._restartObserver();
+        }
+        /**
+         * Restarts the mutation observer, observing all elements in the `watching`
+         * and implicitly unobserving any elements that are no longer in the
+         * watchlist.
+         * @private
+         */
+        _restartObserver() {
+          this.observer.disconnect();
+          for (const el of this.watching) {
+            this.observer.observe(el, { childList: true, subtree: true });
+          }
+        }
+        /**
+         * Flushes the set of watched elements, removing any elements that are no
+         * longer in the DOM, but it does not modify the mutation observer.
+         * @private
+         * @returns A boolean indicating whether the watched elements have changed.
+         */
+        _flush() {
+          let watchedChanged = false;
+          const watched = Array.from(this.watching);
+          for (const el of watched) {
+            if (document.body.contains(el))
+              continue;
+            this.watching.delete(el);
+            watchedChanged = true;
+          }
+          return watchedChanged;
+        }
+      };
+    }
+  });
+
   // srcts/src/components/card.ts
   var _Card, Card;
   var init_card = __esm({
@@ -370,6 +540,7 @@
       "use strict";
       init_utils();
       init_shinyResizeObserver();
+      init_shinyRemovedObserver();
       _Card = class {
         /**
          * Creates an instance of a bslib Card component.
@@ -384,8 +555,10 @@
           this.card = card;
           _Card.instanceMap.set(card, this);
           _Card.shinyResizeObserver.observe(this.card);
+          _Card.cardRemovedObserver.observe(document.body);
           this._addEventListeners();
           this.overlay = this._createOverlay();
+          this._setShinyInput();
           this._exitFullScreenOnEscape = this._exitFullScreenOnEscape.bind(this);
           this._trapFocusExit = this._trapFocusExit.bind(this);
         }
@@ -402,6 +575,9 @@
           var _a;
           if (event)
             event.preventDefault();
+          if (this.card.id) {
+            this.overlay.anchor.setAttribute("aria-controls", this.card.id);
+          }
           document.addEventListener("keydown", this._exitFullScreenOnEscape, false);
           document.addEventListener("keydown", this._trapFocusExit, true);
           this.card.setAttribute(_Card.attr.ATTR_FULL_SCREEN, "true");
@@ -413,6 +589,8 @@
             this.card.setAttribute("tabindex", "-1");
             this.card.focus();
           }
+          this._emitFullScreenEvent(true);
+          this._setShinyInput();
         }
         /**
          * Exit full screen mode. This removes the full screen overlay element,
@@ -430,6 +608,32 @@
           this.card.setAttribute(_Card.attr.ATTR_FULL_SCREEN, "false");
           this.card.removeAttribute("tabindex");
           document.body.classList.remove(_Card.attr.CLASS_HAS_FULL_SCREEN);
+          this._emitFullScreenEvent(false);
+          this._setShinyInput();
+        }
+        _setShinyInput() {
+          if (!this.card.classList.contains(_Card.attr.CLASS_SHINY_INPUT))
+            return;
+          if (!Shiny)
+            return;
+          if (!Shiny.setInputValue) {
+            setTimeout(() => this._setShinyInput(), 0);
+            return;
+          }
+          const fsAttr = this.card.getAttribute(_Card.attr.ATTR_FULL_SCREEN);
+          Shiny.setInputValue(this.card.id + "_full_screen", fsAttr === "true");
+        }
+        /**
+         * Emits a custom event to communicate the card's full screen state change.
+         * @private
+         * @param {boolean} fullScreen
+         */
+        _emitFullScreenEvent(fullScreen) {
+          const event = new CustomEvent("bslib.card", {
+            bubbles: true,
+            detail: { fullScreen }
+          });
+          this.card.dispatchEvent(event);
         }
         /**
          * Adds general card-specific event listeners.
@@ -537,13 +741,19 @@
         /**
          * Creates the anchor element used to exit the full screen mode.
          * @private
-         * @returns {HTMLAnchorElement}
+         * @returns {CardFullScreenOverlay["anchor"]}
          */
         _createOverlayCloseAnchor() {
           const anchor = document.createElement("a");
           anchor.classList.add(_Card.attr.CLASS_FULL_SCREEN_EXIT);
           anchor.tabIndex = 0;
-          anchor.onclick = () => this.exitFullScreen();
+          anchor.setAttribute("aria-expanded", "true");
+          anchor.setAttribute("aria-label", "Close card");
+          anchor.setAttribute("role", "button");
+          anchor.onclick = (ev) => {
+            this.exitFullScreen();
+            ev.stopPropagation();
+          };
           anchor.onkeydown = (ev) => {
             if (ev.key === "Enter" || ev.key === " ") {
               this.exitFullScreen();
@@ -603,7 +813,6 @@
        * Key bslib-specific classes and attributes used by the card component.
        * @private
        * @static
-       * @type {{ ATTR_INIT: string; CLASS_CARD: string; CLASS_FULL_SCREEN: string; CLASS_HAS_FULL_SCREEN: string; CLASS_FULL_SCREEN_ENTER: string; CLASS_FULL_SCREEN_EXIT: string; ID_FULL_SCREEN_OVERLAY: string; }}
        */
       Card.attr = {
         // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -619,7 +828,9 @@
         // eslint-disable-next-line @typescript-eslint/naming-convention
         CLASS_FULL_SCREEN_EXIT: "bslib-full-screen-exit",
         // eslint-disable-next-line @typescript-eslint/naming-convention
-        ID_FULL_SCREEN_OVERLAY: "bslib-full-screen-overlay"
+        ID_FULL_SCREEN_OVERLAY: "bslib-full-screen-overlay",
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        CLASS_SHINY_INPUT: "bslib-card-input"
       };
       /**
        * A Shiny-specific resize observer that ensures Shiny outputs in within the
@@ -629,6 +840,25 @@
        * @static
        */
       Card.shinyResizeObserver = new ShinyResizeObserver();
+      /**
+       * Watch card parent containers for removal and exit full screen mode if a
+       * full screen card is removed from the DOM.
+       *
+       * @private
+       * @type {ShinyRemovedObserver}
+       * @static
+       */
+      Card.cardRemovedObserver = new ShinyRemovedObserver(
+        `.${_Card.attr.CLASS_CARD}`,
+        (el) => {
+          const card = _Card.getInstance(el);
+          if (!card)
+            return;
+          if (card.card.getAttribute(_Card.attr.ATTR_FULL_SCREEN) === "true") {
+            card.exitFullScreen();
+          }
+        }
+      );
       /**
        * The registry of card instances and their associated DOM elements.
        * @private
@@ -644,12 +874,21 @@
        * @type {boolean}
        */
       Card.onReadyScheduled = false;
-      window.bslib = window.bslib || {};
-      window.bslib.Card = Card;
+      registerBslibGlobal("Card", Card);
     }
   });
 
   // srcts/src/components/sidebar.ts
+  function whenChangedCallback(watchFn, callback) {
+    let lastValue = watchFn();
+    return () => {
+      const currentValue = watchFn();
+      if (currentValue !== lastValue) {
+        callback();
+      }
+      lastValue = currentValue;
+    };
+  }
   var _Sidebar, Sidebar, SidebarInputBinding;
   var init_sidebar = __esm({
     "srcts/src/components/sidebar.ts"() {
@@ -663,6 +902,29 @@
          * @param {HTMLElement} container
          */
         constructor(container) {
+          /**
+           * Resize state tracking
+           * @private
+           */
+          this.resizeState = {
+            isResizing: false,
+            startX: 0,
+            startWidth: 0,
+            minWidth: 150,
+            maxWidth: () => window.innerWidth - 50,
+            constrainedWidth: (width) => {
+              return Math.max(
+                this.resizeState.minWidth,
+                Math.min(this.resizeState.maxWidth(), width)
+              );
+            }
+          };
+          /**
+           * The current window size, either `"desktop"` or `"mobile"`.
+           * @private
+           * @type {SidebarWindowSize | ""}
+           */
+          this.windowSize = "";
           var _a;
           _Sidebar.instanceMap.set(container, this);
           this.layout = {
@@ -680,11 +942,12 @@
             (_a = sideAccordion == null ? void 0 : sideAccordion.parentElement) == null ? void 0 : _a.classList.add("has-accordion");
             sideAccordion.classList.add("accordion-flush");
           }
-          if (this.layout.toggle) {
+          this._initSidebarCounters();
+          this._initSidebarState();
+          if (this._isCollapsible("desktop") || this._isCollapsible("mobile")) {
             this._initEventListeners();
-            this._initSidebarCounters();
-            this._initDesktop();
           }
+          this._initResizeHandle();
           _Sidebar.shinyResizeObserver.observe(this.layout.main);
           container.removeAttribute("data-bslib-sidebar-init");
           const initScript = container.querySelector(
@@ -702,11 +965,10 @@
          * The sidebar state works as follows, starting from the open state. When the
          * sidebar is closed:
          * 1. We add both the `COLLAPSE` and `TRANSITIONING` classes to the sidebar.
-         * 2. The sidebar collapse begins to animate. On desktop devices, and where it
-         *    is supported, we transition the `grid-template-columns` property of the
-         *    sidebar layout. On mobile, the sidebar is hidden immediately. In both
-         *    cases, the collapse icon rotates and we use this rotation to determine
-         *    when the transition is complete.
+         * 2. The sidebar collapse begins to animate. In general,  where it is
+         *    supported, we transition the `grid-template-columns` property of the
+         *    sidebar layout. We also rotate the collapse icon and we use this
+         *    rotation to determine when the transition is complete.
          * 3. If another sidebar state toggle is requested while closing the sidebar,
          *    we remove the `COLLAPSE` class and the animation immediately starts to
          *    reverse.
@@ -726,6 +988,21 @@
          */
         static getInstance(el) {
           return _Sidebar.instanceMap.get(el);
+        }
+        /**
+         * Determine whether the sidebar is collapsible at a given screen size.
+         * @private
+         * @param {SidebarWindowSize} [size="desktop"]
+         * @returns {boolean}
+         */
+        _isCollapsible(size = "desktop") {
+          const { container } = this.layout;
+          const attr = size === "desktop" ? "collapsibleDesktop" : "collapsibleMobile";
+          const isCollapsible = container.dataset[attr];
+          if (isCollapsible === void 0) {
+            return true;
+          }
+          return isCollapsible.trim().toLowerCase() !== "false";
         }
         /**
          * Initialize all collapsible sidebars on the page.
@@ -756,6 +1033,237 @@
           containers.forEach((container) => new _Sidebar(container));
         }
         /**
+         * Initialize sidebar resize functionality.
+         * @private
+         */
+        _initResizeHandle() {
+          if (!this.layout.resizeHandle) {
+            const handle = this._createResizeHandle();
+            this.layout.container.appendChild(handle);
+            this.layout.resizeHandle = handle;
+            this._attachResizeEventListeners(handle);
+          }
+          this._updateResizeAvailability();
+        }
+        /**
+         * Create the resize handle element.
+         * @private
+         */
+        _createResizeHandle() {
+          const handle = document.createElement("div");
+          handle.className = _Sidebar.classes.RESIZE_HANDLE;
+          handle.setAttribute("role", "separator");
+          handle.setAttribute("aria-orientation", "vertical");
+          handle.setAttribute("aria-label", "Resize sidebar");
+          handle.setAttribute("tabindex", "0");
+          handle.setAttribute("aria-keyshortcuts", "ArrowLeft ArrowRight Home End");
+          handle.title = "Drag to resize sidebar";
+          const indicator = document.createElement("div");
+          indicator.className = "resize-indicator";
+          handle.appendChild(indicator);
+          const instructions = document.createElement("div");
+          instructions.className = "visually-hidden";
+          instructions.textContent = "Use arrow keys to resize the sidebar, Shift for larger steps, Home/End for min/max width.";
+          handle.appendChild(instructions);
+          return handle;
+        }
+        /**
+         * Attach event listeners for resize functionality.
+         * @private
+         */
+        _attachResizeEventListeners(handle) {
+          handle.addEventListener("mousedown", this._onResizeStart.bind(this));
+          document.addEventListener("mousemove", this._onResizeMove.bind(this));
+          document.addEventListener("mouseup", this._onResizeEnd.bind(this));
+          handle.addEventListener("touchstart", this._onResizeStart.bind(this), {
+            passive: false
+          });
+          document.addEventListener("touchmove", this._onResizeMove.bind(this), {
+            passive: false
+          });
+          document.addEventListener("touchend", this._onResizeEnd.bind(this));
+          handle.addEventListener("keydown", this._onResizeKeyDown.bind(this));
+          window.addEventListener(
+            "resize",
+            whenChangedCallback(
+              () => this._getWindowSize(),
+              () => this._updateResizeAvailability()
+            )
+          );
+        }
+        /**
+         * Check if the sidebar should be resizable in the current state.
+         * @private
+         * @returns {boolean}
+         */
+        _shouldEnableResize() {
+          const isDesktop = this._getWindowSize() === "desktop";
+          const notTransitioning = !this.layout.container.classList.contains(
+            _Sidebar.classes.TRANSITIONING
+          );
+          const notClosed = !this.isClosed;
+          return (
+            // Allow resizing only when the sidebar...
+            isDesktop && notTransitioning && notClosed
+          );
+        }
+        /**
+         * Handle resize start (mouse/touch down).
+         * @private
+         * @param {MouseEvent | TouchEvent} event
+         */
+        _onResizeStart(event) {
+          if (!this._shouldEnableResize())
+            return;
+          event.preventDefault();
+          const clientX = "touches" in event ? event.touches[0].clientX : event.clientX;
+          this.resizeState.isResizing = true;
+          this.resizeState.startX = clientX;
+          this.resizeState.startWidth = this._getCurrentSidebarWidth();
+          this.layout.container.style.setProperty("--_transition-duration", "0ms");
+          this.layout.container.classList.add(_Sidebar.classes.RESIZING);
+          document.documentElement.setAttribute(
+            `data-bslib-${_Sidebar.classes.RESIZING}`,
+            "true"
+          );
+          this._dispatchResizeEvent("start", this.resizeState.startWidth);
+        }
+        /**
+         * Handle resize move (mouse/touch move).
+         * @private
+         * @param {MouseEvent | TouchEvent} event
+         */
+        _onResizeMove(event) {
+          if (!this.resizeState.isResizing)
+            return;
+          event.preventDefault();
+          const clientX = "touches" in event ? event.touches[0].clientX : event.clientX;
+          const deltaX = clientX - this.resizeState.startX;
+          const isRight = this._isRightSidebar();
+          const newWidth = isRight ? this.resizeState.startWidth - deltaX : this.resizeState.startWidth + deltaX;
+          const constrainedWidth = this.resizeState.constrainedWidth(newWidth);
+          this._updateSidebarWidth(constrainedWidth);
+          this._dispatchResizeEvent("move", constrainedWidth);
+        }
+        /**
+         * Handle resize end (mouse/touch up).
+         * @private
+         */
+        _onResizeEnd() {
+          if (!this.resizeState.isResizing)
+            return;
+          this.resizeState.isResizing = false;
+          this.layout.container.style.removeProperty("--_transition-duration");
+          this.layout.container.classList.remove(_Sidebar.classes.RESIZING);
+          document.documentElement.removeAttribute(
+            `data-bslib-${_Sidebar.classes.RESIZING}`
+          );
+          _Sidebar.shinyResizeObserver.flush();
+          this._dispatchResizeEvent("end", this._getCurrentSidebarWidth());
+        }
+        /**
+         * Handle keyboard events for resize accessibility.
+         * @private
+         * @param {KeyboardEvent} event
+         */
+        _onResizeKeyDown(event) {
+          if (!this._shouldEnableResize())
+            return;
+          const step = event.shiftKey ? 50 : 10;
+          let newWidth = this._getCurrentSidebarWidth();
+          switch (event.key) {
+            case "ArrowLeft":
+              newWidth = this._isRightSidebar() ? newWidth + step : newWidth - step;
+              break;
+            case "ArrowRight":
+              newWidth = this._isRightSidebar() ? newWidth - step : newWidth + step;
+              break;
+            case "Home":
+              newWidth = this.resizeState.minWidth;
+              break;
+            case "End":
+              newWidth = this.resizeState.maxWidth();
+              break;
+            default:
+              return;
+          }
+          event.preventDefault();
+          newWidth = this.resizeState.constrainedWidth(newWidth);
+          this._updateSidebarWidth(newWidth);
+          _Sidebar.shinyResizeObserver.flush();
+          this._dispatchResizeEvent("keyboard", newWidth);
+        }
+        /**
+         * Get the current sidebar width in pixels.
+         * @private
+         * @returns {number}
+         */
+        _getCurrentSidebarWidth() {
+          const sidebarWidth = this.layout.sidebar.getBoundingClientRect().width;
+          return sidebarWidth || 250;
+        }
+        /**
+         * Update the sidebar width.
+         * @private
+         * @param {number} newWidth
+         */
+        _updateSidebarWidth(newWidth) {
+          const { container, resizeHandle } = this.layout;
+          container.style.setProperty("--_sidebar-width", `${newWidth}px`);
+          if (resizeHandle) {
+            resizeHandle.setAttribute("aria-valuenow", newWidth.toString());
+            resizeHandle.setAttribute(
+              "aria-valuemin",
+              this.resizeState.minWidth.toString()
+            );
+            resizeHandle.setAttribute(
+              "aria-valuemax",
+              this.resizeState.maxWidth().toString()
+            );
+          }
+        }
+        /**
+         * Check if this is a right-aligned sidebar.
+         * @private
+         * @returns {boolean}
+         */
+        _isRightSidebar() {
+          return this.layout.container.classList.contains("sidebar-right");
+        }
+        /**
+         * Update resize handle availability based on current state.
+         * @private
+         */
+        _updateResizeAvailability() {
+          if (!this.layout.resizeHandle)
+            return;
+          const shouldEnable = this._shouldEnableResize();
+          this.layout.resizeHandle.style.display = shouldEnable ? "" : "none";
+          this.layout.resizeHandle.setAttribute(
+            "aria-hidden",
+            shouldEnable ? "false" : "true"
+          );
+          if (shouldEnable) {
+            this.layout.resizeHandle.setAttribute("tabindex", "0");
+          } else {
+            this.layout.resizeHandle.removeAttribute("tabindex");
+          }
+        }
+        /**
+         * Dispatch a custom resize event.
+         * @private
+         * @param {string} phase The phase of the resize event lifecycle, e.g.
+         *   "start", "move", "end", or "keyboard".
+         * @param {number} width The new width of the sidebar in pixels.
+         */
+        _dispatchResizeEvent(phase, width) {
+          const event = new CustomEvent("bslib.sidebar.resize", {
+            bubbles: true,
+            detail: { phase, width, sidebar: this }
+          });
+          this.layout.sidebar.dispatchEvent(event);
+        }
+        /**
          * Initialize event listeners for the sidebar toggle button.
          * @private
          */
@@ -766,7 +1274,19 @@
             ev.preventDefault();
             this.toggle("toggle");
           });
-          (_a = toggle.querySelector(".collapse-icon")) == null ? void 0 : _a.addEventListener("transitionend", () => this._finalizeState());
+          (_a = toggle.querySelector(".collapse-icon")) == null ? void 0 : _a.addEventListener("transitionend", () => {
+            this._finalizeState();
+          });
+          if (this._isCollapsible("desktop") && this._isCollapsible("mobile")) {
+            return;
+          }
+          window.addEventListener(
+            "resize",
+            whenChangedCallback(
+              () => this._getWindowSize(),
+              () => this._initSidebarState()
+            )
+          );
         }
         /**
          * Initialize nested sidebar counters.
@@ -814,17 +1334,45 @@
           });
         }
         /**
+         * Retrieves the current window size by reading a CSS variable whose value is
+         * toggled via media queries.
+         * @returns The window size as `"desktop"` or `"mobile"`, or `""` if not
+         * available.
+         */
+        _getWindowSize() {
+          const { container } = this.layout;
+          return window.getComputedStyle(container).getPropertyValue("--bslib-sidebar-js-window-size").trim();
+        }
+        /**
+         * Determine the initial toggle state of the sidebar at a current screen size.
+         * It always returns whether we should `"open"` or `"close"` the sidebar.
+         *
+         * @private
+         * @returns {("close" | "open")}
+         */
+        _initialToggleState() {
+          var _a, _b;
+          const { container } = this.layout;
+          const attr = this.windowSize === "desktop" ? "openDesktop" : "openMobile";
+          const initState = (_b = (_a = container.dataset[attr]) == null ? void 0 : _a.trim()) == null ? void 0 : _b.toLowerCase();
+          if (initState === void 0) {
+            return "open";
+          }
+          if (["open", "always"].includes(initState)) {
+            return "open";
+          }
+          if (["close", "closed"].includes(initState)) {
+            return "close";
+          }
+          return "open";
+        }
+        /**
          * Initialize the sidebar's initial state when `open = "desktop"`.
          * @private
          */
-        _initDesktop() {
-          var _a;
-          const { container } = this.layout;
-          if (((_a = container.dataset.bslibSidebarOpen) == null ? void 0 : _a.trim()) !== "desktop") {
-            return;
-          }
-          const initCollapsed = window.getComputedStyle(container).getPropertyValue("--bslib-sidebar-js-init-collapsed");
-          const initState = initCollapsed.trim() === "true" ? "close" : "open";
+        _initSidebarState() {
+          this.windowSize = this._getWindowSize();
+          const initState = this._initialToggleState();
           this.toggle(initState, true);
         }
         /**
@@ -840,6 +1388,8 @@
         toggle(method, immediate = false) {
           if (typeof method === "undefined") {
             method = "toggle";
+          } else if (method === "closed") {
+            method = "close";
           }
           const { container, sidebar } = this.layout;
           const isClosed = this.isClosed;
@@ -872,6 +1422,7 @@
           container.classList.remove(_Sidebar.classes.TRANSITIONING);
           sidebar.hidden = this.isClosed;
           toggle.setAttribute("aria-expanded", this.isClosed ? "false" : "true");
+          this._updateResizeAvailability();
           const event = new CustomEvent("bslib.sidebar", {
             bubbles: true,
             detail: { open: !this.isClosed }
@@ -903,7 +1454,11 @@
         // eslint-disable-next-line @typescript-eslint/naming-convention
         COLLAPSE: "sidebar-collapsed",
         // eslint-disable-next-line @typescript-eslint/naming-convention
-        TRANSITIONING: "transitioning"
+        TRANSITIONING: "transitioning",
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        RESIZE_HANDLE: "bslib-sidebar-resize-handle",
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        RESIZING: "sidebar-resizing"
       };
       /**
        * If sidebars are initialized before the DOM is ready, we re-schedule the
@@ -953,8 +1508,271 @@
         }
       };
       registerBinding(SidebarInputBinding, "sidebar");
-      window.bslib = window.bslib || {};
-      window.bslib.Sidebar = Sidebar;
+      registerBslibGlobal("Sidebar", Sidebar);
+    }
+  });
+
+  // srcts/src/components/taskButton.ts
+  var _clickCount, _clickListeners, _setState, setState_fn, BslibTaskButtonInputBinding;
+  var init_taskButton = __esm({
+    "srcts/src/components/taskButton.ts"() {
+      "use strict";
+      init_utils();
+      BslibTaskButtonInputBinding = class extends InputBinding {
+        constructor() {
+          super(...arguments);
+          /**
+           * Reach into the child <bslib-switch-inline> and to switch to the state case.
+           */
+          __privateAdd(this, _setState);
+          __privateAdd(this, _clickCount, /* @__PURE__ */ new WeakMap());
+          __privateAdd(this, _clickListeners, /* @__PURE__ */ new WeakMap());
+        }
+        find(scope) {
+          return $(scope).find(".bslib-task-button");
+        }
+        getValue(el) {
+          var _a;
+          return {
+            value: (_a = __privateGet(this, _clickCount).get(el)) != null ? _a : 0,
+            autoReset: el.hasAttribute("data-auto-reset")
+          };
+        }
+        getType() {
+          return "bslib.taskbutton";
+        }
+        subscribe(el, callback) {
+          if (__privateGet(this, _clickListeners).has(el)) {
+            this.unsubscribe(el);
+          }
+          const eventListener = () => {
+            var _a;
+            __privateGet(this, _clickCount).set(el, ((_a = __privateGet(this, _clickCount).get(el)) != null ? _a : 0) + 1);
+            callback(true);
+            __privateMethod(this, _setState, setState_fn).call(this, el, "busy");
+          };
+          __privateGet(this, _clickListeners).set(el, eventListener);
+          el.addEventListener("click", eventListener);
+        }
+        unsubscribe(el) {
+          const listener = __privateGet(this, _clickListeners).get(el);
+          if (listener) {
+            el.removeEventListener("click", listener);
+          }
+        }
+        receiveMessage(_0, _1) {
+          return __async(this, arguments, function* (el, { state }) {
+            __privateMethod(this, _setState, setState_fn).call(this, el, state);
+          });
+        }
+      };
+      _clickCount = new WeakMap();
+      _clickListeners = new WeakMap();
+      _setState = new WeakSet();
+      setState_fn = function(el, state) {
+        el.disabled = state === "busy";
+        const tbc = el.querySelector(
+          "bslib-switch-inline"
+        );
+        if (tbc) {
+          tbc.case = state;
+        }
+      };
+      registerBinding(BslibTaskButtonInputBinding, "task-button");
+    }
+  });
+
+  // srcts/src/components/submitTextArea.ts
+  function updateDisabledState(el) {
+    const btn = findSubmitButton(el);
+    const isDisabled = !el.value;
+    btn.classList.toggle("disabled", isDisabled);
+    btn.setAttribute("aria-disabled", isDisabled.toString());
+    isDisabled ? btn.setAttribute("tabindex", "-1") : btn.removeAttribute("tabindex");
+  }
+  function updateHeight(el) {
+    if (el.scrollHeight === 0) {
+      return;
+    }
+    el.style.height = "auto";
+    el.style.height = el.scrollHeight + "px";
+  }
+  function maybeUpdateSubmitButtonLabel(el) {
+    if (!el.hasAttribute("data-needs-modifier")) {
+      return;
+    }
+    const btn = findSubmitButton(el);
+    if (!btn.querySelector(`.${CSS_CLASSES.submitKey}`)) {
+      return;
+    }
+    const isMac = navigator.userAgent.indexOf("Mac") !== -1;
+    btn.querySelectorAll(`.${CSS_CLASSES.submitKey}`).forEach((span) => {
+      const modifierKey2 = isMac ? "\u2318" : "Ctrl";
+      span.textContent = `${modifierKey2} \u23CE`;
+    });
+    const modifierKey = isMac ? "Command" : "Ctrl";
+    btn.title = btn.title.replace("Press Enter", `Press ${modifierKey}+Enter`);
+    const ariaLabel = btn.getAttribute("aria-label");
+    if (ariaLabel) {
+      btn.setAttribute(
+        "aria-label",
+        ariaLabel.replace("Press Enter", `Press ${modifierKey}+Enter`)
+      );
+    }
+  }
+  function findSubmitButton(el) {
+    var _a;
+    const btn = (_a = el.parentElement) == null ? void 0 : _a.querySelector(`.${CSS_CLASSES.button}`);
+    if (btn instanceof HTMLButtonElement) {
+      return btn;
+    }
+    throw new Error(
+      "Expected input_submit_textarea()'s container to have a button with class of 'bslib-submit-textarea-btn'"
+    );
+  }
+  function insertNewLineAtCursor(el) {
+    const start = el.selectionStart;
+    const end = el.selectionEnd;
+    el.value = el.value.substring(0, start) + "\n" + el.value.substring(end);
+    el.selectionStart = el.selectionEnd = start + 1;
+    el.dispatchEvent(new Event("input", { bubbles: true }));
+  }
+  var EVENT_NAMESPACE, CSS_CLASSES, intersectObserver, TextAreaSubmitInputBinding;
+  var init_submitTextArea = __esm({
+    "srcts/src/components/submitTextArea.ts"() {
+      "use strict";
+      init_utils();
+      EVENT_NAMESPACE = "textSubmitInputBinding";
+      CSS_CLASSES = {
+        // Top-level container for the entire input (label and everything)
+        input: "bslib-input-submit-textarea",
+        // Container for the textarea and submit button
+        container: "bslib-submit-textarea-container",
+        // Class assigned to the submit button
+        button: "bslib-submit-textarea-btn",
+        // Class assigned to the span within the button that shows the key combo
+        submitKey: "bslib-submit-key"
+      };
+      intersectObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            updateHeight(entry.target);
+          }
+        });
+      });
+      TextAreaSubmitInputBinding = class extends InputBinding {
+        find(scope) {
+          return $(scope).find(`.${CSS_CLASSES.input} textarea`);
+        }
+        initialize(el) {
+          updateDisabledState(el);
+          updateHeight(el);
+          maybeUpdateSubmitButtonLabel(el);
+        }
+        // Read a 'proxy' value instead of the actual value since we
+        // intentionally don't want the value server-side until it's submitted.
+        getValue(el) {
+          return $(el).data("val");
+        }
+        setValue(el, value) {
+          el.value = value;
+        }
+        subscribe(el, callback) {
+          function doSendValue() {
+            $(el).data("val", el.value);
+            el.value = "";
+            el.dispatchEvent(new Event("input", { bubbles: true }));
+            callback("event");
+          }
+          const btn = findSubmitButton(el);
+          if (btn.classList.contains("shiny-bound-input")) {
+            $(btn).on(`shiny:inputchanged.${EVENT_NAMESPACE}`, doSendValue);
+          } else {
+            $(btn).on(`click.${EVENT_NAMESPACE}`, doSendValue);
+          }
+          $(el).on(`input.${EVENT_NAMESPACE}`, function() {
+            updateDisabledState(el);
+            updateHeight(el);
+          });
+          $(el).on(
+            `keydown.${EVENT_NAMESPACE}`,
+            // event: JQuery.KeyboardEventObject
+            function(event) {
+              if (event.key !== "Enter") {
+                return;
+              }
+              if (!el.value) {
+                event.preventDefault();
+                return;
+              }
+              if (event.shiftKey) {
+                return;
+              }
+              if (event.altKey) {
+                event.preventDefault();
+                insertNewLineAtCursor(el);
+                return;
+              }
+              const needsModifier = el.hasAttribute("data-needs-modifier");
+              if (!needsModifier) {
+                event.preventDefault();
+                btn.click();
+                return;
+              }
+              const hasModifier = event.ctrlKey || event.metaKey;
+              if (needsModifier && hasModifier) {
+                event.preventDefault();
+                btn.click();
+                return;
+              }
+            }
+          );
+          const container = el.closest(`.${CSS_CLASSES.container}`);
+          $(container).on(
+            `click.${EVENT_NAMESPACE}`,
+            // event: JQuery.KeyboardEventObject
+            (event) => {
+              if (event.target.classList.contains(CSS_CLASSES.container)) {
+                el.focus();
+              }
+            }
+          );
+          intersectObserver.observe(el);
+        }
+        unsubscribe(el) {
+          $(el).off(`.${EVENT_NAMESPACE}`);
+          const btn = el.nextElementSibling;
+          $(btn).off(`.${EVENT_NAMESPACE}`);
+          const container = el.closest(`.${CSS_CLASSES.container}`);
+          $(container).off(`.${EVENT_NAMESPACE}`);
+          intersectObserver.unobserve(el);
+        }
+        receiveMessage(el, data) {
+          return __async(this, null, function* () {
+            const oldValue = el.value;
+            if (data.value !== void 0) {
+              el.value = data.value;
+              el.dispatchEvent(new Event("input", { bubbles: true }));
+            }
+            if (data.placeholder !== void 0) {
+              el.placeholder = data.placeholder;
+            }
+            if (data.label !== void 0) {
+              const labEl = $(el).closest(`.${CSS_CLASSES.input}`).find("label");
+              yield updateLabel(data.label, labEl);
+            }
+            if (data.submit) {
+              const btn = findSubmitButton(el);
+              btn.click();
+              el.value = oldValue;
+            }
+            if (data.focus) {
+              el.focus();
+            }
+          });
+        }
+      };
+      registerBinding(TextAreaSubmitInputBinding, "submit-text-area");
     }
   });
 
@@ -964,12 +1782,311 @@
       return;
     }
     for (const [name, handler] of Object.entries(handlers)) {
-      Shiny.addCustomMessageHandler(name, handler);
+      window.Shiny.addCustomMessageHandler(name, handler);
     }
   }
   var init_shinyAddCustomMessageHandlers = __esm({
     "srcts/src/components/_shinyAddCustomMessageHandlers.ts"() {
       "use strict";
+    }
+  });
+
+  // srcts/src/components/toast.ts
+  function showToast(message) {
+    return __async(this, null, function* () {
+      var _a, _b;
+      const { html, deps, autohide, duration, position, id } = message;
+      if (!window.bootstrap || !window.bootstrap.Toast) {
+        showShinyClientMessage({
+          headline: "Bootstrap 5 Required",
+          message: "Toast notifications require Bootstrap 5.",
+          status: "error"
+        });
+        return;
+      }
+      const existingToastEl = document.getElementById(id);
+      if (existingToastEl) {
+        const existingInstance = toastInstances.get(existingToastEl);
+        if (existingInstance) {
+          existingInstance.hide();
+          toastInstances.delete(existingToastEl);
+        }
+        (_b = (_a = window == null ? void 0 : window.Shiny) == null ? void 0 : _a.unbindAll) == null ? void 0 : _b.call(_a, existingToastEl);
+        existingToastEl.remove();
+      }
+      const toaster = toasterManager.getOrCreateToaster(position);
+      yield shinyRenderContent(toaster, { html, deps }, "beforeEnd");
+      const toastEl = document.getElementById(id);
+      if (!toastEl) {
+        showShinyClientMessage({
+          headline: "Toast Creation Failed",
+          message: `Failed to create toast with id "${id}".`,
+          status: "error"
+        });
+        return;
+      }
+      const toastInstance = new BslibToastInstance(toastEl, { autohide, duration });
+      toastInstances.set(toastEl, toastInstance);
+      toastInstance.show();
+      toastEl.addEventListener("hidden.bs.toast", () => {
+        var _a2, _b2;
+        (_b2 = (_a2 = window == null ? void 0 : window.Shiny) == null ? void 0 : _a2.unbindAll) == null ? void 0 : _b2.call(_a2, toastEl);
+        toastEl.remove();
+        toastInstances.delete(toastEl);
+        if (toaster.children.length === 0) {
+          toaster.remove();
+        }
+      });
+    });
+  }
+  function hideToast(message) {
+    const { id } = message;
+    const toastEl = document.getElementById(id);
+    if (!toastEl) {
+      showShinyClientMessage({
+        headline: "Toast Not Found",
+        message: `No toast with id "${id}" was found.`,
+        status: "warning"
+      });
+      return;
+    }
+    const toastInstance = toastInstances.get(toastEl);
+    if (toastInstance) {
+      toastInstance.hide();
+    }
+  }
+  var bootstrapToast, ToasterManager, toasterManager, BslibToastInstance, toastInstances;
+  var init_toast = __esm({
+    "srcts/src/components/toast.ts"() {
+      "use strict";
+      init_shinyAddCustomMessageHandlers();
+      init_utils();
+      bootstrapToast = window.bootstrap ? window.bootstrap.Toast : class {
+      };
+      ToasterManager = class {
+        constructor() {
+          this.containers = /* @__PURE__ */ new Map();
+        }
+        /**
+         * Gets an existing toaster for the position or creates a new one.
+         *
+         * @param position - The toast position (e.g., "top-right", "bottom-center")
+         * @returns The DOM container element for the specified position
+         */
+        getOrCreateToaster(position) {
+          let toaster = this.containers.get(position);
+          if (!toaster || !document.body.contains(toaster)) {
+            toaster = ToasterManager._createToaster(position);
+            document.body.appendChild(toaster);
+            this.containers.set(position, toaster);
+          }
+          return toaster;
+        }
+        /**
+         * Creates a new toast container (toaster) DOM element for the specified
+         * position.
+         *
+         * @param position - The toast position to create a container for
+         * @returns A new DOM container element positioned and styled for toasts
+         * @private
+         */
+        static _createToaster(position) {
+          const toaster = document.createElement("div");
+          toaster.className = "toast-container position-fixed p-1 p-md-2";
+          toaster.setAttribute("data-bslib-toast-container", position);
+          toaster.classList.add(...ToasterManager._positionClasses(position));
+          return toaster;
+        }
+        /**
+         * Maps toast positions to their corresponding Bootstrap utility classes.
+         *
+         * @param position - The toast position
+         * @returns Array of CSS class names for positioning the container
+         * @private
+         */
+        static _positionClasses(position) {
+          const classMap = {
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            "top-left": ["top-0", "start-0"],
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            "top-center": ["top-0", "start-50", "translate-middle-x"],
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            "top-right": ["top-0", "end-0"],
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            "middle-left": ["top-50", "start-0", "translate-middle-y"],
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            "middle-center": ["top-50", "start-50", "translate-middle"],
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            "middle-right": ["top-50", "end-0", "translate-middle-y"],
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            "bottom-left": ["bottom-0", "start-0"],
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            "bottom-center": ["bottom-0", "start-50", "translate-middle-x"],
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            "bottom-right": ["bottom-0", "end-0"]
+          };
+          return classMap[position];
+        }
+      };
+      toasterManager = new ToasterManager();
+      BslibToastInstance = class {
+        constructor(element, options) {
+          this.progressBar = null;
+          this.timeStart = 0;
+          this.timeRemaining = 0;
+          this.hideTimeoutId = null;
+          this.isPaused = false;
+          this.isPointerOver = false;
+          this.hasFocus = false;
+          this.element = element;
+          this.timeRemaining = options.duration || 5e3;
+          const bsOptions = { animation: true, autohide: false };
+          this.bsToast = new bootstrapToast(element, bsOptions);
+          if (options.autohide) {
+            this._addProgressBar();
+            this._setupInteractionPause();
+          }
+        }
+        /**
+         * Shows the toast notification.
+         */
+        show() {
+          this.bsToast.show();
+        }
+        /**
+         * Hides the toast notification.
+         */
+        hide() {
+          if (this.hideTimeoutId !== null) {
+            clearTimeout(this.hideTimeoutId);
+            this.hideTimeoutId = null;
+          }
+          this.bsToast.hide();
+        }
+        /**
+         * Adds an animated progress bar to the toast element.
+         * @private
+         */
+        _addProgressBar() {
+          this.progressBar = document.createElement("div");
+          this.progressBar.className = "bslib-toast-progress-bar";
+          this.progressBar.style.cssText = `
+      animation: bslib-toast-progress ${this.timeRemaining}ms linear forwards;
+      animation-play-state: running;
+    `;
+          const toastHeader = this.element.querySelector(".toast-header");
+          if (toastHeader) {
+            toastHeader.insertBefore(this.progressBar, toastHeader.firstChild);
+          } else {
+            this.element.insertBefore(this.progressBar, this.element.firstChild);
+          }
+        }
+        /**
+         * Sets up interaction-based pause behavior for autohiding toasts.
+         * Pauses auto-hide when user interacts via pointer (mouse/touch) or keyboard focus.
+         * @private
+         */
+        _setupInteractionPause() {
+          this.timeStart = Date.now();
+          this._startHideTimeout(this.timeRemaining);
+          this.element.addEventListener(
+            "pointerenter",
+            () => this._handlePointerEnter()
+          );
+          this.element.addEventListener(
+            "pointerleave",
+            () => this._handlePointerLeave()
+          );
+          this.element.addEventListener("focusin", () => this._handleFocusIn());
+          this.element.addEventListener("focusout", () => this._handleFocusOut());
+        }
+        /**
+         * Handles pointer enter event - pauses the auto-hide timer.
+         * @private
+         */
+        _handlePointerEnter() {
+          this.isPointerOver = true;
+          this._pause();
+        }
+        /**
+         * Handles pointer leave event - resumes the auto-hide timer if not focused.
+         * @private
+         */
+        _handlePointerLeave() {
+          this.isPointerOver = false;
+          if (!this.hasFocus) {
+            this._resume();
+          }
+        }
+        /**
+         * Handles focus in event - pauses the auto-hide timer.
+         * @private
+         */
+        _handleFocusIn() {
+          this.hasFocus = true;
+          this._pause();
+        }
+        /**
+         * Handles focus out event - resumes the auto-hide timer if pointer not over.
+         * @private
+         */
+        _handleFocusOut() {
+          this.hasFocus = false;
+          if (!this.isPointerOver) {
+            this._resume();
+          }
+        }
+        /**
+         * Pauses the auto-hide timer and progress bar animation.
+         * @private
+         */
+        _pause() {
+          if (this.isPaused)
+            return;
+          this.isPaused = true;
+          const elapsed = Date.now() - this.timeStart;
+          this.timeRemaining = Math.max(100, this.timeRemaining - elapsed);
+          if (this.hideTimeoutId !== null) {
+            clearTimeout(this.hideTimeoutId);
+          }
+          if (this.progressBar) {
+            this.progressBar.style.animationPlayState = "paused";
+          }
+        }
+        /**
+         * Resumes the auto-hide timer and progress bar animation.
+         * @private
+         */
+        _resume() {
+          if (!this.isPaused)
+            return;
+          this.isPaused = false;
+          this.timeStart = Date.now();
+          this._startHideTimeout(this.timeRemaining);
+          if (this.progressBar) {
+            this.progressBar.style.animationPlayState = "running";
+          }
+        }
+        /**
+         * Starts or restarts the hide timeout.
+         * @private
+         */
+        _startHideTimeout(delay) {
+          if (this.hideTimeoutId !== null) {
+            clearTimeout(this.hideTimeoutId);
+          }
+          this.hideTimeoutId = window.setTimeout(() => {
+            this.bsToast.hide();
+          }, delay);
+        }
+      };
+      toastInstances = /* @__PURE__ */ new WeakMap();
+      shinyAddCustomMessageHandlers({
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        "bslib.show-toast": showToast,
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        "bslib.hide-toast": hideToast
+      });
     }
   });
 
@@ -979,6 +2096,9 @@
       init_accordion();
       init_card();
       init_sidebar();
+      init_taskButton();
+      init_submitTextArea();
+      init_toast();
       init_utils();
       init_shinyAddCustomMessageHandlers();
       var bslibMessageHandlers = {
