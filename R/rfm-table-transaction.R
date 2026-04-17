@@ -64,7 +64,8 @@ rfm_table_order.default <- function(data = NULL, customer_id = NULL,
   other_cols <-
     data %>%
     select(!c({{ order_date }}, {{ revenue }})) %>%
-    distinct()
+    distinct() %>%
+    rename(customer_id = {{ customer_id }})
 
   out <- rfm_prep_bins(
     result, recency_bins, frequency_bins, monetary_bins,

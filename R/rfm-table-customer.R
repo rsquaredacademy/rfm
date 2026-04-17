@@ -77,7 +77,8 @@ rfm_table_customer.default <- function(data = NULL, customer_id = NULL,
 
     other_cols <-
       data %>%
-      select(!c({{ recency }}, {{ n_transactions }}, {{ total_revenue }}))
+      select(!c({{ recency }}, {{ n_transactions }}, {{ total_revenue }})) %>%
+      rename(customer_id = {{ customer_id }})
   } else {
     result <-
       data %>%
@@ -93,7 +94,8 @@ rfm_table_customer.default <- function(data = NULL, customer_id = NULL,
 
     other_cols <-
       data %>%
-      select(!c({{ recency }}, {{ n_transactions }}, {{ total_revenue }}))
+      select(!c(recency_days, {{ n_transactions }}, {{ total_revenue }})) %>%
+      rename(customer_id = {{ customer_id }})
   }
 
   out <- rfm_prep_bins(result, recency_bins, frequency_bins, monetary_bins,

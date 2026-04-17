@@ -3,7 +3,6 @@
 \docType{package}
 \name{rfm}
 \alias{rfm}
-\alias{_PACKAGE}
 \alias{rfm-package}
 \title{\code{rfm} package}
 \description{
