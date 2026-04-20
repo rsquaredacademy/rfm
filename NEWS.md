@@ -1,3 +1,17 @@
+# rfm 0.4.0
+
+This is a minor release for bug fixes and enhancements.
+
+## Bug Fixes
+
+- missing column error when handling customer level data([#92](https://github.com/rsquaredacademy/rfm/issues/92))
+- customer id fault ([#96](https://github.com/rsquaredacademy/rfm/issues/96))
+
+## Others
+
+- move plotly to imports([#93](https://github.com/rsquaredacademy/rfm/issues/93))
+- move gganimate to imports([#94](https://github.com/rsquaredacademy/rfm/issues/94))
+
 # rfm 0.3.0
 
 ## Enhancements
