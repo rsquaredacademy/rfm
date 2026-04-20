@@ -23,6 +23,13 @@ on:
         description: 'Unique ID. You can leave this empty now.'
         type: string
 
+  repository_dispatch:
+    types: [ok, check]
+  push:
+    branches:
+      - master
+      - develop
+
 jobs:
 
   setup:
