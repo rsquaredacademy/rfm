@@ -59,7 +59,7 @@ revenue, analysis_date)
 
 # rfm score
 rfm_result
-#> # A tibble: 995 x 11
+#> # A tibble: 995 × 11
 #>   customer_id    recency_days transaction_count amount recency_score
 #>   <chr>                 <dbl>             <int>  <int>         <int>
 #> 1 Abbey O'Reilly          205                 6    472             3
@@ -67,8 +67,8 @@ rfm_result
 #> 3 Aden Lesch              194                 4    405             3
 #> 4 Aden Murphy              98                 7    596             5
 #> 5 Admiral Senger          132                 5    448             4
-#> # i 990 more rows
-#> # i 6 more variables: frequency_score <int>, monetary_score <int>,
+#> # ℹ 990 more rows
+#> # ℹ 6 more variables: frequency_score <int>, monetary_score <int>,
 #> #   rfm_score <dbl>, first_name <chr>, last_name <chr>, email <chr>
 
 # segment names
@@ -90,16 +90,16 @@ recency_upper, frequency_lower, frequency_upper, monetary_lower,
 monetary_upper)
 
 segments
-#> # A tibble: 995 x 12
+#> # A tibble: 995 × 12
 #>   customer_id    segment         rfm_score transaction_count recency_days amount
 #>   <chr>          <chr>               <dbl>             <int>        <dbl>  <int>
-#> 1 Abbey O'Reilly Potential Loya~       343                 6          205    472
+#> 1 Abbey O'Reilly Potential Loya…       343                 6          205    472
 #> 2 Add Senger     New Customers         412                 3          140    340
 #> 3 Aden Lesch     Loyal Customers       323                 4          194    405
-#> 4 Aden Murphy    Potential Loya~       544                 7           98    596
-#> 5 Admiral Senger Potential Loya~       433                 5          132    448
-#> # i 990 more rows
-#> # i 6 more variables: recency_score <int>, frequency_score <int>,
+#> 4 Aden Murphy    Potential Loya…       544                 7           98    596
+#> 5 Admiral Senger Potential Loya…       433                 5          132    448
+#> # ℹ 990 more rows
+#> # ℹ 6 more variables: recency_score <int>, frequency_score <int>,
 #> #   monetary_score <int>, first_name <chr>, last_name <chr>, email <chr>
 ```
 
@@ -115,7 +115,7 @@ segments
 
 `rfm` includes a shiny app for interactive RFM analysis. In the latest
 release, we have added project management features to allow users to
-save/clone their projects. Below is a quick demo of the shiny app:
+save/clone their projects.
 
 ## Resources
 
