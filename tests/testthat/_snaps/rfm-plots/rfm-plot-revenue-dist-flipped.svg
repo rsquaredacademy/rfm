@@ -85,13 +85,13 @@
 <text x='267.30' y='529.50' text-anchor='middle' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='17.61px' lengthAdjust='spacingAndGlyphs'>10%</text>
 <text x='428.68' y='529.50' text-anchor='middle' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='17.61px' lengthAdjust='spacingAndGlyphs'>20%</text>
 <text x='590.05' y='529.50' text-anchor='middle' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='17.61px' lengthAdjust='spacingAndGlyphs'>30%</text>
-<rect x='323.12' y='542.28' width='145.23' height='28.24' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<rect x='334.08' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #F2F2F2;' />
-<rect x='334.79' y='548.47' width='15.86' height='15.86' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #3B5BDB;' />
-<rect x='397.55' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #F2F2F2;' />
-<rect x='398.26' y='548.47' width='15.86' height='15.86' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #91A7FF;' />
-<text x='356.84' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='35.23px' lengthAdjust='spacingAndGlyphs'>Revenue</text>
-<text x='420.31' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='42.56px' lengthAdjust='spacingAndGlyphs'>Customers</text>
+<rect x='325.86' y='542.28' width='139.75' height='28.24' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<rect x='331.34' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none;' />
+<rect x='332.05' y='548.47' width='15.86' height='15.86' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #3B5BDB;' />
+<rect x='394.81' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none;' />
+<rect x='395.52' y='548.47' width='15.86' height='15.86' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #91A7FF;' />
+<text x='354.10' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='35.23px' lengthAdjust='spacingAndGlyphs'>Revenue</text>
+<text x='417.57' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='42.56px' lengthAdjust='spacingAndGlyphs'>Customers</text>
 <text x='76.94' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='195.92px' lengthAdjust='spacingAndGlyphs'>Revenue &amp; Customer Distribution</text>
 </g>
 </svg>

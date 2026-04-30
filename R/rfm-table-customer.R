@@ -75,22 +75,27 @@ rfm_table_customer.default <- function(data = NULL, customer_id = NULL,
              {{ total_revenue }}) %>%
       set_names(col_names)
 
-    other_cols <- 
+    other_cols <-
       data %>%
-      select(!c({{ recency }}, {{ n_transactions }}, {{ total_revenue }}))
+      select(!c({{ recency }}, {{ n_transactions }}, {{ total_revenue }})) %>%
+      rename(customer_id = {{ customer_id }})
   } else {
     result <-
       data %>%
       mutate(
         recency_days = as.numeric(analysis_date - {{ recency }},
-                                  units = "days")) %>%
+                                  units = "days"))
+
+    result <-
+      result %>%
       select({{ customer_id }}, recency_days, {{ n_transactions }},
              {{ total_revenue }}) %>%
       set_names(col_names)
 
-    other_cols <- 
+    other_cols <-
       data %>%
-      select(!c(recency_days, {{ n_transactions }}, {{ total_revenue }}))
+      select(!c(recency_days, {{ n_transactions }}, {{ total_revenue }})) %>%
+      rename(customer_id = {{ customer_id }})
   }
 
   out <- rfm_prep_bins(result, recency_bins, frequency_bins, monetary_bins,
