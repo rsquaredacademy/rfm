@@ -16,3 +16,6 @@
 ^debug\.log$
 ^\.github$
 ^revdep$
+^bfg-1.15.0.jar$
+^\.positai$
+^\.claude$
