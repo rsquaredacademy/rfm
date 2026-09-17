@@ -5,3 +5,6 @@
 inst/doc
 debug.log
 .positai
+*.tar.gz
+Rplots.pdf
+roadmap/

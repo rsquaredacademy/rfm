@@ -19,3 +19,7 @@
 ^bfg-1.15.0.jar$
 ^\.positai$
 ^\.claude$
+^roadmap$
+^AGENTS\.md$
+^tests/figs$
+^tests/testthat/Rplots\.pdf$
