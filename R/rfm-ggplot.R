@@ -322,8 +322,7 @@ rfm_gg_median <- function(data, bar_color, sort, ascending, flip, plot_title,
 
 }
 
-#' @importFrom treemapify geom_treemap geom_treemap_text
-rfm_gg_segment <- function(table, metric, print_plot) {
+rfm_gg_segment <- function(table, metric) {
 
   plot <- ggplot(table,
                  aes(area = .data[[metric]],
@@ -331,8 +330,8 @@ rfm_gg_segment <- function(table, metric, print_plot) {
                      label = paste(toupper(segment),
                                    paste0(.data[[metric]], " (", prop, "%)"),
                                    sep = '\n'))) +
-    geom_treemap() +
-    geom_treemap_text(size = 8, place = 'centre') +
+    treemapify::geom_treemap() +
+    treemapify::geom_treemap_text(size = 8, place = 'centre') +
     theme(legend.position = "none")
 
   return(plot)
