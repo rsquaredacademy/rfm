@@ -50,77 +50,65 @@ rfm_create_report <- function(rfm_table, segments, interactive = FALSE,
                               title = NULL, author = NULL, folder_name = NULL,
                               file_name = NULL) {
 
-  pkg_deps <- c("cli", "DT", "rmarkdown", "knitr", "rmdformats")
-  if (interactive) {
-    pkg_deps <- append(pkg_deps, "plotly")
+  pkg_deps <- c("DT", "rmarkdown", "knitr", "rmdformats")
+  if (isTRUE(interactive)) {
+    pkg_deps <- c(pkg_deps, "plotly")
   }
 
-  is_installed <- sapply(pkg_deps, try_pkg)
-  to_install <- pkg_deps[is.na(is_installed)]
+  check_required_packages(pkg_deps, context = "the RFM report")
 
-  if (length(to_install) > 0) {
-    if (interactive()) {
-      message('The following package(s) must be installed:', '\n')
-      for (i in seq_len(length(to_install))) {
-        cat(paste('-', to_install[i], '\n'))
-      }
-      message('\n', 'Would you like to install?')
-      if (menu(c("Yes", "No")) == 1) {
-        install.packages(to_install)
-      } else {
-        stop('Sorry! The report cannot be generated without installing the
-        required packages.', call. = FALSE)
-      }
+  if (is.null(folder_name)) {
+    folder_name <- "report"
+  }
+
+  if (is.null(file_name)) {
+    file_name <- "rfm_report"
+  }
+
+  file_rmd <- paste0(folder_name, "/rfm_report.Rmd")
+  file_html <- paste0(file_name, ".html")
+
+  template <- system.file("template", "rfm_report.Rmd", package = "rfm")
+  if (template == "" || !file.exists(template)) {
+    cli::cli_abort("Could not locate report template inside package installation.")
+  }
+
+  cli::cli_bullets(c("i" = paste0("Checking if directory `", folder_name, "` exists")))
+
+  if (!dir.exists(folder_name)) {
+    cli::cli_bullets(c("v" = paste0("Creating directory `", folder_name, "`")))
+    dir.create(folder_name)
+  } else {
+    cli::cli_bullets(c("i" = paste0("Directory `", folder_name, "` already exists")))
+  }
+
+  cli::cli_bullets(c("i" = "Checking if report template exists"))
+
+  if (!file.exists(file_rmd)) {
+    cli::cli_bullets(c("v" = paste0("Copying report template to directory `", folder_name, "`")))
+    success <- file.copy(from = template, to = file_rmd)
+    if (!success) {
+      cli::cli_abort("Failed to copy report template to `{.path {file_rmd}}`.")
     }
   } else {
+    cli::cli_bullets(c("i" = paste0("Using existing report template in directory `", folder_name, "`")))
+  }
 
-    if (is.null(folder_name)) {
-      folder_name <- "report"
-    }
+  cli::cli_bullets(c("i" = paste0("Generating `", file_html, "`")))
+  rmarkdown::render(file_rmd,
+                    quiet = TRUE,
+                    output_dir = folder_name,
+                    output_file = file_html,
+                    params = list(data = rfm_table,
+                                  segments = segments,
+                                  interactive = interactive,
+                                  report_title = title,
+                                  report_author = author))
 
-    if (is.null(file_name)) {
-      file_name <- "rfm_report"
-    }
-
-    file_rmd <- paste0(folder_name, "/rfm_report.Rmd")
-    file_html <- paste0(file_name, ".html")
-
-    template <- system.file("template", "rfm_report.Rmd", package = "rfm")
-
-    cli::cli_bullets(c("i" = paste0("Checking if directory `", folder_name ,
-                                    "` exists")))
-
-    if (!dir.exists(folder_name)) {
-      cli::cli_bullets(c("v" = paste0("Creating directory `", folder_name ,
-                                      "`")))
-      dir.create(folder_name)
-    } else {
-      cli::cli_bullets(c("i" = paste0("Directory `", folder_name ,
-                                      "` already exists")))
-    }
-
-    cli::cli_bullets(c("i" = "Checking if report template exists"))
-
-    if (!file.exists(file_rmd)) {
-      cli::cli_bullets(c("v" = paste0("Copying report template to directory `",
-                                      folder_name , "`")))
-      file.rename(template, paste0(getwd(), "/", file_rmd))
-    } else {
-      cli::cli_bullets(c("i" = paste0("Using existing report template in
-                                      directory `", folder_name , "`")))
-    }
-
-    cli::cli_bullets(c("i" = paste0("Generating `", file_html , "`")))
-    rmarkdown::render(file_rmd,
-           quiet = TRUE,
-           output_dir = folder_name,
-           output_file = file_html,
-           params = list(data = rfm_table,
-                         segments = segments,
-                         interactive = interactive,
-                         report_title = title,
-                         report_author = author))
+  if (base::interactive()) {
     cli::cli_bullets(c("v" = "Previewing report"))
     browseURL(paste0(folder_name, "/", file_html))
   }
+
+  invisible(file.path(folder_name, file_html))
 }
