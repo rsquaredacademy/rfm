@@ -123,6 +123,10 @@ save/clone their projects.
   Course](https://rsquared-academy.thinkific.com/courses/customer-segmentation-using-rfm-analysis)
 - [YouTube Tutorial](https://www.youtube.com/watch?v=275X7yaSsoQ)
 - [Blog](https://blog.rsquaredacademy.com/customer-segmentation-using-rfm-analysis/)
+- [Data Visualization with R](https://viz-base.rsquaredacademy.com) (free
+  book on base R graphics, with an [Appendix
+  A](https://viz-base.rsquaredacademy.com/rosetta.html) mapping base R onto the
+  ggplot2 that this package draws with)
 
 ## Getting Help
 
