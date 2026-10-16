@@ -1,7 +1,9 @@
 test_that("build_startup_message generates expected offline text without URLs", {
   msg <- rfm:::build_startup_message()
   expect_match(msg, "maintenance mode")
-  expect_match(msg, 'install\\.packages\\("rfmkit"\\)')
+  expect_match(msg, "successor package is in development")
+  expect_false(grepl("rfmkit", msg))
+  expect_false(grepl("install\\.packages", msg))
   expect_false(grepl("http[s]?://", msg))
 })
 

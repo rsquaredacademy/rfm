@@ -12,9 +12,8 @@ status](https://github.com/rsquaredacademy/rfm/workflows/R-CMD-check/badge.svg)]
 Status](https://img.shields.io/codecov/c/github/rsquaredacademy/rfm/master.svg)](https://app.codecov.io/github/rsquaredacademy/rfm?branch=master)
 <!-- badges: end -->
 
-> \[!NOTE\] **Maintenance Notice:** `rfm` is in maintenance mode. Active
-> development continues in `rfmkit`. Existing workflows using `rfm`
-> remain supported.
+> \[!NOTE\] **Maintenance Notice:** `rfm` is now in maintenance mode: it
+> will keep receiving fixes, and a successor package is in development.
 
 ## Overview
 

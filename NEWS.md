@@ -4,7 +4,7 @@ This is a maintenance and trust restoration release.
 
 ## Lifecycle Notice
 
-- `rfm` is transitioning to maintenance mode. Active development continues in `rfmkit`. Install `rfmkit` via `install.packages("rfmkit")`.
+- `rfm` is now in maintenance mode: it will keep receiving fixes, and a successor package is in development.
 
 ## Trust & CRAN Compliance Fixes
 
