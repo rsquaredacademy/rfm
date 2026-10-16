@@ -1,7 +1,5 @@
 #' @importFrom magrittr extract add
 #' @importFrom stats median runif quantile reorder
-#' @importFrom utils available.packages menu update.packages packageVersion
-#' @importFrom utils install.packages
 bins <- function(data, value, n_bins) {
 
   length_out <- n_bins + 1
@@ -53,12 +51,26 @@ modify_rfm <- function(rfm_heatmap_data, n_bins, check_levels) {
 
 }
 
-try_pkg <- function(pkg) {
-  tryCatch(packageVersion(pkg), error = function(e) NA)
+to_title_case <- function(x) {
+  s <- strsplit(x, " ")[[1]]
+  paste(toupper(substring(s, 1, 1)), substring(s, 2),
+        sep = "", collapse = " ")
 }
 
-to_title_case <- function(x) {
-    s <- strsplit(x, " ")[[1]]
-    paste(toupper(substring(s, 1, 1)), substring(s, 2),
-          sep = "", collapse = " ")
+check_required_packages <- function(pkgs, context = "this feature") {
+  missing_pkgs <- pkgs[!vapply(pkgs, function(p) base::requireNamespace(p, quietly = TRUE), logical(1))]
+  if (length(missing_pkgs) > 0) {
+    install_cmd <- sprintf('install.packages(c("%s"))', paste(missing_pkgs, collapse = '", "'))
+    if (!base::requireNamespace("cli", quietly = TRUE)) {
+      stop(sprintf(
+        "The following required package(s) are not installed: %s. Please install them using: %s",
+        paste(missing_pkgs, collapse = ", "), install_cmd
+      ), call. = FALSE)
+    }
+    cli::cli_abort(c(
+      "x" = "The following required package(s) are not installed: {.pkg {missing_pkgs}}.",
+      "i" = "To use {context}, please install them manually using:",
+      " " = "  {.run {install_cmd}}"
+    ))
+  }
 }

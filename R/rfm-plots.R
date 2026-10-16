@@ -73,7 +73,8 @@ rfm_plot_heatmap <- function(data, brewer_n = 5, brewer_name = "PuBu",
     yaxis_label <- "Recency Score"
   }
 
-  if (interactive) {
+  if (isTRUE(interactive)) {
+    check_required_packages("plotly", context = "interactive plots")
     p <- rfm_plotly_heatmap(mapdata, plot_title, xaxis_label, yaxis_label, brewer_n,
                             brewer_name, legend_title)
   } else {
@@ -197,7 +198,8 @@ rfm_plot_histogram <- function(rfm_table, metric = "recency",
   data <- rfm_table$rfm[, ycol, drop = FALSE]
   names(data) <- c("score")
 
-  if (interactive) {
+  if (isTRUE(interactive)) {
+    check_required_packages("plotly", context = "interactive plots")
     p <- rfm_plotly_hist(data, hist_color, plot_title, xaxis_label, yaxis_label)
   } else {
     p <- rfm_gg_hist(data, hist_bins, hist_color, plot_title, xaxis_label,
@@ -405,14 +407,17 @@ rfm_plot_order_dist <- function(rfm_table, flip = FALSE, bar_color = NULL,
     bar_color <- "#0f1a34"
   }
 
-  if (interactive) {
+  if (isTRUE(interactive)) {
     animate <- FALSE
+    check_required_packages("plotly", context = "interactive plots")
+  } else if (isTRUE(animate)) {
+    check_required_packages(c("gganimate", "gifski"), context = "animated plots")
   }
 
   data <- rfm_order_dist_data(rfm_table)
   ylim_max <- rfm_order_dist_ylim(data)
 
-  if (interactive) {
+  if (isTRUE(interactive)) {
     colnames(data) <- c("transaction_count", "n")
     rfm_plotly_order_dist(data, flip = flip, bar_color = bar_color,
       plot_title = plot_title, xaxis_label = xaxis_label,

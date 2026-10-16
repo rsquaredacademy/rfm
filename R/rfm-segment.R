@@ -242,8 +242,11 @@ rfm_plot_segment_summary <- function(x, metric = NULL,  sort = FALSE,
     yaxis_label <- to_title_case(metric)
   }
 
-  if (interactive) {
+  if (isTRUE(interactive)) {
     animate <- FALSE
+    check_required_packages("plotly", context = "interactive plots")
+  } else if (isTRUE(animate)) {
+    check_required_packages(c("gganimate", "gifski"), context = "animated plots")
   }
 
   data <- x[c("segment", metric)]
@@ -253,7 +256,7 @@ rfm_plot_segment_summary <- function(x, metric = NULL,  sort = FALSE,
     multiply_by(1.15) %>%
     ceiling(.)
 
-  if (interactive) {
+  if (isTRUE(interactive)) {
     rfm_plotly_segment_summary(data, metric, flip, sort, ascending, bar_color,
       plot_title, xaxis_label, yaxis_label)
   } else {
@@ -354,11 +357,14 @@ rfm_plot_revenue_dist <- function(x, flip = FALSE,
                                   interactive = FALSE, animate = FALSE,
                                   print_plot = TRUE) {
 
-  if (interactive) {
+  if (isTRUE(interactive)) {
     animate <- FALSE
+    check_required_packages("plotly", context = "interactive plots")
+  } else if (isTRUE(animate)) {
+    check_required_packages(c("gganimate", "gifski"), context = "animated plots")
   }
 
-  if (interactive) {
+  if (isTRUE(interactive)) {
     rfm_plotly_revenue_dist(x, flip, colors, legend_labels, plot_title,
       xaxis_label, yaxis_label)
   } else {
@@ -471,13 +477,16 @@ rfm_plot_median_recency <- function(rfm_segment_table, sort = FALSE,
                                     bar_labels = TRUE, interactive = FALSE,
                                     animate = FALSE, print_plot = TRUE) {
 
-  if (interactive) {
+  if (isTRUE(interactive)) {
     animate <- FALSE
+    check_required_packages("plotly", context = "interactive plots")
+  } else if (isTRUE(animate)) {
+    check_required_packages(c("gganimate", "gifski"), context = "animated plots")
   }
 
   data <- rfm_prep_median(rfm_segment_table, recency_days)
 
-  if (interactive) {
+  if (isTRUE(interactive)) {
     rfm_plotly_median(data, bar_color, sort, ascending, flip, plot_title,
       xaxis_label, yaxis_label)
   } else {
@@ -517,13 +526,16 @@ rfm_plot_median_frequency <- function(rfm_segment_table, sort = FALSE,
                                       bar_labels = TRUE, interactive = FALSE,
                                       animate = FALSE, print_plot = TRUE) {
 
-  if (interactive) {
+  if (isTRUE(interactive)) {
     animate <- FALSE
+    check_required_packages("plotly", context = "interactive plots")
+  } else if (isTRUE(animate)) {
+    check_required_packages(c("gganimate", "gifski"), context = "animated plots")
   }
 
   data <- rfm_prep_median(rfm_segment_table, transaction_count)
 
-  if (interactive) {
+  if (isTRUE(interactive)) {
     rfm_plotly_median(data, bar_color, sort, ascending, flip, plot_title,
       xaxis_label, yaxis_label)
   } else {
@@ -563,13 +575,16 @@ rfm_plot_median_monetary <- function(rfm_segment_table, sort = FALSE,
                                      bar_labels = TRUE, interactive = FALSE,
                                      animate = FALSE, print_plot = TRUE) {
 
-  if (interactive) {
+  if (isTRUE(interactive)) {
     animate <- FALSE
+    check_required_packages("plotly", context = "interactive plots")
+  } else if (isTRUE(animate)) {
+    check_required_packages(c("gganimate", "gifski"), context = "animated plots")
   }
 
   data <- rfm_prep_median(rfm_segment_table, amount)
 
-  if (interactive) {
+  if (isTRUE(interactive)) {
     rfm_plotly_median(data, bar_color, sort, ascending, flip, plot_title,
       xaxis_label, yaxis_label)
   } else {
@@ -660,9 +675,11 @@ rfm_plot_segment <- function(table, metric = "customers", interactive = FALSE,
 
   table$prop <- round((table[[metric]] / sum(table[[metric]])) * 100, 2)
 
-  if (interactive) {
+  if (isTRUE(interactive)) {
+    check_required_packages("plotly", context = "interactive plots")
     p <- rfm_plotly_segment(table, metric)
   } else {
+    check_required_packages("treemapify", context = "segment treemaps")
     p <- rfm_gg_segment(table, metric)
   }
 
@@ -764,11 +781,14 @@ rfm_plot_segment_scatter <- function(segments, x = "monetary", y = "recency",
     plot_title <- paste(yaxis_label, "vs", xaxis_label)
   }
 
-  if (interactive) {
+  if (isTRUE(interactive)) {
     animate <- FALSE
+    check_required_packages("plotly", context = "interactive plots")
+  } else if (isTRUE(animate)) {
+    check_required_packages(c("gganimate", "gifski"), context = "animated plots")
   }
 
-  if (interactive) {
+  if (isTRUE(interactive)) {
     rfm_plotly_segment_scatter(segments, x_data, y_data, plot_title,
       legend_title, xaxis_label, yaxis_label)
   } else {

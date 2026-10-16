@@ -1,3 +1,21 @@
+# rfm 0.5.0
+
+This is a maintenance and trust restoration release.
+
+## Lifecycle Notice
+
+- `rfm` is now in maintenance mode: it will keep receiving fixes, and a successor package is in development.
+
+## Trust & CRAN Compliance Fixes
+
+- Completely removed unsolicited network checks (`available.packages()`), update prompts, and `runif()` lottery from `.onAttach()`. Package attachment is now 100% offline and instantaneous.
+- Fixed report template corruption in `rfm_create_report()`: changed `file.rename()` to safe `file.copy()` (copy-only-if-missing), preserving user modifications and leaving the package installation template intact.
+- Eliminated all runtime interactive `install.packages()` calls in `rfm_create_report()` and `rfm_launch_app()`. Functions now throw polite, structured, and informative errors via `cli::cli_abort()` in both interactive and non-interactive sessions.
+- Promoted `cli` to `Imports`.
+- Trimmed `Imports` by demoting heavy visualization packages (`plotly`, `gganimate`, `treemapify`, and `xplorerr`) to `Suggests`, adding `gifski` to `Suggests`.
+- Added runtime guards at all public entrypoints for optional interactive and animated features.
+- Cleaned legacy test graphics artifacts (`tests/figs/`, `tests/testthat/Rplots.pdf`).
+
 # rfm 0.4.0
 
 This is a minor release for bug fixes and enhancements.

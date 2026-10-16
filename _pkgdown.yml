@@ -75,6 +75,8 @@ reference:
       - rfm_plot_segment_scatter
       - rfm_plot_revenue_dist
       - rfm_plot_median_recency
+      - rfm_plot_median_frequency
+      - rfm_plot_median_monetary
 
   - title: Plots
 

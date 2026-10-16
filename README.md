@@ -12,6 +12,9 @@ status](https://github.com/rsquaredacademy/rfm/workflows/R-CMD-check/badge.svg)]
 Status](https://img.shields.io/codecov/c/github/rsquaredacademy/rfm/master.svg)](https://app.codecov.io/github/rsquaredacademy/rfm?branch=master)
 <!-- badges: end -->
 
+> \[!NOTE\] **Maintenance Notice:** `rfm` is now in maintenance mode: it
+> will keep receiving fixes, and a successor package is in development.
+
 ## Overview
 
 Tools for customer segmentation using RFM (recency, frequency and
@@ -128,5 +131,4 @@ save/clone their projects.
 
 If you encounter a bug, please file a minimal reproducible example using
 [reprex](https://reprex.tidyverse.org/index.html) on github. For
-questions and clarifications, use
-[StackOverflow](https://stackoverflow.com/).
+questions and clarifications, please ask on Stack Overflow.
