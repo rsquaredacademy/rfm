@@ -2,7 +2,11 @@
 
 ## Introduction
 
+    ## Warning: package 'dplyr' was built under R version 4.5.3
+
     ## Warning: package 'rlang' was built under R version 4.5.3
+
+    ## Warning: package 'knitr' was built under R version 4.5.3
 
     ## Warning: package 'kableExtra' was built under R version 4.5.3
 

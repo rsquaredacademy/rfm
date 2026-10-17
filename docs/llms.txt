@@ -1,8 +1,7 @@
 # rfm
 
-> \[!NOTE\] **Maintenance Notice:** `rfm` is in maintenance mode. Active
-> development continues in `rfmkit`. Existing workflows using `rfm`
-> remain supported.
+> \[!NOTE\] **Maintenance Notice:** `rfm` is now in maintenance mode: it
+> will keep receiving fixes, and a successor package is in development.
 
 ## Overview
 
