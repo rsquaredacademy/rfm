@@ -132,3 +132,5 @@ save/clone their projects.
 If you encounter a bug, please file a minimal reproducible example using
 [reprex](https://reprex.tidyverse.org/index.html) on github. For
 questions and clarifications, please ask on Stack Overflow.
+
+<div data-rsa-signup data-site="rfm.rsquaredacademy.com" data-privacy-url="https://www.rsquaredacademy.com/privacy-policy.html"></div>
