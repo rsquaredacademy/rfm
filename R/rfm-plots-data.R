@@ -35,22 +35,32 @@ rfm_heatmap_data <- function(rfm_table) {
     select(frequency_score, recency_score, amount) %>%
     summarise(monetary = mean(amount))
 
-  l_frequency      <- check_levels(result, "frequency_score")
-  l_recency        <- check_levels(result, "recency_score")
-  levels_frequency <- length(l_frequency)
-  levels_recency   <- length(l_recency)
   f_frequency      <- use_series(rfm_table, frequency_bins)
   r_recency        <- use_series(rfm_table, recency_bins)
 
-  if (levels_frequency != f_frequency) {
-    result %<>%
-      modify_rfm(., f_frequency, l_frequency)
+  n_frequency <- if (length(f_frequency) == 1) {
+    f_frequency
+  } else {
+    length(f_frequency) + 1
+  }
+  n_recency <- if (length(r_recency) == 1) {
+    r_recency
+  } else {
+    length(r_recency) + 1
   }
 
-  if (levels_recency != r_recency) {
-    result %<>%
-      modify_rfm(., r_recency, l_recency)
-  }
+  grid <- expand.grid(
+    recency_score   = seq_len(n_recency),
+    frequency_score = seq_len(n_frequency)
+  )
+  grid <- grid[c("frequency_score", "recency_score")]
+
+  result <-
+    grid %>%
+    left_join(as.data.frame(result), by = c("frequency_score", "recency_score"))
+
+  result$monetary[is.na(result$monetary)] <- 0
+  result <- group_by(result, frequency_score)
 
   return(result)
 
@@ -83,10 +93,15 @@ rfm_heatmap_data <- function(rfm_table) {
 #'
 rfm_barchart_data <- function(rfm_table) {
 
+  recency_bins <- use_series(rfm_table, recency_bins)
+  n_recency <- if (length(recency_bins) == 1) {
+    recency_bins
+  } else {
+    length(recency_bins) + 1
+  }
+
   rlevels <-
-    rfm_table %>%
-    use_series(recency_bins) %>%
-    seq_len(.) %>%
+    seq_len(n_recency) %>%
     rev()
 
   data <- use_series(rfm_table, rfm)

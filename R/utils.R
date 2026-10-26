@@ -41,12 +41,19 @@ check_levels <- function(rfm_heatmap_data, column) {
 
 }
 
-modify_rfm <- function(rfm_heatmap_data, n_bins, check_levels) {
+modify_rfm <- function(rfm_heatmap_data, n_bins, check_levels,
+                       column = "frequency_score", other_bins = n_bins) {
 
   missing           <- !(seq_len(n_bins) %in% check_levels)
   missing2          <- seq_len(n_bins)[missing]
-  extra_data        <- expand.grid(missing2, seq_len(n_bins), 0)
-  names(extra_data) <- names(rfm_heatmap_data)
+  other_column      <- setdiff(names(rfm_heatmap_data), c(column, "monetary"))[1]
+  extra_data        <- data.frame(
+    new_values   = rep(missing2, each = other_bins),
+    other_values = rep(seq_len(other_bins), times = length(missing2)),
+    monetary     = rep(0, length(missing2) * other_bins)
+  )
+  names(extra_data) <- c(column, other_column, "monetary")
+  extra_data        <- extra_data[names(rfm_heatmap_data)]
   rbind(rfm_heatmap_data, extra_data)
 
 }
