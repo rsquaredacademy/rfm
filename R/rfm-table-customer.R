@@ -94,7 +94,7 @@ rfm_table_customer.default <- function(data = NULL, customer_id = NULL,
 
     other_cols <-
       data %>%
-      select(!c({{ recency }}, {{ n_transactions }}, {{ total_revenue }})) %>%
+      select(!c({{ n_transactions }}, {{ total_revenue }})) %>%
       rename(customer_id = {{ customer_id }})
   }
 

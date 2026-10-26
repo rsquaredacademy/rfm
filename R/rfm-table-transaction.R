@@ -183,6 +183,14 @@ rfm_prep_bins <- function(result, recency_bins, frequency_bins, monetary_bins,
 
   result$transaction_count <- int(result$transaction_count)
 
+  duplicate_cols <- intersect(
+    setdiff(names(result), "customer_id"),
+    names(data)
+  )
+  if (length(duplicate_cols) > 0) {
+    data <- data[, setdiff(names(data), duplicate_cols), drop = FALSE]
+  }
+
   result <- left_join(result, data, by = join_by(customer_id))
 
   threshold_n <- max(

@@ -2,9 +2,9 @@
 
 ## Bug fixes
 
-- `rfm_table_customer()` now works with a date recency column when the data does not contain a `recency_days` column (#111).
+- `rfm_table_customer()` now accepts either a date or a day-count recency column, with or without a `recency_days` column present (#111).
 - `rfm_table_customer_2()` now runs instead of failing because of a missing argument (#112).
-- `rfm_table_order()` and `rfm_table_customer()` now support different bin counts for recency, frequency and monetary; the threshold table is padded with `NA` to the longest dimension (#113).
+- `rfm_table_order()` and `rfm_table_customer()` now support different bin counts for recency, frequency and monetary; the threshold table is padded with `NA` to the longest dimension (#113). Segment definitions must fit the bin counts, as scores above the number of bins for a dimension never occur.
 - `rfm_heatmap_data()` and `rfm_plot_heatmap()` now work with custom threshold vectors, and missing recency levels are no longer placed in the frequency column (#114).
 
 # rfm 0.5.0

@@ -23,8 +23,7 @@ rfm_table_customer_2 <- function(data = NULL, customer_id = NULL,
 
   other_cols <-
     data %>%
-    select(!c({{ latest_visit_date }}, {{ n_transactions }},
-              {{ total_revenue }})) %>%
+    select(!c({{ n_transactions }}, {{ total_revenue }})) %>%
     rename(customer_id = {{ customer_id }})
 
   out <- rfm_prep_bins(result, recency_bins, frequency_bins, monetary_bins,

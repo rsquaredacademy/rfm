@@ -138,6 +138,40 @@ test_that("rfm_table_customer handles date recency without recency_days (#111)",
   expect_equal(without_days$rfm[score_cols], with_days$rfm[score_cols])
 })
 
+test_that("date recency keeps the 0.5.0 columns and works downstream (#111)", {
+
+  analysis_date <- as.Date("2007-01-01")
+  customer_data <- rfm_data_customer[
+    , c("customer_id", "revenue", "most_recent_visit", "number_of_orders")
+  ]
+
+  without_days <- rfm_table_customer(
+    customer_data, customer_id, number_of_orders, most_recent_visit,
+    revenue, analysis_date
+  )
+  with_days <- rfm_table_customer(
+    rfm_data_customer, customer_id, number_of_orders, most_recent_visit,
+    revenue, analysis_date
+  )
+
+  core_names <- c(
+    "customer_id", "recency_days", "transaction_count", "amount",
+    "recency_score", "frequency_score", "monetary_score", "rfm_score"
+  )
+
+  expect_equal(names(without_days$rfm), c(core_names, "most_recent_visit"))
+  expect_equal(
+    names(with_days$rfm),
+    c(core_names, "most_recent_visit", "first_name", "last_name", "email")
+  )
+
+  for (tab in list(without_days, with_days)) {
+    segments <- rfm_segment(tab, "All", 1, 5, 1, 5, 1, 5)
+    expect_equal(nrow(segments), nrow(tab$rfm))
+    expect_s3_class(rfm_plot_histogram(tab, print_plot = FALSE), "ggplot")
+  }
+})
+
 test_that("rfm_table_customer_2 works and warns about deprecation (#112)", {
 
   analysis_date <- as.Date("2007-01-01")
@@ -153,6 +187,7 @@ test_that("rfm_table_customer_2 works and warns about deprecation (#112)", {
   expect_s3_class(result, "rfm_table_customer")
   expect_equal(sum(result$rfm$transaction_count), 393223)
   expect_equal(nrow(result$rfm), nrow(rfm_data_customer))
+  expect_false(any(grepl("\\.(x|y)$", names(result$rfm))))
 })
 
 test_that("rfm_table_order supports unequal bin counts (#113)", {
