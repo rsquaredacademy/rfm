@@ -185,13 +185,20 @@ rfm_prep_bins <- function(result, recency_bins, frequency_bins, monetary_bins,
 
   result <- left_join(result, data, by = join_by(customer_id))
 
+  threshold_n <- max(
+    length(lower_recency), length(lower_frequency), length(lower_monetary)
+  )
+  pad_threshold <- function(x) {
+    c(x, rep(NA, threshold_n - length(x)))
+  }
+
   threshold <- data.frame(
-    recency_lower = lower_recency,
-    recency_upper = upper_recency,
-    frequency_lower = lower_frequency,
-    frequency_upper = upper_frequency,
-    monetary_lower = lower_monetary,
-    monetary_upper = upper_monetary
+    recency_lower = pad_threshold(lower_recency),
+    recency_upper = pad_threshold(upper_recency),
+    frequency_lower = pad_threshold(lower_frequency),
+    frequency_upper = pad_threshold(upper_frequency),
+    monetary_lower = pad_threshold(lower_monetary),
+    monetary_upper = pad_threshold(upper_monetary)
   )
 
   list(

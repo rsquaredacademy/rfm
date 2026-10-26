@@ -42,14 +42,25 @@ rfm_heatmap_data <- function(rfm_table) {
   f_frequency      <- use_series(rfm_table, frequency_bins)
   r_recency        <- use_series(rfm_table, recency_bins)
 
-  if (levels_frequency != f_frequency) {
-    result %<>%
-      modify_rfm(., f_frequency, l_frequency)
+  n_frequency <- if (length(f_frequency) == 1) {
+    f_frequency
+  } else {
+    length(f_frequency) + 1
+  }
+  n_recency <- if (length(r_recency) == 1) {
+    r_recency
+  } else {
+    length(r_recency) + 1
   }
 
-  if (levels_recency != r_recency) {
+  if (levels_frequency != n_frequency) {
     result %<>%
-      modify_rfm(., r_recency, l_recency)
+      modify_rfm(., n_frequency, l_frequency, "frequency_score", n_recency)
+  }
+
+  if (levels_recency != n_recency) {
+    result %<>%
+      modify_rfm(., n_recency, l_recency, "recency_score", n_frequency)
   }
 
   return(result)

@@ -70,3 +70,52 @@ test_that('output from modify_rfm is as expected', {
   expect_equal(actual, expected)
 
 })
+
+test_that('rfm_heatmap_data supports custom thresholds (#114)', {
+
+  analysis_date <- as.Date('2006-12-31')
+
+  heat <-
+    rfm_table_order(
+      rfm_data_orders, customer_id, order_date, revenue, analysis_date,
+      recency_bins = c(115, 181, 297, 482),
+      frequency_bins = c(4, 5, 6, 8),
+      monetary_bins = c(256, 382, 506, 666)
+    ) %>%
+    rfm_heatmap_data()
+
+  pairs <- heat[c("recency_score", "frequency_score")]
+
+  expect_equal(nrow(pairs), 25)
+  expect_false(anyDuplicated(pairs) > 0)
+  expect_setequal(pairs$recency_score, 1:5)
+  expect_setequal(pairs$frequency_score, 1:5)
+  expect_equal(
+    nrow(unique(pairs)),
+    nrow(expand.grid(
+      recency_score = 1:5,
+      frequency_score = 1:5
+    ))
+  )
+})
+
+test_that('rfm_heatmap_data fills missing recency levels (#114)', {
+
+  analysis_date <- as.Date('2006-12-31')
+
+  heat <-
+    rfm_table_order(
+      rfm_data_orders, customer_id, order_date, revenue, analysis_date,
+      recency_bins = c(115, 181, 297, 10000),
+      frequency_bins = c(4, 5, 6, 8),
+      monetary_bins = c(256, 382, 506, 666)
+    ) %>%
+    rfm_heatmap_data()
+
+  pairs <- heat[c("recency_score", "frequency_score")]
+
+  expect_equal(nrow(pairs), 25)
+  expect_false(anyDuplicated(pairs) > 0)
+  expect_setequal(pairs$recency_score, 1:5)
+  expect_setequal(pairs$frequency_score, 1:5)
+})
