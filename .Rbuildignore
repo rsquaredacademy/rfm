@@ -8,7 +8,6 @@
 ^codecov\.yml$
 ^appveyor\.yml$
 ^CONDUCT\.md$
-^CONTRIBUTING\.md$
 ^ISSUE_TEMPLATE\.md$
 ^SUPPORT\.md$
 ^hex_rfm\.png$
