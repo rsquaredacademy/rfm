@@ -23,7 +23,7 @@
 #'   lower-inclusive: a value equal to a threshold enters the next interval.
 #'   This rule also applies to the deprecated `rfm_table_customer_2()`.
 #'
-#' @return \code{rfm_table_order} returns a list with the following:
+#' @return \code{rfm_table_customer} returns a list with the following:
 #'
 #' \item{rfm}{RFM table.}
 #' \item{analysis_date}{Date of analysis.}
@@ -71,6 +71,7 @@ rfm_table_customer.default <- function(data = NULL, customer_id = NULL,
                                        recency_bins = 5, frequency_bins = 5,
                                        monetary_bins = 5, ...) {
 
+  data <- ungroup(data)
   col_names <- c("customer_id", "recency_days", "transaction_count", "amount")
 
   is_days <-

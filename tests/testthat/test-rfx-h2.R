@@ -44,3 +44,14 @@ test_that("customer input requires unique IDs on both date paths (H2)", {
     x, id, orders, date, revenue, ad
   )), "[Dd]uplicat.*customer")
 })
+
+test_that("grouped transaction metadata cannot restore dropped columns (H2)", {
+  ad <- as.Date("2026-01-10")
+  x <- data.frame(id = c("a", "a", "b"), date = ad - c(2, 1, 1),
+                  revenue = c(10, 20, 40), product = c("X", "Y", "X"))
+  x <- dplyr::group_by(x, product)
+  expect_message(out <- rfm_table_order(x, id, date, revenue, ad)$rfm, "product")
+  expect_false("product" %in% names(out))
+  expect_equal(out$amount, c(30, 40))
+  expect_equal(sum(out$transaction_count), 3L)
+})

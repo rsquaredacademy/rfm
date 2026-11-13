@@ -48,7 +48,8 @@ importFrom(dplyr,
   pull,
   rename,
   select,
-  summarise
+  summarise,
+  ungroup
 )
 importFrom(ggplot2,
   aes,

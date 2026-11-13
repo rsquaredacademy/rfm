@@ -59,13 +59,14 @@ rfm_table_order <- function(data = NULL, customer_id = NULL, order_date = NULL,
                             recency_bins = 5, frequency_bins = 5,
                             monetary_bins = 5, ...) UseMethod("rfm_table_order")
 
-#' @importFrom dplyr distinct
+#' @importFrom dplyr distinct ungroup
 #' @export
 #'
 rfm_table_order.default <- function(data = NULL, customer_id = NULL,
                                     order_date = NULL, revenue = NULL,
                                     analysis_date = NULL, recency_bins = 5,
                                     frequency_bins = 5, monetary_bins = 5, ...) {
+  data <- ungroup(data)
   result <- rfm_prep_table_data(
     data, {{ customer_id }}, {{ order_date }},
     {{ revenue }}, analysis_date

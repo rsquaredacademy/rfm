@@ -41,7 +41,7 @@ Duplicated customer IDs are rejected; input must have one row per customer.}
 \item{recency}{Days since last visit or date of last visit.}
 }
 \value{
-\code{rfm_table_order} returns a list with the following:
+\code{rfm_table_customer} returns a list with the following:
 
 \item{rfm}{RFM table.}
 \item{analysis_date}{Date of analysis.}

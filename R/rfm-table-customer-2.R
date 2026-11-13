@@ -10,6 +10,7 @@ rfm_table_customer_2 <- function(data = NULL, customer_id = NULL,
 
   .Deprecated("rfm_table_customer()")
 
+  data <- ungroup(data)
   col_names <- c("customer_id", "recency_days", "transaction_count", "amount")
 
   result <-
