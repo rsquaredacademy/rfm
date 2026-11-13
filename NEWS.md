@@ -2,6 +2,7 @@
 
 ## Bug fixes
 
+- Segment names such as `"1"` are now assigned correctly, preserving first-match precedence and assigning unmatched customers to `"Others"`.
 - Heatmaps now preserve an observed missing monetary mean as `NA`, filling only absent score combinations with zero.
 - Automatic RFM bins now use right-closed quantile intervals without adding one to cut points, so currency conversions preserve monetary scores. Customers near a quantile boundary can receive different recency, frequency or monetary scores and segments; custom thresholds keep their lower-inclusive rule.
 - Transaction scoring now keeps only metadata that is constant within each customer and names dropped columns in a message, preserving customer totals.

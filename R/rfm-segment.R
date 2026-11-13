@@ -52,7 +52,7 @@ rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
   segment <- NULL
 
   rfm_score_table <- data$rfm
-  rfm_score_table$segment <- 1
+  rfm_score_table$segment <- NA_character_
 
   n_segments <- length(segment_names)
 
@@ -64,11 +64,10 @@ rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
                                                      frequency_upper[i])) &
         (rfm_score_table$monetary_score %>% between(monetary_lower[i],
                                                     monetary_upper[i])) &
-        !rfm_score_table$segment %in% segment_names)] <- segment_names[i]
+        is.na(rfm_score_table$segment)) %in% TRUE] <- segment_names[i]
   }
 
   rfm_score_table$segment[is.na(rfm_score_table$segment)] <- "Others"
-  rfm_score_table$segment[rfm_score_table$segment == 1]   <- "Others"
 
   rfm_score_table[c("customer_id", "segment", "rfm_score", "transaction_count",
                     "recency_days", "amount", "recency_score",
