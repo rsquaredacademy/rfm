@@ -2,6 +2,7 @@
 
 ## Bug fixes
 
+- Interactive median and scatter hover text now names the selected metrics correctly.
 - Deprecated scatter and histogram wrappers now forward axis labels, titles and `print_plot` correctly and name their existing replacements.
 - Segment names such as `"1"` are now assigned correctly, preserving first-match precedence and assigning unmatched customers to `"Others"`.
 - Heatmaps now preserve an observed missing monetary mean as `NA`, filling only absent score combinations with zero.
