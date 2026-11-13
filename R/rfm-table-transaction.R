@@ -14,6 +14,14 @@
 #' @param monetary_bins Number of bins for monetary or custom threshold.
 #' @param ... Other arguments.
 #'
+#' @details Automatic bins use unshifted sample quantiles. Intervals are
+#'   right-closed: `q[i - 1] < x <= q[i]`, with the minimum included in the
+#'   lowest interval and the maximum included in the highest interval. Values
+#'   tied at a boundary stay in the lower interval; repeated boundaries can
+#'   leave intervals empty. Frequency and monetary scores increase with the
+#'   interval number; recency scores decrease. Custom thresholds remain
+#'   lower-inclusive: a value equal to a threshold enters the next interval.
+#'
 #' @return \code{rfm_table_order} returns a list with the following:
 #'
 #' \item{rfm}{RFM table.}
@@ -131,52 +139,44 @@ rfm_prep_bins <- function(result, recency_bins, frequency_bins, monetary_bins,
   }
 
   lower_recency <- bins_lower(result, "recency_days", bins_recency)
-  upper_recency <- bins_upper(result, "recency_days", bins_recency)
+  upper_recency <- bins_upper(result, "recency_days", bins_recency,
+                              right = length(recency_bins) == 1)
 
   rscore_len <- length(rscore)
 
-  for (i in seq_len(rscore_len)) {
-    result$recency_score[result$recency_days >= lower_recency[i] &
-      result$recency_days < upper_recency[i]] <- rscore[i]
-  }
+  result$recency_score <- rscore_len + 1L - rfm_bin_score(
+    result$recency_days, bins_recency, right = length(recency_bins) == 1
+  )
 
 
   if (length(frequency_bins) == 1) {
-    fscore <- rev(seq_len(frequency_bins))
     bins_frequency <- bins(result, "transaction_count", frequency_bins)
   } else {
-    fscore <- rev(seq_len((length(frequency_bins) + 1)))
     bins_frequency <- frequency_bins
   }
 
   lower_frequency <- bins_lower(result, "transaction_count", bins_frequency)
-  upper_frequency <- bins_upper(result, "transaction_count", bins_frequency)
+  upper_frequency <- bins_upper(result, "transaction_count", bins_frequency,
+                                right = length(frequency_bins) == 1)
 
-  fscore_len <- length(fscore)
-
-  for (i in seq_len(fscore_len)) {
-    result$frequency_score[result$transaction_count >= lower_frequency[i] &
-      result$transaction_count < upper_frequency[i]] <- i
-  }
+  result$frequency_score <- rfm_bin_score(
+    result$transaction_count, bins_frequency, right = length(frequency_bins) == 1
+  )
 
   if (length(monetary_bins) == 1) {
-    mscore <- rev(seq_len(monetary_bins))
     bins_monetary <- bins(result, "amount", monetary_bins)
   } else {
-    mscore <- rev(seq_len((length(monetary_bins) + 1)))
     bins_monetary <- monetary_bins
   }
 
 
   lower_monetary <- bins_lower(result, "amount", bins_monetary)
-  upper_monetary <- bins_upper(result, "amount", bins_monetary)
+  upper_monetary <- bins_upper(result, "amount", bins_monetary,
+                               right = length(monetary_bins) == 1)
 
-  mscore_len <- length(mscore)
-
-  for (i in seq_len(mscore_len)) {
-    result$monetary_score[result$amount >= lower_monetary[i] &
-      result$amount < upper_monetary[i]] <- i
-  }
+  result$monetary_score <- rfm_bin_score(
+    result$amount, bins_monetary, right = length(monetary_bins) == 1
+  )
 
   result %<>%
     mutate(
@@ -223,6 +223,10 @@ rfm_prep_bins <- function(result, recency_bins, frequency_bins, monetary_bins,
     monetary_bins = monetary_bins,
     threshold = threshold
   )
+}
+
+rfm_bin_score <- function(x, thresholds, right) {
+  findInterval(x, thresholds, left.open = right) + 1L
 }
 
 #' @importFrom dplyr across all_of n_distinct

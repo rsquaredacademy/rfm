@@ -14,6 +14,15 @@
 #' @param monetary_bins Number of bins for monetary or custom threshold.
 #' @param ... Other arguments.
 #'
+#' @details Automatic bins use unshifted sample quantiles. Intervals are
+#'   right-closed: `q[i - 1] < x <= q[i]`, with the minimum included in the
+#'   lowest interval and the maximum included in the highest interval. Values
+#'   tied at a boundary stay in the lower interval; repeated boundaries can
+#'   leave intervals empty. Frequency and monetary scores increase with the
+#'   interval number; recency scores decrease. Custom thresholds remain
+#'   lower-inclusive: a value equal to a threshold enters the next interval.
+#'   This rule also applies to the deprecated `rfm_table_customer_2()`.
+#'
 #' @return \code{rfm_table_order} returns a list with the following:
 #'
 #' \item{rfm}{RFM table.}

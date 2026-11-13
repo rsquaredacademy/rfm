@@ -7,8 +7,7 @@ bins <- function(data, value, n_bins) {
   data[[value]] %>%
     quantile(probs = seq(0, 1, length.out = length_out)) %>%
     unname() %>%
-    extract(c(-1, -length_out)) %>%
-    add(1)
+    extract(c(-1, -length_out))
 
 }
 
@@ -20,12 +19,15 @@ bins_lower <- function(data, value, bins) {
 
 }
 
-bins_upper <- function(data, value, bins) {
+bins_upper <- function(data, value, bins, right = TRUE) {
 
   data_max <-
     data[[value]] %>%
-    max() %>%
-    add(1)
+    max()
+
+  if (!right) {
+    data_max <- data_max + 1
+  }
 
   c(bins, data_max)
 }

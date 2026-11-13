@@ -2,6 +2,7 @@
 
 ## Bug fixes
 
+- Automatic RFM bins now use right-closed quantile intervals without adding one to cut points, so currency conversions preserve monetary scores. Customers near a quantile boundary can receive different recency, frequency or monetary scores and segments; custom thresholds keep their lower-inclusive rule.
 - Transaction scoring now keeps only metadata that is constant within each customer and names dropped columns in a message, preserving customer totals.
 - Customer scoring now rejects duplicated customer IDs instead of multiplying rows and totals.
 - `rfm_table_customer()` now accepts either a date or a day-count recency column, with or without a `recency_days` column present (#111).
