@@ -2,6 +2,7 @@
 
 ## Bug fixes
 
+- Corrected the customer-scoring return documentation and segment-summary plot title documentation.
 - The package now requires dplyr 1.1.0 or later, matching the imported join API.
 - Financial and fractional median plot labels now retain two decimal places instead of rounding to whole numbers; customer and order counts keep integer labels.
 - Segment summary charts now show negative revenue and average order value, including all-negative data, with room for their labels.

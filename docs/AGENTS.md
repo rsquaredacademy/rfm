@@ -60,7 +60,5 @@ segmentation. Standard R package layout.
   [`rfm_launch_app()`](https://rfm.rsquaredacademy.com/reference/rfm_launch_app.md).
 - Bundled data: `data/rfm_data_orders.rda`, `data/rfm_data_customer.rda`
   (documented in `R/rfm-data.R`).
-- `.onAttach` makes a network call
-  ([`available.packages()`](https://rdrr.io/r/utils/available.packages.html))
-  in interactive sessions to check for updates — keep in mind when
-  testing startup behavior.
+- `.onAttach` only emits an offline maintenance message in interactive
+  sessions; it does not check for updates or access the network.

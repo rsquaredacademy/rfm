@@ -130,7 +130,7 @@ rfm_segment_summary <- function(segments) {
 
 }
 
-#' Visulaize segment summary
+#' Visualize segment summary
 #'
 #' Generates plots for customers, orders, revenue and average order value for
 #'   each segment.

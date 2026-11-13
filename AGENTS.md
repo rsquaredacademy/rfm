@@ -41,4 +41,4 @@ pkgdown::build_site()                     # site config in _pkgdown.yml
 - Core scoring entrypoints: `rfm_table_order()` (transaction data) in `R/rfm-table-transaction.R`; `rfm_table_customer()` / `rfm_table_customer_2()` in `R/rfm-table-customer*.R`; segmentation in `R/rfm-segment.R`.
 - `rfm_create_report()` knits `inst/template/rfm_report.Rmd`; the Shiny app is launched with `rfm_launch_app()`.
 - Bundled data: `data/rfm_data_orders.rda`, `data/rfm_data_customer.rda` (documented in `R/rfm-data.R`).
-- `.onAttach` makes a network call (`available.packages()`) in interactive sessions to check for updates — keep in mind when testing startup behavior.
+- `.onAttach` only emits an offline maintenance message in interactive sessions; it does not check for updates or access the network.
