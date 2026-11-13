@@ -88,6 +88,8 @@ rfm_gg_segment_summary <- function(data, metric, sort, ascending, flip,
                                    axis_label_angle, ylim_min, ylim_max,
                                    bar_labels) {
 
+  label_format <- if (metric %in% c("revenue", "aov")) "%1.2f" else "%1.0f"
+
   if (sort) {
     if (ascending) {
       if (flip) {
@@ -131,7 +133,7 @@ rfm_gg_segment_summary <- function(data, metric, sort, ascending, flip,
     if (bar_labels) {
       p <-
         p +
-        geom_text(aes(label = sprintf("%1.0f", .data[[metric]]),
+        geom_text(aes(label = sprintf(label_format, .data[[metric]]),
                       y = .data[[metric]] * 1.025,
                       hjust = ifelse(.data[[metric]] < 0, 1, 0)),
                   size = 3)
@@ -145,7 +147,7 @@ rfm_gg_segment_summary <- function(data, metric, sort, ascending, flip,
     if (bar_labels) {
       p <-
         p +
-        geom_text(aes(label = sprintf("%1.0f", .data[[metric]]),
+        geom_text(aes(label = sprintf(label_format, .data[[metric]]),
                       y = .data[[metric]] * 1.025,
                       vjust = ifelse(.data[[metric]] < 0, 1, 0)),
                   position = position_dodge(0.9),
@@ -230,6 +232,12 @@ rfm_gg_median <- function(data, bar_color, sort, ascending, flip, plot_title,
 
   n_fill <- nrow(data)
   cnames <- names(data)
+  label_format <- if (cnames[2] == "amount" ||
+                       any(data[[cnames[2]]] %% 1 != 0, na.rm = TRUE)) {
+    "%1.2f"
+  } else {
+    "%1.0f"
+  }
   y_lab  <-
     switch(cnames[2],
            recency_days = "Median Recency",
@@ -296,7 +304,7 @@ rfm_gg_median <- function(data, bar_color, sort, ascending, flip, plot_title,
     if (bar_labels) {
       p <-
         p +
-        geom_text(aes(label = sprintf("%1.0f", .data[[cnames[2]]]),
+        geom_text(aes(label = sprintf(label_format, .data[[cnames[2]]]),
                       y = .data[[cnames[2]]] * 1.025),
                   hjust = 0,
                   size = 3)
@@ -311,7 +319,7 @@ rfm_gg_median <- function(data, bar_color, sort, ascending, flip, plot_title,
     if (bar_labels) {
       p <-
         p +
-        geom_text(aes(label = sprintf("%1.0f", .data[[cnames[2]]]),
+        geom_text(aes(label = sprintf(label_format, .data[[cnames[2]]]),
                       y = .data[[cnames[2]]] * 1.025),
                   position = position_dodge(0.9),
                   vjust = 0,

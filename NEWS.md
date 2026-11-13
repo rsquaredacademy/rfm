@@ -2,6 +2,7 @@
 
 ## Bug fixes
 
+- Financial and fractional median plot labels now retain two decimal places instead of rounding to whole numbers; customer and order counts keep integer labels.
 - Segment summary charts now show negative revenue and average order value, including all-negative data, with room for their labels.
 - Interactive median and scatter hover text now names the selected metrics correctly.
 - Deprecated scatter and histogram wrappers now forward axis labels, titles and `print_plot` correctly and name their existing replacements.
