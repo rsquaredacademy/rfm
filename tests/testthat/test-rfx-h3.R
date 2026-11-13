@@ -57,3 +57,29 @@ test_that("custom thresholds remain lower inclusive (H3)", {
   expect_equal(out$frequency_score, c(1, 2, 2, 3, 3, 3))
   expect_equal(out$monetary_score, c(1, 2, 2, 3, 3, 3))
 })
+
+test_that("values exactly on a cut point stay in the lower bin for every bin count (rfxx M1)", {
+  ad <- as.Date("2026-01-10")
+  d <- data.frame(id = sprintf("c%02d", 1:31), orders = 1L, days = 1L,
+                  revenue = as.numeric(1:31))
+  k <- rfm_table_customer(d, id, orders, days, revenue, ad, monetary_bins = 6)
+  # exact 5/6 quantile of 1:31 is 26, so 26 scores 5, not 6
+  expect_equal(k$rfm$monetary_score[k$rfm$customer_id == "c26"], 5)
+
+  for (n in 2:12) {
+    x <- as.numeric(1:31)
+    q <- stats::quantile(x, probs = seq_len(n - 1) / n, type = 7, names = FALSE)
+    expect_equal(bins(data.frame(v = x), "v", n), q)
+    expected <- 1 + vapply(x, function(v) sum(v > q), numeric(1))
+    got <- rfm_table_customer(d, id, orders, days, revenue, ad,
+                              monetary_bins = n)$rfm$monetary_score
+    expect_equal(as.numeric(got), expected)
+  }
+})
+
+test_that("several missing customer IDs get a clear message (rfxx L)", {
+  ad <- as.Date("2026-01-10")
+  d <- data.frame(id = c(NA, NA, "a"), orders = 1:3, days = 1:3, revenue = 1:3)
+  expect_error(rfm_table_customer(d, id, orders, days, revenue, ad),
+               "more than one missing value")
+})

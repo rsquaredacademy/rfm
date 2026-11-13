@@ -123,7 +123,13 @@ rfm_prep_table_data <- function(data, customer_id, order_date, revenue,
 #' @importFrom dplyr left_join join_by
 rfm_prep_bins <- function(result, recency_bins, frequency_bins, monetary_bins,
                           analysis_date, data) {
-  if (anyDuplicated(result$customer_id) || anyDuplicated(data$customer_id)) {
+  dup_ids <- c(result$customer_id[duplicated(result$customer_id)],
+               data$customer_id[duplicated(data$customer_id)])
+  if (length(dup_ids) > 0) {
+    if (all(is.na(dup_ids))) {
+      stop("Customer IDs contain more than one missing value (NA); give each customer a non-missing ID.",
+           call. = FALSE)
+    }
     stop("Duplicated customer IDs: customer-level input must have one row per customer.",
          call. = FALSE)
   }
