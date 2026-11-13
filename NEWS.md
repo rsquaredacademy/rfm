@@ -2,6 +2,8 @@
 
 ## Bug fixes
 
+- Transaction scoring now keeps only metadata that is constant within each customer and names dropped columns in a message, preserving customer totals.
+- Customer scoring now rejects duplicated customer IDs instead of multiplying rows and totals.
 - `rfm_table_customer()` now accepts either a date or a day-count recency column, with or without a `recency_days` column present (#111).
 - `rfm_table_customer_2()` now runs instead of failing because of a missing argument (#112).
 - `rfm_table_order()` and `rfm_table_customer()` now support different bin counts for recency, frequency and monetary; the threshold table is padded with `NA` to the longest dimension (#113). Segment definitions must fit the bin counts, as scores above the number of bins for a dimension never occur.

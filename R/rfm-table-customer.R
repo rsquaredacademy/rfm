@@ -4,6 +4,7 @@
 #'
 #' @param data A \code{data.frame} or \code{tibble}.
 #' @param customer_id Unique id of the customer.
+#'   Duplicated customer IDs are rejected; input must have one row per customer.
 #' @param n_transactions Number of transactions/orders.
 #' @param recency Days since last visit or date of last visit.
 #' @param total_revenue Total revenue from the customer.

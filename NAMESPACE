@@ -32,55 +32,68 @@ export(rfm_table_customer)
 export(rfm_table_customer_2)
 export(rfm_table_order)
 importFrom(RColorBrewer,brewer.pal)
-importFrom(dplyr,arrange)
-importFrom(dplyr,between)
-importFrom(dplyr,distinct)
-importFrom(dplyr,everything)
-importFrom(dplyr,group_by)
-importFrom(dplyr,join_by)
-importFrom(dplyr,left_join)
-importFrom(dplyr,mutate)
-importFrom(dplyr,n)
-importFrom(dplyr,pull)
-importFrom(dplyr,rename)
-importFrom(dplyr,select)
-importFrom(dplyr,summarise)
-importFrom(ggplot2,aes)
-importFrom(ggplot2,coord_flip)
-importFrom(ggplot2,element_blank)
-importFrom(ggplot2,element_line)
-importFrom(ggplot2,element_rect)
-importFrom(ggplot2,element_text)
-importFrom(ggplot2,facet_grid)
-importFrom(ggplot2,geom_bar)
-importFrom(ggplot2,geom_histogram)
-importFrom(ggplot2,geom_point)
-importFrom(ggplot2,geom_text)
-importFrom(ggplot2,geom_tile)
-importFrom(ggplot2,ggplot)
-importFrom(ggplot2,ggtitle)
-importFrom(ggplot2,labs)
-importFrom(ggplot2,position_dodge)
-importFrom(ggplot2,scale_fill_gradientn)
-importFrom(ggplot2,scale_fill_manual)
-importFrom(ggplot2,scale_y_continuous)
-importFrom(ggplot2,sec_axis)
-importFrom(ggplot2,theme)
-importFrom(ggplot2,xlab)
-importFrom(ggplot2,ylab)
-importFrom(ggplot2,ylim)
-importFrom(magrittr,"%<>%")
-importFrom(magrittr,"%>%")
-importFrom(magrittr,add)
-importFrom(magrittr,extract)
-importFrom(magrittr,multiply_by)
-importFrom(magrittr,set_names)
-importFrom(magrittr,use_series)
-importFrom(rlang,":=")
-importFrom(rlang,.data)
-importFrom(rlang,int)
-importFrom(stats,median)
-importFrom(stats,quantile)
-importFrom(stats,reorder)
-importFrom(stats,runif)
+importFrom(dplyr,
+  across,
+  all_of,
+  arrange,
+  between,
+  distinct,
+  everything,
+  group_by,
+  join_by,
+  left_join,
+  mutate,
+  n,
+  n_distinct,
+  pull,
+  rename,
+  select,
+  summarise
+)
+importFrom(ggplot2,
+  aes,
+  coord_flip,
+  element_blank,
+  element_line,
+  element_rect,
+  element_text,
+  facet_grid,
+  geom_bar,
+  geom_histogram,
+  geom_point,
+  geom_text,
+  geom_tile,
+  ggplot,
+  ggtitle,
+  labs,
+  position_dodge,
+  scale_fill_gradientn,
+  scale_fill_manual,
+  scale_y_continuous,
+  sec_axis,
+  theme,
+  xlab,
+  ylab,
+  ylim
+)
+importFrom(magrittr,
+  "%<>%",
+  "%>%",
+  add,
+  extract,
+  multiply_by,
+  set_names,
+  use_series
+)
+importFrom(rlang,
+  ":=",
+  .data,
+  int
+)
+importFrom(stats,
+  median,
+  quantile,
+  reorder,
+  runif
+)
 importFrom(utils,browseURL)

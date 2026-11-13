@@ -17,7 +17,9 @@ rfm_table_order(
 )
 }
 \arguments{
-\item{data}{A \code{data.frame} or \code{tibble}.}
+\item{data}{A \code{data.frame} or \code{tibble}.
+Extra columns are retained only when constant within each customer.
+Columns that vary within a customer are dropped with a message.}
 
 \item{customer_id}{Unique id of the customer.}
 

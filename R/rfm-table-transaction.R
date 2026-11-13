@@ -3,6 +3,8 @@
 #' Recency, frequency, monetary and RFM score.
 #'
 #' @param data A \code{data.frame} or \code{tibble}.
+#'   Extra columns are retained only when constant within each customer.
+#'   Columns that vary within a customer are dropped with a message.
 #' @param customer_id Unique id of the customer.
 #' @param order_date Date of the transaction.
 #' @param revenue Revenue from the customer.
@@ -64,8 +66,8 @@ rfm_table_order.default <- function(data = NULL, customer_id = NULL,
   other_cols <-
     data %>%
     select(!c({{ order_date }}, {{ revenue }})) %>%
-    distinct() %>%
-    rename(customer_id = {{ customer_id }})
+    rename(customer_id = {{ customer_id }}) %>%
+    rfm_customer_metadata()
 
   out <- rfm_prep_bins(
     result, recency_bins, frequency_bins, monetary_bins,
@@ -112,6 +114,10 @@ rfm_prep_table_data <- function(data, customer_id, order_date, revenue,
 #' @importFrom dplyr left_join join_by
 rfm_prep_bins <- function(result, recency_bins, frequency_bins, monetary_bins,
                           analysis_date, data) {
+  if (anyDuplicated(result$customer_id) || anyDuplicated(data$customer_id)) {
+    stop("Duplicated customer IDs: customer-level input must have one row per customer.",
+         call. = FALSE)
+  }
   result$recency_score <- NA
   result$frequency_score <- NA
   result$monetary_score <- NA
@@ -217,4 +223,20 @@ rfm_prep_bins <- function(result, recency_bins, frequency_bins, monetary_bins,
     monetary_bins = monetary_bins,
     threshold = threshold
   )
+}
+
+#' @importFrom dplyr across all_of n_distinct
+rfm_customer_metadata <- function(data) {
+  counts <- data %>%
+    group_by(customer_id) %>%
+    summarise(across(everything(), n_distinct), .groups = "drop")
+  varying <- names(counts)[vapply(counts, function(x) any(x > 1), logical(1))]
+  varying <- setdiff(varying, "customer_id")
+  if (length(varying) > 0) {
+    message("Dropping columns that vary within a customer: ",
+            paste(varying, collapse = ", "))
+  }
+  data %>%
+    select(-all_of(varying)) %>%
+    distinct()
 }

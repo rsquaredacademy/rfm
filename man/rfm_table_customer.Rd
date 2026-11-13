@@ -21,7 +21,8 @@ rfm_table_customer(
 \arguments{
 \item{data}{A \code{data.frame} or \code{tibble}.}
 
-\item{customer_id}{Unique id of the customer.}
+\item{customer_id}{Unique id of the customer.
+Duplicated customer IDs are rejected; input must have one row per customer.}
 
 \item{n_transactions}{Number of transactions/orders.}
 
