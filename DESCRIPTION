@@ -1,8 +1,8 @@
 Type: Package
 Package: rfm
 Title: Recency, Frequency and Monetary Value Analysis
-Version: 0.5.0
-Authors@R: person("Aravind", "Hebbali", email = "hebbali.aravind@gmail.com", role = c("aut", "cre"),
+Version: 0.5.1
+Authors@R: person("Aravind", "Hebbali", email = "aravindhebbali@rsquaredacademy.com", role = c("aut", "cre"),
     comment = c(ORCID = "0000-0001-9220-9669"))
 Description: Tools for RFM (recency, frequency and monetary value) analysis. 
     Generate RFM score from both transaction and customer level data. Visualize the
@@ -17,7 +17,7 @@ Depends:
     R (>= 3.2)
 Imports: 
     cli,
-    dplyr,
+    dplyr (>= 1.1.0),
     ggplot2,
     magrittr,
     RColorBrewer,
@@ -42,5 +42,5 @@ Suggests:
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.3.3
 Config/testthat/edition: 3
+Config/roxygen2/version: 8.1.1
