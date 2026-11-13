@@ -2,6 +2,7 @@
 
 ## Bug fixes
 
+- Segment summary charts now show negative revenue and average order value, including all-negative data, with room for their labels.
 - Interactive median and scatter hover text now names the selected metrics correctly.
 - Deprecated scatter and histogram wrappers now forward axis labels, titles and `print_plot` correctly and name their existing replacements.
 - Segment names such as `"1"` are now assigned correctly, preserving first-match precedence and assigning unmatched customers to `"Others"`.

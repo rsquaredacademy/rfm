@@ -85,7 +85,8 @@ rfm_gg_hist <- function(data, hist_bins, hist_color, plot_title, xaxis_label,
 rfm_gg_segment_summary <- function(data, metric, sort, ascending, flip,
                                    bar_color, plot_title, xaxis_label,
                                    yaxis_label, axis_label_size,
-                                   axis_label_angle, ylim_max, bar_labels) {
+                                   axis_label_angle, ylim_min, ylim_max,
+                                   bar_labels) {
 
   if (sort) {
     if (ascending) {
@@ -119,7 +120,7 @@ rfm_gg_segment_summary <- function(data, metric, sort, ascending, flip,
     ggtitle(plot_title) +
     xlab(xaxis_label) +
     ylab(yaxis_label) +
-    ylim(0, ylim_max)
+    ylim(ylim_min, ylim_max)
 
   if (flip) {
     p <-
@@ -131,8 +132,8 @@ rfm_gg_segment_summary <- function(data, metric, sort, ascending, flip,
       p <-
         p +
         geom_text(aes(label = sprintf("%1.0f", .data[[metric]]),
-                      y = .data[[metric]] * 1.025),
-                  hjust = 0,
+                      y = .data[[metric]] * 1.025,
+                      hjust = ifelse(.data[[metric]] < 0, 1, 0)),
                   size = 3)
     }
   } else {
@@ -145,9 +146,9 @@ rfm_gg_segment_summary <- function(data, metric, sort, ascending, flip,
       p <-
         p +
         geom_text(aes(label = sprintf("%1.0f", .data[[metric]]),
-                      y = .data[[metric]] * 1.025),
+                      y = .data[[metric]] * 1.025,
+                      vjust = ifelse(.data[[metric]] < 0, 1, 0)),
                   position = position_dodge(0.9),
-                  vjust = 0,
                   size = 3)
     }
   }

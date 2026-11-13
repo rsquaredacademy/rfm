@@ -249,11 +249,9 @@ rfm_plot_segment_summary <- function(x, metric = NULL,  sort = FALSE,
   }
 
   data <- x[c("segment", metric)]
-  ylim_max <-
-    data[[metric]] %>%
-    max() %>%
-    multiply_by(1.15) %>%
-    ceiling(.)
+  finite_values <- data[[metric]][is.finite(data[[metric]])]
+  ylim_min <- floor(min(0, finite_values) * 1.15)
+  ylim_max <- ceiling(max(0, finite_values) * 1.15)
 
   if (isTRUE(interactive)) {
     rfm_plotly_segment_summary(data, metric, flip, sort, ascending, bar_color,
@@ -267,7 +265,7 @@ rfm_plot_segment_summary <- function(x, metric = NULL,  sort = FALSE,
     p <- rfm_gg_segment_summary(data, metric, sort, ascending, flip,
                                 bar_color, plot_title, xaxis_label,
                                 yaxis_label, axis_label_size, axis_label_angle,
-                                ylim_max, bar_labels)
+                                ylim_min, ylim_max, bar_labels)
 
     if (animate) {
       p <- rfm_animate_plot(p)
