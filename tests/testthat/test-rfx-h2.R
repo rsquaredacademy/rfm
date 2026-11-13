@@ -55,3 +55,17 @@ test_that("grouped transaction metadata cannot restore dropped columns (H2)", {
   expect_equal(out$amount, c(30, 40))
   expect_equal(sum(out$transaction_count), 3L)
 })
+
+test_that("metadata variability is computed from columns rather than ID values (H2)", {
+  ad <- as.Date("2026-01-10")
+  x <- data.frame(id = c(NA, NA, "0"), date = ad - c(2, 1, 1),
+                  revenue = c(10, 20, 40), product = c("X", "Y", "X"),
+                  region = c("North", "North", "South"))
+  expect_message(out <- rfm_table_order(x, id, date, revenue, ad)$rfm, "product")
+  expect_equal(nrow(out), 2L)
+  expect_equal(sum(out$amount), 70)
+  expect_equal(sum(out$transaction_count), 3L)
+  expect_equal(out$amount[is.na(out$customer_id)], 30)
+  expect_equal(out$region[is.na(out$customer_id)], "North")
+  expect_false("product" %in% names(out))
+})

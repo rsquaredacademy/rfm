@@ -235,8 +235,8 @@ rfm_customer_metadata <- function(data) {
   counts <- data %>%
     group_by(customer_id) %>%
     summarise(across(everything(), n_distinct), .groups = "drop")
+  counts <- counts[setdiff(names(counts), "customer_id")]
   varying <- names(counts)[vapply(counts, function(x) any(x > 1), logical(1))]
-  varying <- setdiff(varying, "customer_id")
   if (length(varying) > 0) {
     message("Dropping columns that vary within a customer: ",
             paste(varying, collapse = ", "))
