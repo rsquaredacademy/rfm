@@ -55,11 +55,13 @@ rfm_heatmap_data <- function(rfm_table) {
   )
   grid <- grid[c("frequency_score", "recency_score")]
 
+  result$.observed <- TRUE
   result <-
     grid %>%
     left_join(as.data.frame(result), by = c("frequency_score", "recency_score"))
 
-  result$monetary[is.na(result$monetary)] <- 0
+  result$monetary[is.na(result$.observed)] <- 0
+  result$.observed <- NULL
   result <- group_by(result, frequency_score)
 
   return(result)

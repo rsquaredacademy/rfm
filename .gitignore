@@ -8,3 +8,4 @@ debug.log
 *.tar.gz
 Rplots.pdf
 roadmap/
+.rfx/

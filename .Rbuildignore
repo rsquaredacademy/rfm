@@ -24,3 +24,5 @@
 ^AGENTS\.md$
 ^tests/figs$
 ^tests/testthat/Rplots\.pdf$
+^\.rfx$
+^docs-dev$

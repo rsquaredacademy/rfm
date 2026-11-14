@@ -52,6 +52,14 @@ To calculate the RFM score we need the following info for each customer:
 - date of transaction/order
 - transaction/order amount
 
+Automatic bins use right-closed quantile intervals: values equal to a
+cut point stay in the lower interval, including ties. The first interval
+includes the minimum. Recency scores decrease as days increase;
+frequency and monetary scores increase with their values. Custom
+thresholds remain lower-inclusive. In 0.5.1, automatic cut points no
+longer add one, so scores are independent of currency units and
+customers near a cut point may change score or segment.
+
 ``` r
 # analysis date
 analysis_date <- as.Date('2006-12-31')
@@ -62,7 +70,7 @@ revenue, analysis_date)
 
 # rfm score
 rfm_result
-#> # A tibble: 995 × 11
+#> # A tibble: 995 x 11
 #>   customer_id    recency_days transaction_count amount recency_score
 #>   <chr>                 <dbl>             <int>  <int>         <int>
 #> 1 Abbey O'Reilly          205                 6    472             3
@@ -70,8 +78,8 @@ rfm_result
 #> 3 Aden Lesch              194                 4    405             3
 #> 4 Aden Murphy              98                 7    596             5
 #> 5 Admiral Senger          132                 5    448             4
-#> # ℹ 990 more rows
-#> # ℹ 6 more variables: frequency_score <int>, monetary_score <int>,
+#> # i 990 more rows
+#> # i 6 more variables: frequency_score <int>, monetary_score <int>,
 #> #   rfm_score <dbl>, first_name <chr>, last_name <chr>, email <chr>
 
 # segment names
@@ -93,16 +101,16 @@ recency_upper, frequency_lower, frequency_upper, monetary_lower,
 monetary_upper)
 
 segments
-#> # A tibble: 995 × 12
+#> # A tibble: 995 x 12
 #>   customer_id    segment         rfm_score transaction_count recency_days amount
 #>   <chr>          <chr>               <dbl>             <int>        <dbl>  <int>
-#> 1 Abbey O'Reilly Potential Loya…       343                 6          205    472
+#> 1 Abbey O'Reilly Potential Loya~       343                 6          205    472
 #> 2 Add Senger     New Customers         412                 3          140    340
 #> 3 Aden Lesch     Loyal Customers       323                 4          194    405
-#> 4 Aden Murphy    Potential Loya…       544                 7           98    596
-#> 5 Admiral Senger Potential Loya…       433                 5          132    448
-#> # ℹ 990 more rows
-#> # ℹ 6 more variables: recency_score <int>, frequency_score <int>,
+#> 4 Aden Murphy    Potential Loya~       544                 7           98    596
+#> 5 Admiral Senger Potential Loya~       433                 5          132    448
+#> # i 990 more rows
+#> # i 6 more variables: recency_score <int>, frequency_score <int>,
 #> #   monetary_score <int>, first_name <chr>, last_name <chr>, email <chr>
 ```
 
@@ -133,4 +141,7 @@ If you encounter a bug, please file a minimal reproducible example using
 [reprex](https://reprex.tidyverse.org/index.html) on github. For
 questions and clarifications, please ask on Stack Overflow.
 
-<div data-rsa-signup data-site="rfm.rsquaredacademy.com" data-privacy-url="https://www.rsquaredacademy.com/privacy-policy.html"></div>
+<div data-rsa-signup="" data-site="rfm.rsquaredacademy.com"
+data-privacy-url="https://www.rsquaredacademy.com/privacy-policy.html">
+
+</div>

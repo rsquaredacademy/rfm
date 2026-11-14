@@ -3,6 +3,8 @@
 #' Recency, frequency, monetary and RFM score.
 #'
 #' @param data A \code{data.frame} or \code{tibble}.
+#'   Extra columns are retained only when constant within each customer.
+#'   Columns that vary within a customer are dropped with a message.
 #' @param customer_id Unique id of the customer.
 #' @param order_date Date of the transaction.
 #' @param revenue Revenue from the customer.
@@ -11,6 +13,14 @@
 #' @param frequency_bins Number of bins for frequency or custom threshold.
 #' @param monetary_bins Number of bins for monetary or custom threshold.
 #' @param ... Other arguments.
+#'
+#' @details Automatic bins use unshifted sample quantiles. Intervals are
+#'   right-closed: `q[i - 1] < x <= q[i]`, with the minimum included in the
+#'   lowest interval and the maximum included in the highest interval. Values
+#'   tied at a boundary stay in the lower interval; repeated boundaries can
+#'   leave intervals empty. Frequency and monetary scores increase with the
+#'   interval number; recency scores decrease. Custom thresholds remain
+#'   lower-inclusive: a value equal to a threshold enters the next interval.
 #'
 #' @return \code{rfm_table_order} returns a list with the following:
 #'
@@ -49,13 +59,14 @@ rfm_table_order <- function(data = NULL, customer_id = NULL, order_date = NULL,
                             recency_bins = 5, frequency_bins = 5,
                             monetary_bins = 5, ...) UseMethod("rfm_table_order")
 
-#' @importFrom dplyr distinct
+#' @importFrom dplyr distinct ungroup
 #' @export
 #'
 rfm_table_order.default <- function(data = NULL, customer_id = NULL,
                                     order_date = NULL, revenue = NULL,
                                     analysis_date = NULL, recency_bins = 5,
                                     frequency_bins = 5, monetary_bins = 5, ...) {
+  data <- ungroup(data)
   result <- rfm_prep_table_data(
     data, {{ customer_id }}, {{ order_date }},
     {{ revenue }}, analysis_date
@@ -64,8 +75,8 @@ rfm_table_order.default <- function(data = NULL, customer_id = NULL,
   other_cols <-
     data %>%
     select(!c({{ order_date }}, {{ revenue }})) %>%
-    distinct() %>%
-    rename(customer_id = {{ customer_id }})
+    rename(customer_id = {{ customer_id }}) %>%
+    rfm_customer_metadata()
 
   out <- rfm_prep_bins(
     result, recency_bins, frequency_bins, monetary_bins,
@@ -112,6 +123,16 @@ rfm_prep_table_data <- function(data, customer_id, order_date, revenue,
 #' @importFrom dplyr left_join join_by
 rfm_prep_bins <- function(result, recency_bins, frequency_bins, monetary_bins,
                           analysis_date, data) {
+  dup_ids <- c(result$customer_id[duplicated(result$customer_id)],
+               data$customer_id[duplicated(data$customer_id)])
+  if (length(dup_ids) > 0) {
+    if (all(is.na(dup_ids))) {
+      stop("Customer IDs contain more than one missing value (NA); give each customer a non-missing ID.",
+           call. = FALSE)
+    }
+    stop("Duplicated customer IDs: customer-level input must have one row per customer.",
+         call. = FALSE)
+  }
   result$recency_score <- NA
   result$frequency_score <- NA
   result$monetary_score <- NA
@@ -125,52 +146,44 @@ rfm_prep_bins <- function(result, recency_bins, frequency_bins, monetary_bins,
   }
 
   lower_recency <- bins_lower(result, "recency_days", bins_recency)
-  upper_recency <- bins_upper(result, "recency_days", bins_recency)
+  upper_recency <- bins_upper(result, "recency_days", bins_recency,
+                              right = length(recency_bins) == 1)
 
   rscore_len <- length(rscore)
 
-  for (i in seq_len(rscore_len)) {
-    result$recency_score[result$recency_days >= lower_recency[i] &
-      result$recency_days < upper_recency[i]] <- rscore[i]
-  }
+  result$recency_score <- rscore_len + 1L - rfm_bin_score(
+    result$recency_days, bins_recency, right = length(recency_bins) == 1
+  )
 
 
   if (length(frequency_bins) == 1) {
-    fscore <- rev(seq_len(frequency_bins))
     bins_frequency <- bins(result, "transaction_count", frequency_bins)
   } else {
-    fscore <- rev(seq_len((length(frequency_bins) + 1)))
     bins_frequency <- frequency_bins
   }
 
   lower_frequency <- bins_lower(result, "transaction_count", bins_frequency)
-  upper_frequency <- bins_upper(result, "transaction_count", bins_frequency)
+  upper_frequency <- bins_upper(result, "transaction_count", bins_frequency,
+                                right = length(frequency_bins) == 1)
 
-  fscore_len <- length(fscore)
-
-  for (i in seq_len(fscore_len)) {
-    result$frequency_score[result$transaction_count >= lower_frequency[i] &
-      result$transaction_count < upper_frequency[i]] <- i
-  }
+  result$frequency_score <- rfm_bin_score(
+    result$transaction_count, bins_frequency, right = length(frequency_bins) == 1
+  )
 
   if (length(monetary_bins) == 1) {
-    mscore <- rev(seq_len(monetary_bins))
     bins_monetary <- bins(result, "amount", monetary_bins)
   } else {
-    mscore <- rev(seq_len((length(monetary_bins) + 1)))
     bins_monetary <- monetary_bins
   }
 
 
   lower_monetary <- bins_lower(result, "amount", bins_monetary)
-  upper_monetary <- bins_upper(result, "amount", bins_monetary)
+  upper_monetary <- bins_upper(result, "amount", bins_monetary,
+                               right = length(monetary_bins) == 1)
 
-  mscore_len <- length(mscore)
-
-  for (i in seq_len(mscore_len)) {
-    result$monetary_score[result$amount >= lower_monetary[i] &
-      result$amount < upper_monetary[i]] <- i
-  }
+  result$monetary_score <- rfm_bin_score(
+    result$amount, bins_monetary, right = length(monetary_bins) == 1
+  )
 
   result %<>%
     mutate(
@@ -217,4 +230,24 @@ rfm_prep_bins <- function(result, recency_bins, frequency_bins, monetary_bins,
     monetary_bins = monetary_bins,
     threshold = threshold
   )
+}
+
+rfm_bin_score <- function(x, thresholds, right) {
+  findInterval(x, thresholds, left.open = right) + 1L
+}
+
+#' @importFrom dplyr across all_of n_distinct
+rfm_customer_metadata <- function(data) {
+  counts <- data %>%
+    group_by(customer_id) %>%
+    summarise(across(everything(), n_distinct), .groups = "drop")
+  counts <- counts[setdiff(names(counts), "customer_id")]
+  varying <- names(counts)[vapply(counts, function(x) any(x > 1), logical(1))]
+  if (length(varying) > 0) {
+    message("Dropping columns that vary within a customer: ",
+            paste(varying, collapse = ", "))
+  }
+  data %>%
+    select(-all_of(varying)) %>%
+    distinct()
 }

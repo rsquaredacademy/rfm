@@ -1,7 +1,8 @@
 test_that('output from bins is as expected', {
 
   actual <- bins(mtcars, "mpg", 5)
-  expected <- c(16.20, 18.92, 22.00, 25.08)
+  # Type-7 quantiles: h = 1 + 31 * p; interpolate sorted mpg at each h.
+  expected <- c(15.20, 17.92, 21.00, 24.08)
   expect_equal(actual, expected)
 
 })
@@ -16,7 +17,7 @@ test_that('output from bins_lower is as expected', {
 test_that('output from bins_upper is as expected', {
 
   actual <- bins_upper(mtcars, "mpg", 5)
-  expected <- c(5.0, 34.9)
+  expected <- c(5.0, 33.9)
   expect_equal(actual, expected)
 })
 

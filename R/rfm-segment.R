@@ -52,7 +52,7 @@ rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
   segment <- NULL
 
   rfm_score_table <- data$rfm
-  rfm_score_table$segment <- 1
+  rfm_score_table$segment <- NA_character_
 
   n_segments <- length(segment_names)
 
@@ -64,11 +64,10 @@ rfm_segment <- function(data, segment_names = NULL, recency_lower = NULL,
                                                      frequency_upper[i])) &
         (rfm_score_table$monetary_score %>% between(monetary_lower[i],
                                                     monetary_upper[i])) &
-        !rfm_score_table$segment %in% segment_names)] <- segment_names[i]
+        is.na(rfm_score_table$segment)) %in% TRUE] <- segment_names[i]
   }
 
   rfm_score_table$segment[is.na(rfm_score_table$segment)] <- "Others"
-  rfm_score_table$segment[rfm_score_table$segment == 1]   <- "Others"
 
   rfm_score_table[c("customer_id", "segment", "rfm_score", "transaction_count",
                     "recency_days", "amount", "recency_score",
@@ -131,7 +130,7 @@ rfm_segment_summary <- function(segments) {
 
 }
 
-#' Visulaize segment summary
+#' Visualize segment summary
 #'
 #' Generates plots for customers, orders, revenue and average order value for
 #'   each segment.
@@ -250,11 +249,9 @@ rfm_plot_segment_summary <- function(x, metric = NULL,  sort = FALSE,
   }
 
   data <- x[c("segment", metric)]
-  ylim_max <-
-    data[[metric]] %>%
-    max() %>%
-    multiply_by(1.15) %>%
-    ceiling(.)
+  finite_values <- data[[metric]][is.finite(data[[metric]])]
+  ylim_min <- floor(min(0, finite_values) * 1.15)
+  ylim_max <- ceiling(max(0, finite_values) * 1.15)
 
   if (isTRUE(interactive)) {
     rfm_plotly_segment_summary(data, metric, flip, sort, ascending, bar_color,
@@ -268,7 +265,7 @@ rfm_plot_segment_summary <- function(x, metric = NULL,  sort = FALSE,
     p <- rfm_gg_segment_summary(data, metric, sort, ascending, flip,
                                 bar_color, plot_title, xaxis_label,
                                 yaxis_label, axis_label_size, axis_label_angle,
-                                ylim_max, bar_labels)
+                                ylim_min, ylim_max, bar_labels)
 
     if (animate) {
       p <- rfm_animate_plot(p)

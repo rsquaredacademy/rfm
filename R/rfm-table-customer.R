@@ -4,6 +4,7 @@
 #'
 #' @param data A \code{data.frame} or \code{tibble}.
 #' @param customer_id Unique id of the customer.
+#'   Duplicated customer IDs are rejected; input must have one row per customer.
 #' @param n_transactions Number of transactions/orders.
 #' @param recency Days since last visit or date of last visit.
 #' @param total_revenue Total revenue from the customer.
@@ -13,7 +14,16 @@
 #' @param monetary_bins Number of bins for monetary or custom threshold.
 #' @param ... Other arguments.
 #'
-#' @return \code{rfm_table_order} returns a list with the following:
+#' @details Automatic bins use unshifted sample quantiles. Intervals are
+#'   right-closed: `q[i - 1] < x <= q[i]`, with the minimum included in the
+#'   lowest interval and the maximum included in the highest interval. Values
+#'   tied at a boundary stay in the lower interval; repeated boundaries can
+#'   leave intervals empty. Frequency and monetary scores increase with the
+#'   interval number; recency scores decrease. Custom thresholds remain
+#'   lower-inclusive: a value equal to a threshold enters the next interval.
+#'   This rule also applies to the deprecated `rfm_table_customer_2()`.
+#'
+#' @return \code{rfm_table_customer} returns a list with the following:
 #'
 #' \item{rfm}{RFM table.}
 #' \item{analysis_date}{Date of analysis.}
@@ -61,6 +71,7 @@ rfm_table_customer.default <- function(data = NULL, customer_id = NULL,
                                        recency_bins = 5, frequency_bins = 5,
                                        monetary_bins = 5, ...) {
 
+  data <- ungroup(data)
   col_names <- c("customer_id", "recency_days", "transaction_count", "amount")
 
   is_days <-

@@ -2,6 +2,17 @@
 
 ## Bug fixes
 
+- Corrected the customer-scoring return documentation and segment-summary plot title documentation.
+- The package now requires dplyr 1.1.0 or later, matching the imported join API.
+- Financial and fractional median plot labels now retain two decimal places instead of rounding to whole numbers; customer and order counts keep integer labels.
+- Segment summary charts now show negative revenue and average order value, including all-negative data, with room for their labels.
+- Interactive median and scatter hover text now names the selected metrics correctly.
+- Deprecated scatter and histogram wrappers now forward axis labels, titles and `print_plot` correctly and name their existing replacements.
+- Segment names such as `"1"` are now assigned correctly, preserving first-match precedence and assigning unmatched customers to `"Others"`.
+- Heatmaps now preserve an observed missing monetary mean as `NA`, filling only absent score combinations with zero.
+- Automatic RFM bins now use right-closed quantile intervals without adding one to cut points, so currency conversions preserve monetary scores. Customers near a quantile boundary can receive different recency, frequency or monetary scores and segments; custom thresholds keep their lower-inclusive rule.
+- Transaction scoring now keeps only metadata that is constant within each customer and names dropped columns in a message, preserving customer totals.
+- Customer scoring now rejects duplicated customer IDs instead of multiplying rows and totals.
 - `rfm_table_customer()` now accepts either a date or a day-count recency column, with or without a `recency_days` column present (#111).
 - `rfm_table_customer_2()` now runs instead of failing because of a missing argument (#112).
 - `rfm_table_order()` and `rfm_table_customer()` now support different bin counts for recency, frequency and monetary; the threshold table is padded with `NA` to the longest dimension (#113). Segment definitions must fit the bin counts, as scores above the number of bins for a dimension never occur.

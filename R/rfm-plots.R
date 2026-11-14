@@ -221,11 +221,11 @@ rfm_plot_histogram <- function(rfm_table, metric = "recency",
 rfm_histograms <- function(rfm_table, hist_bins = 9, hist_color = "#0f1a34",
                            plot_title = 'RFM Histograms', xaxis_title = ' ',
                            yaxis_title = 'Count', print_plot = TRUE) {
-  .Deprecated("rfm_plot_histograms()")
+  .Deprecated("rfm_plot_histogram()")
   rfm_plot_histogram(rfm_table, metric = "recency",
                      hist_bins = hist_bins, hist_color = hist_color,
                      plot_title = plot_title, xaxis_label = xaxis_title,
-                     yaxis_label = xaxis_title, interactive = FALSE,
+                     yaxis_label = yaxis_title, interactive = FALSE,
                      print_plot = print_plot)
 }
 
@@ -489,9 +489,10 @@ rfm_rm_plot <- function(segments, xaxis_label = NULL,
                         yaxis_label = NULL, plot_title = NULL,
                         print_plot = TRUE) {
 
-  .Deprecated("rfm_plot_scatter")
-  rfm_plot_segment_scatter(segments, "monetary", "recency", xaxis_label,
-                           yaxis_label, plot_title, print_plot)
+  .Deprecated("rfm_plot_segment_scatter()")
+  rfm_plot_segment_scatter(segments = segments, x = "monetary", y = "recency",
+                           xaxis_label = xaxis_label, yaxis_label = yaxis_label,
+                           plot_title = plot_title, print_plot = print_plot)
 
 }
 
@@ -502,9 +503,10 @@ rfm_fm_plot <- function(segments, xaxis_label = NULL,
                         yaxis_label = NULL, plot_title = NULL,
                         print_plot = TRUE) {
 
-  .Deprecated("rfm_plot_scatter")
-  rfm_plot_segment_scatter(segments, "monetary", "frequency", xaxis_label,
-                           yaxis_label, plot_title, print_plot)
+  .Deprecated("rfm_plot_segment_scatter()")
+  rfm_plot_segment_scatter(segments = segments, x = "monetary", y = "frequency",
+                           xaxis_label = xaxis_label, yaxis_label = yaxis_label,
+                           plot_title = plot_title, print_plot = print_plot)
 
 }
 
@@ -515,8 +517,9 @@ rfm_rf_plot <- function(segments, xaxis_label = NULL,
                         yaxis_label = NULL, plot_title = NULL,
                         print_plot = TRUE) {
 
-  .Deprecated("rfm_plot_scatter")
-  rfm_plot_segment_scatter(segments, "frequency", "recency", xaxis_label,
-                           yaxis_label, plot_title, print_plot)
+  .Deprecated("rfm_plot_segment_scatter()")
+  rfm_plot_segment_scatter(segments = segments, x = "frequency", y = "recency",
+                           xaxis_label = xaxis_label, yaxis_label = yaxis_label,
+                           plot_title = plot_title, print_plot = print_plot)
 
 }

@@ -1,4 +1,4 @@
-test_that('first 10 rows of output from rfm_segment are as expected', {
+test_that('Champions summary follows the right-closed automatic scores', {
 
   analysis_date <- as.Date("2006-12-31")
 
@@ -37,8 +37,9 @@ test_that('first 10 rows of output from rfm_segment are as expected', {
 
   segments <- rfm_segment_summary(segment)
 
-  expect_equal(segments[segments$segment == "Champions",][[2]], 158)
-  expect_equal(segments[segments$segment == "Champions",][[3]], 1234)
-  expect_equal(segments[segments$segment == "Champions",][[4]],  120178)
+  expect_equal(segments[segments$segment == "Champions",][[2]], 159)
+  expect_equal(segments[segments$segment == "Champions",][[3]], 1240)
+  expect_equal(segments[segments$segment == "Champions",][[4]], 120684)
+  expect_equal(segments[segments$segment == "Champions",]$aov, 97.33)
 
 })

@@ -57,6 +57,13 @@ To calculate the RFM score we need the following info for each customer:
 - date of transaction/order
 - transaction/order amount
 
+Automatic bins use right-closed quantile intervals: values equal to a cut point
+stay in the lower interval, including ties. The first interval includes the
+minimum. Recency scores decrease as days increase; frequency and monetary
+scores increase with their values. Custom thresholds remain lower-inclusive.
+In 0.5.1, automatic cut points no longer add one, so scores are independent of
+currency units and customers near a cut point may change score or segment.
+
 ```{r rfm_table_order}
 # analysis date
 analysis_date <- as.Date('2006-12-31')

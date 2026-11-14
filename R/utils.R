@@ -2,13 +2,12 @@
 #' @importFrom stats median runif quantile reorder
 bins <- function(data, value, n_bins) {
 
-  length_out <- n_bins + 1
-
+  # exact interior probabilities k / n_bins; seq(0, 1, length.out = ) can land
+  # one ulp below k / n_bins (e.g. 5/6), which moves a value lying exactly on a
+  # cut point into the upper bin
   data[[value]] %>%
-    quantile(probs = seq(0, 1, length.out = length_out)) %>%
-    unname() %>%
-    extract(c(-1, -length_out)) %>%
-    add(1)
+    quantile(probs = seq_len(n_bins - 1) / n_bins) %>%
+    unname()
 
 }
 
@@ -20,12 +19,15 @@ bins_lower <- function(data, value, bins) {
 
 }
 
-bins_upper <- function(data, value, bins) {
+bins_upper <- function(data, value, bins, right = TRUE) {
 
   data_max <-
     data[[value]] %>%
-    max() %>%
-    add(1)
+    max()
+
+  if (!right) {
+    data_max <- data_max + 1
+  }
 
   c(bins, data_max)
 }
