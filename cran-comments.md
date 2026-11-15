@@ -10,11 +10,16 @@ This is a bug-fix release (v0.5.1).
 
 ## Test environments
 
-* local Windows 11 x64 (build 26300), R 4.6.1 (ucrt), 2026-11-13
-* `R CMD build` from a clean `git archive` export, including vignettes
-* `R CMD check --as-cran --no-manual` on the resulting rfm_0.5.1.tar.gz
-* Local tests with NOT_CRAN=true: 890 passes, 0 failures, 0 warnings, 0 skips
-* win-builder (R-devel): not run in this fix round
+* local: Windows 11 x64 build 26300, R 4.6.1 (ucrt), Rtools45
+* win-builder: R-devel and R-release
+* R-hub: linux, windows, macos, macos-arm64 (R-devel)
+* GitHub Actions: ubuntu-latest (devel, release, oldrel-1), windows-latest
+  (release), macos-latest (release)
+* Ubuntu 26.04, R 4.5.2
+
+The checks were run on a tarball built from a clean `git archive` export
+(`R CMD build`, then `R CMD check --as-cran`). Local tests with NOT_CRAN=true:
+890 passes, 0 failures, 0 warnings, 0 skips.
 
 ## R CMD check results
 
@@ -26,4 +31,8 @@ This is a bug-fix release (v0.5.1).
 
 ## Reverse dependencies
 
-Reverse-dependency checks were not run in this fix round.
+We checked 1 reverse dependency (xplorerr), comparing R CMD check results
+across the CRAN and development versions of rfm.
+
+* We saw 0 new problems
+* We failed to check 0 packages
