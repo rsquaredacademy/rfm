@@ -17,7 +17,9 @@ rfm_table_order(
 )
 }
 \arguments{
-\item{data}{A \code{data.frame} or \code{tibble}.}
+\item{data}{A \code{data.frame} or \code{tibble}.
+Extra columns are retained only when constant within each customer.
+Columns that vary within a customer are dropped with a message.}
 
 \item{customer_id}{Unique id of the customer.}
 
@@ -47,6 +49,15 @@ rfm_table_order(
 }
 \description{
 Recency, frequency, monetary and RFM score.
+}
+\details{
+Automatic bins use unshifted sample quantiles. Intervals are
+  right-closed: `q[i - 1] < x <= q[i]`, with the minimum included in the
+  lowest interval and the maximum included in the highest interval. Values
+  tied at a boundary stay in the lower interval; repeated boundaries can
+  leave intervals empty. Frequency and monetary scores increase with the
+  interval number; recency scores decrease. Custom thresholds remain
+  lower-inclusive: a value equal to a threshold enters the next interval.
 }
 \examples{
 analysis_date <- as.Date("2006-12-31")

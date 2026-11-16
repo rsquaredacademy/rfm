@@ -112,3 +112,152 @@ test_that("output from rfm_table_customer is as expected when using dates and
 
   expect_equal(actual, expected)
 })
+
+test_that("rfm_table_customer handles date recency without recency_days (#111)", {
+
+  analysis_date <- as.Date("2007-01-01")
+  customer_data <- rfm_data_customer[
+    , c("customer_id", "revenue", "most_recent_visit", "number_of_orders")
+  ]
+
+  without_days <- rfm_table_customer(
+    customer_data, customer_id, number_of_orders, most_recent_visit,
+    revenue, analysis_date
+  )
+  with_days <- rfm_table_customer(
+    rfm_data_customer, customer_id, number_of_orders, most_recent_visit,
+    revenue, analysis_date
+  )
+
+  score_cols <- c(
+    "customer_id", "recency_score", "frequency_score", "monetary_score",
+    "rfm_score", "transaction_count", "amount"
+  )
+
+  expect_true("recency_days" %in% names(without_days$rfm))
+  expect_equal(without_days$rfm[score_cols], with_days$rfm[score_cols])
+})
+
+test_that("date recency keeps the 0.5.0 columns and works downstream (#111)", {
+
+  analysis_date <- as.Date("2007-01-01")
+  customer_data <- rfm_data_customer[
+    , c("customer_id", "revenue", "most_recent_visit", "number_of_orders")
+  ]
+
+  without_days <- rfm_table_customer(
+    customer_data, customer_id, number_of_orders, most_recent_visit,
+    revenue, analysis_date
+  )
+  with_days <- rfm_table_customer(
+    rfm_data_customer, customer_id, number_of_orders, most_recent_visit,
+    revenue, analysis_date
+  )
+
+  core_names <- c(
+    "customer_id", "recency_days", "transaction_count", "amount",
+    "recency_score", "frequency_score", "monetary_score", "rfm_score"
+  )
+
+  expect_equal(names(without_days$rfm), c(core_names, "most_recent_visit"))
+  expect_equal(
+    names(with_days$rfm),
+    c(core_names, "most_recent_visit", "first_name", "last_name", "email")
+  )
+
+  for (tab in list(without_days, with_days)) {
+    segments <- rfm_segment(tab, "All", 1, 5, 1, 5, 1, 5)
+    expect_equal(nrow(segments), nrow(tab$rfm))
+    expect_s3_class(rfm_plot_histogram(tab, print_plot = FALSE), "ggplot")
+  }
+})
+
+test_that("rfm_table_customer_2 works and warns about deprecation (#112)", {
+
+  analysis_date <- as.Date("2007-01-01")
+
+  expect_warning(
+    result <- rfm_table_customer_2(
+      rfm_data_customer, customer_id, number_of_orders, most_recent_visit,
+      revenue, analysis_date
+    ),
+    "deprecated"
+  )
+
+  expect_s3_class(result, "rfm_table_customer")
+  expect_equal(sum(result$rfm$transaction_count), 393223)
+  expect_equal(nrow(result$rfm), nrow(rfm_data_customer))
+  expect_false(any(grepl("\\.(x|y)$", names(result$rfm))))
+})
+
+test_that("rfm_table_order supports unequal bin counts (#113)", {
+
+  analysis_date <- as.Date("2006-12-31")
+
+  unequal <- rfm_table_order(
+    rfm_data_orders, customer_id, order_date, revenue, analysis_date,
+    recency_bins = 5, frequency_bins = 4, monetary_bins = 3
+  )
+
+  expect_setequal(unequal$rfm$recency_score, 1:5)
+  expect_setequal(unequal$rfm$frequency_score, 1:4)
+  expect_setequal(unequal$rfm$monetary_score, 1:3)
+
+  expect_equal(nrow(unequal$threshold), 5)
+  expect_true(all(is.na(unequal$threshold[5, c(
+    "frequency_lower", "frequency_upper", "monetary_lower", "monetary_upper"
+  )])))
+
+  recency_ref <- rfm_table_order(
+    rfm_data_orders, customer_id, order_date, revenue, analysis_date,
+    recency_bins = 5, frequency_bins = 5, monetary_bins = 5
+  )
+  frequency_ref <- rfm_table_order(
+    rfm_data_orders, customer_id, order_date, revenue, analysis_date,
+    recency_bins = 4, frequency_bins = 4, monetary_bins = 4
+  )
+  monetary_ref <- rfm_table_order(
+    rfm_data_orders, customer_id, order_date, revenue, analysis_date,
+    recency_bins = 3, frequency_bins = 3, monetary_bins = 3
+  )
+
+  expect_equal(unequal$rfm$recency_score, recency_ref$rfm$recency_score)
+  expect_equal(unequal$rfm$frequency_score, frequency_ref$rfm$frequency_score)
+  expect_equal(unequal$rfm$monetary_score, monetary_ref$rfm$monetary_score)
+})
+
+test_that("rfm_table_customer supports unequal bin counts (#113)", {
+
+  analysis_date <- as.Date("2007-01-01")
+
+  unequal <- rfm_table_customer(
+    rfm_data_customer, customer_id, number_of_orders, recency_days, revenue,
+    analysis_date, recency_bins = 5, frequency_bins = 4, monetary_bins = 3
+  )
+
+  expect_setequal(unequal$rfm$recency_score, 1:5)
+  expect_setequal(unequal$rfm$frequency_score, 1:4)
+  expect_setequal(unequal$rfm$monetary_score, 1:3)
+
+  expect_equal(nrow(unequal$threshold), 5)
+  expect_true(all(is.na(unequal$threshold[5, c(
+    "frequency_lower", "frequency_upper", "monetary_lower", "monetary_upper"
+  )])))
+
+  recency_ref <- rfm_table_customer(
+    rfm_data_customer, customer_id, number_of_orders, recency_days, revenue,
+    analysis_date, recency_bins = 5, frequency_bins = 5, monetary_bins = 5
+  )
+  frequency_ref <- rfm_table_customer(
+    rfm_data_customer, customer_id, number_of_orders, recency_days, revenue,
+    analysis_date, recency_bins = 4, frequency_bins = 4, monetary_bins = 4
+  )
+  monetary_ref <- rfm_table_customer(
+    rfm_data_customer, customer_id, number_of_orders, recency_days, revenue,
+    analysis_date, recency_bins = 3, frequency_bins = 3, monetary_bins = 3
+  )
+
+  expect_equal(unequal$rfm$recency_score, recency_ref$rfm$recency_score)
+  expect_equal(unequal$rfm$frequency_score, frequency_ref$rfm$frequency_score)
+  expect_equal(unequal$rfm$monetary_score, monetary_ref$rfm$monetary_score)
+})

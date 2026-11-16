@@ -217,7 +217,7 @@ test_that('interactive segment plot', {
 
   p <- rfm_plot_segment(my_segments, interactive = TRUE)
   expect_equal(p$x$attrs[[1]]$type, "treemap")
-  expect_equal(p$x$attrs[[1]]$values, c(50, 86, 158, 111, 278, 35, 48, 229))
+  expect_equal(p$x$attrs[[1]]$values, c(50, 86, 159, 111, 277, 35, 48, 229))
   expect_equal(p$x$attrs[[1]]$labels,
                c("About To Sleep", "At Risk", "Champions", "Lost",
                "Loyal Customers", "Need Attention", "Others",

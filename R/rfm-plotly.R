@@ -282,8 +282,11 @@ rfm_plotly_segment_scatter <- function(segments, x_data = NULL, y_data = NULL,
     legend_title <- legend_title
   }
 
-  text <- paste0("Amount: ", segments[[x_data]], "\nRecency: ",
-                 segments[[y_data]], "\nSegment: ", segments$segment)
+  metric_labels <- c(amount = "Monetary Value", recency_days = "Recency",
+                     transaction_count = "Frequency")
+  text <- paste0(metric_labels[x_data], ": ", segments[[x_data]], "\n",
+                 metric_labels[y_data], ": ", segments[[y_data]],
+                 "\nSegment: ", segments$segment)
 
 
 
@@ -323,7 +326,7 @@ rfm_plotly_median <- function(data, bar_color = NULL, sort = FALSE,
   )
 
   text <- paste0("Segment: ", data[[cnames[1]]],
-                 " \nMedian Recency: ", data[[cnames[2]]])
+                 " \n", ycol, ": ", data[[cnames[2]]])
 
   if (is.null(yaxis_label)) {
     yaxis_label <- ycol

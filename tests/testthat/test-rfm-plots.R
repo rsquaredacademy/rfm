@@ -21,6 +21,21 @@ test_that('output from rfm_plot_heatmap is as expected', {
 
 })
 
+test_that('rfm_plot_heatmap works with custom thresholds (#114)', {
+
+  analysis_date <- as.Date('2006-12-31')
+  rfm_result <- rfm_table_order(
+    rfm_data_orders, customer_id, order_date, revenue, analysis_date,
+    recency_bins = c(115, 181, 297, 482),
+    frequency_bins = c(4, 5, 6, 8),
+    monetary_bins = c(256, 382, 506, 666)
+  )
+
+  p <- rfm_plot_heatmap(rfm_result, print_plot = FALSE)
+
+  expect_s3_class(p, "ggplot")
+})
+
 test_that('output from rfm_plot_histograms is as expected', {
 
   skip_on_cran()

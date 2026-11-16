@@ -2,13 +2,12 @@
 #' @importFrom stats median runif quantile reorder
 bins <- function(data, value, n_bins) {
 
-  length_out <- n_bins + 1
-
+  # exact interior probabilities k / n_bins; seq(0, 1, length.out = ) can land
+  # one ulp below k / n_bins (e.g. 5/6), which moves a value lying exactly on a
+  # cut point into the upper bin
   data[[value]] %>%
-    quantile(probs = seq(0, 1, length.out = length_out)) %>%
-    unname() %>%
-    extract(c(-1, -length_out)) %>%
-    add(1)
+    quantile(probs = seq_len(n_bins - 1) / n_bins) %>%
+    unname()
 
 }
 
@@ -20,12 +19,15 @@ bins_lower <- function(data, value, bins) {
 
 }
 
-bins_upper <- function(data, value, bins) {
+bins_upper <- function(data, value, bins, right = TRUE) {
 
   data_max <-
     data[[value]] %>%
-    max() %>%
-    add(1)
+    max()
+
+  if (!right) {
+    data_max <- data_max + 1
+  }
 
   c(bins, data_max)
 }
@@ -41,12 +43,19 @@ check_levels <- function(rfm_heatmap_data, column) {
 
 }
 
-modify_rfm <- function(rfm_heatmap_data, n_bins, check_levels) {
+modify_rfm <- function(rfm_heatmap_data, n_bins, check_levels,
+                       column = "frequency_score", other_bins = n_bins) {
 
   missing           <- !(seq_len(n_bins) %in% check_levels)
   missing2          <- seq_len(n_bins)[missing]
-  extra_data        <- expand.grid(missing2, seq_len(n_bins), 0)
-  names(extra_data) <- names(rfm_heatmap_data)
+  other_column      <- setdiff(names(rfm_heatmap_data), c(column, "monetary"))[1]
+  extra_data        <- data.frame(
+    new_values   = rep(missing2, each = other_bins),
+    other_values = rep(seq_len(other_bins), times = length(missing2)),
+    monetary     = rep(0, length(missing2) * other_bins)
+  )
+  names(extra_data) <- c(column, other_column, "monetary")
+  extra_data        <- extra_data[names(rfm_heatmap_data)]
   rbind(rfm_heatmap_data, extra_data)
 
 }

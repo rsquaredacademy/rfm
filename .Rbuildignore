@@ -8,12 +8,12 @@
 ^codecov\.yml$
 ^appveyor\.yml$
 ^CONDUCT\.md$
-^CONTRIBUTING\.md$
 ^ISSUE_TEMPLATE\.md$
 ^SUPPORT\.md$
 ^hex_rfm\.png$
 ^_pkgdown\.yml$
 ^docs$
+^pkgdown$
 ^debug\.log$
 ^\.github$
 ^revdep$
@@ -24,3 +24,6 @@
 ^AGENTS\.md$
 ^tests/figs$
 ^tests/testthat/Rplots\.pdf$
+^\.rfx$
+^docs-dev$
+^\.hz-

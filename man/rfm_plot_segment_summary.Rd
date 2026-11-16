@@ -2,7 +2,7 @@
 % Please edit documentation in R/rfm-segment.R
 \name{rfm_plot_segment_summary}
 \alias{rfm_plot_segment_summary}
-\title{Visulaize segment summary}
+\title{Visualize segment summary}
 \usage{
 rfm_plot_segment_summary(
   x,
