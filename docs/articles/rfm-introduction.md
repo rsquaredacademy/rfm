@@ -2,14 +2,6 @@
 
 ## Introduction
 
-    ## Warning: package 'dplyr' was built under R version 4.5.3
-
-    ## Warning: package 'rlang' was built under R version 4.5.3
-
-    ## Warning: package 'knitr' was built under R version 4.5.3
-
-    ## Warning: package 'kableExtra' was built under R version 4.5.3
-
 This article provides a brief introduction to RFM analysis and customer
 segmentation. If you are looking for a detailed guide, check out our
 free [online
@@ -46,6 +38,7 @@ transactions of a customer. `rfm` package includes two sample data sets:
 
 - `rfm_data_orders`
 
+\
 [`head`](https://rdrr.io/r/utils/head.html)`(``rfm_data_orders``)`
 
     ##        customer_id order_date revenue first_name last_name
@@ -65,6 +58,7 @@ transactions of a customer. `rfm` package includes two sample data sets:
 
 - `rfm_data_customer`
 
+\
 [`head`](https://rdrr.io/r/utils/head.html)`(``rfm_data_customer``)`
 
     ##   customer_id revenue most_recent_visit number_of_orders recency_days
@@ -87,6 +81,14 @@ customer and transaction level data. **Remember, the data sets are
 different and the final results will not match.**
 
 ## RFM Score
+
+Automatic bins use right-closed quantile intervals: values equal to a
+cut point stay in the lower interval, including ties. The first interval
+includes the minimum. Recency scores decrease as days increase;
+frequency and monetary scores increase with their values. Custom
+thresholds remain lower-inclusive. Since 0.5.1, automatic cut points no
+longer add one, making monetary scores independent of currency units;
+customers near a cut point may change score or segment.
 
 So how is the RFM score computed for each customer? The below steps
 explain the process:
@@ -117,7 +119,10 @@ is time to put it into practice. Use
 to generate the score for each customer from the sample data set
 `rfm_data_orders`.
 
-`analysis_date`` ``<-`` `[`as.Date`](https://rdrr.io/r/base/as.Date.html)`(``"2006-12-31"``)`` ``rfm_result`` ``<-`` `[`rfm_table_order`](https://rfm.rsquaredacademy.com/reference/rfm_table_order.md)`(``rfm_data_orders``, ``customer_id``, ``order_date``, ``revenue``, ``analysis_date``)`` ``rfm_result`
+\
+`analysis_date`` ``<-`` `[`as.Date`](https://rdrr.io/r/base/as.Date.html)`(``"2006-12-31"``)`\
+`rfm_result`` ``<-`` `[`rfm_table_order`](https://rfm.rsquaredacademy.com/reference/rfm_table_order.md)`(``rfm_data_orders``, ``customer_id``, ``order_date``, ``revenue``, ``analysis_date``)`\
+`rfm_result`
 
 | customer_id | recency_days | transaction_count | amount | rfm_score | recency_score | frequency_score | monetary_score | first_name | last_name | email |
 |:---|---:|---:|---:|---:|---:|---:|---:|:---|:---|:---|
@@ -183,20 +188,21 @@ of customers, orders and average order value in each of them.
 
 #### Segment Summary
 
+\
 [`rfm_segment_summary`](https://rfm.rsquaredacademy.com/reference/rfm_segment_summary.md)`(``segments``)`
 
     ## # A tibble: 10 × 5
     ##    segment            customers orders revenue   aov
     ##    <chr>                  <int>  <int>   <int> <dbl>
-    ##  1 About To Sleep           102    283   23449  82.9
+    ##  1 About To Sleep           101    279   23194  83.1
     ##  2 At Risk                   28    216   22227 103. 
-    ##  3 Can't Lose Them           47    274   32446 118. 
+    ##  3 Can't Lose Them           48    281   33144 118. 
     ##  4 Champions                 35    316   31646 100. 
     ##  5 Lost                     148    393   35324  89.9
-    ##  6 Loyal Customers          170    799   76562  95.8
+    ##  6 Loyal Customers          171    803   76817  95.7
     ##  7 Need Attention            10     57    4562  80.0
     ##  8 New Customers            104    329   28837  87.6
-    ##  9 Potential Loyalist       342   2211  204856  92.6
+    ##  9 Potential Loyalist       341   2204  204158  92.6
     ## 10 Promising                  9     28    4249 152.
 
 `rfm` package offers visualization tools to validate the segments
@@ -204,18 +210,27 @@ generated from the RFM score. Below are a few of them:
 
 #### Segmentation Plot
 
-`segments`` ``%>%`` `` `[`rfm_segment_summary`](https://rfm.rsquaredacademy.com/reference/rfm_segment_summary.md)`(``)`` ``%>%`` `` `[`rfm_plot_segment`](https://rfm.rsquaredacademy.com/reference/rfm_plot_segment.md)`(``)`
+\
+`segments`` ``%>%`\
+`  `[`rfm_segment_summary`](https://rfm.rsquaredacademy.com/reference/rfm_segment_summary.md)`(``)`` ``%>%`\
+`  `[`rfm_plot_segment`](https://rfm.rsquaredacademy.com/reference/rfm_plot_segment.md)`(``)`
 
 ![](rfm-introduction_files/figure-html/segment_plot-1.png)
 
 #### Segment Summary Plot
 
-`segments`` ``%>%`` `` `[`rfm_segment_summary`](https://rfm.rsquaredacademy.com/reference/rfm_segment_summary.md)`(``)`` ``%>%`` `` `[`rfm_plot_segment_summary`](https://rfm.rsquaredacademy.com/reference/rfm_plot_segment_summary.md)`(``)`
+\
+`segments`` ``%>%`\
+`  `[`rfm_segment_summary`](https://rfm.rsquaredacademy.com/reference/rfm_segment_summary.md)`(``)`` ``%>%`\
+`  `[`rfm_plot_segment_summary`](https://rfm.rsquaredacademy.com/reference/rfm_plot_segment_summary.md)`(``)`
 
 ![](rfm-introduction_files/figure-html/segment_sumamry_plot-1.png)
 
 #### Revenue Distribution
 
-`segments`` ``%>%`` `` `[`rfm_segment_summary`](https://rfm.rsquaredacademy.com/reference/rfm_segment_summary.md)`(``)`` ``%>%`` `` `[`rfm_plot_revenue_dist`](https://rfm.rsquaredacademy.com/reference/rfm_plot_revenue_dist.md)`(``)`
+\
+`segments`` ``%>%`\
+`  `[`rfm_segment_summary`](https://rfm.rsquaredacademy.com/reference/rfm_segment_summary.md)`(``)`` ``%>%`\
+`  `[`rfm_plot_revenue_dist`](https://rfm.rsquaredacademy.com/reference/rfm_plot_revenue_dist.md)`(``)`
 
 ![](rfm-introduction_files/figure-html/revenue_dist_plot-1.png)

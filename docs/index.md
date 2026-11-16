@@ -10,7 +10,13 @@ monetary) analysis.
 
 ## Installation
 
-`# Install rfm from CRAN`` `[`install.packages`](https://rdrr.io/r/utils/install.packages.html)`(``"rfm"``)`` `` ``# Or the development version from GitHub`` ``# install.packages("pak")`` ``pak``::`[`pak`](https://pak.r-lib.org/reference/pak.html)`(``"rsquaredacademy/rfm"``)`
+\
+`# Install rfm from CRAN`\
+[`install.packages`](https://rdrr.io/r/utils/install.packages.html)`(``"rfm"``)`\
+\
+`# Or the development version from GitHub`\
+`# install.packages("pak")`\
+`pak``::`[`pak`](https://pak.r-lib.org/reference/pak.html)`(``"rsquaredacademy/rfm"``)`
 
 ## Usage
 
@@ -33,7 +39,66 @@ To calculate the RFM score we need the following info for each customer:
 - date of transaction/order
 - transaction/order amount
 
-`# analysis date`` ``analysis_date`` ``<-`` `[`as.Date`](https://rdrr.io/r/base/as.Date.html)`(``'2006-12-31'``)`` `` ``# generate rfm score`` ``rfm_result`` ``<-`` `[`rfm_table_order`](https://rfm.rsquaredacademy.com/reference/rfm_table_order.md)`(``rfm_data_orders``, ``customer_id``, ``order_date``,`` ``revenue``, ``analysis_date``)`` `` ``# rfm score`` ``rfm_result`` ``#> # A tibble: 995 × 11`` ``#> customer_id recency_days transaction_count amount recency_score`` ``#> <chr> <dbl> <int> <int> <int>`` ``#> 1 Abbey O'Reilly 205 6 472 3`` ``#> 2 Add Senger 140 3 340 4`` ``#> 3 Aden Lesch 194 4 405 3`` ``#> 4 Aden Murphy 98 7 596 5`` ``#> 5 Admiral Senger 132 5 448 4`` ``#> # ℹ 990 more rows`` ``#> # ℹ 6 more variables: frequency_score <int>, monetary_score <int>,`` ``#> # rfm_score <dbl>, first_name <chr>, last_name <chr>, email <chr>`` `` ``# segment names`` ``segment_names`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``"Champions"``, ``"Potential Loyalist"``, ``"Loyal Customers"``,`` `` ``"Promising"``, ``"New Customers"``, ``"Can't Lose Them"``,`` `` ``"At Risk"``, ``"Need Attention"``, ``"About To Sleep"``, ``"Lost"``)`` `` ``# segment intervals`` ``recency_lower`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``5``, ``3``, ``2``, ``3``, ``4``, ``1``, ``1``, ``1``, ``2``, ``1``)`` ``recency_upper`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``5``, ``5``, ``4``, ``4``, ``5``, ``2``, ``2``, ``3``, ``3``, ``1``)`` ``frequency_lower`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``5``, ``3``, ``2``, ``1``, ``1``, ``3``, ``2``, ``3``, ``1``, ``1``)`` ``frequency_upper`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``5``, ``5``, ``4``, ``3``, ``3``, ``4``, ``5``, ``5``, ``3``, ``5``)`` ``monetary_lower`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``5``, ``2``, ``2``, ``3``, ``1``, ``4``, ``4``, ``3``, ``1``, ``1``)`` ``monetary_upper`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``5``, ``5``, ``4``, ``5``, ``5``, ``5``, ``5``, ``5``, ``4``, ``5``)`` `` ``# generate segments`` ``segments`` ``<-`` `[`rfm_segment`](https://rfm.rsquaredacademy.com/reference/rfm_segment.md)`(``rfm_result``, ``segment_names``, ``recency_lower``,`` ``recency_upper``, ``frequency_lower``, ``frequency_upper``, ``monetary_lower``,`` ``monetary_upper``)`` `` ``segments`` ``#> # A tibble: 995 × 12`` ``#> customer_id segment rfm_score transaction_count recency_days amount`` ``#> <chr> <chr> <dbl> <int> <dbl> <int>`` ``#> 1 Abbey O'Reilly Potential Loya… 343 6 205 472`` ``#> 2 Add Senger New Customers 412 3 140 340`` ``#> 3 Aden Lesch Loyal Customers 323 4 194 405`` ``#> 4 Aden Murphy Potential Loya… 544 7 98 596`` ``#> 5 Admiral Senger Potential Loya… 433 5 132 448`` ``#> # ℹ 990 more rows`` ``#> # ℹ 6 more variables: recency_score <int>, frequency_score <int>,`` ``#> # monetary_score <int>, first_name <chr>, last_name <chr>, email <chr>`
+Automatic bins use right-closed quantile intervals: values equal to a
+cut point stay in the lower interval, including ties. The first interval
+includes the minimum. Recency scores decrease as days increase;
+frequency and monetary scores increase with their values. Custom
+thresholds remain lower-inclusive. In 0.5.1, automatic cut points no
+longer add one, so scores are independent of currency units and
+customers near a cut point may change score or segment.
+
+\
+`# analysis date`\
+`analysis_date`` ``<-`` `[`as.Date`](https://rdrr.io/r/base/as.Date.html)`(``'2006-12-31'``)`\
+\
+`# generate rfm score`\
+`rfm_result`` ``<-`` `[`rfm_table_order`](https://rfm.rsquaredacademy.com/reference/rfm_table_order.md)`(``rfm_data_orders``, ``customer_id``, ``order_date``,`\
+`revenue``, ``analysis_date``)`\
+\
+`# rfm score`\
+`rfm_result`\
+`#> # A tibble: 995 x 11`\
+`#>   customer_id    recency_days transaction_count amount recency_score`\
+`#>   <chr>                 <dbl>             <int>  <int>         <int>`\
+`#> 1 Abbey O'Reilly          205                 6    472             3`\
+`#> 2 Add Senger              140                 3    340             4`\
+`#> 3 Aden Lesch              194                 4    405             3`\
+`#> 4 Aden Murphy              98                 7    596             5`\
+`#> 5 Admiral Senger          132                 5    448             4`\
+`#> # i 990 more rows`\
+`#> # i 6 more variables: frequency_score <int>, monetary_score <int>,`\
+`#> #   rfm_score <dbl>, first_name <chr>, last_name <chr>, email <chr>`\
+\
+`# segment names`\
+`segment_names`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``"Champions"``, ``"Potential Loyalist"``, ``"Loyal Customers"``,`\
+`                   ``"Promising"``, ``"New Customers"``, ``"Can't Lose Them"``,`\
+`                   ``"At Risk"``, ``"Need Attention"``, ``"About To Sleep"``, ``"Lost"``)`\
+\
+`# segment intervals`\
+`recency_lower`` ``<-``   `[`c`](https://rdrr.io/r/base/c.html)`(``5``, ``3``, ``2``, ``3``, ``4``, ``1``, ``1``, ``1``, ``2``, ``1``)`\
+`recency_upper`` ``<-``   `[`c`](https://rdrr.io/r/base/c.html)`(``5``, ``5``, ``4``, ``4``, ``5``, ``2``, ``2``, ``3``, ``3``, ``1``)`\
+`frequency_lower`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``5``, ``3``, ``2``, ``1``, ``1``, ``3``, ``2``, ``3``, ``1``, ``1``)`\
+`frequency_upper`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``5``, ``5``, ``4``, ``3``, ``3``, ``4``, ``5``, ``5``, ``3``, ``5``)`\
+`monetary_lower`` ``<-``  `[`c`](https://rdrr.io/r/base/c.html)`(``5``, ``2``, ``2``, ``3``, ``1``, ``4``, ``4``, ``3``, ``1``, ``1``)`\
+`monetary_upper`` ``<-``  `[`c`](https://rdrr.io/r/base/c.html)`(``5``, ``5``, ``4``, ``5``, ``5``, ``5``, ``5``, ``5``, ``4``, ``5``)`\
+\
+`# generate segments`\
+`segments`` ``<-`` `[`rfm_segment`](https://rfm.rsquaredacademy.com/reference/rfm_segment.md)`(``rfm_result``, ``segment_names``, ``recency_lower``,`\
+`recency_upper``, ``frequency_lower``, ``frequency_upper``, ``monetary_lower``,`\
+`monetary_upper``)`\
+\
+`segments`\
+`#> # A tibble: 995 x 12`\
+`#>   customer_id    segment         rfm_score transaction_count recency_days amount`\
+`#>   <chr>          <chr>               <dbl>             <int>        <dbl>  <int>`\
+`#> 1 Abbey O'Reilly Potential Loya~       343                 6          205    472`\
+`#> 2 Add Senger     New Customers         412                 3          140    340`\
+`#> 3 Aden Lesch     Loyal Customers       323                 4          194    405`\
+`#> 4 Aden Murphy    Potential Loya~       544                 7           98    596`\
+`#> 5 Admiral Senger Potential Loya~       433                 5          132    448`\
+`#> # i 990 more rows`\
+`#> # i 6 more variables: recency_score <int>, frequency_score <int>,`\
+`#> #   monetary_score <int>, first_name <chr>, last_name <chr>, email <chr>`
 
 ### Plotting Engines
 
