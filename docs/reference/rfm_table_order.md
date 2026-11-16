@@ -22,7 +22,9 @@ rfm_table_order(
 
 - data:
 
-  A `data.frame` or `tibble`.
+  A `data.frame` or `tibble`. Extra columns are retained only when
+  constant within each customer. Columns that vary within a customer are
+  dropped with a message.
 
 - customer_id:
 
@@ -83,6 +85,17 @@ rfm_table_order(
 - threshold:
 
   thresholds used for generating RFM scores.
+
+## Details
+
+Automatic bins use unshifted sample quantiles. Intervals are
+right-closed: \`q\[i - 1\] \< x \<= q\[i\]\`, with the minimum included
+in the lowest interval and the maximum included in the highest interval.
+Values tied at a boundary stay in the lower interval; repeated
+boundaries can leave intervals empty. Frequency and monetary scores
+increase with the interval number; recency scores decrease. Custom
+thresholds remain lower-inclusive: a value equal to a threshold enters
+the next interval.
 
 ## Examples
 

@@ -28,6 +28,7 @@ which should include the following:
 `rfm` includes a sample data set `rfm_data_orders` which includes the
 above details:
 
+\
 `rfm_data_customer`
 
     ## # A tibble: 39,999 x 5
@@ -94,7 +95,11 @@ takes 8 inputs:
 
 ## RFM Table
 
-`analysis_date`` ``<-`` `[`as.Date`](https://rdrr.io/r/base/as.Date.html)`(``'2007-01-01'``)`` ``rfm_result`` ``<-`` `[`rfm_table_customer`](https://rfm.rsquaredacademy.com/reference/rfm_table_customer.md)`(``rfm_data_customer``, ``customer_id``, ``number_of_orders``, ``recency_days``, ``revenue``, ``analysis_date``)`` ``rfm_result`
+\
+`analysis_date`` ``<-`` `[`as.Date`](https://rdrr.io/r/base/as.Date.html)`(``'2007-01-01'``)`\
+`rfm_result`` ``<-`` `[`rfm_table_customer`](https://rfm.rsquaredacademy.com/reference/rfm_table_customer.md)`(``rfm_data_customer``, ``customer_id``, ``number_of_orders``,`\
+`  ``recency_days``, ``revenue``, ``analysis_date``)`\
+`rfm_result`
 
 | customer_id | recency_days | transaction_count | amount | recency_score | frequency_score | monetary_score | rfm_score |
 |---:|---:|---:|---:|---:|---:|---:|---:|
@@ -129,6 +134,7 @@ of recency and frequency scores. Higher scores of frequency and recency
 are characterized by higher average monetary value as indicated by the
 darker areas in the heatmap.
 
+\
 [`rfm_plot_heatmap`](https://rfm.rsquaredacademy.com/reference/rfm_plot_heatmap.md)`(``rfm_result``)`
 
 ![](rfm-customer-level-data_files/figure-html/heatmap-1.png)
@@ -140,6 +146,7 @@ Use
 to generate the distribution of monetary scores for the different
 combinations of frequency and recency scores.
 
+\
 [`rfm_plot_bar_chart`](https://rfm.rsquaredacademy.com/reference/rfm_plot_bar_chart.md)`(``rfm_result``)`
 
 ![](rfm-customer-level-data_files/figure-html/barchart-1.png)
@@ -154,6 +161,7 @@ to examine the relative distribution of
 - recency days (days since the most recent visit for each customer)
 - frequency (transaction count for each customer)
 
+\
 [`rfm_plot_histograms`](https://rfm.rsquaredacademy.com/reference/rfm_plot_histograms.md)`(``rfm_result``)`
 
 ![](rfm-customer-level-data_files/figure-html/rfmhist-1.png)
@@ -162,6 +170,7 @@ to examine the relative distribution of
 
 Visualize the distribution of customers across orders.
 
+\
 [`rfm_plot_order_dist`](https://rfm.rsquaredacademy.com/reference/rfm_plot_order_dist.md)`(``rfm_result``)`
 
 ![](rfm-customer-level-data_files/figure-html/rfmorders-1.png)
@@ -242,7 +251,8 @@ recent past are more likely to return compared to those who visited long
 time ago as most of those would be lost customers. As such, higher
 revenue would be associated with most recent visits.
 
-[`rfm_plot_segment_scatter`](https://rfm.rsquaredacademy.com/reference/rfm_plot_segment_scatter.md)`(``segments``, ``"monetary"``, ``"recency"``)`
+\
+[`rfm_plot_segment_scatter`](https://rfm.rsquaredacademy.com/reference/rfm_plot_segment_scatter.md)`(``segments``, ``"monetary"``, ``"recency"``)`
 
 ![](rfm-customer-level-data_files/figure-html/mr-1.png)
 
@@ -253,7 +263,8 @@ increases. Customers who visit more frquently are your champion
 customers, loyal customers or potential loyalists and they drive higher
 revenue.
 
-[`rfm_plot_segment_scatter`](https://rfm.rsquaredacademy.com/reference/rfm_plot_segment_scatter.md)`(``segments``, ``"monetary"``, ``"frequency"``)`
+\
+[`rfm_plot_segment_scatter`](https://rfm.rsquaredacademy.com/reference/rfm_plot_segment_scatter.md)`(``segments``, ``"monetary"``, ``"frequency"``)`
 
 ![](rfm-customer-level-data_files/figure-html/fm-1.png)
 
@@ -265,24 +276,28 @@ customers who visited in the recent past are more likely to return
 compared to those who visited long time ago. As such, higher frequency
 would be associated with the most recent visits.
 
-[`rfm_plot_segment_scatter`](https://rfm.rsquaredacademy.com/reference/rfm_plot_segment_scatter.md)`(``segments``, ``"frequency"``, ``"recency"``)`
+\
+[`rfm_plot_segment_scatter`](https://rfm.rsquaredacademy.com/reference/rfm_plot_segment_scatter.md)`(``segments``, ``"frequency"``, ``"recency"``)`
 
 ![](rfm-customer-level-data_files/figure-html/fr-1.png)
 
 ### Median Recency
 
+\
 [`rfm_plot_median_recency`](https://rfm.rsquaredacademy.com/reference/rfm_plot_median_recency.md)`(``segments``)`
 
 ![](rfm-customer-level-data_files/figure-html/avg_recency-1.png)
 
 ### Median Frequency
 
+\
 [`rfm_plot_median_frequency`](https://rfm.rsquaredacademy.com/reference/rfm_plot_median_recency.md)`(``segments``)`
 
 ![](rfm-customer-level-data_files/figure-html/avg_frequency-1.png)
 
 ### Median Monetary Value
 
+\
 [`rfm_plot_median_monetary`](https://rfm.rsquaredacademy.com/reference/rfm_plot_median_recency.md)`(``segments``)`
 
 ![](rfm-customer-level-data_files/figure-html/avg_monetary-1.png)

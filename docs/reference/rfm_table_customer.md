@@ -27,7 +27,8 @@ rfm_table_customer(
 
 - customer_id:
 
-  Unique id of the customer.
+  Unique id of the customer. Duplicated customer IDs are rejected; input
+  must have one row per customer.
 
 - n_transactions:
 
@@ -63,7 +64,7 @@ rfm_table_customer(
 
 ## Value
 
-`rfm_table_order` returns a list with the following:
+`rfm_table_customer` returns a list with the following:
 
 - rfm:
 
@@ -88,6 +89,18 @@ rfm_table_customer(
 - threshold:
 
   thresholds used for generating RFM scores.
+
+## Details
+
+Automatic bins use unshifted sample quantiles. Intervals are
+right-closed: \`q\[i - 1\] \< x \<= q\[i\]\`, with the minimum included
+in the lowest interval and the maximum included in the highest interval.
+Values tied at a boundary stay in the lower interval; repeated
+boundaries can leave intervals empty. Frequency and monetary scores
+increase with the interval number; recency scores decrease. Custom
+thresholds remain lower-inclusive: a value equal to a threshold enters
+the next interval. This rule also applies to the deprecated
+\`rfm_table_customer_2()\`.
 
 ## Examples
 

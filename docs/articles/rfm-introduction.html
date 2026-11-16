@@ -16,8 +16,10 @@
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="RFM - Introduction">
-<!-- Rsquared site-kit v1.0.1: GA4 + region-based consent. Kit files are vendored in pkgdown/assets/site-kit/. --><link rel="stylesheet" href="/site-kit/rsa-consent.css">
-<script src="/site-kit/rsa-analytics.js" data-ga-id="G-2QSPEL5WM6" async></script>
+<!-- Rsquared site-kit v1.2.0: GA4 + region-based consent + email sign-up. Kit files are vendored in pkgdown/assets/site-kit/. --><link rel="stylesheet" href="/site-kit/rsa-consent.css">
+<script src="/site-kit/rsa-analytics.js" data-ga-id="G-2QSPEL5WM6" async></script><link rel="stylesheet" href="/site-kit/rsa-signup.css">
+<script src="/site-kit/rsa-signup.js" defer></script>
+<link rel="canonical" href="https://rfm.rsquaredacademy.com/articles/rfm-introduction.html">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -27,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">rfm</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,7 +76,7 @@
                         <h4 data-toc-skip class="author">Aravind
 Hebbali</h4>
             
-            <h4 data-toc-skip class="date">2026-10-17</h4>
+            <h4 data-toc-skip class="date">2026-11-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rsquaredacademy/rfm/blob/HEAD/vignettes/rfm-introduction.Rmd" class="external-link"><code>vignettes/rfm-introduction.Rmd</code></a></small>
       <div class="d-none name"><code>rfm-introduction.Rmd</code></div>
@@ -85,10 +87,6 @@ Hebbali</h4>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<pre><code><span><span class="co">## Warning: package 'dplyr' was built under R version 4.5.3</span></span></code></pre>
-<pre><code><span><span class="co">## Warning: package 'rlang' was built under R version 4.5.3</span></span></code></pre>
-<pre><code><span><span class="co">## Warning: package 'knitr' was built under R version 4.5.3</span></span></code></pre>
-<pre><code><span><span class="co">## Warning: package 'kableExtra' was built under R version 4.5.3</span></span></code></pre>
 <p>This article provides a brief introduction to RFM analysis and
 customer segmentation. If you are looking for a detailed guide, check
 out our free <a href="https://rsquared-academy.thinkific.com/courses/customer-segmentation-using-rfm-analysis" class="external-link">online
@@ -124,7 +122,7 @@ sample data sets:</p>
 <ul>
 <li><code>rfm_data_orders</code></li>
 </ul>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rfm_data_orders</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##        customer_id order_date revenue first_name last_name</span></span>
 <span><span class="co">## 1      Brion Stark 2004-12-20      32      Brion     Stark</span></span>
@@ -143,7 +141,7 @@ sample data sets:</p>
 <ul>
 <li><code>rfm_data_customer</code></li>
 </ul>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rfm_data_customer</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   customer_id revenue most_recent_visit number_of_orders recency_days</span></span>
 <span><span class="co">## 1       22086     777        2006-05-14                9          232</span></span>
@@ -166,6 +164,13 @@ different and the final results will not match.</strong></p>
 <div class="section level2">
 <h2 id="rfm-score">RFM Score<a class="anchor" aria-label="anchor" href="#rfm-score"></a>
 </h2>
+<p>Automatic bins use right-closed quantile intervals: values equal to a
+cut point stay in the lower interval, including ties. The first interval
+includes the minimum. Recency scores decrease as days increase;
+frequency and monetary scores increase with their values. Custom
+thresholds remain lower-inclusive. Since 0.5.1, automatic cut points no
+longer add one, making monetary scores independent of currency units;
+customers near a cut point may change score or segment.</p>
 <p>So how is the RFM score computed for each customer? The below steps
 explain the process:</p>
 <ul>
@@ -191,7 +196,7 @@ to an offer. Now that we have understood how the RFM score is computed,
 it is time to put it into practice. Use <code><a href="../reference/rfm_table_order.html">rfm_table_order()</a></code>
 to generate the score for each customer from the sample data set
 <code>rfm_data_orders</code>.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">analysis_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2006-12-31"</span><span class="op">)</span></span>
 <span><span class="va">rfm_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rfm_table_order.html">rfm_table_order</a></span><span class="op">(</span><span class="va">rfm_data_orders</span>, <span class="va">customer_id</span>, <span class="va">order_date</span>, <span class="va">revenue</span>, <span class="va">analysis_date</span><span class="op">)</span></span>
 <span><span class="va">rfm_result</span></span></code></pre></div>
@@ -1224,20 +1229,20 @@ number of customers, orders and average order value in each of them.</p>
 <div class="section level4">
 <h4 id="segment-summary">Segment Summary<a class="anchor" aria-label="anchor" href="#segment-summary"></a>
 </h4>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/rfm_segment_summary.html">rfm_segment_summary</a></span><span class="op">(</span><span class="va">segments</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 10 × 5</span></span></span>
 <span><span class="co">##    segment            customers orders revenue   aov</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> About To Sleep           102    283   <span style="text-decoration: underline;">23</span>449  82.9</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> About To Sleep           101    279   <span style="text-decoration: underline;">23</span>194  83.1</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 2</span> At Risk                   28    216   <span style="text-decoration: underline;">22</span>227 103. </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> Can't Lose Them           47    274   <span style="text-decoration: underline;">32</span>446 118. </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> Can't Lose Them           48    281   <span style="text-decoration: underline;">33</span>144 118. </span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 4</span> Champions                 35    316   <span style="text-decoration: underline;">31</span>646 100. </span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 5</span> Lost                     148    393   <span style="text-decoration: underline;">35</span>324  89.9</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> Loyal Customers          170    799   <span style="text-decoration: underline;">76</span>562  95.8</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> Loyal Customers          171    803   <span style="text-decoration: underline;">76</span>817  95.7</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 7</span> Need Attention            10     57    <span style="text-decoration: underline;">4</span>562  80.0</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 8</span> New Customers            104    329   <span style="text-decoration: underline;">28</span>837  87.6</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> Potential Loyalist       342   <span style="text-decoration: underline;">2</span>211  <span style="text-decoration: underline;">204</span>856  92.6</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> Potential Loyalist       341   <span style="text-decoration: underline;">2</span>204  <span style="text-decoration: underline;">204</span>158  92.6</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">10</span> Promising                  9     28    <span style="text-decoration: underline;">4</span>249 152.</span></span></code></pre>
 <p><code>rfm</code> package offers visualization tools to validate the
 segments generated from the RFM score. Below are a few of them:</p>
@@ -1245,7 +1250,7 @@ segments generated from the RFM score. Below are a few of them:</p>
 <div class="section level4">
 <h4 id="segmentation-plot">Segmentation Plot<a class="anchor" aria-label="anchor" href="#segmentation-plot"></a>
 </h4>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">segments</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="../reference/rfm_segment_summary.html">rfm_segment_summary</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="../reference/rfm_plot_segment.html">rfm_plot_segment</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -1254,7 +1259,7 @@ segments generated from the RFM score. Below are a few of them:</p>
 <div class="section level4">
 <h4 id="segment-summary-plot">Segment Summary Plot<a class="anchor" aria-label="anchor" href="#segment-summary-plot"></a>
 </h4>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">segments</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="../reference/rfm_segment_summary.html">rfm_segment_summary</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="../reference/rfm_plot_segment_summary.html">rfm_plot_segment_summary</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -1263,7 +1268,7 @@ segments generated from the RFM score. Below are a few of them:</p>
 <div class="section level4">
 <h4 id="revenue-distribution">Revenue Distribution<a class="anchor" aria-label="anchor" href="#revenue-distribution"></a>
 </h4>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">segments</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="../reference/rfm_segment_summary.html">rfm_segment_summary</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="../reference/rfm_plot_revenue_dist.html">rfm_plot_revenue_dist</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -1281,7 +1286,7 @@ segments generated from the RFM score. Below are a few of them:</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0. <a href="https://www.rsquaredacademy.com/privacy-policy.html" class="external-link">Privacy</a> · <a href="#" data-rsa-analytics-optout>Turn off analytics</a></p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1. <a href="https://www.rsquaredacademy.com/privacy-policy.html" class="external-link">Privacy</a> · <a href="#" data-rsa-analytics-optout>Turn off analytics</a></p>
 </div>
 
     </footer>
