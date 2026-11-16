@@ -46,8 +46,8 @@ home:
       href: https://blog.rsquaredacademy.com
     - text: Our ebooks
       href: https://ebooks.rsquaredacademy.com
-    - text: Online courses
-      href: https://www.rsquaredacademy.com
+    - text: "Learn R hands-on: free interactive courses"
+      href: https://app.rsquaredacademy.com/?utm_source=pkgdown&utm_medium=sidebar&utm_campaign=rfm
 
 reference:
   - title: Shiny App
