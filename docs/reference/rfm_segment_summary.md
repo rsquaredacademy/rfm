@@ -47,14 +47,14 @@ rfm_segment_summary(segments)
 #> # A tibble: 10 × 5
 #>    segment            customers orders revenue   aov
 #>    <chr>                  <int>  <int>   <int> <dbl>
-#>  1 About To Sleep           102    283   23449  82.9
+#>  1 About To Sleep           101    279   23194  83.1
 #>  2 At Risk                   28    216   22227 103. 
-#>  3 Can't Lose Them           47    274   32446 118. 
+#>  3 Can't Lose Them           48    281   33144 118. 
 #>  4 Champions                 35    316   31646 100. 
 #>  5 Lost                     148    393   35324  89.9
-#>  6 Loyal Customers          170    799   76562  95.8
+#>  6 Loyal Customers          171    803   76817  95.7
 #>  7 Need Attention            10     57    4562  80.0
 #>  8 New Customers            104    329   28837  87.6
-#>  9 Potential Loyalist       342   2211  204856  92.6
+#>  9 Potential Loyalist       341   2204  204158  92.6
 #> 10 Promising                  9     28    4249 152. 
 ```

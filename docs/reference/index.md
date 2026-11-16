@@ -26,7 +26,7 @@
 - [`rfm_plot_segment()`](https://rfm.rsquaredacademy.com/reference/rfm_plot_segment.md)
   : RFM Segmentation Plot
 - [`rfm_plot_segment_summary()`](https://rfm.rsquaredacademy.com/reference/rfm_plot_segment_summary.md)
-  : Visulaize segment summary
+  : Visualize segment summary
 - [`rfm_plot_segment_scatter()`](https://rfm.rsquaredacademy.com/reference/rfm_plot_segment_scatter.md)
   : Segment Scatter Plots
 - [`rfm_plot_revenue_dist()`](https://rfm.rsquaredacademy.com/reference/rfm_plot_revenue_dist.md)

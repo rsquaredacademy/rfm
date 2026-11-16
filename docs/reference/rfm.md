@@ -14,5 +14,10 @@ Useful links:
 
 ## Author
 
-**Maintainer**: Aravind Hebbali <hebbali.aravind@gmail.com>
+**Maintainer**: Aravind Hebbali <aravindhebbali@rsquaredacademy.com>
 ([ORCID](https://orcid.org/0000-0001-9220-9669))
+
+Authors:
+
+- Aravind Hebbali <aravindhebbali@rsquaredacademy.com>
+  ([ORCID](https://orcid.org/0000-0001-9220-9669))
