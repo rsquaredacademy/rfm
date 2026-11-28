@@ -2,6 +2,9 @@
 #'
 #' Create segments based on recency, frequency and monetary scores.
 #'
+#' For a recommended six-segment scheme, with one action per segment, see the
+#' six-segment example in \code{vignette("rfm-introduction")}.
+#'
 #' @param data An object of class \code{rfm_table}.
 #' @param segment_names Names of the segments.
 #' @param recency_lower Lower boundary for recency score.

@@ -1,3 +1,7 @@
+# rfm (development version)
+
+- The vignette and README now lead with a recommended six-segment scheme (recency score crossed with a combined frequency-monetary score); the classic ten segments are kept as a second example.
+
 # rfm 0.5.1
 
 ## Bug fixes

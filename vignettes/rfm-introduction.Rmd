@@ -26,9 +26,9 @@ library(RColorBrewer)
 options(knitr.table.format = "html")
 ```
 
-This article provides a brief introduction to RFM analysis and customer segmentation. If you are looking for a detailed guide, check out our free [online course](https://rsquared-academy.thinkific.com/courses/customer-segmentation-using-rfm-analysis) or YouTube [tutorial](https://www.youtube.com/watch?v=275X7yaSsoQ) or blog [post](https://blog.rsquaredacademy.com/customer-segmentation-using-rfm-analysis/).
+This article provides a brief introduction to RFM analysis and customer segmentation. It scores the bundled orders, labels customers with a recommended six-segment scheme, and keeps the classic ten segments as a second example.
 
-**RFM** (recency, frequency, monetary) analysis is a behavior based technique used to segment customers by examining their transaction history  such as
+**RFM** (recency, frequency, monetary) analysis is a behaviour-based technique used to segment customers by examining their transaction history such as
 
 - how recently a customer has purchased (recency)
 - how often they purchase (frequency)
@@ -62,13 +62,7 @@ You can take a look at them to understand the difference between customer and tr
 
 ## RFM Score
 
-Automatic bins use right-closed quantile intervals: values equal to a cut point
-stay in the lower interval, including ties. The first interval includes the
-minimum. Recency scores decrease as days increase; frequency and monetary
-scores increase with their values. Custom thresholds remain lower-inclusive.
-Since 0.5.1, automatic cut points no longer add one, making monetary scores
-independent of currency units; customers near a cut point may change score or
-segment.
+Automatic bins use right-closed quantile intervals: values equal to a cut point stay in the lower interval, including ties. The first interval includes the minimum. Recency scores decrease as days increase; frequency and monetary scores increase with their values. Custom thresholds remain lower-inclusive. Since 0.5.1, automatic cut points no longer add one, making monetary scores independent of currency units; customers near a cut point may change score or segment.
 
 So how is the RFM score computed for each customer? The below steps explain the process:
 
@@ -97,9 +91,109 @@ rfm_result$rfm[1:10, ] %>%
   kable_styling()
 ```
 
-## Segments
+## The six segments
 
-Let us segment our customers based on the individual recency, frequency and monetary scores. Keep in mind that creating segments based on RFM score is a very subjective endeavour. Having good business and domain knowledge will allow the user to generate effective segments. There is no one size fits all solution here.
+The recommended scheme crosses the recency score with a combined frequency-monetary score, `fm = round((F + M) / 2)`. Base R's `round()` rounds halves to even, so the result is deterministic; on this data 393 of the 995 customers sit exactly on a half. The six rules cover all 25 R x FM cells exactly once, so every customer lands in exactly one segment and there are no `Others`.
+
+| Segment | Rule | Action |
+| --- | --- | --- |
+| Champions | R 4–5 and FM 4–5 | Reward them: early access, referrals; no discounts needed |
+| Loyal | R 3 and FM 4–5, or R 4–5 and FM 3 | Cross-sell, loyalty perks, move them up to Champions |
+| New / promising | R 4–5 and FM 1–2 | Onboarding and a second-purchase nudge |
+| Needs attention | R 3 and FM 1–3 | A timely reminder and a light offer |
+| At risk (high value) | R 1–2 and FM 3–5 | Win-back: personal outreach, the strongest offer |
+| Lost / hibernating | R 1–2 and FM 1–2 | Low-cost reactivation, or suppress to save spend |
+
+Build `fm` on the `rfm_table_order()` result and map each pair of scores to a segment with `case_when()`.
+
+```{r six_segments}
+six_levels <- c("Champions", "Loyal", "New / promising", "Needs attention",
+                "At risk (high value)", "Lost / hibernating")
+
+six_segments <- rfm_result$rfm %>%
+  mutate(
+    fm = round((frequency_score + monetary_score) / 2),
+    segment = case_when(
+      recency_score >= 4 & fm >= 4 ~ "Champions",
+      (recency_score == 3 & fm >= 4) | (recency_score >= 4 & fm == 3) ~ "Loyal",
+      recency_score >= 4 & fm <= 2 ~ "New / promising",
+      recency_score == 3 & fm <= 3 ~ "Needs attention",
+      recency_score <= 2 & fm >= 3 ~ "At risk (high value)",
+      recency_score <= 2 & fm <= 2 ~ "Lost / hibernating"
+    ),
+    segment = factor(segment, levels = six_levels)
+  )
+
+six_segments %>%
+  count(segment) %>%
+  kable() %>%
+  kable_styling(full_width = FALSE)
+```
+
+Summarise the segments to see customers, orders, revenue and average order value, plus the revenue share and how long ago each group last ordered.
+
+```{r six_segment_summary}
+six_summary <- six_segments %>%
+  group_by(segment) %>%
+  summarise(
+    customers = n(),
+    orders = sum(transaction_count),
+    revenue = sum(amount),
+    median_days = median(recency_days),
+    .groups = "drop"
+  ) %>%
+  mutate(
+    pct_customers = round(100 * customers / sum(customers), 1),
+    pct_revenue = round(100 * revenue / sum(revenue), 1),
+    revenue_per_customer = round(revenue / customers, 2),
+    aov = round(revenue / orders, 2)
+  ) %>%
+  select(segment, customers, orders, revenue, pct_customers, pct_revenue,
+         revenue_per_customer, aov, median_days)
+
+six_summary %>%
+  kable(
+    col.names = c("Segment", "Customers", "Orders", "Revenue", "% customers",
+                  "% revenue", "Revenue per customer", "AOV",
+                  "Median days since last order")
+  ) %>%
+  kable_styling(full_width = FALSE)
+```
+
+`rfm_segment_summary(six_segments)` accepts the same labelled frame and returns customers, orders, revenue and average order value if you do not need the extra measures.
+
+What the store owner learns:
+
+- **Champions** are 202 customers (20.3%) and 31.0% of revenue, 711.39 each, with a median last order 114 days ago (about four months). Reward them with early access and referrals; they do not need a discount.
+- **Loyal** are 139 customers (14.0%) and 17.6% of revenue, 588.48 each, with a median last order 193 days ago (about six months). Cross-sell and give them a reason to move up to Champions.
+- **New / promising** are 144 customers (14.5%) but only 9.0% of revenue; their average order is 83.34 and their median last order 119 days ago (about four months). Onboard them and nudge the second purchase.
+- **Needs attention** are 112 customers (11.3%) and 7.7% of revenue, with an 82.69 average order and a median last order 236 days ago (about eight months). A timely reminder and a light offer is the right spend.
+- **At risk (high value)** are 161 customers (16.2%) and 21.4% of revenue, the second-largest revenue block: 615.63 each and a 101.76 average order, the highest of the six. Their last order is a median 449 days old (about 15 months), so this is the win-back list to call first.
+- **Lost / hibernating** are the largest group at 237 customers (23.8%) but only 13.3% of revenue, 260.47 each, with a median last order 515 days ago (about 17 months). Use low-cost reactivation, or suppress them to save spend.
+
+Every segment is at least 11% of customers. Past value is concentrated in Champions, Loyal and At risk (588–711 per customer); the other three are between 260 and 322 per customer, so each row carries one clear action.
+
+## Plot the revenue share
+
+A store owner can see at a glance where the revenue sits.
+
+```{r six_revenue_share, fig.align='center', fig.width=7, fig.height=4}
+ggplot(six_summary, aes(x = segment, y = pct_revenue)) +
+  geom_col(fill = "#3b5bdb") +
+  geom_text(aes(label = paste0(sprintf("%.1f", pct_revenue), "%")),
+            vjust = -0.4, size = 3.2) +
+  labs(
+    x = NULL,
+    y = "Share of revenue (%)",
+    title = "Revenue share by segment"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 20, hjust = 1))
+```
+
+## Example 2: the standard segments
+
+R `rfm`'s vignette defines ten segments on the three separate score boxes, and `rfm_segment()` applies them in order with the first match winning. The ten rules overlap in 58 of the 125 R x F x M score cells, so list order matters: "Potential Loyalist" covers many high-frequency, high-monetary customers because it is listed second with a wide box (R 3–5, F 3–5, M 2–5). Ten cells match no rule at all; customers there become `Others` (none in this data). Each bound below is inclusive on both ends.
 
 ```{r segments, echo=FALSE}
 segment <- c("Champions", "Potential Loyalist", "Loyal Customers", 
@@ -109,7 +203,7 @@ description <- c(
   "Bought recently, buy often and spend the most",
   "Recent customers, spent good amount, bought more than once",
   "Spend good money. Responsive to promotions",
-  "Recent shoppers, but haven't spent much",
+  "Recent shoppers; the rule needs a monetary score of 3–5, so only large first baskets qualify",
   "Bought more recently, but not often",
   "Made big purchases and often, but long time ago",
   "Spent big money, purchased often but long time ago",
@@ -130,16 +224,7 @@ segments %>%
   kable_styling(full_width = FALSE, font_size = 12)
 ```
 
-## Segmented Customer Data
-
-We can use the segmented data to identify 
-
-- best customers
-- loyal customers
-- at risk customers
-- and lost customers
-
-Once we have segmented a customer, we can take appropriate action to increase his/her lifetime value. 
+Assign the labels with those rules.
 
 ```{r criteria, echo=FALSE}
 segment_names <- c("Champions", "Potential Loyalist", "Loyal Customers", 
@@ -162,7 +247,9 @@ segments %>%
   kable_styling()
 ```
 
-Let us quickly summarize the segments to get an overview of the number of customers, orders and average order value in each of them.
+The ten rules claim all 995 customers; no customer falls through to `Others`.
+
+Let us quickly summarise the segments to get an overview of the number of customers, orders and average order value in each of them.
 
 #### Segment Summary
 
@@ -170,7 +257,7 @@ Let us quickly summarize the segments to get an overview of the number of custom
 rfm_segment_summary(segments)
 ```
 
-`rfm` package offers visualization tools to validate the segments generated from the RFM score. Below are a few of them:
+`rfm` package offers visualisation tools to validate the segments generated from the RFM score. Below are a few of them:
 
 #### Segmentation Plot
 
