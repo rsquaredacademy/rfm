@@ -86,10 +86,13 @@ rfm_result
 ## The six segments
 
 The recommended scheme crosses the recency score with a combined
-frequency-monetary score, `fm = round((F + M) / 2)`. Base R’s `round()`
-rounds halves to even, so the result is deterministic. The six rules
-cover all 25 R x FM cells exactly once, so every customer lands in
-exactly one segment and there are no `Others`.
+frequency-monetary score, `fm = round((F + M) / 2)`.
+
+Base R’s `round()` rounds halves to even, so the result is
+deterministic.
+
+The six rules cover all 25 R x FM cells exactly once, so every customer
+lands in exactly one segment and there are no `Others`.
 
 | Segment | Rule | Action |
 |----|----|----|
@@ -169,8 +172,10 @@ A store-owner reading of the table:
 - **Loyal** are 139 customers (14.0%) and 17.6% of revenue, 588.48 each.
   Cross-sell and move them up to Champions.
 - **New / promising** are 144 customers (14.5%) but only 9.0% of
-  revenue, with an 83.34 average order. Onboard them and nudge the
-  second purchase.
+  revenue, with an 83.34 average order. Most have already ordered
+  several times (median 4), so treat them as recent, lower-spend buyers:
+  onboard them, then raise the basket size or frequency to move them
+  towards Loyal.
 - **Needs attention** are 112 customers (11.3%) and 7.7% of revenue,
   with an 82.69 average order. A timely reminder and a light offer is
   enough.
@@ -197,16 +202,16 @@ ggplot(six_summary, aes(x = segment, y = pct_revenue)) +
   theme(axis.text.x = element_text(angle = 20, hjust = 1))
 ```
 
-<img src="tools/README-six_revenue_share-1.png" alt="" style="display: block; margin: auto;" />
+<img src="tools/README-six_revenue_share-1.png" alt="Bar chart of share of revenue by segment: Champions 31.0%, Loyal 17.6%, New / promising 9.0%, Needs attention 7.7%, At risk (high value) 21.4%, Lost / hibernating 13.3%." style="display: block; margin: auto;" />
 
 The vignette gives the full readings for each segment.
 
 ## Example 2: the standard segments
 
-R `rfm`’s vignette defines ten segments on the three separate score
-boxes, and `rfm_segment()` applies them in order with the first match
-winning. The ten rules overlap in 58 of the 125 R x F x M score cells,
-so list order matters: “Potential Loyalist” covers many high-frequency,
+The classic ten segments are defined on the three separate score boxes,
+and `rfm_segment()` applies them in order with the first match winning.
+The ten rules overlap in 58 of the 125 R x F x M score cells, so list
+order matters: “Potential Loyalist” covers many high-frequency,
 high-monetary customers because it is listed second with a wide box (R
 3–5, F 3–5, M 2–5). Ten cells match no rule at all; customers there
 become `Others` (none in this data). Each bound below is inclusive on
@@ -245,7 +250,7 @@ segments
 #> #   monetary_score <int>, first_name <chr>, last_name <chr>, email <chr>
 ```
 
-### Plotting Engines
+## Plotting Engines
 
 `rfm` supports the following plotting engines:
 
@@ -253,7 +258,7 @@ segments
 - [plotly](https://plotly.com/r/)
 - [gganimate](https://gganimate.com)
 
-### Shiny App
+## Shiny App
 
 `rfm` includes a shiny app for interactive RFM analysis. In the latest
 release, we have added project management features to allow users to

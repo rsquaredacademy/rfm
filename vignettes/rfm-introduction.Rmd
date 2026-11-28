@@ -62,7 +62,13 @@ You can take a look at them to understand the difference between customer and tr
 
 ## RFM Score
 
-Automatic bins use right-closed quantile intervals: values equal to a cut point stay in the lower interval, including ties. The first interval includes the minimum. Recency scores decrease as days increase; frequency and monetary scores increase with their values. Custom thresholds remain lower-inclusive. Since 0.5.1, automatic cut points no longer add one, making monetary scores independent of currency units; customers near a cut point may change score or segment.
+Automatic bins use right-closed quantile intervals: values equal to a cut point
+stay in the lower interval, including ties. The first interval includes the
+minimum. Recency scores decrease as days increase; frequency and monetary
+scores increase with their values. Custom thresholds remain lower-inclusive.
+Since 0.5.1, automatic cut points no longer add one, making monetary scores
+independent of currency units; customers near a cut point may change score or
+segment.
 
 So how is the RFM score computed for each customer? The below steps explain the process:
 
@@ -93,7 +99,11 @@ rfm_result$rfm[1:10, ] %>%
 
 ## The six segments
 
-The recommended scheme crosses the recency score with a combined frequency-monetary score, `fm = round((F + M) / 2)`. Base R's `round()` rounds halves to even, so the result is deterministic; on this data 393 of the 995 customers sit exactly on a half. The six rules cover all 25 R x FM cells exactly once, so every customer lands in exactly one segment and there are no `Others`.
+The recommended scheme crosses the recency score with a combined frequency-monetary score, `fm = round((F + M) / 2)`.
+
+Base R's `round()` rounds halves to even, so the result is deterministic; on this data 393 of the 995 customers sit exactly on a half.
+
+The six rules cover all 25 R x FM cells exactly once, so every customer lands in exactly one segment and there are no `Others`.
 
 | Segment | Rule | Action |
 | --- | --- | --- |
@@ -166,7 +176,7 @@ What the store owner learns:
 
 - **Champions** are 202 customers (20.3%) and 31.0% of revenue, 711.39 each, with a median last order 114 days ago (about four months). Reward them with early access and referrals; they do not need a discount.
 - **Loyal** are 139 customers (14.0%) and 17.6% of revenue, 588.48 each, with a median last order 193 days ago (about six months). Cross-sell and give them a reason to move up to Champions.
-- **New / promising** are 144 customers (14.5%) but only 9.0% of revenue; their average order is 83.34 and their median last order 119 days ago (about four months). Onboard them and nudge the second purchase.
+- **New / promising** are 144 customers (14.5%) but only 9.0% of revenue; their average order is 83.34 and their median last order 119 days ago (about four months). Most have already ordered several times (median 4), so treat them as recent, lower-spend buyers: onboard them, then raise the basket size or frequency to move them towards Loyal.
 - **Needs attention** are 112 customers (11.3%) and 7.7% of revenue, with an 82.69 average order and a median last order 236 days ago (about eight months). A timely reminder and a light offer is the right spend.
 - **At risk (high value)** are 161 customers (16.2%) and 21.4% of revenue, the second-largest revenue block: 615.63 each and a 101.76 average order, the highest of the six. Their last order is a median 449 days old (about 15 months), so this is the win-back list to call first.
 - **Lost / hibernating** are the largest group at 237 customers (23.8%) but only 13.3% of revenue, 260.47 each, with a median last order 515 days ago (about 17 months). Use low-cost reactivation, or suppress them to save spend.
@@ -177,7 +187,7 @@ Every segment is at least 11% of customers. Past value is concentrated in Champi
 
 A store owner can see at a glance where the revenue sits.
 
-```{r six_revenue_share, fig.align='center', fig.width=7, fig.height=4}
+```{r six_revenue_share, fig.align='center', fig.width=7, fig.height=4, fig.alt="Bar chart of share of revenue by segment: Champions 31.0%, Loyal 17.6%, New / promising 9.0%, Needs attention 7.7%, At risk (high value) 21.4%, Lost / hibernating 13.3%."}
 ggplot(six_summary, aes(x = segment, y = pct_revenue)) +
   geom_col(fill = "#3b5bdb") +
   geom_text(aes(label = paste0(sprintf("%.1f", pct_revenue), "%")),
@@ -193,7 +203,7 @@ ggplot(six_summary, aes(x = segment, y = pct_revenue)) +
 
 ## Example 2: the standard segments
 
-R `rfm`'s vignette defines ten segments on the three separate score boxes, and `rfm_segment()` applies them in order with the first match winning. The ten rules overlap in 58 of the 125 R x F x M score cells, so list order matters: "Potential Loyalist" covers many high-frequency, high-monetary customers because it is listed second with a wide box (R 3–5, F 3–5, M 2–5). Ten cells match no rule at all; customers there become `Others` (none in this data). Each bound below is inclusive on both ends.
+The classic ten segments are defined on the three separate score boxes, and `rfm_segment()` applies them in order with the first match winning. The ten rules overlap in 58 of the 125 R x F x M score cells, so list order matters: "Potential Loyalist" covers many high-frequency, high-monetary customers because it is listed second with a wide box (R 3–5, F 3–5, M 2–5). Ten cells match no rule at all; customers there become `Others` (none in this data). Each bound below is inclusive on both ends.
 
 ```{r segments, echo=FALSE}
 segment <- c("Champions", "Potential Loyalist", "Loyal Customers", 
