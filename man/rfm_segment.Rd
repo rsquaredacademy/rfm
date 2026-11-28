@@ -35,6 +35,10 @@ rfm_segment(
 \description{
 Create segments based on recency, frequency and monetary scores.
 }
+\details{
+For a recommended six-segment scheme, with one action per segment, see the
+six-segment example in \code{vignette("rfm-introduction")}.
+}
 \examples{
 # analysis date
 analysis_date <- as.Date('2006-12-31')
